@@ -77,8 +77,8 @@ public:
 
   virtual ~Impl() { }
 
-  void setTimeout(int timeout) { 
-    timeout_ = timeout; 
+  void setTimeout(int timeout) {
+    timeout_ = timeout;
   }
 
   void setMaximumResponseSize(std::size_t bytes) {
@@ -98,7 +98,7 @@ public:
                      << boost::lexical_cast<std::string>(port) << "\r\n";
 
     if (!auth.empty())
-      request_stream << "Authorization: Basic " 
+      request_stream << "Authorization: Basic "
 		     << Wt::Utils::base64Encode(auth) << "\r\n";
 
     bool haveContentLength = false;
@@ -111,7 +111,7 @@ public:
 
     if ((method == "POST" || method == "PUT" || method == "DELETE" || method == "PATCH") &&
 	!haveContentLength)
-      request_stream << "Content-Length: " << message.body().length() 
+      request_stream << "Content-Length: " << message.body().length()
 		     << "\r\n";
 
     request_stream << "Connection: close\r\n\r\n";
@@ -230,7 +230,7 @@ private:
       complete();
     }
   }
- 
+
   void handleConnect(const boost::system::error_code& err,
 		     tcp::resolver::iterator endpoint_iterator)
   {
@@ -390,7 +390,7 @@ private:
 	  }
 	}
       }
-      
+
       if (headersReceived_.isConnected()) {
 	if (server_)
 	  server_->post(sessionId_,
@@ -501,7 +501,7 @@ private:
 	  }
 
 	  chunkState_.parsePos = 0;
-	  
+
 	  break;
 	case 0:
 	  if (ch >= '0' && ch <= '9') {
@@ -536,7 +536,7 @@ private:
 	  if (chunkState_.size == 0) {
 	    chunkState_.state = ChunkState::Complete; return;
 	  }
-	    
+
 	  chunkState_.state = ChunkState::Data;
 	}
 
@@ -571,7 +571,7 @@ private:
     err_ = boost::system::errc::make_error_code
       (boost::system::errc::protocol_error);
     complete();
-  } 
+  }
 
   void complete()
   {
@@ -918,9 +918,9 @@ bool Client::request(Http::Method method, const std::string& url,
 #endif // VERIFY_CERTIFICATE
 
     impl_.reset(new SslImpl(*ioService, verifyEnabled_,
-			    server, 
-			    context, 
-			    sessionId, 
+			    server,
+			    context,
+			    sessionId,
 			    parsedUrl.host));
 #endif // WT_WITH_SSL
 
@@ -949,12 +949,12 @@ bool Client::request(Http::Method method, const std::string& url,
 
   LOG_DEBUG(methodNames_[method] << " " << url);
 
-  impl_->request(methodNames_[method], 
+  impl_->request(methodNames_[method],
 		 parsedUrl.protocol,
 		 parsedUrl.auth,
-		 parsedUrl.host, 
-		 parsedUrl.port, 
-		 parsedUrl.path, 
+		 parsedUrl.host,
+		 parsedUrl.port,
+		 parsedUrl.path,
 		 message);
 
   return true;

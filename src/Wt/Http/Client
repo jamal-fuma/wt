@@ -273,7 +273,7 @@ public:
    * \sa request(), done()
    */
   bool put(const std::string& url, const Message& message);
-  
+
   /*! \brief Starts a DELETE request.
    *
    * The function starts an asynchronous DELETE request, and returns
@@ -289,7 +289,7 @@ public:
    * \sa request(), done()
    */
   bool deleteRequest(const std::string& url, const Message& message);
-  
+
   /*! \brief Starts a PATCH request.
    *
    * The function starts an asynchronous PATCH request, and returns
@@ -305,7 +305,7 @@ public:
    * \sa request(), done()
    */
   bool patch(const std::string& url, const Message& message);
-  
+
   /*! \brief Starts a request.
    *
    * The function starts an asynchronous HTTP request, and returns
