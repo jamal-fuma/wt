@@ -604,7 +604,7 @@ private:
     headersReceived_.emit(response_);
   }
 
-  void emitBodyReceived(std::string text) {
+  void emitBodyReceived(const std::string & text) {
     bodyDataReceived_.emit(text);
   }
 
