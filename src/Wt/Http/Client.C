@@ -583,7 +583,7 @@ private:
       emitDone();
   }
 
-  void haveBodyData(std::string text)
+  void haveBodyData(const std::string & text)
   {
     if (bodyDataReceived_.isConnected()) {
       if (server_)
