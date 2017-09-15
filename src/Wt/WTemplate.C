@@ -457,8 +457,12 @@ void WTemplate::updateDom(DomElement& element, bool all)
     for (WidgetMap::const_iterator i = widgets_.begin(); i != widgets_.end();
 	 ++i) {
       WWidget *w = i->second;
-      if (w->isRendered() && w->webWidget()->domCanBeSaved()) {
-	previouslyRendered.insert(w);
+      if (w->isRendered()) {
+	if (w->webWidget()->domCanBeSaved()) {
+	  previouslyRendered.insert(w);
+	} else {
+	  unrenderWidget(w, element);
+	}
       }
     }
 
@@ -487,28 +491,38 @@ void WTemplate::updateDom(DomElement& element, bool all)
     else
       element.setProperty(Wt::PropertyInnerHTML, encode(html.str()));
 
-    changed_ = false;
-
     for (std::set<WWidget *>::const_iterator i = previouslyRendered.begin();
-	 i != previouslyRendered.end(); ++i) {
+         i != previouslyRendered.end(); ++i) {
       WWidget *w = *i;
       // it could be that the widget was removed/deleted in the mean time
       // as a side-effect of rendering some of the widgets; thus we check
       // that the widget is still a child
       for (WidgetMap::const_iterator j = widgets_.begin();
-	   j != widgets_.end(); ++j) {
-	if (j->second == w) {
-	  w->webWidget()->setRendered(false);
-	  break;
-	}
+           j != widgets_.end(); ++j) {
+        if (j->second == w) {
+          unrenderWidget(w, element);
+          break;
+        }
       }
     }
 
     WApplication::instance()->session()->renderer()
       .updateFormObjects(this, true);
+
+    changed_ = false;
   }
 
   WInteractWidget::updateDom(element, all);
+}
+
+void WTemplate::unrenderWidget(WWidget *w, DomElement &el)
+{
+  std::string removeJs = w->webWidget()->renderRemoveJs(false);
+  if (removeJs[0] == '_')
+    el.callJavaScript(WT_CLASS ".remove('" + removeJs.substr(1) + "');", true);
+  else
+    el.callJavaScript(removeJs, true);
+  w->webWidget()->setRendered(false);
 }
 
 std::string WTemplate::encode(const std::string& text) const
