@@ -93,7 +93,7 @@ void WStackedWidget::setCurrentIndex(int index)
 void WStackedWidget::setCurrentIndex(int index, const WAnimation& animation,
 				     bool autoReverse)
 {
-  if (!animation.empty() && 
+  if (!animation.empty() &&
       WApplication::instance()->environment().supportsCss3Animations() &&
       ((isRendered() && javaScriptDefined_) || !canOptimizeUpdates())) {
     if (canOptimizeUpdates() && index == currentIndex_)
