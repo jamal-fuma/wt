@@ -55,7 +55,7 @@ unsigned buffer_string::length() const
 
   for (const buffer_string *s = this; s; s = s->next)
     result += s->len;
-  
+
   return result;
 }
 
@@ -215,7 +215,7 @@ void Request::enableWebSocket()
   }
 }
 
-bool Request::closeConnection() const 
+bool Request::closeConnection() const
 {
   if ((http_version_major == 1) && (http_version_minor == 0)) {
     const Header *i = getHeader("Connection");
@@ -228,7 +228,7 @@ bool Request::closeConnection() const
 
   if ((http_version_major == 1) && (http_version_minor == 1)) {
     const Header *i = getHeader("Connection");
-    
+
     if (i && i->value.icontains("close"))
       return true;
 
@@ -255,10 +255,10 @@ Wt::WSslInfo *Request::sslInfo() const
     return nullptr;
 
   X509 *x509 = SSL_get_peer_certificate(ssl);
-  
+
   if (x509) {
     Wt::WSslCertificate clientCert = Wt::Ssl::x509ToWSslCertificate(x509);
-    
+
     X509_free(x509);
 
     std::vector<Wt::WSslCertificate> clientCertChain;
@@ -269,7 +269,7 @@ Wt::WSslInfo *Request::sslInfo() const
 	clientCertChain.push_back(Wt::Ssl::x509ToWSslCertificate(x509_i));
       }
     }
-    
+
     Wt::ValidationState state = Wt::ValidationState::Invalid;
     std::string info;
 
@@ -281,9 +281,9 @@ Wt::WSslInfo *Request::sslInfo() const
       info = X509_verify_cert_error_string(SSL_state);
     }
     Wt::WValidator::Result clientVerificationResult(state, info);
-    
-    return new Wt::WSslInfo(clientCert, 
-			    clientCertChain, 
+
+    return new Wt::WSslInfo(clientCert,
+			    clientCertChain,
 			    clientVerificationResult);
   }
 #endif
