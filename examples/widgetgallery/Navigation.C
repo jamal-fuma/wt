@@ -21,28 +21,28 @@ Navigation::Navigation()
 void Navigation::populateSubMenu(Wt::WMenu *menu)
 {
   menu->addItem("Internal paths", internalPaths())->setPathComponent("");
-  menu->addItem("Anchor", 
+  menu->addItem("Anchor",
                 deferCreate(std::bind
                             (&Navigation::anchor, this)));
-  menu->addItem("Stacked widget", 
+  menu->addItem("Stacked widget",
                 deferCreate(std::bind
                             (&Navigation::stackedWidget, this)));
-  menu->addItem("Menu", 
+  menu->addItem("Menu",
                 deferCreate(std::bind
                             (&Navigation::menuWidget, this)));
-  menu->addItem("Tab widget", 
+  menu->addItem("Tab widget",
                 deferCreate(std::bind
                             (&Navigation::tabWidget, this)));
-  menu->addItem("Navigation bar", 
+  menu->addItem("Navigation bar",
                 deferCreate(std::bind
                             (&Navigation::navigationBar, this)));
-  menu->addItem("Popup menu", 
+  menu->addItem("Popup menu",
                 deferCreate(std::bind
                             (&Navigation::popupMenu, this)));
-  menu->addItem("Split button", 
+  menu->addItem("Split button",
                 deferCreate(std::bind
                             (&Navigation::splitButton, this)));
-  menu->addItem("Toolbar", 
+  menu->addItem("Toolbar",
                 deferCreate(std::bind
                             (&Navigation::toolBar, this)));
 }
