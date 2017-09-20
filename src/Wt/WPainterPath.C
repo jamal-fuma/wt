@@ -204,7 +204,7 @@ void WPainterPath::moveTo(double x, double y)
    * first close previous sub path
    */
   if (!openSubPathsEnabled_ &&
-      !segments_.empty() && 
+      !segments_.empty() &&
       segments_.back().type() != SegmentType::MoveTo) {
     WPointF startP = getSubPathStart();
     WPointF currentP = currentPosition();
@@ -213,7 +213,7 @@ void WPainterPath::moveTo(double x, double y)
       lineTo(startP.x(), startP.y());
   }
 
-  segments_.push_back(Segment(x, y, SegmentType::MoveTo));  
+  segments_.push_back(Segment(x, y, SegmentType::MoveTo));
 }
 
 void WPainterPath::lineTo(const WPointF& point)
@@ -255,7 +255,7 @@ void WPainterPath::arcTo(double x, double y, double width, double height,
   checkModifiable();
   segments_.push_back(Segment(x + width/2, y + height/2, SegmentType::ArcC));
   segments_.push_back(Segment(width/2, height/2, SegmentType::ArcR));
-  segments_.push_back(Segment(startAngle, sweepLength, 
+  segments_.push_back(Segment(startAngle, sweepLength,
 			      SegmentType::ArcAngleSweep));
 }
 
@@ -317,7 +317,7 @@ void WPainterPath::addPolygon(const std::vector<WPointF>& points)
   checkModifiable();
   if (!points.empty()) {
     unsigned i = 0;
-    if (currentPosition() != points[0]) 
+    if (currentPosition() != points[0])
       moveTo(points[i++]);
 
     for (; i < points.size(); ++i)
