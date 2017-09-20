@@ -10,7 +10,7 @@
 #include "Wt/WFormWidget.h"
 #include "Wt/WLogger.h"
 #include "Wt/WSuggestionPopup.h"
-#include "Wt/WStringStream.h" 
+#include "Wt/WStringStream.h"
 #include "Wt/WStringListModel.h"
 #include "Wt/WTemplate.h"
 #include "Wt/WText.h"
@@ -25,7 +25,7 @@ namespace {
   std::string instantiateStdMatcher(const Wt::WSuggestionPopup::Options&
 				    options) {
     Wt::WStringStream s;
-    
+
     s << "new " WT_CLASS ".WSuggestionPopupStdMatcher("
       << Wt::WWebWidget::jsStringLiteral(options.highlightBeginTag) << ", "
       << Wt::WWebWidget::jsStringLiteral(options.highlightEndTag) << ", ";
@@ -50,7 +50,7 @@ namespace Wt {
 LOGGER("WSuggestionPopup");
 
 #ifdef WT_TARGET_JAVA
-WSuggestionPopup::Options::Options() 
+WSuggestionPopup::Options::Options()
   : listSeparator(0)
 { }
 #endif
@@ -138,10 +138,10 @@ void WSuggestionPopup::render(WFlags<RenderFlag> flags)
   WPopupWidget::render(flags);
 }
 
-void WSuggestionPopup::connectObjJS(EventSignalBase& s, 
+void WSuggestionPopup::connectObjJS(EventSignalBase& s,
 				     const std::string& methodName)
 {
-  std::string jsFunction = 
+  std::string jsFunction =
     "function(obj, event) {"
     """var o = jQuery.data(" + jsRef() + ", 'obj');"
     """if (o) o." + methodName + "(obj, event);"
@@ -215,7 +215,7 @@ void WSuggestionPopup::modelRowsInserted(const WModelIndex& parent,
 
     cpp17::any d = index.data();
 
-    TextFormat format = index.flags().test(ItemFlag::XHTMLText) ? 
+    TextFormat format = index.flags().test(ItemFlag::XHTMLText) ?
       TextFormat::XHTML : TextFormat::Plain;
     WAnchor *anchor = line->addWidget(cpp14::make_unique<WAnchor>());
     WText *value = anchor->addWidget(cpp14::make_unique<WText>(asString(d), format));
@@ -335,7 +335,7 @@ void WSuggestionPopup::addSuggestion(const WString& suggestionText,
   int row = model_->rowCount();
 
   if (model_->insertRow(row)) {
-    model_->setData(row, modelColumn_, cpp17::any(suggestionText), 
+    model_->setData(row, modelColumn_, cpp17::any(suggestionText),
 		    ItemDataRole::Display);
     if (!suggestionValue.empty())
       model_->setData(row, modelColumn_, cpp17::any(suggestionValue),
