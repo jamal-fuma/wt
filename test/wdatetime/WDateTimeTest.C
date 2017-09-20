@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE( WDateTime_test_WDate2 )
   BOOST_REQUIRE(!wd.isNull());
 
   wd = Wt::WDate::fromString("31/07/9999", "dd/MM/yyyy");
-  
+
   BOOST_REQUIRE(wd.isValid());
   BOOST_REQUIRE(!wd.isNull());
 }
