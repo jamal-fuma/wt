@@ -51,7 +51,7 @@ WOverlayLoadingIndicator
     app->styleSheet().addRule("body", "height: 100%; margin: 0;");
 
   std::string position
-    = app->environment().agent() == UserAgent::IE6 
+    = app->environment().agent() == UserAgent::IE6
     ? "absolute" : "fixed";
 
   if (backgroundStyleClass.empty())
@@ -83,5 +83,5 @@ void WOverlayLoadingIndicator::setMessage(const WString& text)
 {
   text_->setText(text);
 }
-  
+
 }
