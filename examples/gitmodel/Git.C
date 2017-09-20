@@ -29,7 +29,7 @@ namespace {
       return b - '0';
     else if (b <= 'F')
       return (b - 'A') + 0x0A;
-    else 
+    else
       return (b - 'a') + 0x0A;
   }
 
@@ -141,7 +141,7 @@ namespace {
        */
       std::string result;
       std::string unsafe = "<>&;|[$`";
- 
+
       for (auto item : cmd) {
         if (unsafe.find(item) == std::string::npos)
           result += item;
@@ -204,7 +204,7 @@ Git::Git()
 { }
 
 void Git::setRepositoryPath(const std::string& repositoryPath)
-{ 
+{
   struct stat sb;
   is_bare_ = !(stat((repositoryPath + "/.git").c_str(), &sb) == 0 &&
                S_ISDIR(sb.st_mode));
@@ -239,7 +239,7 @@ Git::ObjectId Git::getTreeFromCommit(const ObjectId& commit) const
 {
   std::string treeLine;
   if (!getCmdResult("cat-file -p " + commit.toString(), treeLine, "tree"))
-    throw Exception("Git: could not parse tree from commit '" 
+    throw Exception("Git: could not parse tree from commit '"
 		    + commit.toString() + "'");
 
   std::vector<std::string> v;
@@ -267,7 +267,7 @@ Git::Object Git::treeGetObject(const ObjectId& tree, int index) const
     if (v2.size() != 3)
       throw Exception("Git: could not parse tree object line: '"
 		      + objectLine + "'");
- 
+
     const std::string& stype = v2[1];
     ObjectType type;
     if (stype == "tree")
