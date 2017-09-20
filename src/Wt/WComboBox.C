@@ -23,7 +23,7 @@ WComboBox::WComboBox()
     selectionChanged_(true),
     currentlyConnected_(false),
     noSelectionEnabled_(false)
-{ 
+{
   setInline(true);
   setFormObject(true);
   setModel(std::make_shared<WStringListModel>());
@@ -72,9 +72,9 @@ void WComboBox::rowsRemoved(const WModelIndex &index, int from, int to)
     return;
 
   int count = to - from + 1;
-  
+
   if (currentIndex_ > to) // shift up the selection by amount of removed rows
-    currentIndex_ -= count; 
+    currentIndex_ -= count;
   else if (currentIndex_ >= from) {
     currentIndex_ = -1;
     makeCurrentIndexValid();
@@ -244,7 +244,7 @@ void WComboBox::updateDom(DomElement& element, bool all)
       if (isSelected(i))
 	item->setProperty(Property::Selected, "true");
 
-      WString sc = asString(model_->data(i, modelColumn_, 
+      WString sc = asString(model_->data(i, modelColumn_,
 					 ItemDataRole::StyleClass));
       if (!sc.empty())
 	item->setProperty(Property::Class, sc.toUTF8());
@@ -288,7 +288,7 @@ void WComboBox::updateDom(DomElement& element, bool all)
 	    groupDisabled = false;
 	}
       }
-      
+
       if (isSoloItem)
 	element.addChild(item);
       else
@@ -397,7 +397,7 @@ void WComboBox::itemsChanged()
 void WComboBox::saveSelection()
 {
   if (currentIndex_ >= 0)
-    currentIndexRaw_ = 
+    currentIndexRaw_ =
       model_->toRawIndex(model_->index(currentIndex_, modelColumn_));
   else
     currentIndexRaw_ = nullptr;
