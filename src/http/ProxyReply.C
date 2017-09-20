@@ -269,7 +269,7 @@ void ProxyReply::assembleRequestHeaders()
       if (it->value.iequals("websocket")) {
 	establishWebSockets = true;
       }
-    } else if (it->name.iequals("X-Forwarded-Proto")) { 
+    } else if (it->name.iequals("X-Forwarded-Proto")) {
       forwardedProto = it->value.str();
     } else if(it->name.iequals("X-Forwarded-Port")) {
       forwardedPort = it->value.str();
@@ -312,7 +312,7 @@ void ProxyReply::appendSSLInfo(const Wt::WSslInfo* sslInfo, std::ostream& os) {
   Wt::WSslCertificate clientCert = sslInfo->clientCertificate();
   std::string pem = clientCert.toPem();
 
-  obj["client-certificate"] = Wt::WString(pem); 
+  obj["client-certificate"] = Wt::WString(pem);
 
   Wt::Json::Value arrVal(Wt::Json::Type::Array);
   Wt::Json::Array &sslCertsArr = arrVal;
@@ -407,7 +407,7 @@ void ProxyReply::handleHeadersRead(const Wt::AsioWrapper::error_code &ec)
       std::string value = boost::trim_copy(header.substr(i+1));
       if (boost::iequals(name, "Content-Type")) {
 	contentType_ = value;
-      } else if (boost::iequals(name, "Content-Length")) { 
+      } else if (boost::iequals(name, "Content-Length")) {
 	contentLength_ = Wt::Utils::stoll(value);
       } else if (boost::iequals(name, "Date")) {
 	// Ignore, we're overriding it
@@ -481,7 +481,7 @@ void ProxyReply::handleResponseRead(const Wt::AsioWrapper::error_code &ec)
     }
   } else {
     LOG_ERROR("error reading response: " << ec.message());
-    if (!sendReload()) 
+    if (!sendReload())
       error(service_unavailable);
   }
 }
@@ -566,7 +566,7 @@ bool ProxyReply::sendReload()
     std::string origin;
     if(!horigin)
       origin = "*";
-    else 
+    else
       origin = horigin->value.str();
 
     addHeader("Access-Control-Allow-Origin", origin);
