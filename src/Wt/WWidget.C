@@ -26,7 +26,7 @@ LOGGER("WWidget");
 
 WWidget::WWidget()
   : parent_(nullptr)
-{ 
+{
   flags_.set(BIT_NEED_RERENDER);
 }
 
@@ -199,18 +199,18 @@ void WWidget::hide()
 }
 
 void WWidget::show()
-{ 
+{
   flags_.set(BIT_WAS_HIDDEN, isHidden());
   setHidden(false);
 }
 
 void WWidget::animateShow(const WAnimation& animation)
-{ 
+{
   setHidden(false, animation);
 }
 
 void WWidget::animateHide(const WAnimation& animation)
-{ 
+{
   setHidden(true, animation);
 }
 
@@ -221,7 +221,7 @@ void WWidget::disable()
 }
 
 void WWidget::enable()
-{ 
+{
   flags_.set(BIT_WAS_DISABLED, isDisabled());
   setDisabled(false);
 }
@@ -351,7 +351,7 @@ void WWidget::getDropTouch(const std::string sourceId, const std::string mimeTyp
 {
   WDropEvent e(WApplication::instance()->decodeObject(sourceId), mimeType,
 	       event);
- 
+
   dropEvent(e);
 }
 
@@ -423,7 +423,7 @@ void WWidget::positionAt(const WWidget *widget, Orientation orientation)
   if (isHidden())
     show();
 
-  std::string side = (orientation == Orientation::Horizontal 
+  std::string side = (orientation == Orientation::Horizontal
 		      ? ".Horizontal" : ".Vertical");
 
   doJavaScript(WT_CLASS ".positionAtWidget('"
@@ -462,7 +462,7 @@ bool WWidget::layoutSizeAware() const
 }
 
 void WWidget::layoutSizeChanged(int width, int height)
-{ } 
+{ }
 
 bool WWidget::isInLayout() const
 {
@@ -510,7 +510,7 @@ WCssTextRule *WWidget::addCssRule(const std::string& selector,
   return result;
 }
 
-void WWidget::addJSignal(EventSignalBase* signal) 
+void WWidget::addJSignal(EventSignalBase* signal)
 {
   jsignals_.push_back(signal);
 }
