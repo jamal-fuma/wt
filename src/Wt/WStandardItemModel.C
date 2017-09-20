@@ -84,7 +84,7 @@ WStandardItem *WStandardItemModel::itemFromIndex(const WModelIndex& index,
 	c = item.get();
 	parent->setChild(index.row(), index.column(), std::move(item));
       }
-      
+
       return c;
     }
 }
@@ -124,7 +124,7 @@ void WStandardItemModel::insertRow(int row,
 {
   invisibleRootItem_->insertRow(row, std::move(item));
 }
-  
+
 WStandardItem *WStandardItemModel::item(int row, int column) const
 {
   return invisibleRootItem_->child(row, column);
@@ -197,7 +197,7 @@ cpp17::any WStandardItemModel::headerData(int section, Orientation orientation,
     return 0;
 
   const std::vector<HeaderData>& headerData
-    = (orientation == Orientation::Horizontal) 
+    = (orientation == Orientation::Horizontal)
     ? columnHeaderData_ : rowHeaderData_;
 
   if (section >= (int)headerData.size())
@@ -282,7 +282,7 @@ bool WStandardItemModel::removeRows(int row, int count,
   if (parentItem)
     parentItem->removeRows(row, count);
 
-  return parentItem;  
+  return parentItem;
 }
 
 void WStandardItemModel::beginInsertColumns(const WModelIndex& parent,
@@ -314,7 +314,7 @@ void WStandardItemModel::beginRemoveColumns(const WModelIndex& parent,
 
 void WStandardItemModel::beginRemoveRows(const WModelIndex& parent,
 					 int first, int last)
-{ 
+{
   WAbstractItemModel::beginRemoveRows(parent, first, last);
 
   removeHeaderData(rowHeaderData_, rowHeaderFlags_, itemFromIndex(parent),
