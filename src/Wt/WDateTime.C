@@ -320,7 +320,7 @@ WDateTime WDateTime::currentDateTime()
 
 WString WDateTime::defaultFormat()
 {
-  return WString::fromUTF8("ddd MMM d HH:mm:ss yyyy"); 
+  return WString::fromUTF8("ddd MMM d HH:mm:ss yyyy");
 }
 
 WDateTime WDateTime::fromString(const WString& s)
@@ -465,7 +465,7 @@ WString WDateTime::toString(const WDate *date, const WTime *time,
   bool useAmPm = false;
   if (time)
     useAmPm = WTime::usesAmPm(format);
- 
+
   for (unsigned i = 0; i < f.length() - 3; ++i) {
     if (inQuote) {
       if (f[i] != '\'') {
@@ -505,7 +505,7 @@ WString WDateTime::toString(const WDate *date, const WTime *time,
 WDateTime WDateTime::fromTime_t(std::time_t t) {
   WDateTime dt;
   dt.setTime_t(t);
-  
+
   return dt;
 }
 
