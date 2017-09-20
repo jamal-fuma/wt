@@ -17,7 +17,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     BOOST_REQUIRE(c.red() == 255);
     BOOST_REQUIRE(c.green() == 136);
     BOOST_REQUIRE(c.blue() == 0);
-    BOOST_REQUIRE(c.alpha() == 255); 
+    BOOST_REQUIRE(c.alpha() == 255);
     BOOST_REQUIRE(c.cssText() == "#f80");
   }
 
@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     BOOST_REQUIRE(c.red() == 18);
     BOOST_REQUIRE(c.green() == 160);
     BOOST_REQUIRE(c.blue() == 207);
-    BOOST_REQUIRE(c.alpha() == 255); 
+    BOOST_REQUIRE(c.alpha() == 255);
   }
 
   {
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     BOOST_REQUIRE(c.red() == 255);
     BOOST_REQUIRE(c.green() == 0);
     BOOST_REQUIRE(c.blue() == 0);
-    BOOST_REQUIRE(c.alpha() == 255); 
+    BOOST_REQUIRE(c.alpha() == 255);
   }
 
   {
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     BOOST_REQUIRE(c.red() == 18);
     BOOST_REQUIRE(c.green() == 160);
     BOOST_REQUIRE(c.blue() == 207);
-    BOOST_REQUIRE(c.alpha() == 255); 
+    BOOST_REQUIRE(c.alpha() == 255);
   }
 
   {
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     BOOST_REQUIRE(c.red() == 127);
     BOOST_REQUIRE(c.green() == 63);
     BOOST_REQUIRE(c.blue() == 0);
-    BOOST_REQUIRE(c.alpha() == 255); 
+    BOOST_REQUIRE(c.alpha() == 255);
   }
 
   {
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     BOOST_REQUIRE(c.red() == 18);
     BOOST_REQUIRE(c.green() == 160);
     BOOST_REQUIRE(c.blue() == 207);
-    BOOST_REQUIRE(c.alpha() == 50); 
+    BOOST_REQUIRE(c.alpha() == 50);
   }
 
   {
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     BOOST_REQUIRE(c.red() == 18);
     BOOST_REQUIRE(c.green() == 160);
     BOOST_REQUIRE(c.blue() == 207);
-    BOOST_REQUIRE(c.alpha() == 50); 
+    BOOST_REQUIRE(c.alpha() == 50);
   }
 
   {
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     BOOST_REQUIRE(c.red() == 127);
     BOOST_REQUIRE(c.green() == 63);
     BOOST_REQUIRE(c.blue() == 0);
-    BOOST_REQUIRE(c.alpha() == 55); 
+    BOOST_REQUIRE(c.alpha() == 55);
   }
 
   //try to mess things up
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( color_test_constructors )
     Wt::WColor c("#f8 0");
     BOOST_REQUIRE(c.red() == 0 && c.green() == 0 && c.blue() == 0);
   }
-  
+
   {
     Wt::WColor c("#ff80");
     BOOST_REQUIRE(c.red() == 0 && c.green() == 0 && c.blue() == 0);
