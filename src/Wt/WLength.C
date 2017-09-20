@@ -52,10 +52,10 @@ void WLength::parseCssString(const char *s)
     auto_ = true;
     return;
   }
-  
+
   std::string unit(end);
   boost::trim(unit);
-  
+
   if (unit == "em")
     unit_ = LengthUnit::FontEm;
   else if (unit == "ex")
@@ -85,7 +85,7 @@ void WLength::parseCssString(const char *s)
 WLength::WLength(double value, LengthUnit unit)
   : auto_(false),
     value_(value)
-{ 
+{
   setUnit(unit);
 }
 
