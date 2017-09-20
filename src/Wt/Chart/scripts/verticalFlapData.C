@@ -72,7 +72,7 @@ void writeAll() {
       for (int k=0; k<ptsPerPlane; k++) {
 	if (i == faces-1 && j == planes -1 && k == ptsPerPlane -1)
 	  break;
-	myfile << inPlaneNormals[i][j].x << ", " << inPlaneNormals[i][j].y 
+	myfile << inPlaneNormals[i][j].x << ", " << inPlaneNormals[i][j].y
 	       << ", " << inPlaneNormals[i][j].z << ", ";
       }
     }
@@ -87,7 +87,7 @@ void writeAll() {
       for (int k=0; k<ptsPerPlane; k++) {
 	if (i == faces-1 && j == planes -1 && k == ptsPerPlane -1)
 	  break;
-	myfile << outOfPlaneNormals[i][j].x << ", " <<outOfPlaneNormals[i][j].y 
+	myfile << outOfPlaneNormals[i][j].x << ", " <<outOfPlaneNormals[i][j].y
 	       << ", " << outOfPlaneNormals[i][j].z << ", ";
       }
     }
@@ -148,7 +148,7 @@ int main() {
   put(backVertexPosV[0][2], 0.0, -extension, 0.0);
   put(backVertexPosV[0][3], 0.0, 1.0 + extension, 0.0);
   axesTexture.addCoords(0);
-  
+
   put(backVertexPosV[1][0], 0.0, 1.0 + extension, -size);
   put(backVertexPosV[1][1], 0.0, -extension, -size);
   put(backVertexPosV[1][2], 0.0, -extension, 0.0);
