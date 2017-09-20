@@ -34,7 +34,7 @@ namespace {
 
 SessionProcessManager::SessionProcessManager(asio::io_service &ioService,
 					     const Wt::Configuration &configuration)
-  : 
+  :
 #ifdef SIGNAL_SET
     signals_(ioService, SIGCHLD),
 #else // !SIGNAL_SET
@@ -107,7 +107,7 @@ void SessionProcessManager
 }
 
 void SessionProcessManager
-::addSessionProcess(std::string sessionId, 
+::addSessionProcess(std::string sessionId,
 		    const std::shared_ptr<SessionProcess>& process)
 {
 #ifdef WT_THREADED
