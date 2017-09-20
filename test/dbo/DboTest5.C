@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE( dbo5_test1 )
     std::unique_ptr<Shard> shard{new Shard()};
     shard->name = "shard1";
     dbo::ptr<Shard> s = session.add(std::move(shard));
-    
+
     std::unique_ptr<MixedId> mixedId{new MixedId()};
     mixedId->shard = s;
     mixedId->value = "A lot";
