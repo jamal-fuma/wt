@@ -16,7 +16,7 @@
 #include <sstream>
 
 namespace {
-  std::string toString(const Wt::WLength& length) 
+  std::string toString(const Wt::WLength& length)
   {
     if (length.isAuto())
       return "";
@@ -193,7 +193,7 @@ void WFlashObject::getDomChanges(std::vector<DomElement *>& result,
   WWebWidget::getDomChanges(result, app);
   if (sizeChanged_) {
     std::stringstream ss;
-    ss << 
+    ss <<
       ""  "var v=" << jsFlashRef() << ";"
       ""  "if(v){"
       ""    "v.setAttribute('width', '" << toString(width()) << "');"
