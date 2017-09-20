@@ -156,13 +156,13 @@ PaintedSlider::~PaintedSlider()
 
 double PaintedSlider::w() const
 {
-  return width().toPixels() 
+  return width().toPixels()
     + (slider_->orientation() == Orientation::Horizontal ? 10 : 0);
 }
 
 double PaintedSlider::h() const
 {
-  return height().toPixels() 
+  return height().toPixels()
     + (slider_->orientation() == Orientation::Vertical ? 10 : 0);
 }
 
@@ -222,7 +222,7 @@ void PaintedSlider::updateState()
 	   <<     "if (rtl && horizontal)";
   computeD <<       "pos = " << Utils::round_js_str(l, 3, buf) << " - pos;";
   computeD <<     "var d = pos - down;";
-  
+
   WStringStream mouseMovedJS;
   mouseMovedJS << "var down = obj.getAttribute('down');"
 	       << "var WT = " WT_CLASS ";"
@@ -240,7 +240,7 @@ void PaintedSlider::updateState()
 		 << ")";
   } else
     mouseMovedJS << "intd + " << (slider_->handleWidth() / 2);
-  mouseMovedJS <<       " + 'px';" 
+  mouseMovedJS <<       " + 'px';"
 	       <<     "objh.style." << dir << " = intd + 'px';"
 	       <<     "var vs = ";
   if (o == Orientation::Horizontal)
@@ -268,15 +268,15 @@ void PaintedSlider::updateState()
 	    << "}";
 
   bool enabled = !slider_->isDisabled();
-  
-  mouseDownJS_.setJavaScript(std::string("function(obj, event) {") 
-			     + (enabled ? mouseDownJS.str() : "") 
+
+  mouseDownJS_.setJavaScript(std::string("function(obj, event) {")
+			     + (enabled ? mouseDownJS.str() : "")
 			     + "}");
-  mouseMovedJS_.setJavaScript(std::string("function(obj, event) {") 
-			      + (enabled ? mouseMovedJS.str() : "") 
+  mouseMovedJS_.setJavaScript(std::string("function(obj, event) {")
+			      + (enabled ? mouseMovedJS.str() : "")
 			      + "}");
-  mouseUpJS_.setJavaScript(std::string("function(obj, event) {") 
-			   + (enabled ? mouseUpJS.str() : "") 
+  mouseUpJS_.setJavaScript(std::string("function(obj, event) {")
+			   + (enabled ? mouseUpJS.str() : "")
 			   + "}");
   handleClickedJS_.setJavaScript(std::string("function(obj, event) {")
 			     + WT_CLASS + ".cancelEvent(event,"
@@ -318,12 +318,12 @@ void PaintedSlider::sliderResized(const WLength& width, const WLength& height)
     if (!h.isAuto())
       h = WLength(h.toPixels() - 10);
 
-    resize(width, h);    
+    resize(width, h);
   }
 
   updateState();
 }
- 
+
 void PaintedSlider::onSliderClick(const WMouseEvent& event)
 {
   int x = event.widget().x;
@@ -349,14 +349,14 @@ void PaintedSlider::onSliderReleased(int u)
 
   double v = std::max(slider_->minimum(),
 		      std::min(slider_->maximum(),
-			       slider_->minimum() 
+			       slider_->minimum()
 			       + (int)((double)u / pixelsPerUnit + 0.5)));
 
   // TODO changed() ?
   slider_->sliderMoved().emit(static_cast<int>(v));
 
   slider_->setValue(static_cast<int>(v));
-  slider_->valueChanged().emit(slider_->value());  
+  slider_->valueChanged().emit(slider_->value());
 
   updateSliderPosition();
 }
@@ -379,7 +379,7 @@ void PaintedSlider::updateSliderPosition()
 
 WSlider::WSlider()
   : WSlider(Orientation::Horizontal)
-{ 
+{
   resize(150, 50);
 }
 
@@ -395,7 +395,7 @@ WSlider::WSlider(Orientation orientation)
     maximum_(99),
     value_(0),
     sliderMoved_(this, "moved", true)
-{ 
+{
   if (orientation == Orientation::Horizontal)
     resize(150, 50);
   else
@@ -422,13 +422,13 @@ bool WSlider::nativeControl() const
 {
   if (preferNative_) {
     const WEnvironment& env = WApplication::instance()->environment();
-    if ((env.agentIsChrome() && 
-	 static_cast<unsigned int>(env.agent()) >= 
+    if ((env.agentIsChrome() &&
+	 static_cast<unsigned int>(env.agent()) >=
 	 static_cast<unsigned int>(UserAgent::Chrome5))
-	|| (env.agentIsSafari() && 
-	    static_cast<unsigned int>(env.agent()) >= 
+	|| (env.agentIsSafari() &&
+	    static_cast<unsigned int>(env.agent()) >=
 	    static_cast<unsigned int>(UserAgent::Safari4))
-	|| (env.agentIsOpera() && 
+	|| (env.agentIsOpera() &&
 	    static_cast<unsigned int>(env.agent()) >=
 	    static_cast<unsigned int>(UserAgent::Opera10)))
       return true;
@@ -629,7 +629,7 @@ void WSlider::setValueText(const WT_USTRING& value)
 {
   try {
     value_ = Utils::stoi(value.toUTF8());
-  } catch (std::exception& e) { 
+  } catch (std::exception& e) {
   }
 }
 
