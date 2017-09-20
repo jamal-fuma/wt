@@ -153,7 +153,7 @@ void WVirtualImage::generateGridItems(::int64_t newX, ::int64_t newY)
    * The coordinates of the two extreme corners of the new rendered
    * neighbourhood
    */
-  Rect newNb = neighbourhood(newX, newY, viewPortWidth_, viewPortHeight_);  
+  Rect newNb = neighbourhood(newX, newY, viewPortWidth_, viewPortHeight_);
 
   ::int64_t i1 = newNb.x1 / gridImageSize_;
   ::int64_t j1 = newNb.y1 / gridImageSize_;
@@ -223,7 +223,7 @@ void WVirtualImage::decodeKey(::int64_t key, Coordinate& coordinate)
 
 void WVirtualImage::cleanGrid()
 {
-  Rect cleanNb = neighbourhood(currentX_, currentY_, 
+  Rect cleanNb = neighbourhood(currentX_, currentY_,
 			       viewPortWidth_ * 3, viewPortHeight_ * 3);
 
   ::int64_t i1 = cleanNb.x1 / gridImageSize_;
@@ -235,7 +235,7 @@ void WVirtualImage::cleanGrid()
     Coordinate coordinate;
     decodeKey(it->first, coordinate);
 
-    if (coordinate.i < i1 || coordinate.i > i2 || 
+    if (coordinate.i < i1 || coordinate.i > i2 ||
 	coordinate.j < j1 || coordinate.j > j2) {
       it->second->removeFromParent();
       Utils::eraseAndNext(grid_, it);
@@ -257,7 +257,7 @@ WVirtualImage::Rect WVirtualImage::neighbourhood(::int64_t x, ::int64_t y,
   ::int64_t x2 = x + viewPortWidth_ + marginX;
   if (imageWidth_ != Infinite)
     x2 = std::min(imageWidth_, x2);
-  
+
   ::int64_t y2 = std::min(imageHeight_, y + viewPortHeight_ + marginY);
 
   return Rect(x1, y1, x2, y2);
