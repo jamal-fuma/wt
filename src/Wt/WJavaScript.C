@@ -14,7 +14,7 @@ void addSignalToWidget(WObject* object, EventSignalBase* signal) {
   WWidget* w = dynamic_cast<WWidget*>(object);
   if(w)
     w->addJSignal(signal);
-  
+
 }
 
 namespace Impl {
