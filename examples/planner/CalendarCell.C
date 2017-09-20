@@ -35,7 +35,7 @@ void CalendarCell::update(const dbo::ptr<UserAccount>& user, const WDate& date)
 
   dbo::Session& session = PlannerApplication::plannerApplication()->session;
   dbo::Transaction transaction(session);
-  
+
   WString day;
   day += std::to_string(date.day());
   if (date.day() == 1)
@@ -65,8 +65,8 @@ void CalendarCell::update(const dbo::ptr<UserAccount>& user, const WDate& date)
 
     WString format = EntryDialog::timeFormat;
     addWidget(cpp14::make_unique<WText>((*i)->start.toString(format) +
-			"-" + 
-			(*i)->stop.toString(format) + 
+			"-" +
+			(*i)->stop.toString(format) +
 			": " + (*i)->summary));
   }
 
@@ -87,7 +87,7 @@ void CalendarCell::showAllEntriesDialog()
   WString title =
     tr("calendar.cell.all-entries.title")
     .arg(date_.toString("ddd, d MMM yyyy"));
-  
+
   dialog_ = cpp14::make_unique<AllEntriesDialog>(title, this);
   dialog_->show();
 }
