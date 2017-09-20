@@ -139,7 +139,7 @@ void CommentView::renderView()
 
   bool mayDelete
     = (session_.user() && session_.user() == comment_->author)
-    || session_.user() == comment_->post->author; 
+    || session_.user() == comment_->post->author;
 
   if (mayDelete) {
     auto deleteText
