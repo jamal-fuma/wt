@@ -83,7 +83,7 @@ public:
 
     paramValues_ = nullptr;
     paramTypes_ = paramLengths_ = paramFormats_ = nullptr;
- 
+
     snprintf(name_, 64, "SQL%p%08X", (void*)this, rand());
 
     DEBUG(std::cerr << this << " for: " << sql_ << std::endl);
@@ -316,7 +316,7 @@ public:
 
     PQclear(result_);
     result_ = PQgetResult(conn_.connection());
-    
+
     row_ = 0;
     if (PQresultStatus(result_) == PGRES_COMMAND_OK) {
       std::string s = PQcmdTuples(result_);
@@ -366,7 +366,7 @@ public:
   {
     return affectedRows_;
   }
-  
+
   virtual bool nextRow() override
   {
     switch (state_) {
@@ -400,7 +400,7 @@ public:
 
     *value = PQgetvalue(result_, row_, column);
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result string " << column << " " << *value << std::endl);
 
     return true;
@@ -433,7 +433,7 @@ public:
     else
       *value = std::stoi(v);
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result int " << column << " " << *value << std::endl);
 
     return true;
@@ -446,12 +446,12 @@ public:
 
     *value = std::stoll(PQgetvalue(result_, row_, column));
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result long long " << column << " " << *value << std::endl);
 
     return true;
   }
-  
+
   virtual bool getResult(int column, float *value) override
   {
     if (PQgetisnull(result_, row_, column))
@@ -459,7 +459,7 @@ public:
 
     *value = std::stof(PQgetvalue(result_, row_, column));
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result float " << column << " " << *value << std::endl);
 
     return true;
@@ -472,7 +472,7 @@ public:
 
     *value = std::stod(PQgetvalue(result_, row_, column));
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result double " << column << " " << *value << std::endl);
 
     return true;
@@ -547,7 +547,7 @@ public:
     std::copy(v, v + vlength, value->begin());
     PQfreemem(v);
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result blob " << column << " (blob, size = " << vlength << ")"
 	  << std::endl);
 
@@ -576,7 +576,7 @@ private:
   int paramCount_;
   char **paramValues_;
   int *paramTypes_, *paramLengths_, *paramFormats_;
- 
+
   int lastId_, row_, affectedRows_;
 
   void handleErr(int err, PGresult *result)
@@ -695,7 +695,7 @@ void Postgres::disconnect()
     ps->rebuild();
   }
 }
-    
+
 void Postgres::setTimeout(std::chrono::microseconds timeout)
 {
   timeout_ = timeout;
@@ -726,7 +726,7 @@ bool Postgres::connect(const std::string& db)
 bool Postgres::reconnect()
 {
   std::cerr << this << " reconnecting..." << std::endl;
-  
+
   if (conn_) {
     if (PQstatus(conn_) == CONNECTION_OK) {
       PQfinish(conn_);
@@ -773,7 +773,7 @@ void Postgres::exec(const std::string& sql, bool showQuery)
 
   if (showQuery && showQueries())
     std::cerr << sql << std::endl;
-  
+
   int err;
 
   err = PQsendQuery(conn_, sql.c_str());
@@ -834,20 +834,20 @@ std::string Postgres::autoincrementType() const
 {
   return "bigserial";
 }
-  
+
 std::string Postgres::autoincrementSql() const
 {
   return std::string();
 }
 
-std::vector<std::string> 
+std::vector<std::string>
 Postgres::autoincrementCreateSequenceSql(const std::string &table,
 					 const std::string &id) const
 {
   return std::vector<std::string>();
 }
 
-std::vector<std::string> 
+std::vector<std::string>
 Postgres::autoincrementDropSequenceSql(const std::string &table,
 				       const std::string &id) const
 {
@@ -858,7 +858,7 @@ std::string Postgres::autoincrementInsertSuffix(const std::string& id) const
 {
   return " returning \"" + id + "\"";
 }
-  
+
 const char *Postgres::dateTimeType(SqlDateTimeType type) const
 {
   switch (type) {
