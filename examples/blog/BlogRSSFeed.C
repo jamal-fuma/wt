@@ -86,7 +86,7 @@ void BlogRSSFeed::handleRequest(const Wt::Http::Request &request,
       description +=
 	"<p><a href=\"" + permaLink + "\">Read the rest...</a></p>";
 
-    response.out() << 
+    response.out() <<
       "      <description><![CDATA[" << description << "]]></description>\n"
       "    </item>\n";
   }
