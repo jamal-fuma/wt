@@ -147,7 +147,7 @@ WPieChart::createLegendItemWidget(int index, WFlags<LabelOption> options)
 {
   std::unique_ptr<WContainerWidget> legendItem(new WContainerWidget());
   legendItem->setPadding(4);
-  
+
   auto colorText = legendItem->addWidget(std::unique_ptr<WText>());
   colorText->setPadding(10, Side::Left | Side::Right);
   colorText->decorationStyle().setBackgroundColor(brush(index).color());
@@ -366,7 +366,7 @@ void WPieChart::drawLabel(WPainter* painter, const WRectF& rect,
   painter->drawText(rect, alignmentFlags, text);
 }
 
-WString WPieChart::labelText(int index, double v, double total, 
+WString WPieChart::labelText(int index, double v, double total,
 			     WFlags<LabelOption> options) const
 {
   WString text;
@@ -467,7 +467,7 @@ void WPieChart::drawPie(WPainter& painter, double cx, double cy,
 	  index90 = i;
 
 	if (endAngle < 0)
-	  endAngle += 360;	
+	  endAngle += 360;
 
 	currentAngle = endAngle;
       }
