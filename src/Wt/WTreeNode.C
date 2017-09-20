@@ -50,7 +50,7 @@ WTreeNode::WTreeNode(const WString& labelText,
   /*
    * Children
    */
-  WContainerWidget *children 
+  WContainerWidget *children
     = layout_->bindWidget("children", cpp14::make_unique<WContainerWidget>());
   children->setList(true);
   children->hide();
@@ -58,7 +58,7 @@ WTreeNode::WTreeNode(const WString& labelText,
   /*
    * Expand icon
    */
-  if (WApplication::instance()->layoutDirection() == 
+  if (WApplication::instance()->layoutDirection() ==
       LayoutDirection::RightToLeft)
     expandIcon_ = layout_->bindWidget
       ("expand",
@@ -218,7 +218,7 @@ void WTreeNode::setChildCountPolicy(ChildCountPolicy policy)
 
   if (childCountPolicy_ == Enabled) {
     WTreeNode *parent = parentNode();
- 
+
     if (parent && parent->isExpanded())
       if (doPopulate())
 	update();
@@ -314,7 +314,7 @@ void WTreeNode::descendantAdded(WTreeNode *node)
   WTreeNode *parent = parentNode();
 
   if (parent)
-    parent->descendantAdded(node);  
+    parent->descendantAdded(node);
 }
 
 void WTreeNode::descendantRemoved(WTreeNode *node)
@@ -494,7 +494,7 @@ void WTreeNode::undoDoExpand()
    */
   auto children = childNodes();
   for (auto& c : children)
-    c->undoDoCollapse();  
+    c->undoDoCollapse();
 }
 
 void WTreeNode::setLabelIcon(std::unique_ptr<WIconPair> labelIcon)
@@ -558,7 +558,7 @@ void WTreeNode::update()
   if (!parentNode() || parentNode()->isExpanded()) {
     if (childCountPolicy_ == Enabled && !populated_)
       doPopulate();
-    
+
     expandIcon_->setHidden(!expandable());
     noExpandIcon_->setHidden(expandable());
   }
