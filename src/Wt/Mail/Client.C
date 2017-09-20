@@ -24,7 +24,7 @@ namespace {
 }
 
 namespace asio = AsioWrapper::asio;
-		
+
   namespace Mail {
 
 using asio::ip::tcp;
@@ -183,7 +183,7 @@ private:
 Client::Client(const std::string& selfHost)
   : impl_(nullptr),
     selfHost_(selfHost)
-{ 
+{
   if (selfHost_.empty()) {
     selfHost_ = "localhost";
     WApplication::readConfigurationProperty("smtp-self-host", selfHost_);
@@ -205,7 +205,7 @@ bool Client::connect()
 {
   std::string smtpHost = "localhost";
   std::string smtpPortStr = "25";
-  
+
   WApplication::readConfigurationProperty("smtp-host", smtpHost);
   WApplication::readConfigurationProperty("smtp-port", smtpPortStr);
 
