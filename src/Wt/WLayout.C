@@ -137,7 +137,7 @@ void WLayout::itemAdded(WLayoutItem *item)
 }
 
 void WLayout::itemRemoved(WLayoutItem *item)
-{  
+{
   if (impl_)
     impl_->itemRemoved(item);
 
