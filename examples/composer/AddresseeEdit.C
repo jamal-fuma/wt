@@ -45,7 +45,7 @@ bool AddresseeEdit::parse(std::vector<Contact>& contacts) const
 
   std::wstring t = text();
   CsvTokenizer tok(t);
-  
+
  for (CsvTokenizer::iterator i = tok.begin(); i != tok.end(); ++i) {
     std::wstring addressee = *i;
 
