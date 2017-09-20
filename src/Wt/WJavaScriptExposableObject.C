@@ -19,7 +19,7 @@ WJavaScriptExposableObject::WJavaScriptExposableObject()
 
 WJavaScriptExposableObject::WJavaScriptExposableObject(const WJavaScriptExposableObject &other)
 #ifndef WT_TARGET_JAVA
-  : clientBinding_(other.clientBinding_ ? 
+  : clientBinding_(other.clientBinding_ ?
 		   new JSInfo(*other.clientBinding_) : nullptr)
 #else
   : clientBinding_(other.clientBinding_)
