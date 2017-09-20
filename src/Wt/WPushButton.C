@@ -18,18 +18,18 @@ const char *WPushButton::CHECKED_SIGNAL = "M_checked";
 const char *WPushButton::UNCHECKED_SIGNAL = "M_unchecked";
 
 WPushButton::WPushButton()
-{ 
+{
   text_.format = TextFormat::Plain;
 }
 
 WPushButton::WPushButton(const WString& text)
-{ 
+{
   text_.format = TextFormat::Plain;
   text_.text = text;
 }
 
 WPushButton::WPushButton(const WString& text, TextFormat format)
-{ 
+{
   text_.format = TextFormat::Plain;
   text_.text = text;
   setTextFormat(format);
@@ -209,7 +209,7 @@ void WPushButton::updateDom(DomElement& element, bool all)
   if (updateInnerHtml || flags_.test(BIT_ICON_CHANGED)
       || (all && !icon_.isNull())) {
     DomElement *image = DomElement::createNew(DomElementType::IMG);
-    image->setProperty(Property::Src, 
+    image->setProperty(Property::Src,
 		       icon_.resolveUrl(WApplication::instance()));
     image->setId("im" + formName());
     element.insertChildAt(image, 0);
