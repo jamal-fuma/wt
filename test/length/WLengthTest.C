@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE( length_test_constructors )
   BOOST_REQUIRE(s.value() == 10.0);
   BOOST_REQUIRE(s.unit() == Wt::LengthUnit::Pixel);
   }
-  
+
   {
   Wt::WLength s("15.2em");
   BOOST_REQUIRE(!s.isAuto());
@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE( length_test_constructors )
   BOOST_REQUIRE(s.value() == 15.0);
   BOOST_REQUIRE(s.unit() == Wt::LengthUnit::Point);
   }
-  
+
   {
   Wt::WLength s("15.0pc");
   BOOST_REQUIRE(!s.isAuto());
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE( length_test_constructors )
   BOOST_REQUIRE(s.unit() == Wt::LengthUnit::Percentage);
   }
 
-  //add some random empty chars 
+  //add some random empty chars
   {
   Wt::WLength s("  15.0   px   ");
   BOOST_REQUIRE(!s.isAuto());
