@@ -53,7 +53,7 @@ LOGGER("WMenu");
 
 WMenu::WMenu()
   : contentsStack_(nullptr)
-{ 
+{
   init();
 }
 
