@@ -244,7 +244,7 @@ void WAbstractDataSeries3D::setChart(WCartesian3DChart *chart)
 
   if (chart_ && model_)
     clearConnections(connections_);
-  
+
   chart_ = chart;
 
   if (chart_ && model_) {
