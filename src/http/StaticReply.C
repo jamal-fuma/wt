@@ -198,7 +198,7 @@ void StaticReply::reset(const Wt::EntryPoint *ep)
 
   if (!modifiedDate.empty())
     addHeader("Last-Modified", modifiedDate);
- 
+
   if (gzipReply)
     addHeader("Content-Encoding", "gzip");
 
