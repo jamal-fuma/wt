@@ -49,7 +49,7 @@ namespace {
     Wt::WApplication *app = Wt::WApplication::instance();
     double dpiScale = doScale ? app->environment().dpiScale() : 1.0;
     return static_cast<int>(dpiScale * ( (Z * a) - Z/2 + 0.5 ));
-  }  
+  }
 
   bool fequal(double d1, double d2) {
     return std::fabs(d1 - d2) < 1E-5;
@@ -95,7 +95,7 @@ WFlags<PaintDeviceFeatureFlag> WVmlImage::features() const
 }
 
 void WVmlImage::init()
-{ 
+{
   currentBrush_ = painter()->brush();
   currentPen_ = painter()->pen();
   currentShadow_ = painter()->shadow();
@@ -112,8 +112,8 @@ void WVmlImage::done()
 
 void WVmlImage::setChanged(WFlags<PainterChangeFlag> flags)
 {
-  if (!(flags & (PainterChangeFlag::Pen | 
-	       PainterChangeFlag::Brush | 
+  if (!(flags & (PainterChangeFlag::Pen |
+	       PainterChangeFlag::Brush |
 	       PainterChangeFlag::Shadow)).empty())
     penBrushShadowChanged_ = true;
 
@@ -322,7 +322,7 @@ void WVmlImage::drawPath(const WPainterPath& path)
 	const double cpy = s.y();
 	const double xend = segments[i+1].x();
 	const double yend = segments[i+1].y();
-      
+
 	const double cp1x = current.x() + 2.0/3.0*(cpx - current.x());
 	const double cp1y = current.y() + 2.0/3.0*(cpy - current.y());
 	const double cp2x = cp1x + (xend - current.x())/3.0;
@@ -363,7 +363,7 @@ std::string WVmlImage::createShadowFilter() const
 
   double r = std::sqrt(2 * currentShadow_.blur());
   filter << "left: " << myzround(currentShadow_.offsetX() - r/2 - 1) << "px;";
-  filter << "top: " << myzround(currentShadow_.offsetY() - r/2 - 1) 
+  filter << "top: " << myzround(currentShadow_.offsetY() - r/2 - 1)
 	 << "px;z-index:-10;";
   filter << "filter:progid:DXImageTransform.Microsoft.Blur(makeShadow=1,";
   filter << "pixelradius="
@@ -418,7 +418,7 @@ void WVmlImage::drawLine(double x1, double y1, double x2, double y2)
   painter()->setBrush(oldBrush);
 }
 
-void WVmlImage::drawText(const WRectF& rect, 
+void WVmlImage::drawText(const WRectF& rect,
 			 WFlags<AlignmentFlag> flags, TextFlag textFlag,
 			 const WString& text, const WPointF *clipPoint)
 {
@@ -456,13 +456,13 @@ void WVmlImage::drawText(const WRectF& rect,
   if (verticalAlign != AlignmentFlag::Top) {
     t = DomElement::createNew(DomElement::DIV);
 
-    if (verticalAlign == AlignmentFlag::Middle) {      
+    if (verticalAlign == AlignmentFlag::Middle) {
       i = DomElement::createNew(DomElement::DIV);
       i->setProperty(Property::StylePosition, "absolute");
       i->setProperty(Property::StyleTop, "50%");
 
       t->setProperty(Property::StylePosition, "relative");
-      t->setProperty(Property::StyleTop, "-50%");      
+      t->setProperty(Property::StyleTop, "-50%");
     } else if (verticalAlign == AlignmentFlag::Bottom) {
       t->setProperty(Property::StylePosition, "absolute");
       t->setProperty(Property::StyleWidth, "100%");
@@ -629,7 +629,7 @@ std::string WVmlImage::skewElement(const WTransform& t) const
 
     /*
      * Note adding negative t.m11() and t.m22() seems to correct a
-     * slight discrepancy in the paint example -- not sure if it is 
+     * slight discrepancy in the paint example -- not sure if it is
      * a good general rule though !
      * The vertical correction is another weird thing ?
      */
@@ -795,13 +795,13 @@ void WVmlImage::startClip(const WRectF& rect)
 {
   rendered_ << "<div style=\"position:absolute;left:"
 	    << rect.left() << "px;top:" << rect.top() << "px;width:"
-	    << rect.width() << "px;height:" << rect.height() 
+	    << rect.width() << "px;height:" << rect.height()
 	    << "px;overflow:hidden;\""
 	    << " onselectstart=\"return false;\">"
 	    << "<v:group style=\"position:absolute;left:0px;top:0px;width:"
-	    << rect.width() << "px;height:" 
+	    << rect.width() << "px;height:"
 	    << rect.height() << "px\" coordorigin=\""
-	    << 0.5 * rect.left() * Z 
+	    << 0.5 * rect.left() * Z
 	    << "," << 0.5 * rect.top() * Z << "\" coordsize=\""
 	    << rect.width() * Z << "," << rect.height() * Z << "\">";
 
