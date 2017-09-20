@@ -28,7 +28,7 @@ WAbstractToggleButton::WAbstractToggleButton()
 
 WAbstractToggleButton::WAbstractToggleButton(const WString& text)
   : state_(CheckState::Unchecked)
-{ 
+{
   flags_.set(BIT_WORD_WRAP);
   text_.format = TextFormat::Plain;
   text_.text = text;
@@ -142,7 +142,7 @@ void WAbstractToggleButton::updateDom(DomElement& element, bool all)
 
       span = DomElement::createNew(DomElementType::SPAN);
       span->setName("t" + id());
- 
+
       if (element.type() != DomElementType::LABEL) {
 	label = DomElement::createNew(DomElementType::LABEL);
 	label->setName("l" + id());
@@ -188,9 +188,9 @@ void WAbstractToggleButton::updateDom(DomElement& element, bool all)
    * kept on the interior element. And also tabindex
    */
   if (&element != input) {
-    if (element.properties().find(Property::Class) != 
+    if (element.properties().find(Property::Class) !=
 	element.properties().end())
-      input->addPropertyWord(Property::Class, 
+      input->addPropertyWord(Property::Class,
 			     element.getProperty(Property::Class));
     element.setProperties(input->properties());
     input->clearProperties();
@@ -300,7 +300,7 @@ void WAbstractToggleButton::updateDom(DomElement& element, bool all)
     if (all || flags_.test(BIT_TEXT_CHANGED)) {
       span->setProperty(Property::InnerHTML, text_.formattedText());
       if (all || flags_.test(BIT_WORD_WRAP_CHANGED)) {
-	span->setProperty(Property::StyleWhiteSpace, 
+	span->setProperty(Property::StyleWhiteSpace,
 			  flags_.test(BIT_WORD_WRAP) ? "normal" : "nowrap");
 	flags_.reset(BIT_WORD_WRAP_CHANGED);
       }
@@ -352,7 +352,7 @@ void WAbstractToggleButton::setFormData(const FormData& formData)
     if (formData.values[0] == "i")
       state_ = CheckState::PartiallyChecked;
     else
-      state_ = formData.values[0] != "0" ? 
+      state_ = formData.values[0] != "0" ?
 	CheckState::Checked : CheckState::Unchecked;
   else
     if (isEnabled() && isVisible())
@@ -371,7 +371,7 @@ bool WAbstractToggleButton::supportsIndeterminate(const WEnvironment& env)
     && (env.agentIsIE()
 	|| env.agentIsSafari()
 	|| env.agentIsChrome()
-	|| (env.agentIsGecko() && 
+	|| (env.agentIsGecko() &&
 	    (static_cast<unsigned int>(env.agent()) >=
 	     static_cast<unsigned int>(UserAgent::Firefox3_6))));
 }
