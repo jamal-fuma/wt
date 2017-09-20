@@ -97,7 +97,7 @@ protected:
         std::string s = std::to_string(request.tooLarge());
 
         // postMessage does not work for IE6,7
-        if (agent == UserAgent::IE6 || 
+        if (agent == UserAgent::IE6 ||
 	    agent == UserAgent::IE7)
           o << fileUpload_->fileTooLarge().createCall({s});
         else
