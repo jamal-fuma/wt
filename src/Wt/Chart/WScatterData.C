@@ -102,7 +102,7 @@ void WScatterData::updateGL()
 			 WGLWidget::STATIC_DRAW,
 			 true);
     vertexBufferSize_ = simplePtsArray.size();
-    
+
     // sizes of simple points
     vertexSizeBuffer_ = chart_->createBuffer();
     chart_->bindBuffer(WGLWidget::ARRAY_BUFFER, vertexSizeBuffer_);
@@ -111,7 +111,7 @@ void WScatterData::updateGL()
 			 WGLWidget::STATIC_DRAW,
 			 true);
   }
-  
+
   if (coloredPtsArray.size() != 0) {
     // pos of colored points
     vertexPosBuffer2_ = chart_->createBuffer();
@@ -121,7 +121,7 @@ void WScatterData::updateGL()
 			 WGLWidget::STATIC_DRAW,
 			 true);
     vertexBuffer2Size_ = coloredPtsArray.size();
-    
+
     // size of colored points
     vertexSizeBuffer2_ = chart_->createBuffer();
     chart_->bindBuffer(WGLWidget::ARRAY_BUFFER, vertexSizeBuffer2_);
@@ -129,7 +129,7 @@ void WScatterData::updateGL()
 			 coloredPtsSize,
 			 WGLWidget::STATIC_DRAW,
 			 true);
-    
+
     // color of colored points
     vertexColorBuffer2_ = chart_->createBuffer();
     chart_->bindBuffer(WGLWidget::ARRAY_BUFFER, vertexColorBuffer2_);
@@ -180,9 +180,9 @@ void WScatterData::updateGL()
   chart_->useProgram(shaderProgram_);
   float text_min, text_max;
   if (colormap_ != nullptr) {
-    text_min = (float)chart_->toPlotCubeCoords(colormap_->minimum(), 
+    text_min = (float)chart_->toPlotCubeCoords(colormap_->minimum(),
 					       Axis::Z3D);
-    text_max = (float)chart_->toPlotCubeCoords(colormap_->maximum(), 
+    text_max = (float)chart_->toPlotCubeCoords(colormap_->maximum(),
 					       Axis::Z3D);
     chart_->uniform1f(offsetUniform_, text_min);
     chart_->uniform1f(scaleFactorUniform_, 1.0/(text_max - text_min));
@@ -317,11 +317,11 @@ void WScatterData::dataFromModel(FloatBuffer& simplePtsArray,
   double yMax = chart_->axis(Axis::Y3D).maximum();
   double zMin = chart_->axis(Axis::Z3D).minimum();
   double zMax = chart_->axis(Axis::Z3D).maximum();
-  
+
   for (int i=0; i < N; i++) {
     if (colorColumn_ == -1 && model_->data(i,ZSeriesColumn_, ItemDataRole::MarkerBrushColor).empty()) {
       simplePtsArray.push_back
-	((float)((Wt::asNumber(model_->data(i,XSeriesColumn_)) - xMin) / 
+	((float)((Wt::asNumber(model_->data(i,XSeriesColumn_)) - xMin) /
 		 (xMax - xMin)));
       simplePtsArray.push_back
 	((float)((Wt::asNumber(model_->data(i,YSeriesColumn_)) - yMin) /
@@ -363,17 +363,17 @@ void WScatterData::dataFromModel(FloatBuffer& simplePtsArray,
       coloredPtsColor.push_back((float)color.alpha());
     }
 
-    FloatBuffer& sizeArrayAlias = 
-      (colorColumn_ == -1 && 
+    FloatBuffer& sizeArrayAlias =
+      (colorColumn_ == -1 &&
        model_->data(i, ZSeriesColumn_, ItemDataRole::MarkerBrushColor).empty())
       ? simplePtsSize : coloredPtsSize;
     if (sizeColumn_ == -1 &&
-	model_->data(i, ZSeriesColumn_, 
+	model_->data(i, ZSeriesColumn_,
 		     ItemDataRole::MarkerScaleFactor).empty()) {
       sizeArrayAlias.push_back((float)pointSize_);
     } else if (sizeColumn_ == -1) {
       sizeArrayAlias.push_back
-	((float)(Wt::asNumber(model_->data(i, ZSeriesColumn_, 
+	((float)(Wt::asNumber(model_->data(i, ZSeriesColumn_,
 					   ItemDataRole::MarkerScaleFactor))));
     } else {
       sizeArrayAlias.push_back
@@ -542,7 +542,7 @@ void WScatterData::paintGL() const
 			WGLWidget::TEXTURE_WRAP_S,WGLWidget::CLAMP_TO_EDGE);
   chart_->texParameteri(WGLWidget::TEXTURE_2D,
 			WGLWidget::TEXTURE_WRAP_T,WGLWidget::CLAMP_TO_EDGE);
-  
+
   chart_->disable(WGLWidget::CULL_FACE);
   chart_->enable(WGLWidget::DEPTH_TEST);
 
@@ -646,15 +646,15 @@ void WScatterData::paintGL() const
 				0,
 				0);
     chart_->enableVertexAttribArray(posAttrLines_);
-    chart_->lineWidth(droplinesPen_.width().value() == 0 ? 
-		      1.0 : 
+    chart_->lineWidth(droplinesPen_.width().value() == 0 ?
+		      1.0 :
 		      droplinesPen_.width().value());
     chart_->drawArrays(WGLWidget::LINES,
 		       0,
 		       lineVertBufferSize_/3);
     chart_->disableVertexAttribArray(posAttrLines_);
   }
-  
+
   chart_->enable(WGLWidget::CULL_FACE);
   chart_->disable(WGLWidget::DEPTH_TEST);
 }
