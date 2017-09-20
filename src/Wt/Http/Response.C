@@ -109,7 +109,7 @@ WT_BOSTREAM& Response::out()
 	  cdp << "filename=\"" << fileName.toUTF8() << "\";";
 	}
 	// Next will be picked by RFC 5987 in favour of the
-	// one without specified encoding (Chrome9, 
+	// one without specified encoding (Chrome9,
 	cdp << Utils::EncodeHttpHeaderField("filename", fileName);
 	addHeader("Content-Disposition", cdp.str());
       } else {
