@@ -20,7 +20,7 @@
 #include "Wt/WPainterPath.h"
 #include "Wt/WPaintDevice.h"
 #include "Wt/WRectF.h"
-#include "Wt/WStringStream.h" 
+#include "Wt/WStringStream.h"
 #include "Wt/WTransform.h"
 #include "Wt/WWebWidget.h"
 
@@ -231,7 +231,7 @@ bool WPainter::begin(WPaintDevice *device)
   device_->init();
 
   viewPort_ = WRectF(0, 0, device_->width().value(), device_->height().value());
-  
+
   window_ = viewPort_;
 
   recalculateViewTransform();
@@ -477,7 +477,7 @@ void WPainter::drawPie(double x, double y, double width, double height,
 }
 
 void WPainter::drawPoint(double x, double y)
-{ 
+{
   drawLine(x - 0.05, y - 0.05, x + 0.05, y + 0.05);
 }
 
@@ -560,7 +560,7 @@ void WPainter::drawText(const WRectF& rectangle, WFlags<AlignmentFlag> flags,
 		    text, nullptr);
 }
 
-void WPainter::drawText(const WRectF& rectangle, 
+void WPainter::drawText(const WRectF& rectangle,
 			WFlags<AlignmentFlag> alignmentFlags,
 			TextFlag textFlag,
 			const WString& text,
@@ -581,7 +581,7 @@ void WPainter::drawText(const WRectF& rectangle,
       alignmentFlags |= AlignmentFlag::Left;
 
     if (device_->features().test(PaintDeviceFeatureFlag::WordWrap))
-      device_->drawText(rectangle.normalized(), alignmentFlags, textFlag, 
+      device_->drawText(rectangle.normalized(), alignmentFlags, textFlag,
 			text, clipPoint);
     else if (device_->features().test(PaintDeviceFeatureFlag::FontMetrics)) {
 #ifndef WT_TARGET_JAVA
@@ -600,7 +600,7 @@ void WPainter::drawText(const WRectF& rectangle,
       s << "<table style=\"width:" << (int)rectangle.width() << "px;\""
 	          "cellspacing=\"0\"><tr>"
 	     "<td style=\"padding:0px;height:" << (int)rectangle.height() <<
-	                 "px;color:" << pen().color().cssText() 
+	                 "px;color:" << pen().color().cssText()
 	              << ";text-align:";
 
       switch (horizontalAlign) {
@@ -622,7 +622,7 @@ void WPainter::drawText(const WRectF& rectangle,
       s << ";" << font().cssText(false);
 
       s << "\">"
-	 << WWebWidget::escapeText(text, true).toUTF8() 
+	 << WWebWidget::escapeText(text, true).toUTF8()
 	 << "</td></tr></table>";
 
       save();
@@ -632,7 +632,7 @@ void WPainter::drawText(const WRectF& rectangle,
        * them ...
        */
       WPainterPath p;
-      p.addRect(rectangle.x() + 1, rectangle.y() + 1, 
+      p.addRect(rectangle.x() + 1, rectangle.y() + 1,
 		rectangle.width() - 2, rectangle.height() - 2);
       setClipPath(p);
       setClipping(true);
@@ -645,7 +645,7 @@ void WPainter::drawText(const WRectF& rectangle,
   }
 }
 
-void WPainter::drawText(double x, double y, double width, double height, 
+void WPainter::drawText(double x, double y, double width, double height,
 			WFlags<AlignmentFlag> alignmentFlags,
 			TextFlag textFlag,
 			const WString& text)
@@ -856,7 +856,7 @@ void WPainter::setWindow(double x, double y, double width, double height)
 
 void WPainter::recalculateViewTransform()
 {
-  viewTransform_ = WTransform(); 
+  viewTransform_ = WTransform();
 
   double scaleX = viewPort_.width() / window_.width();
   double scaleY = viewPort_.height() / window_.height();
