@@ -72,7 +72,7 @@ RequestParser::RequestParser(Server *server) :
   reset();
 }
 
-RequestParser::~RequestParser() 
+RequestParser::~RequestParser()
 {
 #ifdef WTHTTP_WITH_ZLIB
   if(inflateInitialized_)
@@ -92,8 +92,8 @@ void RequestParser::reset()
   maxSize_ = 0;
   haveHeader_ = false;
 #ifdef WTHTTP_WITH_ZLIB
-  if(inflateInitialized_) 
-	inflateEnd(&zInState_);	
+  if(inflateInitialized_)
+	inflateEnd(&zInState_);
 
   inflateInitialized_ = false;
   frameCompressed_ = false;
@@ -112,7 +112,7 @@ bool RequestParser::initInflate() {
   if(ret != Z_OK) {
 	LOG_ERROR("Cannot init inflate");
 	return false;
-  }	
+  }
   inflateInitialized_ = true;
   return true;
 }
@@ -275,7 +275,7 @@ bool RequestParser::parseCrazyWebSocketKey(const buffer_string& k,
 
   if (!spaces)
     return false;
-  
+
   if (n % spaces == 0) {
     result = n / spaces;
     return true;
@@ -302,7 +302,7 @@ std::string RequestParser::doWebSocketHandshake13(const Request& req)
 }
 
 #ifdef WTHTTP_WITH_ZLIB
-bool RequestParser::doWebSocketPerMessageDeflateNegotiation(const Request& req, std::string& response) 
+bool RequestParser::doWebSocketPerMessageDeflateNegotiation(const Request& req, std::string& response)
 {
   req.pmdState_.enabled = false;
   response = "";
@@ -317,12 +317,12 @@ bool RequestParser::doWebSocketPerMessageDeflateNegotiation(const Request& req, 
 	  req.pmdState_.enabled = true;
 	  response = "permessage-deflate";
 	} else return true;
-  
+
 	bool hasClientWBit = false;
 	bool hasServerWBit = false;
 	bool hasClientNoCtx = false;
 	bool hasServerNoCtx = false;
-	
+
 	req.pmdState_.server_max_window_bits = SERVER_MAX_WINDOW_BITS;
 	req.pmdState_.client_max_window_bits = CLIENT_MAX_WINDOW_BITS;
 
@@ -353,9 +353,9 @@ bool RequestParser::doWebSocketPerMessageDeflateNegotiation(const Request& req, 
 		boost::trim(key);
 		size_t pos = key.find("=");
 		if (pos != std::string::npos) {
-		  hasServerWBit = true; 
+		  hasServerWBit = true;
 		  int ws = boost::lexical_cast<int>(key.substr(pos + 1));
-		  
+
 		  if (ws < 8 || ws > 15) return false;
 
 		  req.pmdState_.server_max_window_bits  = ws;
@@ -368,9 +368,9 @@ bool RequestParser::doWebSocketPerMessageDeflateNegotiation(const Request& req, 
 		boost::trim(key);
 		size_t pos = key.find("=");
 		if (pos != std::string::npos) {
-		  hasClientWBit = true; 
+		  hasClientWBit = true;
 		  int ws = boost::lexical_cast<int>(key.substr(pos + 1));
-		  
+
 		  if (ws < 8 || ws > 15) return false;
 
 		  req.pmdState_.client_max_window_bits = ws;
@@ -450,7 +450,7 @@ RequestParser::parseWebSocketMessage(Request& req, ReplyPtr reply,
 	  std::string compressHeader;
 	  if(!doWebSocketPerMessageDeflateNegotiation(req, compressHeader))
 		return Request::Error;
-	  
+
 	  if(!compressHeader.empty())  {
 		// We can use per message deflate
 		if(initInflate()) {
@@ -579,9 +579,9 @@ RequestParser::parseWebSocketMessage(Request& req, ReplyPtr reply,
 
 #ifdef WTHTTP_WITH_ZLIB
 	/* RSV1-3 must be 0 */
-	if (frameType & 0x70 && (!req.pmdState_.enabled && frameType & 0x30)) 
+	if (frameType & 0x70 && (!req.pmdState_.enabled && frameType & 0x30))
 	  return Request::Error;
-	
+
 	frameCompressed_ = frameType & 0x40;
 #else
 	if(frameType & 0x70)
@@ -682,7 +682,7 @@ RequestParser::parseWebSocketMessage(Request& req, ReplyPtr reply,
 	  wsState_ = ws13_frame_start;
 	}
       }
-      
+
       ++begin;
 
       break;
@@ -737,16 +737,16 @@ RequestParser::parseWebSocketMessage(Request& req, ReplyPtr reply,
 	  char buffer[16 * 1024];
 	  do {
 		read_ = 0;
-		bool ret1 =  inflate(reinterpret_cast<unsigned char*>(&*beg), 
+		bool ret1 =  inflate(reinterpret_cast<unsigned char*>(&*beg),
 			end - beg, reinterpret_cast<unsigned char*>(buffer), hasMore);
 
 		if(!ret1) return Request::Error;
-		
+
 		reply->consumeWebSocketMessage(opcode, &buffer[0], &buffer[read_], hasMore ? Request::Partial : state);
 
 	  } while (hasMore);
 
-	  if (state == Request::Complete) 
+	  if (state == Request::Complete)
 	    if(!inflate(appendBlock, 4, reinterpret_cast<unsigned char*>(buffer), hasMore))
 	      return Request::Error;
 
