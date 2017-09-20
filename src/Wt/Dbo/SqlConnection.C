@@ -48,7 +48,7 @@ SqlStatement *SqlConnection::getStatement(const std::string& id) const
      */
     if (!result->use())
       throw Exception("A collection for '" + id + "' is already in use."
-		      " Reentrant statement use is not yet implemented."); 
+		      " Reentrant statement use is not yet implemented.");
 
     return result;
   } else
@@ -154,6 +154,6 @@ std::vector<SqlStatement *> SqlConnection::getStatements() const
 
   return result;
 }
-  
+
   }
 }
