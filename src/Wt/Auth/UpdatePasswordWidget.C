@@ -52,7 +52,7 @@ UpdatePasswordWidget
   WPushButton *okButton =
     bindWidget("ok-button",
                cpp14::make_unique<WPushButton>(tr("Wt.WMessageBox.Ok")));
-  WPushButton *cancelButton = 
+  WPushButton *cancelButton =
     bindWidget("cancel-button",
                cpp14::make_unique<WPushButton>(tr("Wt.WMessageBox.Cancel")));
 
@@ -151,7 +151,7 @@ bool UpdatePasswordWidget::validate()
 
   registrationModel_->validateField(RegistrationModel::EmailField);
 
-  if (!registrationModel_->valid()) 
+  if (!registrationModel_->valid())
     valid = false;
 
   return valid;
