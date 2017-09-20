@@ -332,7 +332,7 @@ void SocketNotifier::threadEntry()
         if (FD_ISSET(*i, &read_fds)) {
           if (impl_->readFds_.find(*i) != impl_->readFds_.end()) {
             impl_->readFds_.erase(*i);
-	    callbacks.push_back(std::make_pair((int)*i, 
+	    callbacks.push_back(std::make_pair((int)*i,
 					       WSocketNotifier::Type::Read));
           }
         }
