@@ -22,7 +22,7 @@ X509 *convertCertContext(const CERT_CONTEXT &cc) {
   BIO *in = BIO_new_mem_buf(cc.pbCertEncoded, cc.cbCertEncoded);
   x509 = d2i_X509_bio(in, NULL);
   BIO_free_all(in);
-  
+
   return x509;
 }
 #endif
@@ -237,7 +237,7 @@ void IsapiRequest::sendHeader()
   hei.cchStatus = static_cast<DWORD>(status.size() + 1);
   hei.pszHeader = header.c_str();
   hei.cchHeader = static_cast<DWORD>(header.size() + 1);
-  hei.fKeepConn 
+  hei.fKeepConn
     = version_ == HTTP_1_1 && ((contentLength_ != -1) || chunking_);
   ecb_->ServerSupportFunction(ecb_->ConnID, HSE_REQ_SEND_RESPONSE_HEADER_EX,
     &hei, 0, 0);
@@ -320,7 +320,7 @@ void IsapiRequest::writeSync()
     DWORD offset = 0;
     while (more) {
       DWORD size = static_cast<DWORD>(writeData_[i].size() - offset);
-      if (ecb_->WriteClient(ecb_->ConnID, 
+      if (ecb_->WriteClient(ecb_->ConnID,
 			    (LPVOID)(writeData_[i].data() + offset),
           &size, HSE_IO_SYNC)) {
         offset += size;
@@ -356,17 +356,17 @@ void IsapiRequest::writeAsync(DWORD cbIO, DWORD dwError, bool first)
     writeOffset_ = 0;
   }
   writeOffset_ += cbIO;
-  if (writeIndex_ < writeData_.size() 
+  if (writeIndex_ < writeData_.size()
       && writeOffset_ >= writeData_[writeIndex_].size()) {
     writeIndex_++;
     writeOffset_ = 0;
   }
   if (!error) {
     if (writeIndex_ < writeData_.size()) {
-      DWORD size 
+      DWORD size
 	= static_cast<DWORD>(writeData_[writeIndex_].size() - writeOffset_);
       if (ecb_
-	  ->WriteClient(ecb_->ConnID, 
+	  ->WriteClient(ecb_->ConnID,
 			(LPVOID)(writeData_[writeIndex_].data() + writeOffset_),
 			&size, HSE_IO_ASYNC)) {
         // Don't do anything anymore, the callback will take over
@@ -610,30 +610,30 @@ WSslInfo *IsapiRequest::sslInfo() const {
   char certbuf[64*1024];
   cce.cbAllocated = sizeof(certbuf);
   cce.CertContext.pbCertEncoded = (BYTE *) &certbuf;
-  
-  if(ecb_->ServerSupportFunction(ecb_->ConnID, 
-				 HSE_REQ_GET_CERT_INFO_EX, 
+
+  if(ecb_->ServerSupportFunction(ecb_->ConnID,
+				 HSE_REQ_GET_CERT_INFO_EX,
 				 &cce, 0, 0)) {
     bool present = (bool)(cce.dwCertificateFlags & 0x001);
     bool invalid = (bool)(cce.dwCertificateFlags & 0x002);
     if (present) {
       X509 *x509 = convertCertContext(cce.CertContext);
-      
+
       std::string clientCert;
       if (x509) {
         Wt::WSslCertificate clientCert = Wt::Ssl::x509ToWSslCertificate(x509);
 
         X509_free(x509);
-	
+
         // FIXME!!! Not implemented!!
         std::vector<WSslCertificate> clientCertChain;
-	
+
         Wt::WValidator::Result
           clientVerificationResult(invalid ? Wt::ValidationState::Invalid
 				   : Wt::ValidationState::Valid);
 
-        return new Wt::WSslInfo(clientCert, 
-			        clientCertChain, 
+        return new Wt::WSslInfo(clientCert,
+			        clientCertChain,
 			        clientVerificationResult);
       }
     }
