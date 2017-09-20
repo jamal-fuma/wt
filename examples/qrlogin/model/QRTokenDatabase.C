@@ -37,7 +37,7 @@ public:
 
 QRTokenDatabase::QRTokenDatabase(Dbo::Session& session)
   : session_(session)
-{ 
+{
   session_.mapClass<QRToken>("qr_token");
 }
 
