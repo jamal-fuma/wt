@@ -317,14 +317,14 @@ char *round_css_str(double d, int digits, char *buf)
     }
     len = digits + 1;
   }
-  
+
   int dotPos = (std::max)(len - digits, 0);
 
   for (int i = digits + 1; i >= 0; --i)
     num[dotPos + i + 1] = num[dotPos + i];
 
   num[dotPos] = '.';
-  
+
   return buf;
 }
 
@@ -383,17 +383,17 @@ std::string EncodeHttpHeaderField(const std::string &fieldname,
   return fieldname + "*=UTF-8''" + urlEncode(fieldValue.toUTF8());
 }
 
-std::string readFile(const std::string& fname) 
+std::string readFile(const std::string& fname)
 {
   std::ifstream f(fname.c_str(), std::ios::in | std::ios::binary);
-  
+
   if (!f)
     throw WException("Could not load " + fname);
-  
+
   f.seekg(0, std::ios::end);
   int length = f.tellg();
   f.seekg(0, std::ios::beg);
-  
+
   std::unique_ptr<char[]> ftext(new char[length + 1]);
   f.read(ftext.get(), length);
   ftext[length] = 0;
