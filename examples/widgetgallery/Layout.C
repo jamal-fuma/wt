@@ -22,25 +22,25 @@ void Layout::populateSubMenu(Wt::WMenu *menu)
   menu->addItem("HTML Templates",
                 deferCreate(std::bind
 			    (&Layout::templates, this)));
-  menu->addItem("Text", 
+  menu->addItem("Text",
                 deferCreate(std::bind
 			    (&Layout::text, this)));
-  menu->addItem("Grouping widgets", 
+  menu->addItem("Grouping widgets",
                 deferCreate(std::bind
 			    (&Layout::grouping, this)));
-  menu->addItem("Layout managers", 
+  menu->addItem("Layout managers",
                 deferCreate(std::bind
 			    (&Layout::layoutManagers, this)));
-  menu->addItem("Dialogs", 
+  menu->addItem("Dialogs",
                 deferCreate(std::bind
 			    (&Layout::dialogs, this)));
-  menu->addItem("Images", 
+  menu->addItem("Images",
                 deferCreate(std::bind
 			    (&Layout::images, this)));
-  menu->addItem("CSS", 
+  menu->addItem("CSS",
                 deferCreate(std::bind
 			    (&Layout::css, this)));
-  menu->addItem("Themes", 
+  menu->addItem("Themes",
                 deferCreate(std::bind
 			    (&Layout::themes, this)));
 }
