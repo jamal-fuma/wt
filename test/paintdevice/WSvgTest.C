@@ -15,12 +15,12 @@
 
 BOOST_AUTO_TEST_CASE( svg_test_drawWrappedText )
 {
-  static std::string text = 
+  static std::string text =
     "ceci n'est pas un text et ceci n'est pas une pipe non plus";
 
   Wt::WSvgImage svgImage(1800, 800);
   Wt::WPainter p(&svgImage);
-  
+
   //horizontal alignment
   {
   Wt::WRectF r(5, 5, 150, 100);
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE( svg_test_drawWrappedText )
 	     Wt::TextFlag::WordWrap, text);
   p.drawRect(r);
   }
-  
+
   {
   Wt::WRectF r(470, 5, 150, 100);
   p.drawText(r, Wt::AlignmentFlag::Justify | Wt::AlignmentFlag::Top,
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE( svg_test_drawWrappedText )
 
 BOOST_AUTO_TEST_CASE( svg_test_drawSingleText )
 {
-  static std::string text = 
+  static std::string text =
     "ceci n'est pas un text et ceci n'est pas une pipe non plus";
 
   Wt::WSvgImage svgImage(1800, 800);
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE( svg_test_drawSingleText )
   //horizontal alignment
   {
   Wt::WRectF r(5, 5, 150, 100);
-  p.drawText(r, Wt::AlignmentFlag::Left | Wt::AlignmentFlag::Top, 
+  p.drawText(r, Wt::AlignmentFlag::Left | Wt::AlignmentFlag::Top,
 	     text);
   p.drawRect(r);
   }
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE( svg_test_drawSingleText )
 	     text);
   p.drawRect(r);
   }
-  
+
   {
   Wt::WRectF r(5, 320, 150, 100);
   p.drawText(r, Wt::AlignmentFlag::Justify | Wt::AlignmentFlag::Top,
