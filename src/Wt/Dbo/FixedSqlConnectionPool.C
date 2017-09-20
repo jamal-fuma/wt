@@ -54,7 +54,7 @@ std::chrono::steady_clock::duration FixedSqlConnectionPool::timeout() const
 {
   return impl_->timeout;
 }
-  
+
 std::unique_ptr<SqlConnection> FixedSqlConnectionPool::getConnection()
 {
 #ifdef WT_THREADED
@@ -85,7 +85,7 @@ void FixedSqlConnectionPool::handleTimeout()
 {
   throw Exception("FixedSqlConnectionPool::getConnection(): timeout");
 }
-  
+
 void FixedSqlConnectionPool::returnConnection(std::unique_ptr<SqlConnection> connection)
 {
 #ifdef WT_THREADED
