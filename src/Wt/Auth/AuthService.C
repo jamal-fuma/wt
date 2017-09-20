@@ -273,11 +273,11 @@ AuthTokenResult AuthService::processAuthToken(const std::string& token,
 
     if (t.get()) t->commit();
 
-    return AuthTokenResult(AuthTokenState::Valid, 
+    return AuthTokenResult(AuthTokenState::Valid,
 			   user, newToken, validity);
   } else {
     if (t.get()) t->commit();
-    
+
     return AuthTokenResult(AuthTokenState::Invalid);
   }
 }
@@ -320,7 +320,7 @@ void AuthService::lostPassword(const std::string& emailAddress,
 
 std::string AuthService::parseEmailToken(const std::string& internalPath) const
 {
-  if (emailVerification_ && 
+  if (emailVerification_ &&
       WApplication::pathMatches(internalPath, redirectInternalPath_))
     return internalPath.substr(redirectInternalPath_.length());
   else
