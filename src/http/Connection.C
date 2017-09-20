@@ -3,7 +3,7 @@
  *
  * All rights reserved.
  */
-// 
+//
 // connection.cpp
 // ~~~~~~~~~~~~~~
 //
@@ -62,7 +62,7 @@ Connection::~Connection()
 }
 
 void Connection::finishReply()
-{ 
+{
   if (!request_.uri.empty()) {
     LOG_DEBUG("last request: " << request_.method.str()
 	      << " " << request_.uri.str()
@@ -221,9 +221,9 @@ void Connection::handleReadRequest0()
     sendStockReply(StockReply::bad_request);
   } else {
     rcv_buffers_.push_back(Buffer());
-    startAsyncReadRequest(rcv_buffers_.back(), 
+    startAsyncReadRequest(rcv_buffers_.back(),
 			  request_parser_.initialState()
-			  ? KEEPALIVE_TIMEOUT 
+			  ? KEEPALIVE_TIMEOUT
 			  : CONNECTION_TIMEOUT);
   }
 }
