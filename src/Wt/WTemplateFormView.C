@@ -72,7 +72,7 @@ void WTemplateFormView
   fields_[field].formWidget = formWidget;
   fields_[field].updateFunctions = fieldView;
 
-  bindWidget(field, formWidget); 
+  bindWidget(field, formWidget);
 }
 
 #endif // WT_TARGET_JAVA
@@ -122,7 +122,7 @@ bool WTemplateFormView::updateViewValue(WFormModel *model,
   }
 
   return false;
-} 
+}
 
 void WTemplateFormView::updateViewField(WFormModel *model,
 					WFormModel::Field field)
@@ -168,7 +168,7 @@ void WTemplateFormView::updateViewField(WFormModel *model,
   } else {
     setCondition("if:" + var, false);
     bindEmpty(var);
-    bindEmpty(var + "-info");    
+    bindEmpty(var + "-info");
   }
 }
 
@@ -184,7 +184,7 @@ void WTemplateFormView::indicateValidation(WFormModel::Field field,
     WApplication::instance()->theme()
       ->applyValidationStyle(edit, validation, ValidationAllStyles);
 
-    info->toggleStyleClass("Wt-error", 
+    info->toggleStyleClass("Wt-error",
 			   validation.state() != ValidationState::Valid,
 			   true);
   } else {
@@ -239,7 +239,7 @@ bool WTemplateFormView::updateModelValue(WFormModel *model,
     }
 #endif
   }
-   
+
   return false;
 }
 
