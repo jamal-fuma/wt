@@ -90,7 +90,7 @@ void ResponseContinuation::readyToContinue(WebWriteEvent event)
 
 ResponseContinuation::ResponseContinuation(WResource *resource,
 					   WebResponse *response)
-  : 
+  :
 #ifdef WT_THREADED
     mutex_(resource->mutex_),
 #endif
