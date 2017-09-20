@@ -113,7 +113,7 @@ void WBorderLayout::addWidget(std::unique_ptr<WWidget> w,
 WWidget *WBorderLayout::widgetAt(LayoutPosition position) const
 {
   WWidgetItem *item = dynamic_cast<WWidgetItem *>(itemAt(position));
-  
+
   if (item)
     return item->widget();
   else
