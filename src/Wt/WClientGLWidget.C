@@ -370,7 +370,7 @@ void WClientGLWidget::activeTexture(WGLWidget::GLenum texture)
 void WClientGLWidget::attachShader(WGLWidget::Program program,
 				   WGLWidget::Shader shader)
 {
-  js_ << "ctx.attachShader(" << program.jsRef() 
+  js_ << "ctx.attachShader(" << program.jsRef()
       << ", " << shader.jsRef() << ");";
   GLDEBUG;
 }
@@ -409,7 +409,7 @@ void WClientGLWidget::bindRenderbuffer(WGLWidget::GLenum target,
 void WClientGLWidget::bindTexture(WGLWidget::GLenum target,
 				  WGLWidget::Texture texture)
 {
-  js_ << "ctx.bindTexture(" << toString(target) << "," 
+  js_ << "ctx.bindTexture(" << toString(target) << ","
       << texture.jsRef() << ");";
   currentlyBoundTexture_ = texture;
   GLDEBUG;
@@ -435,7 +435,7 @@ void WClientGLWidget::blendEquation(WGLWidget::GLenum mode)
 void WClientGLWidget::blendEquationSeparate(WGLWidget::GLenum modeRGB,
 					    WGLWidget::GLenum modeAlpha)
 {
-  js_ << "ctx.blendEquationSeparate(" << toString(modeRGB) << "," 
+  js_ << "ctx.blendEquationSeparate(" << toString(modeRGB) << ","
     << toString(modeAlpha) << ");";
   GLDEBUG;
 }
@@ -613,7 +613,7 @@ void WClientGLWidget::bufferSubDatafv(WGLWidget::GLenum target, unsigned offset,
 #endif
 
 void WClientGLWidget::bufferSubDataiv(WGLWidget::GLenum target,
-				      unsigned offset, IntBuffer &buffer, 
+				      unsigned offset, IntBuffer &buffer,
 				      WGLWidget::GLenum type)
 {
   js_ << "ctx.bufferSubData(" << toString(target) << "," << offset << ",";
@@ -957,7 +957,7 @@ WGLWidget::AttribLocation WClientGLWidget::getAttribLocation(WGLWidget::Program 
 WGLWidget::UniformLocation WClientGLWidget::getUniformLocation(WGLWidget::Program program, const std::string location)
 {
   WGLWidget::UniformLocation retval(uniforms_++);
-  js_ << retval.jsRef() << "=ctx.getUniformLocation(" << program.jsRef() 
+  js_ << retval.jsRef() << "=ctx.getUniformLocation(" << program.jsRef()
       << "," << WWebWidget::jsStringLiteral(location) << ");";
   GLDEBUG;
   return retval;
@@ -980,9 +980,9 @@ void WClientGLWidget::lineWidth(double width)
 void WClientGLWidget::linkProgram(WGLWidget::Program program)
 {
   js_ << "ctx.linkProgram(" << program.jsRef() << ");";
-  js_ << "if(!ctx.getProgramParameter(" << program.jsRef() 
+  js_ << "if(!ctx.getProgramParameter(" << program.jsRef()
       << ",ctx.LINK_STATUS)){"
-      << "alert('Could not initialize shaders: ' + ctx.getProgramInfoLog(" 
+      << "alert('Could not initialize shaders: ' + ctx.getProgramInfoLog("
       << program.jsRef() << "));}";
   GLDEBUG;
 }
@@ -1001,7 +1001,7 @@ void WClientGLWidget::polygonOffset(double factor, double units) {
 }
 
 void WClientGLWidget::renderbufferStorage(WGLWidget::GLenum target,
-					  WGLWidget::GLenum internalformat, 
+					  WGLWidget::GLenum internalformat,
 					  unsigned width, unsigned height)
 {
   js_ << "ctx.renderbufferStorage(" << toString(target) << ","
@@ -1027,7 +1027,7 @@ void WClientGLWidget::scissor(int x, int y, unsigned width, unsigned height)
 void WClientGLWidget::shaderSource(WGLWidget::Shader shader,
 				   const std::string &src)
 {
-  js_ << "ctx.shaderSource(" << shader.jsRef() << "," 
+  js_ << "ctx.shaderSource(" << shader.jsRef() << ","
       << WWebWidget::jsStringLiteral(src) << ");";
   GLDEBUG;
 }
@@ -1080,7 +1080,7 @@ void WClientGLWidget::stencilOpSeparate(WGLWidget::GLenum face,
 }
 
 void WClientGLWidget::texImage2D(WGLWidget::GLenum target, int level,
-				 WGLWidget::GLenum internalformat, 
+				 WGLWidget::GLenum internalformat,
 				 unsigned width, unsigned height, int border,
 				 WGLWidget::GLenum format)
 {
@@ -1129,7 +1129,7 @@ void WClientGLWidget::texImage2D(WGLWidget::GLenum target, int level,
 // 					image->url(), imgNb));
 
 //   js_ << "ctx.texImage2D(" << toString(target) << "," << level << ","
-//       << toString(internalformat) << "," << toString(format) 
+//       << toString(internalformat) << "," << toString(format)
 //       << "," << toString(type)
 //       << "," << currentlyBoundTexture_.jsRef() << ".image" << imgNb  << ");";
 //   GLDEBUG;
@@ -1149,7 +1149,7 @@ void WClientGLWidget::texImage2D(WGLWidget::GLenum target, int level,
   addChild(std::move(imgFile));
 
   js_ << "ctx.texImage2D(" << toString(target) << "," << level << ","
-      << toString(internalformat) << "," << toString(format) 
+      << toString(internalformat) << "," << toString(format)
       << "," << toString(type)
       << "," << currentlyBoundTexture_.jsRef() << ".image" << imgNb  << ");";
   GLDEBUG;
@@ -1188,7 +1188,7 @@ void WClientGLWidget::texImage2D(WGLWidget::GLenum target, int level,
 #endif
 
   js_ << "ctx.texImage2D(" << toString(target) << "," << level << ","
-      << toString(internalformat) << "," << toString(format) 
+      << toString(internalformat) << "," << toString(format)
       << "," << toString(type)
       << "," << currentlyBoundTexture_.jsRef() << ".image" << imgNb << ");";
   GLDEBUG;
@@ -1213,7 +1213,7 @@ void WClientGLWidget::texImage2D(WGLWidget::GLenum target, int level,
 				 WGLWidget::Texture texture)
 {
   js_ << "ctx.texImage2D(" << toString(target) << "," << level << ","
-      << toString(internalformat) << "," << toString(format) 
+      << toString(internalformat) << "," << toString(format)
       << "," << toString(type)
       << "," << texture.jsRef() << ".image0);";
   GLDEBUG;
@@ -1232,7 +1232,7 @@ void WClientGLWidget::uniform1f(const WGLWidget::UniformLocation &location,
 				double x)
 {
   char buf[30];
-  js_ << "ctx.uniform1f(" << location.jsRef() 
+  js_ << "ctx.uniform1f(" << location.jsRef()
       << "," << makeFloat(x, buf) << ");";
   GLDEBUG;
 }
@@ -1406,7 +1406,7 @@ void WClientGLWidget::uniform4i(const WGLWidget::UniformLocation &location,
   js_ << makeInt(w, buf) << ");";
   GLDEBUG;
 }
-  
+
 void WClientGLWidget::uniform4iv(const WGLWidget::UniformLocation &location,
 				 const WT_ARRAY int *value)
 {
@@ -1722,7 +1722,7 @@ void WClientGLWidget::render(const std::string& jsRef, WFlags<RenderFlag> flags)
     tmp <<
       "{\n"
       """var o = new " WT_CLASS ".WGLWidget(" << wApp->javaScriptClass() << "," << jsRef << ");\n"
-      """o.discoverContext(function(){" << webglNotAvailable_.createCall({}) 
+      """o.discoverContext(function(){" << webglNotAvailable_.createCall({})
 	<< "}, "
 	<< (glInterface_->renderOptions_.test(GLRenderOption::AntiAliasing)
 	    ? "true" : "false") << ");\n";
