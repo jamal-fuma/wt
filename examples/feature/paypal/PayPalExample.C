@@ -331,7 +331,7 @@ private:
 
         items->addWidget(std::move(it));
       }
-      
+
       t->bindWidget("items", std::move(items));
     } else
       t->bindEmpty("items");
