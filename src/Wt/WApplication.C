@@ -68,7 +68,7 @@ WApplication::MetaLink::MetaLink(const std::string &aHref,
 				 const std::string &aType,
 				 const std::string &aSizes,
 				 bool aDisabled)
-  : href(aHref), rel(aRel), media(aMedia), hreflang(aHreflang), type(aType), 
+  : href(aHref), rel(aRel), media(aMedia), hreflang(aHreflang), type(aType),
     sizes(aSizes), disabled(aDisabled)
 { }
 
@@ -147,12 +147,12 @@ WApplication::WApplication(const WEnvironment& env
 
   if (!environment().javaScript() && environment().agentIsIE()) {
     /*
-     * WARNING: Similar code in WebRenderer.C must be kept in sync for 
+     * WARNING: Similar code in WebRenderer.C must be kept in sync for
      *          plain boot.
      */
-    if (static_cast<unsigned int>(environment().agent()) < 
+    if (static_cast<unsigned int>(environment().agent()) <
 	static_cast<unsigned int>(UserAgent::IE9)) {
-      const Configuration& conf = environment().server()->configuration(); 
+      const Configuration& conf = environment().server()->configuration();
       bool selectIE7 = conf.uaCompatible().find("IE8=IE7")
 	!= std::string::npos;
 
@@ -354,7 +354,7 @@ std::string WApplication::onePixelGifUrl()
   if (environment().agentIsIElt(7)) {
     if (!onePixelGifR_) {
       std::unique_ptr<WMemoryResource> w(new WMemoryResource("image/gif"));
-  
+
       static const unsigned char gifData[]
 	= { 0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00,
             0x80, 0x00, 0x00, 0xdb, 0xdf, 0xef, 0x00, 0x00, 0x00, 0x21,
@@ -422,8 +422,8 @@ std::string WApplication::relativeResourcesUrl()
 
   return result;
 #else
-  WApplication *app = WApplication::instance(); 
-  const Configuration& conf = app->environment().server()->configuration(); 
+  WApplication *app = WApplication::instance();
+  const Configuration& conf = app->environment().server()->configuration();
   const std::string* path = conf.property(WApplication::RESOURCES_URL);
 
   int version;
@@ -443,7 +443,7 @@ std::string WApplication::relativeResourcesUrl()
 	return result + path->substr(1);
       else
 	return result + *path;
-    } else 
+    } else
       return *path;
   } else { // from v3.0, resources can be deployed in META-INF of a jar-file
     return app->environment().server()->getContextPath() + *path;
@@ -505,7 +505,7 @@ void WApplication::addGlobalWidget(WWidget *w)
 }
 
 void WApplication::removeGlobalWidget(WWidget *w)
-{ 
+{
   // In the destructor domRoot_->reset() can cause domRoot_
   // to be null. In that case, we don't need to remove this
   // widget from the domRoot.
@@ -599,7 +599,7 @@ void WApplication::useStyleSheet(const WLinkedCssStyleSheet& styleSheet,
       case UserAgent::IE10:
 	thisVersion = 10; break;
       default:
-	thisVersion = 11; break;	
+	thisVersion = 11; break;
       }
 
       enum { lte, lt, eq, gt, gte } cond = eq;
@@ -643,7 +643,7 @@ void WApplication::useStyleSheet(const WLinkedCssStyleSheet& styleSheet,
 	  r.clear();
 	}
       }
-    } 
+    }
   }
 
   if (display) {
@@ -836,11 +836,11 @@ bool WApplication::removeExposedResource(WResource *resource)
     return false;
 }
 
-WResource *WApplication::decodeExposedResource(const std::string& resourceKey) 
+WResource *WApplication::decodeExposedResource(const std::string& resourceKey)
   const
 {
   ResourceMap::const_iterator i = exposedResources_.find(resourceKey);
-  
+
   if (i != exposedResources_.end())
     return i->second;
   else {
@@ -1065,9 +1065,9 @@ void WApplication::addMetaLink(const std::string &href,
   if (environment().javaScript())
     LOG_WARN("WApplication::addMetaLink() with no effect");
 
-  if (href.empty()) 
+  if (href.empty())
     throw WException("WApplication::addMetaLink() href cannot be empty!");
-  if (rel.empty()) 
+  if (rel.empty())
     throw WException("WApplication::addMetaLink() rel cannot be empty!");
 
   for (unsigned i = 0; i < metaLinks_.size(); ++i) {
