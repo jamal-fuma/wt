@@ -91,7 +91,7 @@ WWebWidget::LayoutImpl::LayoutImpl()
     baseZIndex_(DEFAULT_BASE_Z_INDEX),
     zIndex_(0),
     verticalAlignment_(AlignmentFlag::Baseline)
-{ 
+{
   for (unsigned i = 0; i < 4; ++i) {
 #ifdef WT_TARGET_JAVA
     offsets_[i] = WLength::Auto;
@@ -193,7 +193,7 @@ const std::string WWebWidget::id() const
   if (otherImpl_ && otherImpl_->id_)
     return *otherImpl_->id_;
   else
-    return WWidget::id();  
+    return WWidget::id();
 }
 
 void WWebWidget::repaint(WFlags<RepaintFlag> flags)
@@ -326,7 +326,7 @@ void WWebWidget::widgetRemoved(WWidget *child, bool renderRemove)
       !child->webWidget()->isRendered() &&
       !child->webWidget()->isStubbed())
     --transientImpl_->addedChildren_;
-    
+
   /*
    * When the child is about to be deleted, all of its descendants
    * properly removes itself from the renderer "dirty" list. If not,
@@ -514,7 +514,7 @@ void WWebWidget::setVerticalAlignment(AlignmentFlag alignment,
 				      const WLength& length)
 {
   if (AlignHorizontalMask.test(alignment))
-    LOG_ERROR("setVerticalAlignment(): alignment " 
+    LOG_ERROR("setVerticalAlignment(): alignment "
 	      << static_cast<int>(alignment)
 	      << " is not vertical");
 
@@ -531,7 +531,7 @@ void WWebWidget::setVerticalAlignment(AlignmentFlag alignment,
 
 AlignmentFlag WWebWidget::verticalAlignment() const
 {
-  return layoutImpl_ 
+  return layoutImpl_
     ? layoutImpl_->verticalAlignment_ : AlignmentFlag::Baseline;
 }
 
@@ -665,7 +665,7 @@ WWidget *WWebWidget::selfWidget()
   do {
     p = p_parent;
     p_parent = p->parent();
-  } while (p_parent != nullptr && 
+  } while (p_parent != nullptr &&
 	   dynamic_cast<WCompositeWidget *>(p_parent) != nullptr);
 
   return p;
@@ -742,7 +742,7 @@ void WWebWidget::addStyleClass(const WT_USTRING& styleClass, bool force)
   std::string currentClass = lookImpl_->styleClass_.toUTF8();
   Utils::SplitSet classes;
   Utils::split(classes, currentClass, " ", true);
-  
+
   if (classes.find(styleClass.toUTF8()) == classes.end()) {
     lookImpl_->styleClass_
       = WT_USTRING::fromUTF8(Utils::addWord(lookImpl_->styleClass_.toUTF8(),
@@ -851,7 +851,7 @@ void WWebWidget::setAttributeValue(const std::string& name,
 
   std::map<std::string, WT_USTRING>::const_iterator i
     = otherImpl_->attributes_->find(name);
-  
+
   if (i != otherImpl_->attributes_->end() && i->second == value)
     return;
 
@@ -886,10 +886,10 @@ void WWebWidget::setJavaScriptMember(const std::string& name,
 
   if (!otherImpl_->jsMembers_)
     otherImpl_->jsMembers_.reset(new std::vector<OtherImpl::Member>);
-  
+
   std::vector<OtherImpl::Member>& members = *otherImpl_->jsMembers_;
   int index = indexOfJavaScriptMember(name);
-  
+
   if (index != -1 && (members[index].value == value))
     return;
 
@@ -923,7 +923,7 @@ std::string WWebWidget::javaScriptMember(const std::string& name) const
     return std::string();
 }
 
-int WWebWidget::indexOfJavaScriptMember(const std::string& name) const 
+int WWebWidget::indexOfJavaScriptMember(const std::string& name) const
 {
   if (otherImpl_ && otherImpl_->jsMembers_)
   for (unsigned i = 0; i < otherImpl_->jsMembers_->size(); i++)
@@ -936,7 +936,7 @@ int WWebWidget::indexOfJavaScriptMember(const std::string& name) const
 void WWebWidget::callJavaScriptMember(const std::string& name,
 				      const std::string& args)
 {
-  addJavaScriptStatement(JavaScriptStatementType::CallMethod, 
+  addJavaScriptStatement(JavaScriptStatementType::CallMethod,
 			 name + "(" + args + ");");
 
   repaint();
@@ -1093,7 +1093,7 @@ void WWebWidget::parentResized(WWidget *parent, WFlags<Orientation> directions)
 	  c->webWidget()->parentResized(parent, directions);
       });
   }
-}    
+}
 
 void WWebWidget::containsLayout()
 {
@@ -1266,7 +1266,7 @@ void WWebWidget::updateDom(DomElement& element, bool all)
    * determine display
    */
 
-  if (flags_.test(BIT_GEOMETRY_CHANGED) || 
+  if (flags_.test(BIT_GEOMETRY_CHANGED) ||
       (!flags_.test(BIT_HIDE_WITH_VISIBILITY) &&
         flags_.test(BIT_HIDDEN_CHANGED)) ||
       all) {
@@ -1484,7 +1484,7 @@ void WWebWidget::updateDom(DomElement& element, bool all)
 
   if (flags_.test(BIT_FLOAT_SIDE_CHANGED) || all) {
     if (layoutImpl_) {
-      if (layoutImpl_->floatSide_ == static_cast<Side>(0)) { 
+      if (layoutImpl_->floatSide_ == static_cast<Side>(0)) {
 	if (flags_.test(BIT_FLOAT_SIDE_CHANGED))
 	  element.setProperty(Property::StyleFloat, "none");
       }
@@ -1665,14 +1665,14 @@ void WWebWidget::updateDom(DomElement& element, bool all)
 	bool notHere = false;
 	if (otherImpl_->jsStatements_) {
 	  for (unsigned j = 0; j < otherImpl_->jsStatements_->size(); ++j) {
-	    const OtherImpl::JavaScriptStatement& jss 
+	    const OtherImpl::JavaScriptStatement& jss
 	      = (*otherImpl_->jsStatements_)[j];
 
-	    if (jss.type == JavaScriptStatementType::SetMember && 
+	    if (jss.type == JavaScriptStatementType::SetMember &&
 		jss.data == member.name) {
 	      notHere = true;
 	      break;
-	    } 
+	    }
 	  }
 	}
 
@@ -1685,7 +1685,7 @@ void WWebWidget::updateDom(DomElement& element, bool all)
 
     if (otherImpl_->jsStatements_) {
       for (unsigned i = 0; i < otherImpl_->jsStatements_->size(); ++i) {
-	const OtherImpl::JavaScriptStatement& jss 
+	const OtherImpl::JavaScriptStatement& jss
 	  = (*otherImpl_->jsStatements_)[i];
 
 	switch (jss.type) {
@@ -1885,7 +1885,7 @@ void WWebWidget::updateDom(DomElement& element, bool all)
     }
     flags_.reset(BIT_OBJECT_NAME_CHANGED);
   }
-  
+
   renderOk();
 
   transientImpl_.reset();
@@ -1958,7 +1958,7 @@ void WWebWidget::setTabIndex(int index)
 {
   if (!otherImpl_)
     otherImpl_.reset(new OtherImpl(this));
-    
+
   otherImpl_->tabIndex_ = index;
 
   flags_.set(BIT_TABINDEX_CHANGED);
@@ -2248,7 +2248,7 @@ DomElement *WWebWidget::createStubElement(WApplication *app)
    * learning is not confused.
    */
   propagateRenderOk();
- 
+
   flags_.set(BIT_STUBBED);
 
   DomElement *stub = DomElement::createNew(DomElementType::SPAN);
@@ -2323,7 +2323,7 @@ void WWebWidget::enableAjax()
     }
   }
 
-  if (flags_.test(BIT_TOOLTIP_DEFERRED) || 
+  if (flags_.test(BIT_TOOLTIP_DEFERRED) ||
       (lookImpl_ && lookImpl_->toolTipTextFormat_ != TextFormat::Plain)) {
     flags_.set(BIT_TOOLTIP_CHANGED);
     repaint();
@@ -2516,7 +2516,7 @@ bool WWebWidget::setAcceptDropsImpl(const std::string& mimeType, bool accept,
 	+= "{" + j->first + ":" + j->second.hoverStyleClass.toUTF8() + "}";
     }
     setAttributeValue("amts", mimeTypes);
-  } 
+  }
 
   if (result && !otherImpl_->dropSignal_)
     otherImpl_->dropSignal_
