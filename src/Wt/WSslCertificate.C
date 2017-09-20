@@ -21,7 +21,7 @@
 #define PEM_FOOTER "-----END CERTIFICATE-----"
 
 namespace {
-  std::string 
+  std::string
   attributesToString(const std::vector<Wt::WSslCertificate::DnAttribute> &DN) {
     std::stringstream ss;
     for (unsigned i = 0; i < DN.size(); ++i) {
@@ -48,7 +48,7 @@ WSslCertificate::WSslCertificate(const std::vector<DnAttribute> &subjectDn,
   validityEnd_(validityEnd),
   pemCert_(pemCert)
 {
-  LOG_DEBUG("WSslCertificate fields: " 
+  LOG_DEBUG("WSslCertificate fields: "
 	    <<  gdb());
 }
 
@@ -123,7 +123,7 @@ std::string WSslCertificate::issuerDnString() const
   return attributesToString(issuerDn());
 }
 
-std::string WSslCertificate::subjectDnString() const 
+std::string WSslCertificate::subjectDnString() const
 {
   return attributesToString(subjectDn());
 }
@@ -139,11 +139,11 @@ std::string WSslCertificate::pemToDer(const std::string &pem)
   if (endPos == std::string::npos)
     throw Wt::WException("WSslCertificate::pemToDer() illegal PEM format");
 
-  int npos = pem.size() 
+  int npos = pem.size()
     - (startPos + strlen(PEM_HEADER))
     - (pem.size() - endPos);
   std::string cert = pem.substr(startPos + pem_header_len, npos);
-  
+
   std::string cert_base64;
   cert_base64.reserve(cert.size());
   int x=0;
@@ -156,20 +156,20 @@ std::string WSslCertificate::pemToDer(const std::string &pem)
   }
 
   std::string der = Utils::base64Decode(cert_base64);
-  
-  return der; 
+
+  return der;
 }
 
 std::string WSslCertificate::gdb() const
 {
   std::stringstream ss;
-  ss 
+  ss
     << "subject DN: " << subjectDnString() << std::endl
     << "issuer DN: " << issuerDnString() << std::endl
     << "validity start: " << validityStart_.toString() << std::endl
     << "validity end: " << validityEnd_.toString() << std::endl
     << "client cert: " << pemCert_ << std::endl;
- 
+
   return ss.str();
 }
 
