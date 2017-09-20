@@ -19,9 +19,9 @@ WFormModel::FieldData::FieldData()
     visible(true),
     readOnly(false),
     validated(false)
-{ 
+{
   //TODO
-  //this is a workaround for cnor, 
+  //this is a workaround for cnor,
   //because cnor seems to be unable to map initalizer ctors
   //fix this in cnor
   value = cpp17::any();
@@ -33,7 +33,7 @@ WFormModel::WFormModel()
 void WFormModel::addField(Field field, const WString& info)
 {
   fields_[field] = FieldData();
-  fields_[field].validation 
+  fields_[field].validation
     = WValidator::Result(ValidationState::Invalid, info);
 }
 
@@ -176,7 +176,7 @@ bool WFormModel::valid() const
 {
   for (FieldMap::const_iterator i = fields_.begin(); i != fields_.end(); ++i) {
     const FieldData& fd = i->second;
-    
+
     if (!fd.visible)
       continue;
 
