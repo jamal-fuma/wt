@@ -266,7 +266,7 @@ Wt::WDateTime BlogUserDatabase::lastLoginAttempt(const Wt::Auth::User& user) con
 
 void BlogUserDatabase::setLastLoginAttempt(const Wt::Auth::User& user,
                                            const Wt::WDateTime& t)
-{ 
+{
   WithUser find(*this, user);
 
   user_.modify()->lastLoginAttempt = t;
