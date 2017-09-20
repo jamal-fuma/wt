@@ -138,7 +138,7 @@ EventSignal<WMouseEvent>& WInteractWidget::mouseDragged()
 EventSignal<WMouseEvent>& WInteractWidget::mouseWheel()
 {
   if (WApplication::instance()->environment().agentIsIElt(9) ||
-      WApplication::instance()->environment().agent() 
+      WApplication::instance()->environment().agent()
       == UserAgent::Edge) {
     return *mouseEventSignal(MOUSE_WHEEL_SIGNAL, true);
   } else {
@@ -325,7 +325,7 @@ void WInteractWidget::updateDom(DomElement& element, bool all)
     if ((mouseMove && mouseMove->isConnected())
 	|| (mouseDrag && mouseDrag->isConnected()))
       js << WT_CLASS ".mouseUp(e);";
-      
+
     if (mouseUp) {
       js << mouseUp->javaScript();
       element.setEvent("mouseup", js.str(),
@@ -340,7 +340,7 @@ void WInteractWidget::updateDom(DomElement& element, bool all)
      * We need to mix mouseDrag and mouseMove events.
      */
     std::vector<DomElement::EventAction> actions;
-    
+
     if (mouseMove) {
       actions.push_back
 	(DomElement::EventAction(std::string(),
@@ -391,7 +391,7 @@ void WInteractWidget::updateDom(DomElement& element, bool all)
      * When we have:
      *  - a touchStart + (touchMove or touchEnd),
      * we need to capture everything after on touch start, and keep track of the
-     * down button if we have a touchMove 
+     * down button if we have a touchMove
      */
     WStringStream js;
 
@@ -433,7 +433,7 @@ void WInteractWidget::updateDom(DomElement& element, bool all)
   }
 
   if (updateTouchMove) {
-    
+
     if (touchMove) {
       element.setEvent("touchmove", touchMove->javaScript(),
 			touchMove->encodeCmd(), touchMove->isExposedSignal());
@@ -448,7 +448,7 @@ void WInteractWidget::updateDom(DomElement& element, bool all)
   EventSignal<WMouseEvent> *mouseClick
     = mouseEventSignal(M_CLICK_SIGNAL, false);
   EventSignal<WMouseEvent> *mouseDblClick
-    = mouseEventSignal(DBL_CLICK_SIGNAL, false);  
+    = mouseEventSignal(DBL_CLICK_SIGNAL, false);
 
   bool updateMouseClick
     = (mouseClick && mouseClick->needsUpdate(all))
@@ -545,7 +545,7 @@ void WInteractWidget::updateDom(DomElement& element, bool all)
   EventSignal<WMouseEvent> *mouseOver
     = mouseEventSignal(MOUSE_OVER_SIGNAL, false);
   EventSignal<WMouseEvent> *mouseOut
-    = mouseEventSignal(MOUSE_OUT_SIGNAL, false); 
+    = mouseEventSignal(MOUSE_OUT_SIGNAL, false);
 
   bool updateMouseOver = mouseOver && mouseOver->needsUpdate(all);
 
