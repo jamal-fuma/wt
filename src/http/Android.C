@@ -25,7 +25,7 @@ void preventRemoveOfSymbolsDuringLinking() {
     (JNIEnv* env, jobject thiz, jobjectArray strArray)
     {
       unsigned i;
-      
+
       jsize argsCount = env->GetArrayLength(strArray);
       std::vector<std::string> args(argsCount);
       for (i = 0; i < argsCount; i++) {
@@ -38,13 +38,13 @@ void preventRemoveOfSymbolsDuringLinking() {
 	  size_t index = env.find("=");
 	  if (index != std::string::npos) {
 	    if (!putenv(env.c_str()))
-	      std::cerr 
-		<< "WtAndroid::startwt putenv() failed on: " 
+	      std::cerr
+		<< "WtAndroid::startwt putenv() failed on: "
 		<< env
 		<< std::endl;
 	  } else {
-	    std::cerr 
-	      << "WtAndroid::startwt invalid environment variable definition: " 
+	    std::cerr
+	      << "WtAndroid::startwt invalid environment variable definition: "
 	      << s
 	      << std::endl;
 	  }
