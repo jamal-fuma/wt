@@ -14,10 +14,10 @@
 
 namespace {
   const int mimeTypeCount = 10;
-  const char *imageMimeTypes [] = { 
-    "image/png", 
-    "image/jpeg", 
-    "image/gif", 
+  const char *imageMimeTypes [] = {
+    "image/png",
+    "image/jpeg",
+    "image/gif",
     "image/gif",
     "image/bmp",
     "image/bmp",
@@ -26,10 +26,10 @@ namespace {
     "image/bmp",
     "image/bmp"
   };
-  const char *imageHeaders [] = { 
-    "\211PNG\r\n\032\n", 
+  const char *imageHeaders [] = {
+    "\211PNG\r\n\032\n",
     "\377\330\377",
-    "GIF87a", 
+    "GIF87a",
     "GIF89a",
     "BA",
     "BM",
@@ -68,29 +68,29 @@ namespace Wt {
 std::string ImageUtils::identifyMimeType(const std::string& fileName)
 {
   std::vector<unsigned char> header = FileUtils::fileHeader(fileName, 25);
- 
+
   if (header.empty())
     return "";
   else
     return identifyMimeType(header);
 }
-    
+
 std::string ImageUtils::identifyMimeType(const std::vector<unsigned char>&
 					 header)
 {
   // TODO: also check the filename extension, if parsing the file did not work
   for (int i = 0; i < mimeTypeCount; ++i) {
 #ifndef WT_TARGET_JAVA
-    if (std::memcmp(&header[0], 
+    if (std::memcmp(&header[0],
 		    imageHeaders[i], imageHeaderSize[i]) == 0)
       return std::string(imageMimeTypes[i]);
 #else
-    if (std::memcmp(header.data(), 
+    if (std::memcmp(header.data(),
 		    imageHeaders[i], imageHeaderSize[i]) == 0)
       return std::string(imageMimeTypes[i]);
 #endif
   }
-    
+
   return std::string();
 }
 
@@ -98,7 +98,7 @@ WPoint ImageUtils::getSize(const std::string& fileName)
 {
   std::vector<unsigned char> header =
       FileUtils::fileHeader(fileName, 25);
- 
+
   if (header.empty())
     return WPoint();
   else{
