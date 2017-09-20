@@ -63,7 +63,7 @@ bool SimpleChatServer::connect(Client *client,
 
   if (clients_.count(client) == 0) {
     ClientInfo clientInfo;
-  
+
     clientInfo.sessionId = Wt::WApplication::instance()->sessionId();
     clientInfo.eventCallback = handleEvent;
 
@@ -84,7 +84,7 @@ bool SimpleChatServer::disconnect(Client *client)
 bool SimpleChatServer::login(const Wt::WString& user)
 {
   std::unique_lock<std::recursive_mutex> lock(mutex_);
-  
+
   if (users_.find(user) == users_.end()) {
     users_.insert(user);
 
@@ -114,7 +114,7 @@ bool SimpleChatServer::changeName(const Wt::WString& user, const Wt::WString& ne
     return true;
 
   std::unique_lock<std::recursive_mutex> lock(mutex_);
-  
+
   UserSet::iterator i = users_.find(user);
 
   if (i != users_.end()) {
