@@ -15,9 +15,9 @@ AbstractPasswordService::~AbstractPasswordService()
 
 AbstractPasswordService::StrengthValidatorResult
 ::StrengthValidatorResult(
-			  bool valid, 
+			  bool valid,
 			  const WString &message,
-			  int strength) 
+			  int strength)
   : valid_(valid), message_(message), strength_(strength)
 {}
 
@@ -25,11 +25,11 @@ WValidator::Result AbstractPasswordService::AbstractStrengthValidator
 ::validate(const WT_USTRING& password, const WT_USTRING& loginName,
 	   const std::string& email) const
 {
-  AbstractPasswordService::StrengthValidatorResult result 
+  AbstractPasswordService::StrengthValidatorResult result
     = evaluateStrength(password, loginName, email);
 
   return WValidator::Result
-    (result.isValid() ? ValidationState::Valid : ValidationState::Invalid, 
+    (result.isValid() ? ValidationState::Valid : ValidationState::Invalid,
      result.message());
 }
 
