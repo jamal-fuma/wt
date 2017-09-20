@@ -10,8 +10,8 @@
 
 #include <cmath>
 
-Circle::Circle(const WPointF& center, 
-	       const ShapeColor& color, 
+Circle::Circle(const WPointF& center,
+	       const ShapeColor& color,
 	       const double size)
   : Shape(center, color, size)
 {
@@ -21,10 +21,10 @@ Circle::Circle(const WPointF& center,
 
 bool Circle::contains(const WPointF& point) const
 {
-  return distanceTo(center().x(), 
-		    center().y(), 
-		    point.x(), 
-		    point.y()) 
+  return distanceTo(center().x(),
+		    center().y(),
+		    point.x(),
+		    point.y())
     <= size();
 }
 
@@ -32,8 +32,8 @@ WString Circle::shapeName() const
 {
   return WString::tr("captcha.circle");
 }
- 
-double Circle::distanceTo(const double x1, const double y1, 
+
+double Circle::distanceTo(const double x1, const double y1,
 			  const double x2, const double y2) const
 {
   return std::sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
@@ -44,17 +44,17 @@ void Circle::paint(WPainter& painter) const
   WBrush b;
   b.setStyle(BrushStyle::Solid);
   b.setColor(color());
-  
+
   WPainterPath pp;
-  pp.addEllipse(center().x() - size(), 
-		center().y() - size(), 
+  pp.addEllipse(center().x() - size(),
+		center().y() - size(),
 		size() * 2, size() * 2);
-  
+
   painter.fillPath(pp, b);
 }
 
-Rectangle::Rectangle(const WPointF& center, 
-		     const ShapeColor& color, 
+Rectangle::Rectangle(const WPointF& center,
+		     const ShapeColor& color,
 		     const double size)
   : Shape(center, color, size)
 {
@@ -63,9 +63,9 @@ Rectangle::Rectangle(const WPointF& center,
 
 bool Rectangle::contains(const WPointF& point) const
 {
-  return WRectF(center().x(), 
-		center().y(), 
-		size(), 
+  return WRectF(center().x(),
+		center().y(),
+		size(),
 		size()).
     contains(point);
 }
@@ -80,9 +80,9 @@ void Rectangle::paint(WPainter& painter) const
   WBrush b;
   b.setStyle(BrushStyle::Solid);
   b.setColor(color());
-  
+
   WPainterPath pp;
   pp.addRect(WRectF(center().x(), center().y(), size(), size()));
-  
+
   painter.fillPath(pp, b);
 }
