@@ -245,7 +245,7 @@ void WAxisSliderWidget::paintEvent(WPaintDevice *paintDevice)
 	 h = horizontal ? height().value() : width().value();
 
   bool autoPadding = autoPadding_;
-  if (autoPadding && !(paintDevice->features() & 
+  if (autoPadding && !(paintDevice->features() &
 		       PaintDeviceFeatureFlag::FontMetrics) &&
       labelsEnabled_) {
     LOG_ERROR("setAutoLayout(): device does not have font metrics "
@@ -280,7 +280,7 @@ void WAxisSliderWidget::paintEvent(WPaintDevice *paintDevice)
 		     10.0)), Side::Top | Side::Bottom);
 	setSelectionAreaPadding
 	  (static_cast<int>(chart()->axis(Axis::X).calcMaxTickLabelSize
-			    (paintDevice, Orientation::Horizontal) + 10), 
+			    (paintDevice, Orientation::Horizontal) + 10),
 	   Side::Left);
       } else {
 	setSelectionAreaPadding(0, Side::Right);
@@ -311,7 +311,7 @@ void WAxisSliderWidget::paintEvent(WPaintDevice *paintDevice)
   double renderIntervalBak = chart()->axis(Axis::X).renderInterval_;
   double fullRenderLengthBak = chart()->axis(Axis::X).fullRenderLength_;
   chart()->axis(Axis::X).prepareRender
-    (horizontal ? Orientation::Horizontal : Orientation::Vertical, 
+    (horizontal ? Orientation::Horizontal : Orientation::Vertical,
      drawArea.width());
 
   const WRectF& chartArea = chart()->chartArea_;
@@ -373,7 +373,7 @@ void WAxisSliderWidget::paintEvent(WPaintDevice *paintDevice)
 	labelHFlag = AlignmentFlag::Center;
     }
   }
-  
+
   WFlags<AxisProperty> axisProperties = AxisProperty::Line;
   if (labelsEnabled_) {
     axisProperties |= AxisProperty::Labels;
