@@ -164,7 +164,7 @@ void TreeNode::undoCollapse()
     expandIcon_->setState(1);
     expandedContent_->show();
     if (labelIcon_)
-      labelIcon_->setState(1);    
+      labelIcon_->setState(1);
   }
 }
 
