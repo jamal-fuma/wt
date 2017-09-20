@@ -92,7 +92,7 @@ void SessionProcess::asyncExec(const Configuration &config,
   acceptor_->async_accept
     (*socket_, std::bind(&SessionProcess::acceptHandler, shared_from_this(),
 			 std::placeholders::_1, onReady));
-  LOG_DEBUG("Listening to child process on port " 
+  LOG_DEBUG("Listening to child process on port "
 	    << acceptor_->local_endpoint(ec).port());
 
   exec(config, onReady);
@@ -241,7 +241,7 @@ void SessionProcess::exec(const Configuration& config,
     sigfillset(&mask);
     pthread_sigmask(SIG_UNBLOCK, &mask, 0);
 #endif // WT_THREADED
-    
+
 
     execv(c_options[0], const_cast<char *const *>(c_options));
     // An error occurred, this should not be reached
