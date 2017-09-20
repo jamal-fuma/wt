@@ -191,7 +191,7 @@ Reply::Reply(Request& request, const Configuration& config)
 { }
 
 Reply::~Reply()
-{ 
+{
   LOG_DEBUG("~Reply");
 #ifdef WTHTTP_WITH_ZLIB
   if (gzipBusy_)
@@ -408,7 +408,7 @@ bool Reply::nextBuffers(std::vector<asio::const_buffer>& result)
 	/*
 	 * Content-Encoding: gzip ?
 	 */
-	gzipEncoding_ = 
+	gzipEncoding_ =
 	     !haveContentEncoding
 	  && configuration_.compression()
 	  && request_.acceptGzipEncoding()
@@ -424,7 +424,7 @@ bool Reply::nextBuffers(std::vector<asio::const_buffer>& result)
 
 	if (gzipEncoding_) {
 	  buf_ << "Content-Encoding: gzip\r\n";
-	  
+
 	  initGzip();
 	}
 #endif
@@ -605,7 +605,7 @@ bool Reply::encodeNextContentBuffer(
 
 	int r = 0;
 	r = deflate(&gzipStrm_,
-		    lastData && (i == buffers.size() - 1) ? 
+		    lastData && (i == buffers.size() - 1) ?
 		    Z_FINISH : Z_NO_FLUSH);
 
 	assert(r != Z_STREAM_ERROR);
