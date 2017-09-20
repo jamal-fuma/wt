@@ -140,7 +140,7 @@ WStatelessSlot *WObject::implementPrelearn(Method method, Method undoMethod)
 
 WStatelessSlot *WObject::implementPrelearned(Method method,
 					     const std::string& jsCode)
-{        
+{
   for (unsigned i = 0; i < statelessSlots_.size(); i++)
     if (statelessSlots_[i]->implementsMethod(method)) {
       statelessSlots_[i]->reimplementJavaScript(jsCode);
