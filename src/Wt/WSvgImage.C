@@ -32,7 +32,7 @@ namespace {
       return 359.5;
     else if (std::fabs(d + 360) < 0.01)
       return -359.5;
-    else 
+    else
       return d;
   }
 
@@ -81,7 +81,7 @@ WFlags<PaintDeviceFeatureFlag> WSvgImage::features() const
 }
 
 void WSvgImage::init()
-{ 
+{
   currentBrush_ = painter()->brush();
   currentPen_ = painter()->pen();
   currentFont_ = painter()->font();
@@ -141,16 +141,16 @@ void WSvgImage::makeNewGroup()
   if (!newGroup_)
     return;
 
-  bool brushChanged = 
+  bool brushChanged =
     changeFlags_.test(PainterChangeFlag::Brush) &&
     (currentBrush_ != painter()->brush());
 
   bool penChanged =
-    changeFlags_.test(PainterChangeFlag::Hints) || 
-    (changeFlags_.test(PainterChangeFlag::Pen) && 
+    changeFlags_.test(PainterChangeFlag::Hints) ||
+    (changeFlags_.test(PainterChangeFlag::Pen) &&
      (currentPen_ != painter()->pen()));
-  bool fontChanged = 
-    changeFlags_.test(PainterChangeFlag::Font) && 
+  bool fontChanged =
+    changeFlags_.test(PainterChangeFlag::Font) &&
     (currentFont_ != painter()->font());
   bool shadowChanged = false;
 
@@ -316,7 +316,7 @@ void WSvgImage::makeNewGroup()
   }
 
   shapes_ << '>';
-  
+
   changeFlags_ = None;
 }
 
@@ -541,7 +541,7 @@ void WSvgImage::drawImage(const WRectF& rect, const std::string& imgUri,
       || drect.height() != srect.height()) {
     shapes_ << "<" SVG "g transform=\"matrix("
 	    << Utils::round_js_str(drect.width() / srect.width(), 3, buf);
-    shapes_ << " 0 0 " 
+    shapes_ << " 0 0 "
 	    << Utils::round_js_str(drect.height() / srect.height(), 3, buf);
     shapes_ << ' ' << Utils::round_js_str(drect.x(), 3, buf);
     shapes_ << ' ' << Utils::round_js_str(drect.y(), 3, buf) << ")\">";
@@ -598,7 +598,7 @@ void WSvgImage::drawLine(double x1, double y1, double x2, double y2)
   drawPath(path);
 }
 
-void WSvgImage::drawText(const WRectF& rect, 
+void WSvgImage::drawText(const WRectF& rect,
 			 WFlags<AlignmentFlag> flags,
 			 TextFlag textFlag,
 			 const WString& text,
@@ -622,7 +622,7 @@ void WSvgImage::drawText(const WRectF& rect,
       || painter()->brush().style() == BrushStyle::None) {
     const WColor& color = painter()->pen().color();
     style << "fill:" + color.cssText() << ';'
-	  << "fill-opacity:" 
+	  << "fill-opacity:"
 	  << Utils::round_css_str(color.alpha() / 255., 3, buf)
 	  << ';';
   }
@@ -703,7 +703,7 @@ void WSvgImage::drawText(const WRectF& rect,
       break;
     }
 
-    shapes << ">" << WWebWidget::escapeText(text, false).toUTF8() 
+    shapes << ">" << WWebWidget::escapeText(text, false).toUTF8()
 	   << "</" SVG "text>";
 
 #else
@@ -728,7 +728,7 @@ void WSvgImage::drawText(const WRectF& rect,
 
   shapes_ << " y=" << quote(y);
 
-  shapes_ << ">" << WWebWidget::escapeText(text, false).toUTF8() 
+  shapes_ << ">" << WWebWidget::escapeText(text, false).toUTF8()
 	  << "</" SVG "text>";
 #endif
   }
@@ -785,7 +785,7 @@ std::string WSvgImage::fillStyle() const
     }
   case BrushStyle::Gradient:
     if (!currentBrush_.gradient().isEmpty()) {
-      result += "fill:"; 
+      result += "fill:";
       result += "url(#gradient";
       result += std::to_string(currentFillGradientId_);
       result += ");";
