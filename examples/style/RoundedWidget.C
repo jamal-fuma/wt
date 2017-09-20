@@ -164,7 +164,7 @@ void RoundedWidget::adjust()
   if (images_[3] && !images_[3]->isHidden())
     images_[3]->setForeground(backgroundColor_);
 
-  if (images_[1]) 
+  if (images_[1])
     top_->decorationStyle().setBackgroundImage(images_[1]->imageLink(),
                                                WFlags<Orientation>(),
                                                Side::Top | Side::Right);
