@@ -26,7 +26,7 @@
 
 namespace Wt {
 
-LOGGER("Auth.RegistrationWidget");	     
+LOGGER("Auth.RegistrationWidget");
 
   namespace Auth {
 
@@ -132,7 +132,7 @@ void RegistrationWidget::update()
       else
 	bindString("oauth-description", tr("Wt.Auth.oauth-registration"));
 
-      WContainerWidget *icons = 
+      WContainerWidget *icons =
 	bindWidget("icons", cpp14::make_unique<WContainerWidget>());
       icons->addStyleClass("Wt-field");
 
