@@ -81,7 +81,7 @@ WColor WStandardColorMap::toColor(double value) const
 {
   if (colors_.size() == 0)
     return WColor();
-  
+
   // value outside of the colormap
   if (value < colors_[0].value()) {
     return colors_[0].color();
@@ -99,7 +99,7 @@ WColor WStandardColorMap::toColor(double value) const
   if (continuous_) {
     Pair mapVal1 = colors_[i-1];
     Pair mapVal2 = colors_[i];
-    
+
     double factor = (value - mapVal1.value())/(mapVal2.value() - mapVal1.value());
     return interpolate(mapVal1.color(), mapVal2.color(), factor);
   } else {
@@ -126,11 +126,11 @@ void WStandardColorMap::createStrip(WPainter *painter, const WRectF& area) const
   double offset = valueInterval/2;
   for (int i=0; i<height; i++) {
     WColor color = toColor(min_ + offset + i*valueInterval);
-    
+
     painter->setBrush(WBrush(color));
     WPen linePen(color); linePen.setWidth(1);
     painter->setPen(linePen);
-    
+
     painter->drawLine(0, height-(0.5+i),
 		      width, height-(0.5+i));
   }
@@ -176,13 +176,13 @@ void WStandardColorMap::paintLegend(WPainter *painter,
     int interval = (height-textHeight)/(nbTicks-1);
     int rest = (height-textHeight) % (nbTicks-1);
     int adjustedInterval = interval;
-    
+
     double value = max_;
     double valDiff = (max_-min_)/(nbTicks-1);
     for (int i=0; i < nbTicks; i++) {
       painter->drawLine(0, 0.5, 4, 0.5);
       painter->drawText(10, -textHeight/2, 40, textHeight,
-			AlignmentFlag::Left | AlignmentFlag::Middle, 
+			AlignmentFlag::Left | AlignmentFlag::Middle,
 			Wt::asString(value, format_));
       value -= valDiff;
 
