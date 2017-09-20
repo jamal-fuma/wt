@@ -158,7 +158,7 @@ WValidator::Result WDateValidator::validate(const WT_USTRING& input) const
 	if (!top_.isNull())
 	  if (d > top_)
 	    return Result(ValidationState::Invalid, invalidTooLateText());
-    
+
 	return Result(ValidationState::Valid);
       }
     } catch (std::exception& e) {
