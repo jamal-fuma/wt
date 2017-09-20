@@ -53,7 +53,7 @@ namespace {
       : request_(request),
 	headersCommitted_(false),
 	status_(-1)
-    { 
+    {
       in_streambuf_ = new fcgi_streambuf(request_->in, &buf_[0], buf_.size());
       out_streambuf_ = new fcgi_streambuf(request_->out);
       err_streambuf_ = new fcgi_streambuf(request_->err);
@@ -92,11 +92,11 @@ namespace {
     virtual std::ostream& out() override {
       if (!headersCommitted_) {
 	headersCommitted_ = true;
-	if(status_ > -1 ) 
+	if(status_ > -1 )
 	  *out_ << "Status: " << status_ << "\r\n";
 	*out_ << "\r\n";
       }
-      return *out_; 
+      return *out_;
     }
     virtual std::ostream& err() override { return *err_; }
 
@@ -129,7 +129,7 @@ namespace {
       *out_ << "Location: " << url << "\r\n\r\n";
     }
 
-    virtual const char *headerValue(const char *name) const override 
+    virtual const char *headerValue(const char *name) const override
     {
       return envValue(cgiEnvName(name).c_str());
     }
@@ -263,7 +263,7 @@ namespace {
       std::string clientCert = str(envValue("SSL_CLIENT_CERT"));
       if (!clientCert.empty()) {
 	X509 *x509 = Wt::Ssl::readFromPem(clientCert);
-	
+
 	if (x509) {
           Wt::WSslCertificate clientCert = Wt::Ssl::x509ToWSslCertificate(x509);
 
@@ -272,18 +272,18 @@ namespace {
 	  std::vector<Wt::WSslCertificate> clientCertChain;
 	  unsigned depth = UINT_MAX;
 	  for (unsigned i = 0; i < depth; i++) {
-	    std::string name = SSL_CLIENT_CERT_CHAIN_PREFIX; 
+	    std::string name = SSL_CLIENT_CERT_CHAIN_PREFIX;
 	    name += std::to_string(i);
 	    char *cc = FCGX_GetParam(name.c_str(), request_->envp);
 	    if (cc) {
               X509 *x509_i = Wt::Ssl::readFromPem(cc);
 	      clientCertChain.push_back(Wt::Ssl::x509ToWSslCertificate(x509_i));
               X509_free(x509_i);
-            } else 
+            } else
 	      break;
 	  }
-	  
-	  
+
+
           Wt::ValidationState state = Wt::ValidationState::Invalid;
 	  std::string verify = str(envValue("SSL_CLIENT_VERIFY"));
           std::string verifyInfo;
@@ -298,8 +298,8 @@ namespace {
 	  }
 	  Wt::WValidator::Result clientVerificationResult(state, verifyInfo);
 
-	  return new Wt::WSslInfo(clientCert, 
-                                  clientCertChain, 
+	  return new Wt::WSslInfo(clientCert,
+                                  clientCertChain,
 				  clientVerificationResult);
 	}
       }
