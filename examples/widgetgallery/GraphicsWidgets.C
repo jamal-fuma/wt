@@ -25,25 +25,25 @@ void GraphicsWidgets::populateSubMenu(Wt::WMenu *menu)
   menu->setInternalBasePath("/graphics-charts");
 
   menu->addItem("2D painting", painting2d())->setPathComponent("");
-  menu->addItem("Paintbrush", 
+  menu->addItem("Paintbrush",
                 deferCreate(std::bind
                             (&GraphicsWidgets::paintbrush, this)));
-  menu->addItem("Category chart", 
+  menu->addItem("Category chart",
                 deferCreate(std::bind
                             (&GraphicsWidgets::categoryChart, this)));
-  menu->addItem("Scatter plot", 
+  menu->addItem("Scatter plot",
                 deferCreate(std::bind
                             (&GraphicsWidgets::scatterPlot, this)));
   menu->addItem("Axis slider widget",
                 deferCreate(std::bind
                             (&GraphicsWidgets::axisSliderWidget, this)));
-  menu->addItem("Pie chart", 
+  menu->addItem("Pie chart",
                 deferCreate(std::bind
                             (&GraphicsWidgets::pieChart, this)));
   menu->addItem("Maps",
                 deferCreate(std::bind
                             (&GraphicsWidgets::googleMap, this)));
-  menu->addItem("3D painting", 
+  menu->addItem("3D painting",
                 deferCreate(std::bind
                             (&GraphicsWidgets::painting3d, this)));
   menu->addItem("3D numerical chart",
@@ -178,7 +178,7 @@ std::unique_ptr<Wt::WWidget> GraphicsWidgets::numCharts3d()
   auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-NumCharts3D");
 
   result->bindWidget("NumericalCharts3D", NumChart3d());
- 
+
   return std::move(result);
 }
 
