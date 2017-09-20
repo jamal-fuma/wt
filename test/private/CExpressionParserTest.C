@@ -8,7 +8,7 @@
 #include <boost/test/unit_test.hpp>
 
 namespace {
-  int eval(std::string expression, ::uint64_t n) 
+  int eval(std::string expression, ::uint64_t n)
   {
     return Wt::WMessageResources::evalPluralCase(expression, n);
   }
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( cexpression_basic_expression_test )
     BOOST_REQUIRE(eval(gte_e, 3) == 1);
     BOOST_REQUIRE(eval(gte_e, 4) == 1);
 
-    std::string combined = 
+    std::string combined =
       lt_e + " || " + lte_e + " && " + gt_e + " && " + gte_e;
     BOOST_REQUIRE(eval(combined, 2) == 1);
     BOOST_REQUIRE(eval(combined, 3) == 0);
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE( cexpression_basic_languagesTest )
 {
   //Polish language expression
   {
-    std::string e 
+    std::string e
       = "n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2";
     BOOST_REQUIRE(eval(e, 1) == 0);
     BOOST_REQUIRE(eval(e, 3) == 1);
@@ -137,9 +137,9 @@ BOOST_AUTO_TEST_CASE( cexpression_basic_languagesTest )
   }
 
   //English, German, Dutch, Swedish, Danish, Norwegian, Faroese,
-  //Spanish, Portuguese, Italian, Bulgarian 
+  //Spanish, Portuguese, Italian, Bulgarian
   //Greek
-  //Finnish, Estonian, Hungarian 
+  //Finnish, Estonian, Hungarian
   //Hebrew
   //Esperanto
   //Turkish
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE( cexpression_basic_languagesTest )
     BOOST_REQUIRE(eval(e, 3) == 1);
     BOOST_REQUIRE(eval(e, 22) == 1);
   }
-  
+
   //Russian, Ukrainian, Serbian, Croatian language expression
   {
     std::string e = "n%10==1 && n%100!=11 ? 0 :"
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE( cexpression_basic_languagesTest )
     BOOST_REQUIRE(eval(e, 12) == 2);
     BOOST_REQUIRE(eval(e, 13) == 2);
     BOOST_REQUIRE(eval(e, 14) == 2);
-    
+
     BOOST_REQUIRE(eval(e, 211) == 2);
     BOOST_REQUIRE(eval(e, 212) == 2);
     BOOST_REQUIRE(eval(e, 213) == 2);
