@@ -224,7 +224,7 @@ void WtReply::consumeRequestBody(const char *begin,
 	// Note: this is being posted because we want to release the strand
 	// we currently hold; we need to do that because otherwise the strand
 	// could be locked during a recursive event loop
-	// 
+	//
 	// Are we sure that the reply object isn't deleted before it's used?
 	// the httpRequest_ has a WtReplyPtr and httpRequest_ is only deleted
 	// from the destructor, so that's okay.
@@ -283,7 +283,7 @@ void WtReply::consumeRequestBody(const char *begin,
       httpRequest_ = new HTTPRequest(std::static_pointer_cast<WtReply>
                                      (shared_from_this()), entryPoint_);
       httpRequest_->setWebSocketRequest(true);
-      
+
       fetchMoreDataCallback_
 	= std::bind(&WtReply::readRestWebSocketHandshake, this);
 
@@ -564,7 +564,7 @@ void WtReply::formatResponse(std::vector<asio::const_buffer>& result)
 		  // strip trailing for 0x0 0x0 0xff 0xff bytes
 		  bs = bs - 4;
 		}
-		
+
 		buffers.push_back(buf(std::string((char*)buffer, bs)));
 		payloadLength+=bs;
 	  } while (hasMore);
@@ -609,10 +609,10 @@ void WtReply::formatResponse(std::vector<asio::const_buffer>& result)
 
 #ifdef WTHTTP_WITH_ZLIB
 	// Compress frame if compression is enabled
-	if(request_.pmdState_.enabled) 
-	  for(unsigned i = 0; i < buffers.size() ; ++i) 
+	if(request_.pmdState_.enabled)
+	  for(unsigned i = 0; i < buffers.size() ; ++i)
 		result.push_back(buffers[i]);
-	else 
+	else
 #endif
 	  result.push_back(out_buf_.data());
 
@@ -660,7 +660,7 @@ bool WtReply::nextContentBuffers(std::vector<asio::const_buffer>& result)
 
 #ifdef WTHTTP_WITH_ZLIB
 
-bool WtReply::initDeflate() 
+bool WtReply::initDeflate()
 {
   zOutState_.zalloc = nullptr;
   zOutState_.zfree = nullptr;
@@ -681,7 +681,7 @@ bool WtReply::initDeflate()
   deflateInitialized_ = true;
   return true;
 }
-  
+
 int WtReply::deflate(const unsigned char* in, size_t size, unsigned char out[], bool& hasMore)
 {
   size_t output = 0;
@@ -693,7 +693,7 @@ int WtReply::deflate(const unsigned char* in, size_t size, unsigned char out[], 
 	if(!initDeflate())
 	  return -1;
   }
-  
+
   // If it's the first iteration init the data
   if(!hasMore) {
     // Set only at the first iteration
@@ -707,20 +707,20 @@ int WtReply::deflate(const unsigned char* in, size_t size, unsigned char out[], 
 
   hasMore = true;
 
-  int ret = ::deflate(&zOutState_, 
-      request_.pmdState_.server_max_window_bits < 0 
+  int ret = ::deflate(&zOutState_,
+      request_.pmdState_.server_max_window_bits < 0
       ? Z_FULL_FLUSH : Z_SYNC_FLUSH);
-  
+
   assert(ret != Z_STREAM_ERROR);
 
   output = bufferSize - zOutState_.avail_out;
 
-  if (zOutState_.avail_out != 0) 
+  if (zOutState_.avail_out != 0)
     hasMore = false;
 
-  return output; 
+  return output;
 }
 #endif
-  
+
 }
 }
