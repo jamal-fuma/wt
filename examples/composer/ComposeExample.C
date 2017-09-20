@@ -75,7 +75,7 @@ void ComposeExample::send()
               + contacts[i].email + U">", TextFormat::Plain));
     horiz->addWidget(cpp14::make_unique<WBreak>());
   }
-  
+
   contacts = composer_->bcc();
   if (!contacts.empty())
     horiz = feedback->addWidget(cpp14::make_unique<WContainerWidget>());
