@@ -51,10 +51,10 @@ BOOST_AUTO_TEST_CASE( json_generate_object )
 	      "}"
 	      ,
   	      initial);
-  
+
   Json::Object obj = initial;
   std::string generated = Json::serialize(obj);
-  
+
   Json::Value reconstructed;
   Json::parse(generated, reconstructed);
 
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( json_generate_array )
 
   Json::Array arr = initial;
   std::string generated = Json::serialize(arr);
-  
+
   Json::Value reconstructed;
   Json::parse(generated, reconstructed);
 
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE( json_generate_UTF8 )
 // We lose precision in earlier versions of boost
 BOOST_AUTO_TEST_CASE( json_test_double_dim )
 {
-  Json::Value v(2.0487042606859837E-309);  
+  Json::Value v(2.0487042606859837E-309);
   Json::Object obj;
   obj["test"] = v;
   std::string generated = Json::serialize(obj);
