@@ -90,7 +90,7 @@ void MandelbrotImage::generate(int64_t x, int64_t y, WRasterImage *img)
   int w = img->width().toPixels();
   int h = img->height().toPixels();
 
-  std::cerr << "rendering: (" << x << "," << y << ") (" 
+  std::cerr << "rendering: (" << x << "," << y << ") ("
 	    << x+w << "," << y+h << ")" << std::endl;
 
   for (int i = 0; i < w; ++i)
