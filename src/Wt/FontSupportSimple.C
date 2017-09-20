@@ -29,7 +29,7 @@ namespace {
 namespace Wt {
 
 LOGGER("FontSupportSimple");
-	      
+
 #ifndef WT_TARGET_JAVA
 FontSupport::Bitmap::Bitmap(int width, int height)
 { }
@@ -51,7 +51,7 @@ FontSupport::FontMatch::FontMatch(const std::string& fileName, double quality)
 FontSupport::FontSupport(WPaintDevice *device, EnabledFontFormats /* enabledFontFormats */)
   : device_(device),
     font_(nullptr)
-{ 
+{
   for (int i = 0; i < 5; ++i)
     cache_.push_back(Matched());
 }
@@ -214,7 +214,7 @@ void FontSupport::matchFont(const WFont& font,
 {
   std::vector<std::string> files;
   FileUtils::listFiles(path, files);
-  
+
   for (unsigned i = 0; i < files.size(); ++i) {
     std::string f = files[i];
     if (FileUtils::isDirectory(f)) {
@@ -252,16 +252,16 @@ void FontSupport::matchFont(const WFont& font,
     }
 
     switch (font.style()) {
-    case FontStyle::Normal: 
+    case FontStyle::Normal:
       styleVariants.push_back("regular");
-      styleVariants.push_back(""); 
+      styleVariants.push_back("");
       break;
-    case FontStyle::Italic:  
+    case FontStyle::Italic:
       styleVariants.push_back("italic");
-      styleVariants.push_back("oblique");  
+      styleVariants.push_back("oblique");
       break;
-    case FontStyle::Oblique: 
-      styleVariants.push_back("oblique"); 
+    case FontStyle::Oblique:
+      styleVariants.push_back("oblique");
       break;
     }
 
@@ -270,7 +270,7 @@ void FontSupport::matchFont(const WFont& font,
 
       if (q <= match.quality())
 	return;
-      
+
       for (unsigned w = 0; w < weightVariants.size(); ++w)
 	for (unsigned s = 0; s < styleVariants.size(); ++s) {
 	  std::string fn = fontNames[i] + weightVariants[w] + styleVariants[s];
