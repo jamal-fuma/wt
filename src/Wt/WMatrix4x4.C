@@ -53,7 +53,7 @@ WMatrix4x4::WMatrix4x4(const WMatrix4x4 &other)
 
 WMatrix4x4::WMatrix4x4(const WGenericMatrix<double, 4, 4> &other)
   : WGenericMatrix<double, 4, 4>(other)
-{} 
+{}
 
 void WMatrix4x4::flipCoordinates()
 {
@@ -68,17 +68,17 @@ void WMatrix4x4::frustum(double left, double right, double bottom, double top,
   f(0, 1) = 0;
   f(0, 2) = (right + left) / (right - left);
   f(0, 3) = 0;
-    
+
   f(1, 0) = 0;
   f(1, 1) = 2 * nearPlane / (top - bottom);
   f(1, 2) = (top + bottom) / (top - bottom);
   f(1, 3) = 0;
-    
+
   f(2, 0) = 0;
   f(2, 1) = 0;
   f(2, 2) = - (farPlane + nearPlane) / (farPlane - nearPlane);
   f(2, 3) = - 2 * farPlane * nearPlane / (farPlane - nearPlane);
-    
+
   f(3, 0) = 0;
   f(3, 1) = 0;
   f(3, 2) = -1;
