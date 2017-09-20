@@ -23,7 +23,7 @@ using namespace Wt::Chart;
 
 namespace {
 
-double plotTimeSeriesChart(const std::shared_ptr<WStandardItemModel>& model, 
+double plotTimeSeriesChart(const std::shared_ptr<WStandardItemModel>& model,
 			   std::string fileName,
 			   AxisScale xScale)
 {
@@ -55,7 +55,7 @@ double plotTimeSeriesChart(const std::shared_ptr<WStandardItemModel>& model,
 
     chart.paint(painter);
 
-    result = 
+    result =
       chart.axis(Axis::Y).maximum() - chart.axis(Axis::Y).minimum();
 
     painter.end();
@@ -93,9 +93,9 @@ BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChartMinutes )
 
   plotTimeSeriesChart(model, "minutes.svg", AxisScale::DateTime);
 }
-  
+
 BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChartHours )
-{ 
+{
   auto model = std::make_shared<WStandardItemModel>();
 
   WDate d(2009, 10, 1);
@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChartHours )
 BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChartDays )
 {
   auto model = std::make_shared<WStandardItemModel>();
-  
+
   WDate start(2009, 10, 1);
   WDate end(2009, 11, 10);
 
@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChartDays )
   plotTimeSeriesChart(model, "days.svg", AxisScale::Date);
 }
 
-  
+
 BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChartWeeks )
 {
   auto model = std::make_shared<WStandardItemModel>();
@@ -158,14 +158,14 @@ BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChartWeeks )
 
   plotTimeSeriesChart(model, "weeks.svg", AxisScale::Date);
 }
-  
+
 BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChartMonths )
 {
   auto model = std::make_shared<WStandardItemModel>();
 
   WDate start(2008, 4, 1);
   WDate end(2008, 12, 1);
-  
+
   WDate d = start;
   int row = 0;
   model->insertColumns(0, 2);
@@ -186,7 +186,7 @@ BOOST_AUTO_TEST_CASE( chart_test_WDateTimeChart0Range )
 
   WDate start(2008, 4, 1);
   WDate end(2008, 12, 1);
-  
+
   WDate d = start;
   int row = 0;
   model->insertColumns(0, 2);
