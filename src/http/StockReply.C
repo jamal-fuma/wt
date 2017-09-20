@@ -275,7 +275,7 @@ StockReply::StockReply(Request& request,
 		       const Configuration& configuration)
   : Reply(request, configuration),
     transmitted_(false)
-{ 
+{
   setStatus(status);
 }
 
