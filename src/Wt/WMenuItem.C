@@ -236,7 +236,7 @@ WLink WMenuItem::link() const
 }
 
 void WMenuItem::updateInternalPath()
-{  
+{
   if (menu_ && menu_->internalPathEnabled() && internalPathEnabled()) {
     std::string internalPath = menu_->internalBasePath() + pathComponent();
     WLink link(LinkType::InternalPath, internalPath);
@@ -246,7 +246,7 @@ void WMenuItem::updateInternalPath()
   } else {
     WAnchor *a = anchor();
     if (a && !customLink_) {
-      if (WApplication::instance()->environment().agent() == 
+      if (WApplication::instance()->environment().agent() ==
 	  UserAgent::IE6)
 	a->setLink(WLink("#"));
       else
