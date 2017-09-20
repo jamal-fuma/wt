@@ -17,7 +17,7 @@ namespace Wt {
 Transaction::Transaction(Session& session)
   : committed_(false),
     session_(session)
-{ 
+{
   if (!session_.transaction_)
     session_.transaction_ = new Impl(session_);
 
@@ -72,7 +72,7 @@ void Transaction::release()
   --impl_->transactionCount_;
 
   if (impl_->transactionCount_ == 0)
-    delete impl_;  
+    delete impl_;
 }
 
 bool Transaction::isActive() const
