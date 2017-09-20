@@ -39,7 +39,7 @@ WColor::WColor(const WString& name)
     blue_(-1),
     alpha_(255),
     name_(name)
-{ 
+{
   WColor c = Wt::Color::parseCssColor(name.toUTF8());
   this->setRgb(c.red(), c.green(), c.blue(), c.alpha());
   // setRgb() erases name_
