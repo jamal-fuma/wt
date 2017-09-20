@@ -52,7 +52,7 @@ ServerSideFontMetrics::measureText(const WFont& font,
 #else
   throw WException("ServerSideFontMetrics not available");
 #endif // WT_HAS_WPDFIMAGE
-} 
+}
 
 bool ServerSideFontMetrics::available()
 {
