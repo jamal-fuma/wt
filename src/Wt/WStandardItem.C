@@ -277,7 +277,7 @@ void WStandardItem::setChecked(bool checked)
 void WStandardItem::setCheckState(CheckState state)
 {
   cpp17::any d = data(ItemDataRole::Checked);
-  if (d.empty() || checkState() != state || 
+  if (d.empty() || checkState() != state ||
       data(ItemDataRole::Checked).empty()) {
     if (isTristate())
       setData(cpp17::any(state), ItemDataRole::Checked);
@@ -456,7 +456,7 @@ void WStandardItem::insertColumns(int column, int count)
 {
   if (count > 0) {
     if (model_)
-      model_->beginInsertColumns(index(), column, column + count - 1);    
+      model_->beginInsertColumns(index(), column, column + count - 1);
 
     int rc = rowCount();
 
@@ -604,13 +604,13 @@ std::unique_ptr<WStandardItem> WStandardItem::takeChild(int row, int column)
   std::unique_ptr<WStandardItem> result;
   if (item) {
     WModelIndex idx = item->index();
-    
+
     if (item->hasChildren())
       model_->beginRemoveRows(item->index(), 0, item->rowCount() - 1);
-    
+
     orphanChild(item);
     result = std::move((*columns_)[column][row]);
-    
+
     if (item->hasChildren())
       model_->endRemoveRows();
 
