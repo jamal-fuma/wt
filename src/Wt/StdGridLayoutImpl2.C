@@ -131,7 +131,7 @@ bool StdGridLayoutImpl2::hasItem(int row, int col) const
 DomElement *StdGridLayoutImpl2::createElement(WLayoutItem *item,
 					      WApplication *app)
 {
-  DomElement *c = getImpl(item)->createDomElement(nullptr, true, true, app); 
+  DomElement *c = getImpl(item)->createDomElement(nullptr, true, true, app);
 
   c->setProperty(Property::StyleVisibility, "hidden");
 
@@ -224,7 +224,7 @@ void StdGridLayoutImpl2::updateDom(DomElement& parent)
 }
 
 StdGridLayoutImpl2::~StdGridLayoutImpl2()
-{ 
+{
   WApplication *app = WApplication::instance();
 
   /*
