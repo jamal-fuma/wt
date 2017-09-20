@@ -35,7 +35,7 @@ WCalendar::WCalendar()
   impl_->addStyleClass("Wt-calendar");
 }
 
-void WCalendar::setSelectionMode(SelectionMode mode) 
+void WCalendar::setSelectionMode(SelectionMode mode)
 {
   if (selectionMode_ != mode) {
     if (mode != SelectionMode::Extended && selection_.size() > 1) {
@@ -155,8 +155,8 @@ void WCalendar::setFirstDayOfWeek(int dayOfWeek)
     int day = (i + firstDayOfWeek_ - 1) % 7 + 1;
 
     WString title = WDate::longDayName(day);
-    impl_->bindString("t" + std::to_string(i), 
-		      title, 
+    impl_->bindString("t" + std::to_string(i),
+		      title,
 		      TextFormat::UnsafeXHTML);
 
     WString abbr;
@@ -171,7 +171,7 @@ void WCalendar::setFirstDayOfWeek(int dayOfWeek)
       abbr = WDate::longDayName(day);
       break;
     }
-   
+
     impl_->bindString("d" + std::to_string(i), abbr,
 		      TextFormat::UnsafeXHTML);
   }
@@ -232,14 +232,14 @@ void WCalendar::render(WFlags<RenderFlag> flags)
     // The first line contains the last day of the previous month.
     WDate d(currentYear_, currentMonth_, 1);
     d = d.addDays(-1);
- 
+
     d = WDate::previousWeekday(d, firstDayOfWeek_);
 
     for (unsigned i = 0; i < 6; ++i) {
       for (unsigned j = 0; j < 7; ++j) {
 	Utils::itoa(i * 7 + j, buf);
 	std::string cell = std::string("c") + buf;
-	
+
 	WDate date(d.year(), d.month(), d.day());
 
 	WWidget *w = impl_->resolveWidget(cell);
@@ -252,7 +252,7 @@ void WCalendar::render(WFlags<RenderFlag> flags)
 	if (iw && iw != w) {
 	  if (clicked().isConnected()
 	      || (selectionMode_ == SelectionMode::Extended)
-	      || (selectionMode_ != SelectionMode::Extended && 
+	      || (selectionMode_ != SelectionMode::Extended &&
 		  singleClickSelect_ && activated().isConnected()))
 	    iw->clicked().connect
 	      (this,
@@ -404,8 +404,8 @@ void WCalendar::cellClicked(Coordinate weekday)
 
   selectInCurrentMonth(dt);
   clicked().emit(dt);
-  
-  if (selectionMode_ != SelectionMode::Extended && 
+
+  if (selectionMode_ != SelectionMode::Extended &&
       singleClickSelect_)
     activated().emit(dt);
 }
