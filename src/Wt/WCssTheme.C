@@ -299,10 +299,10 @@ void WCssTheme::applyValidationStyle(WWidget *widget,
     widget->doJavaScript(js.str());
   } else {
     bool validStyle
-      = (validation.state() == ValidationState::Valid) && 
+      = (validation.state() == ValidationState::Valid) &&
       styles.test(ValidationStyleFlag::ValidStyle);
     bool invalidStyle
-      = (validation.state() != ValidationState::Valid) && 
+      = (validation.state() != ValidationState::Valid) &&
       styles.test(ValidationStyleFlag::InvalidStyle);
 
     widget->toggleStyleClass("Wt-valid", validStyle);
