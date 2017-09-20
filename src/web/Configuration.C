@@ -147,7 +147,7 @@ std::vector<xml_node<> *> childElements(xml_node<> *element,
   for (xml_node<> *r = element->first_node(tagName); r;
        r = r->next_sibling(tagName))
     result.push_back(r);
-  
+
   return result;
 }
 
@@ -855,7 +855,7 @@ void Configuration::readApplicationSettings(xml_node<> *app)
 
       bootstrapConfig_.push_back(BootstrapEntry());
       BootstrapEntry& e = bootstrapConfig_.back();
-      
+
       e.prefix = path[path.length() - 1] == '*';
       e.method = std::string(entry->value()) == "progressive"
 	? Progressive : DetectAjax;
@@ -901,7 +901,7 @@ void Configuration::readApplicationSettings(xml_node<> *app)
 
     std::string mode;
     attributeValue(userAgentsList, "mode", mode);
-    
+
     AgentList *list;
     if (type == "ajax") {
       list = &ajaxAgentList_;
@@ -964,7 +964,7 @@ void Configuration::readApplicationSettings(xml_node<> *app)
     std::vector<xml_node<> *> metas = childElements(metaHeader, "meta");
     for (unsigned j = 0; j < metas.size(); ++j) {
       xml_node<> *meta = metas[j];
-      
+
       std::string name, property, httpEquiv, content;
       attributeValue(meta, "name", name);
       attributeValue(meta, "http-equiv", httpEquiv);
