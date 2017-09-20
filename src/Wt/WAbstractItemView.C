@@ -132,7 +132,7 @@ public:
     return model_->setHeaderData(index.column(), Orientation::Horizontal,
 				 value, role);
   }
-  
+
   virtual WFlags<ItemFlag> flags(const WModelIndex& index) const override
   {
     WFlags<HeaderFlag> headerFlags
@@ -154,7 +154,7 @@ private:
   std::shared_ptr<WAbstractItemModel> model_;
 };
 
-WAbstractItemView::ColumnInfo::ColumnInfo(const WAbstractItemView *view, 
+WAbstractItemView::ColumnInfo::ColumnInfo(const WAbstractItemView *view,
 					  int anId)
   : id(anId),
     sortOrder(SortOrder::Ascending),
@@ -409,12 +409,12 @@ void WAbstractItemView::setColumnAlignment(int column, AlignmentFlag alignment)
   const char *align = nullptr;
   switch (alignment) {
   case AlignmentFlag::Left:
-    align = app->layoutDirection() == LayoutDirection::LeftToRight 
+    align = app->layoutDirection() == LayoutDirection::LeftToRight
       ? "left" : "right";
     break;
   case AlignmentFlag::Center: align = "center"; break;
   case AlignmentFlag::Right:
-    align = app->layoutDirection() == LayoutDirection::LeftToRight 
+    align = app->layoutDirection() == LayoutDirection::LeftToRight
       ? "right" : "left";
     break;
   case AlignmentFlag::Justify: align = "justify"; break;
@@ -441,13 +441,13 @@ void WAbstractItemView::setHeaderAlignment(int column,
   if (alignment.test(AlignVerticalMask))
     columnInfo(column).headerVAlignment = alignment & AlignVerticalMask;
 
-  if (columnInfo(column).hidden || 
+  if (columnInfo(column).hidden ||
       static_cast<unsigned int>(renderState_) >=
       static_cast<unsigned int>(RenderState::NeedRerenderHeader))
     return;
 
   WContainerWidget *wc = dynamic_cast<WContainerWidget *>(headerWidget(column));
-  
+
   wc->setContentAlignment(alignment);
 
   if (columnInfo(column).headerVAlignment == AlignmentFlag::Middle)
@@ -460,8 +460,8 @@ void WAbstractItemView::setHeaderWordWrap(int column, bool enabled)
 {
   columnInfo(column).headerWordWrap = enabled;
 
-  if (columnInfo(column).hidden || 
-      static_cast<unsigned int>(renderState_) >= 
+  if (columnInfo(column).hidden ||
+      static_cast<unsigned int>(renderState_) >=
       static_cast<unsigned int>(RenderState::NeedRerenderHeader))
     return;
 
@@ -583,7 +583,7 @@ void WAbstractItemView::dropEvent(const WDropEvent& e, const WModelIndex& index)
 	// currently selection models cannot be shared
 	bool internal = e.source() == selectionModel_.get();
 
-	DropAction action = internal ? 
+	DropAction action = internal ?
 	  DropAction::Move : DropAction::Copy;
 
 	// TODO: (later) we need to interpret the event location
@@ -702,7 +702,7 @@ void WAbstractItemView::toggleSortColumn(int columnid)
   if (column != currentSortColumn_)
     sortByColumn(column, columnInfo(column).sortOrder);
   else
-    sortByColumn(column, 
+    sortByColumn(column,
 		 columnInfo(column).sortOrder == SortOrder::Ascending
 		 ? SortOrder::Descending : SortOrder::Ascending);
 }
@@ -810,19 +810,19 @@ void WAbstractItemView::modelReset()
 bool WAbstractItemView::internalSelect(const WModelIndex& index,
 				       SelectionFlag option)
 {
-  if (!(index.flags() & ItemFlag::Selectable) || 
+  if (!(index.flags() & ItemFlag::Selectable) ||
       selectionMode() == SelectionMode::None)
     return false;
 
   if (option == SelectionFlag::ToggleSelect)
-    option = isSelected(index) 
+    option = isSelected(index)
       ? SelectionFlag::Deselect : SelectionFlag::Select;
 
   if (selectionMode() == SelectionMode::Single &&
       option == SelectionFlag::Select)
     option = SelectionFlag::ClearAndSelect;
 
-  if ((option == SelectionFlag::ClearAndSelect || 
+  if ((option == SelectionFlag::ClearAndSelect ||
        option == SelectionFlag::Select) &&
       selectionModel()->selection_.size() == 1 &&
       isSelected(index))
@@ -940,7 +940,7 @@ void WAbstractItemView::selectionHandleClick(const WModelIndex& index,
     if (modifiers.test(KeyboardModifier::Shift))
       extendSelection(index);
     else {
-      if (!(modifiers & (KeyboardModifier::Control | 
+      if (!(modifiers & (KeyboardModifier::Control |
 			 KeyboardModifier::Meta))) {
 	if (!dragEnabled_)
 	  select(index, SelectionFlag::ClearAndSelect);
@@ -954,7 +954,7 @@ void WAbstractItemView::selectionHandleClick(const WModelIndex& index,
 	select(index, SelectionFlag::ToggleSelect);
     }
   } else {
-    if (!(modifiers & (KeyboardModifier::Control | 
+    if (!(modifiers & (KeyboardModifier::Control |
 		      KeyboardModifier::Meta)).empty() &&
 	isSelected(index)) {
       clearSelection();
@@ -994,9 +994,9 @@ WModelIndexSet WAbstractItemView::selectedIndexes() const
 
 void WAbstractItemView::scheduleRerender(RenderState what)
 {
-  if ((what == RenderState::NeedRerenderHeader && 
+  if ((what == RenderState::NeedRerenderHeader &&
        renderState_ == RenderState::NeedRerenderData)
-      || (what == RenderState::NeedRerenderData && 
+      || (what == RenderState::NeedRerenderData &&
 	  renderState_ == RenderState::NeedRerenderHeader))
     renderState_ = RenderState::NeedRerender;
   else
@@ -1011,7 +1011,7 @@ void WAbstractItemView::scheduleRerender(RenderState what)
 void WAbstractItemView::modelHeaderDataChanged(Orientation orientation,
 					       int start, int end)
 {
-  if (static_cast<unsigned int>(renderState_) < 
+  if (static_cast<unsigned int>(renderState_) <
       static_cast<unsigned int>(RenderState::NeedRerenderHeader)) {
     if (orientation == Orientation::Horizontal) {
       for (int i = start; i <= end; ++i) {
@@ -1070,7 +1070,7 @@ std::unique_ptr<WWidget> WAbstractItemView::createHeaderWidget(int column)
    * | | | ....             | | | | |     margin-top for right-border-level
    * | | +------------------+ | | | |
    * | +----------------------+ +-+ |
-   * +------------------------------+    
+   * +------------------------------+
    */
 
   ColumnInfo& info = columnInfo(column);
@@ -1092,7 +1092,7 @@ std::unique_ptr<WWidget> WAbstractItemView::createHeaderWidget(int column)
     contents->addWidget(std::move(sortIcon));
   }
 
-  if (!(model_->headerFlags(column) & (HeaderFlag::ColumnIsExpandedLeft | 
+  if (!(model_->headerFlags(column) & (HeaderFlag::ColumnIsExpandedLeft |
 				     HeaderFlag::ColumnIsExpandedRight)).empty()) {
     std::unique_ptr<WImage> collapseIcon(new WImage());
     collapseIcon->setFloatSide(Side::Left);
@@ -1109,7 +1109,7 @@ std::unique_ptr<WWidget> WAbstractItemView::createHeaderWidget(int column)
     expandIcon->clicked().connect
       (this, std::bind(&WAbstractItemView::expandColumn, this, info.id));
     contents->addWidget(std::move(expandIcon));
-  }    
+  }
 
   WModelIndex index = headerModel_->index(0, column);
   std::unique_ptr<WWidget> i(headerItemDelegate_->update(nullptr, index, None));
@@ -1129,7 +1129,7 @@ std::unique_ptr<WWidget> WAbstractItemView::createHeaderWidget(int column)
     if (rightColumn != -1) {
       WFlags<HeaderFlag> flagsLeft = model_->headerFlags(column);
       WFlags<HeaderFlag> flagsRight = model_->headerFlags(rightColumn);
-      
+
       int rightHeaderLevel = this->headerLevel(rightColumn);
 
       if (flagsLeft.test(HeaderFlag::ColumnIsExpandedRight))
@@ -1187,7 +1187,7 @@ std::unique_ptr<WWidget> WAbstractItemView::createHeaderWidget(int column)
   if (extraW)
     main->addWidget(std::move(extraW));
 
-  main->clicked().connect(this, 
+  main->clicked().connect(this,
 	  std::bind(&WAbstractItemView::handleHeaderClicked, this,
 		    info.id, std::placeholders::_1));
   main->mouseWentDown().connect(this,
@@ -1244,7 +1244,7 @@ int WAbstractItemView::headerLevelCount() const
 
 void WAbstractItemView::setHeaderHeight(const WLength& height)
 {
-  headerLineHeight_ = height;  
+  headerLineHeight_ = height;
 
   int lineCount = headerLevelCount();
   WLength headerHeight = headerLineHeight_ * lineCount;
@@ -1415,7 +1415,7 @@ void WAbstractItemView::setEditOptions(WFlags<EditOption> editOptions)
 }
 
 void WAbstractItemView::edit(const WModelIndex& index)
-{ 
+{
   if (index.flags().test(ItemFlag::Editable) && !isEditing(index)) {
     if (editOptions_.test(EditOption::SingleEditor)) {
       while (!editedItems_.empty())
@@ -1467,7 +1467,7 @@ void WAbstractItemView::closeEditor(const WModelIndex& index, bool saveData)
   }
 }
 
-void WAbstractItemView::closeEditors(bool saveData) 
+void WAbstractItemView::closeEditors(bool saveData)
 {
   while (!editedItems_.empty()) {
     closeEditor(editedItems_.begin()->first, saveData);
@@ -1492,14 +1492,14 @@ ValidationState WAbstractItemView::validateEditor(const WModelIndex& index)
 
     ValidationState state = delegate->validate(index, editState);
     editor.valid = (state == ValidationState::Valid);
-    
+
     return state;
   }
-  
+
   return ValidationState::Invalid;
 }
 
-ValidationState WAbstractItemView::validateEditors() 
+ValidationState WAbstractItemView::validateEditors()
 {
   ValidationState state = ValidationState::Valid;
 
@@ -1639,7 +1639,7 @@ bool WAbstractItemView::shiftEditorColumns(const WModelIndex& parent,
 }
 
 bool WAbstractItemView::isValid(const WModelIndex& index) const
-{  
+{
   EditorMap::const_iterator i = editedItems_.find(index);
 
   if (i != editedItems_.end()) {
@@ -1674,7 +1674,7 @@ void WAbstractItemView::saveEditedValue(const WModelIndex& index,
 {
   cpp17::any editState;
   auto delegate = itemDelegate(index);
-    
+
   if (editor.widget)
     editState = delegate->editState(editor.widget.get(), index);
   else
@@ -1694,7 +1694,7 @@ void WAbstractItemView::persistEditor(const WModelIndex& index)
 void WAbstractItemView::persistEditor(const WModelIndex& index, Editor& editor)
 {
   if (editor.widget) {
-    editor.editState 
+    editor.editState
       = itemDelegate(index)->editState(editor.widget.get(), index);
     editor.stateSaved = true;
     editor.widget = nullptr;
