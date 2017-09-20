@@ -132,7 +132,7 @@ void WFormWidget::defineJavaScript(bool force)
     LOAD_JAVASCRIPT(app, "js/WFormWidget.js", "WFormWidget", wtjs1);
 
     setJavaScriptMember(" WFormWidget", "new " WT_CLASS ".WFormWidget("
-			+ app->javaScriptClass() + "," 
+			+ app->javaScriptClass() + ","
 			+ jsRef() + ","
 			+ emptyText_.jsStringLiteral() + ");");
   }
@@ -147,7 +147,7 @@ void WFormWidget::render(WFlags<RenderFlag> flags)
     if (validator()) {
       WValidator::Result result = validator()->validate(valueText());
       WApplication::instance()->theme()
-	->applyValidationStyle(this, result, 
+	->applyValidationStyle(this, result,
 			       ValidationStyleFlag::InvalidStyle);
     }
   }
@@ -186,7 +186,7 @@ void WFormWidget::enableAjax()
     setToolTip("");
     setPlaceholderText(emptyText_);
   }
-  
+
   WInteractWidget::enableAjax();
 }
 
