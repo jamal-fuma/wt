@@ -93,7 +93,7 @@ namespace Wt {
 	setNodeVisible(false);
 	expand();
      }
-      
+
      virtual WTree *tree() const override { return tree_; }
 
     protected:
@@ -146,7 +146,7 @@ void WTree::clearSelection()
 
 void WTree::select(WTreeNode *node, bool selected)
 {
-  if (selectionMode_ == SelectionMode::Single && selected && 
+  if (selectionMode_ == SelectionMode::Single && selected &&
       selection_.size() == 1 && Utils::first(selection_) == node)
     return; // node was already selected, avoid re-emission of signals
 
