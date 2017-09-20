@@ -24,7 +24,7 @@ namespace {
       << "WAggregateProxyModel: aggregates must strictly nest: ["
       << pa << ": " << a1 << " - " << a2 << "] overlaps partially with ["
       << pb << ": " << b1 << " - " << b2 << "]";
-    
+
     return msg.str();
   }
 }
@@ -448,7 +448,7 @@ WModelIndex WAggregateProxyModel::index(int row, int column,
     = sourceModel()->index(sourceRow, sourceColumn, sourceParent);
 
   return createIndex(row, column,
-		     sourceIndex.isValid() ? sourceIndex.internalPointer() : 
+		     sourceIndex.isValid() ? sourceIndex.internalPointer() :
 		     nullptr);
 }
 
@@ -585,7 +585,7 @@ void WAggregateProxyModel::sourceRowsAboutToBeRemoved
 
 void WAggregateProxyModel::sourceRowsRemoved(const WModelIndex& parent,
 					      int start, int end)
-{ 
+{
   WModelIndex proxyParent = mapFromSource(parent);
 
   if (proxyParent.isValid() || !parent.isValid())
@@ -619,7 +619,7 @@ void WAggregateProxyModel::sourceDataChanged(const WModelIndex& topLeft,
   }
 }
 
-void WAggregateProxyModel::sourceHeaderDataChanged(Orientation orientation, 
+void WAggregateProxyModel::sourceHeaderDataChanged(Orientation orientation,
 						   int start, int end)
 {
   if (orientation == Orientation::Vertical) {
@@ -638,7 +638,7 @@ void WAggregateProxyModel::sourceHeaderDataChanged(Orientation orientation,
 }
 
 void WAggregateProxyModel::sourceLayoutAboutToBeChanged()
-{ 
+{
   layoutAboutToBeChanged().emit();
 }
 
