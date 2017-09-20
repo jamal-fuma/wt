@@ -22,7 +22,7 @@
 #include <boost/algorithm/string.hpp>
 
 namespace {
-  Wt::MediaReadyState intToReadyState(int i) 
+  Wt::MediaReadyState intToReadyState(int i)
   {
     switch (i) {
     case 0:
@@ -56,7 +56,7 @@ public:
   WMediaPlayerImpl(WMediaPlayer *player, const WString& text)
     : WTemplate(text),
       player_(player)
-  { 
+  {
     setFormObject(true);
   }
 
@@ -291,7 +291,7 @@ void WMediaPlayer::updateFromProgressBar(MediaPlayerProgressBarId id,
     seek(value); break;
   case MediaPlayerProgressBarId::Volume:
     setVolume(value);
-  } 
+  }
 }
 
 WProgressBar *WMediaPlayer::progressBar(MediaPlayerProgressBarId id) const
@@ -313,7 +313,7 @@ void WMediaPlayer::play()
      * play is being delayed so that other changes (e.g. addSource() are
      * reflected first, see #2819
      */
-    doJavaScript("setTimeout(function(){" + jsPlayerRef() 
+    doJavaScript("setTimeout(function(){" + jsPlayerRef()
 		 + ".jPlayer('play'); }, 0);");
   } else
     playerDo("play");
@@ -421,7 +421,7 @@ void WMediaPlayer::playerDoRaw(const std::string& jqueryMethod)
 
   if (isRendered())
     doJavaScript(ss.str());
-  else 
+  else
     initialJs_ += ss.str();
 }
 
@@ -520,27 +520,27 @@ void WMediaPlayer::render(WFlags<RenderFlag> flags)
     ss << "cssSelectorAncestor: " << (gui_ ? "'#" + id() + '\'' : "''")
        << ", cssSelector: {";
 
-    const char *controlSelectors[] = 
+    const char *controlSelectors[] =
       { "videoPlay", "play", "pause", "stop", "volumeMute", "volumeUnmute",
 	"volumeMax",
 	"fullScreen", "restoreScreen", "repeat", "repeatOff" };
 
     first = true;
     for (unsigned i = static_cast<unsigned int>
-	   (MediaPlayerButtonId::VideoPlay); 
+	   (MediaPlayerButtonId::VideoPlay);
 	 i < static_cast<unsigned int>(MediaPlayerButtonId::RepeatOff); ++i) {
       if (control_[i]) {
 	if (!first)
 	  ss << ", ";
 
-	ss << const_cast<char *>(controlSelectors[i]) << ":\"#" 
+	ss << const_cast<char *>(controlSelectors[i]) << ":\"#"
 	   << control_[i]->id() << "\"";
 
 	first = false;
       }
     }
 
-    const char *displaySelectors[] = 
+    const char *displaySelectors[] =
       { "currentTime", "duration" };
 
     for (unsigned i = static_cast<unsigned int>(MediaPlayerTextId::CurrentTime);
@@ -582,7 +582,7 @@ void WMediaPlayer::render(WFlags<RenderFlag> flags)
 	 << progressBar_[static_cast<unsigned int>
 			 (MediaPlayerProgressBarId::Volume)]->id()
 	 << "\", "
-	 << "volumeBarValue:\"#bar" 
+	 << "volumeBarValue:\"#bar"
 	 << progressBar_[static_cast<unsigned int>
 			 (MediaPlayerProgressBarId::Volume)]->id()
 	 << "\"";
@@ -661,7 +661,7 @@ void WMediaPlayer::setFormData(const FormData& formData)
 
 /*
 JSignal<>& WMediaPlayer::loadStarted()
-{ 
+{
   return signal(LOAD_STARTED_SIGNAL);
 }
 */
@@ -755,7 +755,7 @@ void WMediaPlayer::createDefaultGui()
 	      "jp-restore-screen");
   }
 
-  addText(ui.get(), MediaPlayerTextId::CurrentTime, 
+  addText(ui.get(), MediaPlayerTextId::CurrentTime,
 	  "current-time", "jp-current-time");
   addText(ui.get(), MediaPlayerTextId::Duration, "duration", "jp-duration");
   addText(ui.get(), MediaPlayerTextId::Title, "title", std::string());
