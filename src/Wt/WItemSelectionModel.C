@@ -29,7 +29,7 @@ void WItemSelectionModel::setSelectionBehavior(SelectionBehavior behavior)
 bool WItemSelectionModel::isSelected(const WModelIndex& index) const
 {
   if (selectionBehavior_ == SelectionBehavior::Rows) {
-    for (std::set<WModelIndex>::const_iterator it = selection_.begin() ; 
+    for (std::set<WModelIndex>::const_iterator it = selection_.begin() ;
          it != selection_.end(); ++it ) {
       WModelIndex mi = *it;
       if (mi.row() == index.row() && mi.parent() == index.parent())
