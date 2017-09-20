@@ -142,7 +142,7 @@ void WTimePicker::configure()
 	sbmillisecond_->setRange(0, 999);
 	sbmillisecond_->setSingleStep(1);
 	sbmillisecond_->changed().connect(this, &WTimePicker::msecValueChanged);
-	
+
 	sbmillisecond_->setWrapAroundEnabled(wrapAroundEnabled());
       }
     } else {
