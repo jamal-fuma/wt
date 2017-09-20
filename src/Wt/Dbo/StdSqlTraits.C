@@ -41,7 +41,7 @@ bool sql_value_traits<std::string>::read(std::string& v,
 }
 
   /*
-   * long long 
+   * long long
    */
 
 std::string sql_value_traits<long long>::type(SqlConnection *conn, int size)
