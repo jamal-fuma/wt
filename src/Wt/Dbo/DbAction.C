@@ -46,7 +46,7 @@ bool InitSchema::getsValue() const { return false; }
 bool InitSchema::setsValue() const { return false; }
 bool InitSchema::isSchema() const { return true; }
 
-DropSchema::DropSchema(Session& session, 
+DropSchema::DropSchema(Session& session,
 		       Impl::MappingInfo& mapping,
 		       std::set<std::string>& tablesDropped)
   : session_(session),
@@ -67,7 +67,7 @@ void DropSchema::drop(const std::string& table)
       std::vector<std::string> sql = session_.connection(false)
 	->autoincrementDropSequenceSql(Impl::quoteSchemaDot(table),
 				       mapping_.surrogateIdFieldName);
-      
+
       for (unsigned i = 0; i < sql.size(); i++)
 	session_.connection(true)->executeSql(sql[i]);
   }
