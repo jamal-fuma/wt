@@ -66,7 +66,7 @@ WBootstrapTheme::WBootstrapTheme()
   : version_(BootstrapVersion::v2),
     responsive_(false),
     formControlStyle_(true)
-{ 
+{
   WApplication *app = WApplication::instance();
 
   if (app)
@@ -93,7 +93,7 @@ std::vector<WLinkedCssStyleSheet> WBootstrapTheme::styleSheets() const
 		   (WLink(themeVersionDir.str() + "bootstrap.css")));
 
   WApplication *app = WApplication::instance();
- 
+
   if (responsive_) {
     if (version_ == BootstrapVersion::v2)
       result.push_back(WLinkedCssStyleSheet
@@ -266,8 +266,8 @@ void WBootstrapTheme::apply(WWidget *widget, DomElement& element,
       if (creating && button->isDefault())
 	element.addPropertyWord(Property::Class, "btn-primary");
 
-      if (button->menu() && 
-	  element.properties().find(Property::InnerHTML) != 
+      if (button->menu() &&
+	  element.properties().find(Property::InnerHTML) !=
 	  element.properties().end()) {
 	element.addPropertyWord(Property::InnerHTML,
 				"<span class=\"caret\"></span>");
@@ -343,9 +343,9 @@ void WBootstrapTheme::apply(WWidget *widget, DomElement& element,
 	if (version_ == BootstrapVersion::v3) {
 	  WCheckBox *cb = dynamic_cast<WCheckBox *>(widget);
 	  WRadioButton *rb = nullptr;
- 
+
 	  if (cb) {
-	    element.addPropertyWord(Property::Class, widget->isInline() ? 
+	    element.addPropertyWord(Property::Class, widget->isInline() ?
 				    "checkbox-inline" : "checkbox");
 	  } else {
 	    rb = dynamic_cast<WRadioButton *>(widget);
@@ -359,7 +359,7 @@ void WBootstrapTheme::apply(WWidget *widget, DomElement& element,
 	} else {
 	  WCheckBox *cb = dynamic_cast<WCheckBox *>(widget);
 	  WRadioButton *rb = nullptr;
- 
+
 	  if (cb) {
 	    element.addPropertyWord(Property::Class, "checkbox");
 	  } else {
@@ -581,7 +581,7 @@ std::string WBootstrapTheme::classAccordion() const
 
 std::string WBootstrapTheme::classAccordionGroup() const
 {
-  return version_ == BootstrapVersion::v2 ? "accordion-group" 
+  return version_ == BootstrapVersion::v2 ? "accordion-group"
     : "panel panel-default";
 }
 
