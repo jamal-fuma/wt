@@ -88,7 +88,7 @@ struct json_grammar : public qi::grammar<Iterator, ascii::space_type>
     using phoenix::construct;
     using phoenix::val;
     using phoenix::throw_;
-        
+
     root
       = object | array;
 
@@ -103,7 +103,7 @@ struct json_grammar : public qi::grammar<Iterator, ascii::space_type>
       state_.pop_back();
       objectStack_.pop_back();
     };
-    
+
     object
       =  lit('{')[startObject]
       >> -(member % ',')
@@ -117,10 +117,10 @@ struct json_grammar : public qi::grammar<Iterator, ascii::space_type>
       currentValue_ = &((currentObject())[s_.str()] = Value::Null);
       s_.clear();
     };
-                
+
     member
       = raw[string][setMemberName]
-      >> lit(':') 
+      >> lit(':')
       >> value
       ;
 
@@ -137,8 +137,8 @@ struct json_grammar : public qi::grammar<Iterator, ascii::space_type>
       state_.pop_back();
       arrayStack_.pop_back();
     };
-                
-    array 
+
+    array
       = lit('[')[startArray]
       >> -(value % ',')
       >> lit(']')[endArray]
@@ -182,7 +182,7 @@ struct json_grammar : public qi::grammar<Iterator, ascii::space_type>
       currentValue_ = nullptr;
     };
 
-    value 
+    value
       = raw[string][setStringValue]
       | double_[setNumberValue]
       | lit("true")[setTrueValue]
@@ -298,7 +298,7 @@ namespace {
   void parseJson(const std::string &str, Value& result, bool validateUTF8)
   {
     throw ParseError("Wt::Json::parse requires boost version 1.41 or later");
-  }  
+  }
 
 #endif // JSON_PARSER
 
