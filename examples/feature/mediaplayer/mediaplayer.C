@@ -26,7 +26,7 @@ std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
     "http://www.webtoolkit.eu/audio/LaSera-NeverComeAround.mp3";
 
   std::string poster = "sintel_trailer.jpg";
-  
+
   app->root()->addWidget(cpp14::make_unique<WText>(WString::tr("intro")));
 
   app->root()->addWidget(cpp14::make_unique<WText>(WString::tr("video")));
@@ -47,7 +47,7 @@ std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
 
   player->addSource(MediaEncoding::MP3, mp3Audio);
   player->setTitle("La Sera - Never Come Around");
-  
+
   return app;
 }
 
