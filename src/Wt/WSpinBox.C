@@ -18,7 +18,7 @@ WSpinBox::WSpinBox()
     max_(99),
     step_(1),
     wrapAroundEnabled_(false)
-{ 
+{
   setValidator(createValidator());
   setValue(0);
 }
@@ -74,7 +74,7 @@ int WSpinBox::decimals() const
   return 0;
 }
 
-std::string WSpinBox::jsMinMaxStep() const 
+std::string WSpinBox::jsMinMaxStep() const
 {
   return std::to_string(min_) + "," + std::to_string(max_) + ","
     + std::to_string(step_);
@@ -126,7 +126,7 @@ std::unique_ptr<WValidator> WSpinBox::createValidator()
 
 WT_USTRING WSpinBox::textFromValue() const
 {
-  if (nativeControl())    
+  if (nativeControl())
     return WLocale::currentLocale().toString(value_);
   else {
     std::string text = prefix().toUTF8()
@@ -172,5 +172,5 @@ bool WSpinBox::wrapAroundEnabled() const
 {
   return wrapAroundEnabled_;
 }
-  
+
 }
