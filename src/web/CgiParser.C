@@ -13,7 +13,7 @@
 # Perl Routines to Manipulate CGI input
 # cgi-lib@pobox.com
 #
-# Copyright (c) 1993-1999 Steven E. Brenner  
+# Copyright (c) 1993-1999 Steven E. Brenner
 # Unpublished work.
 # Permission granted to use and modify this library so long as the
 # copyright above is maintained, modifications are documented, and
@@ -22,7 +22,7 @@
 # Thanks are due to many people for reporting bugs and suggestions
 
 # For more information, see:
-#     http://cgi-lib.stanford.edu/cgi-lib/  
+#     http://cgi-lib.stanford.edu/cgi-lib/
 
  */
 
@@ -99,7 +99,7 @@ namespace {
     regmatch_t pmatch[5];
     int res = regexec(&e1, text.c_str(), 5, pmatch, 0);
 
-    if (res == 0) {      
+    if (res == 0) {
       if (pmatch[3].rm_so != -1)
 	result = text.substr(pmatch[3].rm_so,
 			     pmatch[3].rm_eo - pmatch[3].rm_so);
@@ -198,7 +198,7 @@ void CgiParser::parse(WebRequest& request, ReadOption readOption)
   if (readOption != ReadHeadersOnly &&
       strcmp(meth, "POST") == 0 &&
       ((type && strstr(type, "application/x-www-form-urlencoded") == type) ||
-       (queryString.find("&contentType=x-www-form-urlencoded") != 
+       (queryString.find("&contentType=x-www-form-urlencoded") !=
 	std::string::npos))) {
     /*
      * TODO: parse this stream-based to avoid the malloc here. For now
@@ -242,7 +242,7 @@ void CgiParser::parse(WebRequest& request, ReadOption readOption)
 
     if (!request.postDataExceeded_)
       readMultipartData(request, type, len);
-    else if (readOption == ReadBodyAnyway) {      
+    else if (readOption == ReadBodyAnyway) {
       for (;len > 0;) {
 	::int64_t toRead = std::min(::int64_t(BUFSIZE), len);
 	request.in().read(buf_, toRead);
@@ -263,10 +263,10 @@ void CgiParser::readMultipartData(WebRequest& request,
 				  const std::string type, ::int64_t len)
 {
   std::string boundary;
-    
+
   if (!fishValue(type, boundary_e, boundary))
     throw WException("Could not find a boundary for multipart data.");
-    
+
   boundary = "--" + boundary;
 
   buflen_ = 0;
@@ -280,7 +280,7 @@ void CgiParser::readMultipartData(WebRequest& request,
   for (;;) {
     if (!parseHead(request))
       break;
-    if (!parseBody(request,boundary)) 
+    if (!parseBody(request,boundary))
       break;
   }
 }
@@ -316,7 +316,7 @@ void CgiParser::readUntilBoundary(WebRequest& request,
     if (save > 0) {
       if (resultString)
 	*resultString += std::string(buf_, save);
-      if (resultFile) 
+      if (resultFile)
 	resultFile->write(buf_, save);
 
       /* wind buffer */
@@ -327,7 +327,7 @@ void CgiParser::readUntilBoundary(WebRequest& request,
       (std::min(left_,
 		static_cast< ::int64_t >(BUFSIZE + MAXBOUND - buflen_)));
 
-    request.in().read(buf_ + buflen_, amt);    
+    request.in().read(buf_ + buflen_, amt);
     if (request.in().gcount() != (int)amt)
       throw WException("CgiParser: short read");
 
