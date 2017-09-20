@@ -33,7 +33,7 @@ namespace Wt {
 const int PasswordStrengthValidator::Disabled = std::numeric_limits<int>::max();
 
 PasswordStrengthValidator::PasswordStrengthValidator()
-{ 
+{
   minLength_[0] = Disabled;
   minLength_[1] = 15;
   minLength_[2] = 11;
@@ -44,7 +44,7 @@ PasswordStrengthValidator::PasswordStrengthValidator()
   minMatchLength_ = 4;
 }
 
-AbstractPasswordService::StrengthValidatorResult 
+AbstractPasswordService::StrengthValidatorResult
 PasswordStrengthValidator::evaluateStrength(const WT_USTRING& password,
 					    const WT_USTRING& loginName,
 					    const std::string& email) const
@@ -62,14 +62,14 @@ PasswordStrengthValidator::evaluateStrength(const WT_USTRING& password,
   passwdqc_user_t user;
   user.pw_name = login_utf8.c_str();
   user.pw_email = email.c_str();
-  
+
   int index = passwdqc_check(&params, password.toUTF8().c_str(), nullptr, &user);
 
-  WString message 
+  WString message
     = WString::tr(std::string("Wt.Auth.passwdqc.reason-") + reasons[index]);
   bool valid = index == 0;
-  AbstractPasswordService::StrengthValidatorResult result(valid, 
-							  message, 
+  AbstractPasswordService::StrengthValidatorResult result(valid,
+							  message,
 							  valid ? 5 : 0);
   return result;
 }
