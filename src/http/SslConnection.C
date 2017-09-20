@@ -3,7 +3,7 @@
  *
  * All rights reserved.
  */
-// 
+//
 // connection.cpp
 // ~~~~~~~~~~~~~~
 //
@@ -48,7 +48,7 @@ asio::ip::tcp::socket& SslConnection::socket()
 
 void SslConnection::start()
 {
-  std::shared_ptr<SslConnection> sft 
+  std::shared_ptr<SslConnection> sft
     = std::static_pointer_cast<SslConnection>(shared_from_this());
 
   socket_.async_handshake(asio::ssl::stream_base::server,
@@ -70,7 +70,7 @@ void SslConnection::handleHandshake(const Wt::AsioWrapper::error_code& error)
   } else {
     long sslState = SSL_get_verify_result(ssl);
     if (sslState != X509_V_OK) {
-      LOG_INFO("OpenSSL error: " 
+      LOG_INFO("OpenSSL error: "
 	       << X509_verify_cert_error_string(sslState));
     }
 
@@ -86,8 +86,8 @@ void SslConnection::stop()
   LOG_DEBUG(socket().native() << ": SSL shutdown");
 
   Connection::stop();
-  
-  std::shared_ptr<SslConnection> sft 
+
+  std::shared_ptr<SslConnection> sft
     = std::static_pointer_cast<SslConnection>(shared_from_this());
 
   sslShutdownTimer_.expires_from_now(std::chrono::seconds(1));
@@ -115,7 +115,7 @@ void SslConnection::stopNextLayer(const Wt::AsioWrapper::error_code& ec)
     if (socket().is_open()) {
       Wt::AsioWrapper::error_code ignored_ec;
       LOG_DEBUG(socket().native() << ": socket shutdown");
-      socket().shutdown(asio::ip::tcp::socket::shutdown_both, 
+      socket().shutdown(asio::ip::tcp::socket::shutdown_both,
 			ignored_ec);
       LOG_DEBUG(socket().native() << "closing socket");
       socket().close();
@@ -134,7 +134,7 @@ void SslConnection::startAsyncReadRequest(Buffer& buffer, int timeout)
 
   setReadTimeout(timeout);
 
-  std::shared_ptr<SslConnection> sft 
+  std::shared_ptr<SslConnection> sft
     = std::static_pointer_cast<SslConnection>(shared_from_this());
   socket_.async_read_some(asio::buffer(buffer),
 			  strand_.wrap
@@ -186,7 +186,7 @@ void SslConnection::handleReadBodySsl(ReplyPtr reply,
                                       std::size_t bytes_transferred)
 {
   // See handleReadRequestSsl for explanation
-  std::shared_ptr<SslConnection> sft 
+  std::shared_ptr<SslConnection> sft
     = std::static_pointer_cast<SslConnection>(shared_from_this());
   strand_.post(std::bind(&SslConnection::handleReadBody0,
 			 sft, reply, e, bytes_transferred));
@@ -207,7 +207,7 @@ void SslConnection
 
   setWriteTimeout(timeout);
 
-  std::shared_ptr<SslConnection> sft 
+  std::shared_ptr<SslConnection> sft
     = std::static_pointer_cast<SslConnection>(shared_from_this());
   asio::async_write(socket_, buffers,
 		    strand_.wrap
