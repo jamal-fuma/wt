@@ -105,7 +105,7 @@ void WEnvironment::updateHostName(const WebRequest& request)
   if(host_.size() == 0) host_ = oldHost;
 }
 
-void WEnvironment::updateUrlScheme(const WebRequest& request) 
+void WEnvironment::updateUrlScheme(const WebRequest& request)
 {
   urlScheme_       = str(request.urlScheme());
 
@@ -209,7 +209,7 @@ void WEnvironment::parseSSLInfo(const std::string& json) {
 	}
 
 	std::string clientCertificatePem = obj["client-certificate"];
-  
+
 	X509* cert = Wt::Ssl::readFromPem(clientCertificatePem);
 
 	if(cert) {
@@ -473,11 +473,11 @@ bool WEnvironment::agentSupportsAjax() const
 
 bool WEnvironment::supportsCss3Animations() const
 {
-  return ((agentIsGecko() && 
-	   static_cast<unsigned int>(agent_) >= 
+  return ((agentIsGecko() &&
+	   static_cast<unsigned int>(agent_) >=
 	   static_cast<unsigned int>(UserAgent::Firefox5_0)) ||
-	  (agentIsIE() && 
-	   static_cast<unsigned int>(agent_) >= 
+	  (agentIsIE() &&
+	   static_cast<unsigned int>(agent_) >=
 	   static_cast<unsigned int>(UserAgent::IE10)) ||
 	  agentIsWebKit());
 }
