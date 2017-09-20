@@ -13,15 +13,15 @@ class MyObject : public Wt::WObject
 public:
   MyObject() { }
 
-  void foo() { 
+  void foo() {
     result = 1;
   }
 
-  void fooc() const { 
+  void fooc() const {
     result = 1;
   }
 
-  void bar(int v) { 
+  void bar(int v) {
     result = v;
   }
 
