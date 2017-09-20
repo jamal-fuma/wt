@@ -19,7 +19,7 @@
 #endif
 
 namespace {
-  Wt::MediaReadyState intToReadyState(int i) 
+  Wt::MediaReadyState intToReadyState(int i)
   {
     switch (i) {
     case 0:
@@ -127,7 +127,7 @@ void WAbstractMedia::setFormData(const FormData& formData)
         readyState_ = MediaReadyState::HaveNothing;
       }
     } else
-      throw WException("WAbstractMedia: error parsing: " 
+      throw WException("WAbstractMedia: error parsing: "
 		       + formData.values[0]);
   }
 }
@@ -425,7 +425,7 @@ void WAbstractMedia::iterateChildren(const HandleWidgetMethod& method) const
     method(alternative_.get());
 }
 
-void WAbstractMedia::enableAjax() 
+void WAbstractMedia::enableAjax()
 {
   WWebWidget::enableAjax();
 
@@ -434,7 +434,7 @@ void WAbstractMedia::enableAjax()
     // We therefore restart the play manually
     play();
   }
-}	
+}
 
 WAbstractMedia::Source::Source(WAbstractMedia *parent,
 			       const WLink& link, const std::string &type,
