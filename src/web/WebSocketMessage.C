@@ -15,7 +15,7 @@ LOGGER("WebSocketMessage");
 
 WebSocketMessage::WebSocketMessage(WebSession *session)
   : session_(session)
-{ 
+{
   queryString_ = "wtd=" + session_->sessionId() + "&request=jsupdate";
 }
 
@@ -23,7 +23,7 @@ void WebSocketMessage::flush(ResponseState state,
 			     const WriteCallback& callback)
 {
   if (state != ResponseState::ResponseDone)
-    error("flush(" + std::to_string(static_cast<unsigned int>(state)) 
+    error("flush(" + std::to_string(static_cast<unsigned int>(state))
 	  + ") expected");
 
   session_->pushUpdates();
