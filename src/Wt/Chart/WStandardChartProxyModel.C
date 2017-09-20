@@ -47,8 +47,8 @@ WString WStandardChartProxyModel::displayData(int row, int column) const
 
 WString WStandardChartProxyModel::headerData(int column) const
 {
-  return asString(sourceModel_->headerData(column, 
-					   Orientation::Horizontal, 
+  return asString(sourceModel_->headerData(column,
+					   Orientation::Horizontal,
 					   ItemDataRole::Display));
 }
 
@@ -119,7 +119,7 @@ const WColor *WStandardChartProxyModel::barBrushColor(int row, int column) const
 
 const double *WStandardChartProxyModel::markerScaleFactor(int row, int column) const
 {
-  cpp17::any result = sourceModel_->data(row, column, 
+  cpp17::any result = sourceModel_->data(row, column,
 				      ItemDataRole::MarkerScaleFactor);
 
   if (result.empty()) {
