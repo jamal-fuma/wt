@@ -411,13 +411,13 @@ void WSortFilterProxyModel::sourceColumnsInserted(const WModelIndex& parent,
 
 void WSortFilterProxyModel::sourceColumnsAboutToBeRemoved
   (const WModelIndex& parent, int start, int end)
-{ 
+{
   beginRemoveColumns(mapFromSource(parent), start, end);
 }
 
 void WSortFilterProxyModel::sourceColumnsRemoved(const WModelIndex& parent,
 						 int start, int end)
-{ 
+{
   endRemoveColumns();
 }
 
@@ -539,11 +539,11 @@ void WSortFilterProxyModel::sourceDataChanged(const WModelIndex& topLeft,
     return;
 
   bool refilter
-    = dynamic_ && (filterKeyColumn_ >= topLeft.column() 
+    = dynamic_ && (filterKeyColumn_ >= topLeft.column()
 		   && filterKeyColumn_ <= bottomRight.column());
 
   bool resort
-    = dynamic_ && (sortKeyColumn_ >= topLeft.column() 
+    = dynamic_ && (sortKeyColumn_ >= topLeft.column()
 		   && sortKeyColumn_ <= bottomRight.column());
 
   WModelIndex parent = mapFromSource(topLeft.parent());
@@ -596,7 +596,7 @@ void WSortFilterProxyModel::sourceDataChanged(const WModelIndex& topLeft,
   }
 }
 
-void WSortFilterProxyModel::sourceHeaderDataChanged(Orientation orientation, 
+void WSortFilterProxyModel::sourceHeaderDataChanged(Orientation orientation,
 						    int start, int end)
 {
   if (orientation == Orientation::Vertical) {
@@ -611,7 +611,7 @@ void WSortFilterProxyModel::sourceHeaderDataChanged(Orientation orientation,
 }
 
 void WSortFilterProxyModel::sourceLayoutAboutToBeChanged()
-{ 
+{
   layoutAboutToBeChanged().emit();
   resetMappings();
 }
