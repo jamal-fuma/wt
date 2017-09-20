@@ -44,7 +44,7 @@ WAnchor::WAnchor(const WLink& link, const WString& text)
 }
 
 WAnchor::WAnchor(const WLink& link, std::unique_ptr<WImage> image)
-{ 
+{
   setInline(true);
   setLink(link);
 
@@ -56,7 +56,7 @@ WAnchor::WAnchor(const WLink& link, std::unique_ptr<WImage> image)
 
 void WAnchor::setLink(const WLink& link)
 {
-  if (linkState_.link.type() != LinkType::Resource && 
+  if (linkState_.link.type() != LinkType::Resource &&
       linkState_.link == link)
     return;
 
@@ -185,8 +185,8 @@ void WAnchor::updateDom(DomElement& element, bool all)
 
 	/*
 	 * TODO(Benoit)
-	 * We do that here because of the static method, 
-	 * We should maybe move the code to renderHTarget() 
+	 * We do that here because of the static method,
+	 * We should maybe move the code to renderHTarget()
 	 * and make it non static ?
 	 */
 	flags_.reset(BIT_TARGET_CHANGED);
