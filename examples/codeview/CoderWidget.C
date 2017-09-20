@@ -62,7 +62,7 @@ public:
     } else
       t = escape(t);
 
-    return t; 
+    return t;
   }
 
   WTextArea *textArea() { return textArea_; }
