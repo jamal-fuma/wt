@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( urlmanip_test6 )
   BOOST_REQUIRE(app.resolveRelativeUrl("./") == "/foo/bar/");
   BOOST_REQUIRE(app.resolveRelativeUrl("../") == "/foo/bar/../");
   BOOST_REQUIRE(app.resolveRelativeUrl("./../") == "/foo/bar/../");
-  
+
   app.setInternalPath("/internal/path");
   BOOST_REQUIRE(app.resolveRelativeUrl(".") == "/foo/bar/");
   BOOST_REQUIRE(app.resolveRelativeUrl("./") == "/foo/bar/");
