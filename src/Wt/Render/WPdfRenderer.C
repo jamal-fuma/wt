@@ -69,8 +69,8 @@ HPDF_Page WPdfRenderer::createPage(int page)
 
   return result;
 #else
-  return Wt::Render::Utils::createPage(pdf_, 
-				       HPDF_Page_GetWidth(page_), 
+  return Wt::Render::Utils::createPage(pdf_,
+				       HPDF_Page_GetWidth(page_),
 				       HPDF_Page_GetHeight(page_));
 #endif
 }
@@ -98,7 +98,7 @@ double WPdfRenderer::pageWidth(int page) const
 {
   return HPDF_Page_GetWidth(page_) * dpi_ / 72.0;
 }
- 
+
 double WPdfRenderer::pageHeight(int page) const
 {
   return HPDF_Page_GetHeight(page_) * dpi_ / 72.0;
