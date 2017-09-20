@@ -54,7 +54,7 @@ AuthWidget::AuthWidget(const AuthService& baseAuth,
 AuthWidget::AuthWidget(Login& login)
   : WTemplateFormView(WString::Empty),
     login_(login)
-{ 
+{
   init();
 }
 
@@ -156,7 +156,7 @@ void AuthWidget::closeDialog()
     dialog_.reset();
   else
     messageBox_.reset();
-  
+
   /* Reset internal path */
   if (!basePath_.empty()) {
     WApplication *app = WApplication::instance();
@@ -237,7 +237,7 @@ void AuthWidget::logout()
 
 void AuthWidget::displayError(const WString& m)
 {
-  messageBox_.reset(new WMessageBox(tr("Wt.Auth.error"), m, 
+  messageBox_.reset(new WMessageBox(tr("Wt.Auth.error"), m,
 				    Icon::None, StandardButton::Ok));
   messageBox_->buttonClicked().connect(this, &AuthWidget::closeDialog);
   messageBox_->show();
@@ -245,7 +245,7 @@ void AuthWidget::displayError(const WString& m)
 
 void AuthWidget::displayInfo(const WString& m)
 {
-  messageBox_.reset(new WMessageBox(tr("Wt.Auth.notice"), m, 
+  messageBox_.reset(new WMessageBox(tr("Wt.Auth.notice"), m,
 				    Icon::None, StandardButton::Ok));
   messageBox_->buttonClicked().connect(this, &AuthWidget::closeDialog);
   messageBox_->show();
@@ -289,7 +289,7 @@ void AuthWidget::onLoginChange()
 	WApplication::instance()->removeCookie
 	  (model_->baseAuth()->authTokenCookieName());
       }
-      
+
       model_->reset();
       createLoginView();
     } else {
@@ -361,7 +361,7 @@ void AuthWidget::updatePasswordLoginView()
 		     (WLink(LinkType::InternalPath, basePath_ + "register"),
 		      tr("Wt.Auth.register")));
 	} else {
-	  WText *t = 
+	  WText *t =
 	    bindWidget("register",
 		       cpp14::make_unique<WText>(tr("Wt.Auth.register")));
 	  t->clicked().connect(this, &AuthWidget::registerNewUser);
@@ -435,7 +435,7 @@ void AuthWidget::oAuthDone(OAuthProcess *oauth, const Identity& identity)
 void AuthWidget::attemptPasswordLogin()
 {
   updateModel(model_.get());
- 
+
   if (model_->validate()) {
     if (!model_->login(login_))
       updatePasswordLoginView();
@@ -447,7 +447,7 @@ void AuthWidget::createLoggedInView()
 {
   setTemplateText(tr("Wt.Auth.template.logged-in"));
 
-  bindString("user-name", login_.user().identity(Identity::LoginName));  
+  bindString("user-name", login_.user().identity(Identity::LoginName));
 
   WPushButton *logout
     = bindWidget("logout",
