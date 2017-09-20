@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE( performance_test )
     p->text = text;
     p->creation_date = Wt::WDateTime::currentDateTime().addSecs(-(int)i * 60 * 60);
     p->last_change_date = Wt::WDateTime::currentDateTime();
- 
+
     for (unsigned k = 0; k < 10; ++k)
       p->counter[k] = i + k + 1;
 
