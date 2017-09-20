@@ -41,7 +41,7 @@ using std::memset;
 namespace Wt {
 
   LOGGER("wtfcgi");
- 
+
 /*
  * From the FCGI Specifaction
  */
@@ -223,7 +223,7 @@ void Server::handleSignal(const char *signal)
 
   /* We need to kill all children */
   for (unsigned i = 0; i < sessionProcessPids_.size(); ++i)
-    kill(sessionProcessPids_[i], SIGTERM); 
+    kill(sessionProcessPids_[i], SIGTERM);
 
   exit(0);
 }
@@ -373,16 +373,16 @@ int Server::run()
   struct sockaddr_un clientname;
   socklen_t socklen = sizeof(clientname);
 
-  if (signal(SIGCHLD, Wt::handleSigChld) == SIG_ERR) 
+  if (signal(SIGCHLD, Wt::handleSigChld) == SIG_ERR)
     LOG_ERROR_S(&wt_, "cannot catch SIGCHLD: signal(): "
 		<< (const char *)strerror(errno));
   if (signal(SIGTERM, Wt::handleServerSigTerm) == SIG_ERR)
     LOG_ERROR_S(&wt_, "cannot catch SIGTERM: signal(): "
 		<< (const char *)strerror(errno));
-  if (signal(SIGUSR1, Wt::handleServerSigUsr1) == SIG_ERR) 
+  if (signal(SIGUSR1, Wt::handleServerSigUsr1) == SIG_ERR)
     LOG_ERROR_S(&wt_, "cannot catch SIGUSR1: signal(): "
 		<< (const char *)strerror(errno));
-  if (signal(SIGHUP, Wt::handleServerSigHup) == SIG_ERR) 
+  if (signal(SIGHUP, Wt::handleServerSigHup) == SIG_ERR)
     LOG_ERROR_S(&wt_, "cannot catch SIGHUP: signal(): "
 		<< (const char *)strerror(errno));
 
@@ -575,7 +575,7 @@ void Server::handleRequest(int serverSocket)
 	 * But not if we have already too many sessions running...
 	 */
 	if ((int)sessions_.size() > conf.maxNumSessions()) {
-	  LOG_ERROR_S(&wt_, "session limit reached (" << 
+	  LOG_ERROR_S(&wt_, "session limit reached (" <<
 		      conf.maxNumSessions() << ')');
 	  break;
 	}
