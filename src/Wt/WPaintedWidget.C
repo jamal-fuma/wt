@@ -87,8 +87,8 @@ public:
 			      std::unique_ptr<WPaintDevice> device) override;
   virtual void updateContents(std::vector<DomElement *>& result,
 			      std::unique_ptr<WPaintDevice> device) override;
-  virtual RenderType renderType() const override { 
-    return RenderType::HtmlCanvas; 
+  virtual RenderType renderType() const override {
+    return RenderType::HtmlCanvas;
   }
 };
 
@@ -105,9 +105,9 @@ public:
   virtual void createContents(DomElement *element,
 			      std::unique_ptr<WPaintDevice> device) override;
   virtual void updateContents(std::vector<DomElement *>& result,
-			      std::unique_ptr<WPaintDevice> device) override; 
-  virtual RenderType renderType() const override { 
-    return RenderType::PngImage; 
+			      std::unique_ptr<WPaintDevice> device) override;
+  virtual RenderType renderType() const override {
+    return RenderType::PngImage;
   }
 
 private:
@@ -120,7 +120,7 @@ WPaintedWidget::WPaintedWidget()
     sizeChanged_(false),
     areaImageAdded_(false),
     repaintFlags_(None),
-    renderWidth_(0), 
+    renderWidth_(0),
     renderHeight_(0),
     repaintSlot_("function() {"
 	"var o=" + this->objJsRef() + ";"
@@ -254,17 +254,17 @@ RenderMethod WPaintedWidget::getMethod() const
 
   if (env.agentIsIElt(9)) {
 #ifdef WT_HAS_WRASTERIMAGE
-    method = preferredMethod_ == RenderMethod::InlineSvgVml ? 
+    method = preferredMethod_ == RenderMethod::InlineSvgVml ?
       RenderMethod::InlineSvgVml : RenderMethod::PngImage;
 #else
     method = RenderMethod::InlineSvgVml;
 #endif
-  } else 
-    if (!((env.agentIsChrome() && 
-	   static_cast<unsigned int>(env.agent()) >= 
+  } else
+    if (!((env.agentIsChrome() &&
+	   static_cast<unsigned int>(env.agent()) >=
 	   static_cast<unsigned int>(UserAgent::Chrome5))
-	  || (env.agentIsGecko() && 
-	      static_cast<unsigned int>(env.agent()) >= 
+	  || (env.agentIsGecko() &&
+	      static_cast<unsigned int>(env.agent()) >=
 	      static_cast<unsigned int>(UserAgent::Firefox4_0)))) {
       // on older browsers, inline svg is only supported in xhtml mode. HTML5
       // also allows inline svg
@@ -293,7 +293,7 @@ RenderMethod WPaintedWidget::getMethod() const
 	else {
 	  // HTML canvas if preferred method is PNG, but there's no
 	  // WRasterImage support
-	  method = preferredMethod_ == RenderMethod::PngImage 
+	  method = preferredMethod_ == RenderMethod::PngImage
 	    ? RenderMethod::HtmlCanvas : preferredMethod_;
 	}
 
@@ -311,7 +311,7 @@ RenderMethod WPaintedWidget::getMethod() const
 	else {
 	  // HTML canvas if preferred method is PNG, but there's no
 	  // WRasterImage support
-	  method = preferredMethod_ == RenderMethod::PngImage 
+	  method = preferredMethod_ == RenderMethod::PngImage
 	    ? RenderMethod::HtmlCanvas : preferredMethod_;
 	}
       }
@@ -360,7 +360,7 @@ DomElementType WPaintedWidget::domElementType() const
 {
   if (isInline() && WApplication::instance()->environment().agentIsIElt(9))
     return DomElementType::SPAN;
-  else  
+  else
     return DomElementType::DIV;
 }
 
@@ -401,7 +401,7 @@ DomElement *WPaintedWidget::createDomElement(WApplication *app)
 
   std::unique_ptr<WPaintDevice> device = painter_->getPaintDevice(false);
 
-  //handle the widget correctly when inline and using VML 
+  //handle the widget correctly when inline and using VML
   if (painter_->renderType() == WWidgetPainter::RenderType::InlineVml &&
       isInline()) {
     result->setProperty(Property::Style, "zoom: 1;");
@@ -513,7 +513,7 @@ WAbstractArea *WPaintedWidget::area(int index) const
 
 const std::vector<WAbstractArea *> WPaintedWidget::areas() const
 {
-  return areaImage_ 
+  return areaImage_
     ? areaImage_->areas()
     : static_cast<const std::vector<WAbstractArea *>>
     (std::vector<WAbstractArea *>());
@@ -717,7 +717,7 @@ void WWidgetCanvasPainter
     widget_->sizeChanged_ = false;
   }
 
-  bool domText = canvasDevice->textMethod() == 
+  bool domText = canvasDevice->textMethod() ==
     WCanvasPaintDevice::TextMethod::DomText;
 
   DomElement *el
