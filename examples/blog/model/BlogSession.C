@@ -38,7 +38,7 @@ namespace {
   class UnixCryptHashFunction : public Wt::Auth::HashFunction
   {
   public:
-    virtual std::string compute(const std::string& msg, 
+    virtual std::string compute(const std::string& msg,
 				const std::string& salt) const
     {
       std::string md5Salt = "$1$" + salt;
