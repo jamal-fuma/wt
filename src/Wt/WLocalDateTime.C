@@ -53,7 +53,7 @@ WLocalDateTime::WLocalDateTime(const std::chrono::system_clock::time_point& dt,
 }
 
 WLocalDateTime::WLocalDateTime(const std::chrono::system_clock::time_point& dt,
-                               const std::shared_ptr<date::time_zone>& zone, 
+                               const std::shared_ptr<date::time_zone>& zone,
 			       const WT_USTRING& format)
   : datetime_(dt),
     format_(format),
@@ -83,7 +83,7 @@ WLocalDateTime::WLocalDateTime(const WDate& date, const WTime& time,
     zone_(locale.timeZone()),
     valid_(false),
     null_(false)
-{ 
+{
   setDateTime(date, time);
 }
 
