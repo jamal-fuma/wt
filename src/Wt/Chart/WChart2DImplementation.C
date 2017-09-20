@@ -25,13 +25,13 @@ void ExtremesIterator::newValue(const WDataSeries& series, double x, double y,
 				int yRow, int yColumn)
 {
   double v = axis_ == Axis::X ? x : y;
-  
+
   if (!Utils::isNaN(v) && (scale_ != AxisScale::Log || v > 0.0)) {
     maximum_ = std::max(v, maximum_);
     minimum_ = std::min(v, minimum_);
   }
 }
-    
+
 WChart2DImplementation::WChart2DImplementation(WCartesianChart *chart)
   : chart_(chart)
 { }
@@ -79,7 +79,7 @@ WString WChart2DImplementation::categoryLabel(int u, Axis axis) const
 WChart2DImplementation::RenderRange WChart2DImplementation::computeRenderRange(Axis axis, AxisScale scale) const
 {
   ExtremesIterator iterator(axis, scale);
-  
+
   chart_->iterateSeries(&iterator, nullptr);
 
   RenderRange range;
