@@ -41,7 +41,7 @@ struct BatchEditFixture {
   std::shared_ptr<Wt::WStandardItemModel> sourceModel_;
   std::shared_ptr<Wt::WBatchEditProxyModel> proxyModel_;
 
-  enum EventType { 
+  enum EventType {
     RowsInserted,
     ColumnsInserted,
     RowsRemoved,
