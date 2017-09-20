@@ -192,7 +192,7 @@ int AbstractUserDatabase::failedLoginAttempts(const User& user) const
 }
 
 void AbstractUserDatabase::setFailedLoginAttempts(const User& user, int count)
-{ 
+{
   LOG_ERROR(Require("setFailedLoginAttempts()", THROTTLING).what());
 }
 
