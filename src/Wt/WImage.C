@@ -84,7 +84,7 @@ WImage::WImage()
 }
 
 WImage::WImage(const WLink& link)
-{ 
+{
   setLoadLaterWhenInvisible(false);
 
   setImageLink(link);
@@ -92,7 +92,7 @@ WImage::WImage(const WLink& link)
 
 WImage::WImage(const WLink& link, const WString& altText)
   : altText_(altText)
-{ 
+{
   setLoadLaterWhenInvisible(false);
 
   setImageLink(link);
