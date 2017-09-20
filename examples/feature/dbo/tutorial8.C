@@ -31,7 +31,7 @@ struct MembershipId {
 
   MembershipId(dbo::ptr<Person> p, dbo::ptr<Organisation> o)
     : person(p),
-      organisation(o) 
+      organisation(o)
   { }
 
   bool operator== (const MembershipId& other) const {
@@ -164,7 +164,7 @@ void run()
 
     std::cerr << "Joe is member of " << joe->memberships.size()
 	      << " organisation(s):" << std::endl;
-    for (dbo::collection< dbo::ptr<Membership> >::const_iterator i = 
+    for (dbo::collection< dbo::ptr<Membership> >::const_iterator i =
 	   joe->memberships.begin(); i != joe->memberships.end(); ++i) {
       const Membership& ms = **i;
       std::cerr << " " << ms.id.organisation->name
