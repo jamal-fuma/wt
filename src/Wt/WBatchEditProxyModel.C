@@ -48,7 +48,7 @@ WBatchEditProxyModel::Item::Item(Item *insertedParent)
 { }
 
 WBatchEditProxyModel::Item::~Item()
-{ 
+{
   for (unsigned i = 0; i < insertedItems_.size(); ++i)
     delete insertedItems_[i];
 }
@@ -144,7 +144,7 @@ WModelIndex WBatchEditProxyModel::mapFromSource(const WModelIndex& sourceIndex)
     if (row >= 0 && column >= 0)
       return createIndex(row, column, static_cast<void *>(parentItem));
     else
-      return WModelIndex();      
+      return WModelIndex();
   } else
     return WModelIndex();
 }
@@ -484,7 +484,7 @@ void WBatchEditProxyModel::sourceColumnsInserted(const WModelIndex& parent,
 
 void WBatchEditProxyModel::sourceColumnsAboutToBeRemoved
   (const WModelIndex& parent, int start, int end)
-{ 
+{
   if (isRemoved(parent))
     return;
 
@@ -550,7 +550,7 @@ void WBatchEditProxyModel::sourceRowsAboutToBeRemoved
       item->removedRows_.erase(item->removedRows_.begin() + remi);
     }
   }
-  
+
   startShiftModelIndexes(parent, start, -(end - start + 1), mappedIndexes_);
 }
 
@@ -570,10 +570,10 @@ void WBatchEditProxyModel::deleteItemsUnder(Item *item, int row)
 
 void WBatchEditProxyModel::sourceRowsRemoved(const WModelIndex& parent,
 					     int start, int end)
-{ 
+{
   if (isRemoved(parent))
     return;
-  
+
   endShiftModelIndexes(parent, start, -(end - start + 1), mappedIndexes_);
 }
 
@@ -586,7 +586,7 @@ void WBatchEditProxyModel::sourceRowsInserted(const WModelIndex& parent,
 {
   if (isRemoved(parent))
     return;
-  
+
   startShiftModelIndexes(parent, start, (end - start + 1), mappedIndexes_);
 
   WModelIndex pparent = mapFromSource(parent);
@@ -651,10 +651,10 @@ void WBatchEditProxyModel::sourceDataChanged(const WModelIndex& topLeft,
   }
 }
 
-void WBatchEditProxyModel::sourceHeaderDataChanged(Orientation orientation, 
+void WBatchEditProxyModel::sourceHeaderDataChanged(Orientation orientation,
 						   int start, int end)
 {
-  if (orientation == Orientation::Vertical) {    
+  if (orientation == Orientation::Vertical) {
     Item *item = itemFromIndex(WModelIndex());
     for (int row = start; row <= end; ++row) {
       int proxyRow = adjustedProxyRow(item, row);
