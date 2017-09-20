@@ -45,7 +45,7 @@ ParameterBase::~ParameterBase()
 
 void addGroupBy(std::string& result, const std::string& groupBy,
 		const std::vector<FieldInfo>& fields)
-{		      
+{
   std::vector<std::string> groupByFields;
   boost::split(groupByFields, groupBy, boost::is_any_of(","));
 
@@ -120,7 +120,7 @@ std::string addLimitQuery(const std::string& sql, const std::string &orderBy, in
       result += " offset 0 rows";
 
     break;
-  
+
   case LimitQuery::NotSupported:
     break;
   }
