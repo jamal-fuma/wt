@@ -70,7 +70,7 @@ namespace {
 	  << gradient.radialRadius() << ");";
     }
     for (unsigned i=0; i<gradient.colorstops().size(); i++) {
-      js << jsRef << ".addColorStop(" 
+      js << jsRef << ".addColorStop("
 	 << gradient.colorstops()[i].position() << ","
 	 << WWebWidget::jsStringLiteral
 	(gradient.colorstops()[i].color().cssText(true))
@@ -97,14 +97,14 @@ WCanvasPaintDevice::WCanvasPaintDevice(const WLength& width,
 
   if (app) {
     if (app->environment().agentIsChrome()) {
-      if (static_cast<unsigned int>(app->environment().agent()) <= 
+      if (static_cast<unsigned int>(app->environment().agent()) <=
 	  static_cast<unsigned int>(UserAgent::Chrome2))
 	textMethod_ = TextMethod::DomText;
     } else if (app->environment().agentIsGecko()) {
       if (static_cast<unsigned int>(app->environment().agent()) <
 	  static_cast<unsigned int>(UserAgent::Firefox3_0))
 	textMethod_ = TextMethod::DomText;
-      else if (static_cast<unsigned int>(app->environment().agent()) 
+      else if (static_cast<unsigned int>(app->environment().agent())
 	       < static_cast<unsigned int>(UserAgent::Firefox3_5))
 	textMethod_ = TextMethod::MozText;
     } else if (app->environment().agentIsSafari()) {
@@ -235,10 +235,10 @@ void WCanvasPaintDevice::init()
   currentShadow_ = WShadow();
   currentFont_ = WFont();
 
-  changeFlags_ = PainterChangeFlag::Transform | 
-    PainterChangeFlag::Pen | 
-    PainterChangeFlag::Brush | 
-    PainterChangeFlag::Shadow | 
+  changeFlags_ = PainterChangeFlag::Transform |
+    PainterChangeFlag::Pen |
+    PainterChangeFlag::Brush |
+    PainterChangeFlag::Shadow |
     PainterChangeFlag::Font;
 }
 
@@ -290,7 +290,7 @@ void WCanvasPaintDevice::drawArc(const WRectF& rect, double startAngle,
   js_ << ',' << Utils::round_js_str(ra.x(), 3, buf);
   js_ << "," << Utils::round_js_str(ra.y(), 3, buf) << ",true);";
 
-  // restore comes before fill and stroke, otherwise the gradient will use 
+  // restore comes before fill and stroke, otherwise the gradient will use
   // this temporary coordinate system
   js_ << "ctx.restore();";
 
@@ -488,7 +488,7 @@ void WCanvasPaintDevice::drawText(const WRectF& rect,
   }
 
   switch (textMethod_) {
-  case TextMethod::Html5Text: 
+  case TextMethod::Html5Text:
     {
       js_ << WT_CLASS ".gfxUtils.drawText(ctx,"
 	  << rect.jsRef() << ',' << flags.value() << ','
@@ -707,8 +707,8 @@ void WCanvasPaintDevice::renderStateChanges(bool resetPathTranslation)
     (currentPen_ != painter()->pen()) &&
     (slowFirefox || painter()->pen().style() != PenStyle::None);
 
-  bool penColorChanged = 
-    penChanged && 
+  bool penColorChanged =
+    penChanged &&
     (painter()->pen().isJavaScriptBound() ||
      currentPen_.color() != painter()->pen().color() ||
      currentPen_.gradient() != painter()->pen().gradient());
@@ -910,10 +910,10 @@ void WCanvasPaintDevice::renderStateChanges(bool resetPathTranslation)
       renderStateChanges(true);
     } else {
       if (currentBrush_.isJavaScriptBound()) {
-	js_ << "ctx.fillStyle=" WT_CLASS ".gfxUtils.css_text(" 
+	js_ << "ctx.fillStyle=" WT_CLASS ".gfxUtils.css_text("
 	    << currentBrush_.jsRef() << ".color);";
       } else {
-	js_ << "ctx.fillStyle=" 
+	js_ << "ctx.fillStyle="
 	    << WWebWidget::jsStringLiteral(currentBrush_.color().cssText(true))
 	    << ";";
       }
@@ -931,7 +931,7 @@ void WCanvasPaintDevice::renderStateChanges(bool resetPathTranslation)
     js_ << "ctx.shadowOffsetX=" << Utils::round_js_str(offsetX, 3, buf) << ';';
     js_ << "ctx.shadowOffsetY=" << Utils::round_js_str(offsetY, 3, buf) << ';';
     js_ << "ctx.shadowBlur=" << Utils::round_js_str(blur, 3, buf) << ';'
-	<< "ctx.shadowColor=" 
+	<< "ctx.shadowColor="
 	<< WWebWidget::jsStringLiteral(currentShadow_.color().cssText(true))
 	<< ";";
   }
@@ -940,7 +940,7 @@ void WCanvasPaintDevice::renderStateChanges(bool resetPathTranslation)
     currentFont_ = painter_->font();
 
     switch (textMethod_) {
-    case TextMethod::Html5Text: 
+    case TextMethod::Html5Text:
       js_ << "ctx.font="
 	  << WWebWidget::jsStringLiteral(painter()->font().cssText()) << ";";
       break;
