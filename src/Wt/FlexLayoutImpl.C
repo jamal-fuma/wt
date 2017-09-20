@@ -27,7 +27,7 @@ LOGGER("FlexLayout");
 FlexLayoutImpl::FlexLayoutImpl(WLayout *layout, Impl::Grid& grid)
   : StdLayoutImpl(layout),
     grid_(grid)
-{ 
+{
   const char *THIS_JS = "js/FlexLayoutImpl.js";
 
   WApplication *app = WApplication::instance();
@@ -89,7 +89,7 @@ void FlexLayoutImpl::updateDom(DomElement& parent)
 }
 
 FlexLayoutImpl::~FlexLayoutImpl()
-{ 
+{
   WApplication *app = WApplication::instance();
 
   if (parentLayoutImpl() == nullptr) {
@@ -331,7 +331,7 @@ LayoutDirection FlexLayoutImpl::getDirection() const
 {
   WBoxLayout *boxLayout = dynamic_cast<WBoxLayout *>(layout());
   if (boxLayout)
-    return boxLayout->direction();  
+    return boxLayout->direction();
   else
     return LayoutDirection::LeftToRight;
 }
@@ -451,7 +451,7 @@ DomElement *FlexLayoutImpl::createElement(Orientation orientation,
       }
     }
 
-    if (hAlign != static_cast<AlignmentFlag>(0)) 
+    if (hAlign != static_cast<AlignmentFlag>(0))
       switch (hAlign) {
       case AlignmentFlag::Left:
 	el->setProperty(Property::StyleAlignSelf, "flex-start");
@@ -466,7 +466,7 @@ DomElement *FlexLayoutImpl::createElement(Orientation orientation,
 	break;
       }
   }
-      
+
   {
     WStringStream flexProperty;
     int flexGrow = totalStretch == 0 ? 1 : s.stretch_;
