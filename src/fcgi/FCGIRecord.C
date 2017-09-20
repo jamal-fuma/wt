@@ -35,7 +35,7 @@ FCGIRecord::FCGIRecord(short requestId, char version)
   plainTextBuf_[5] = 8;
   plainTextBuf_[6] = 0;
   plainTextBuf_[7] = 0;
-  
+
   plainTextBuf_[8] = 0;
   plainTextBuf_[9] = 0;
   plainTextBuf_[10] = 0;
@@ -93,7 +93,7 @@ int FCGIRecord::getChar(int fd, bool waitForIt)
     } else
       return -1;
   }
-     
+
   if (plainTextLength_ >= plainTextBufLength_) {
     plainTextBufLength_ += 1024;
     plainTextBuf_ = (unsigned char *)
@@ -229,7 +229,7 @@ bool FCGIRecord::getParam(const std::string name, std::string& value) const
     }
 
     unsigned int valueLen;
-  
+
     if ((contentData_[i] >> 7) == 0) {
       valueLen = contentData_[i];
       i += 1;
