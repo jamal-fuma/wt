@@ -150,7 +150,7 @@ private:
     loginStatus_->resolveWidget("login")->hide();
     loginStatus_->resolveWidget("login-link")->show();
     loginStatus_->resolveWidget("register-link")->show();
-    
+
     refresh();
     panel_->hide();
   }
@@ -184,9 +184,9 @@ private:
       loginStatus_->bindEmpty("userlist-link");
       loginStatus_->bindEmpty("author-panel-link");
     }
- 
+
     loginStatus_->bindWidget("profile-link", std::move(profileLink));
- 
+
     bindPanelTemplates();
   }
 
@@ -215,7 +215,7 @@ private:
 
     t.commit();
   }
- 
+
   void editUsers() {
     panel_->show();
 
@@ -340,7 +340,7 @@ private:
   dbo::ptr<User> findUser(const std::string& name) {
     return session_.find<User>("where name = ?").bind(name);
   }
-  
+
   bool yearMonthDiffer(const Wt::WDateTime& dt1, const Wt::WDateTime& dt2) {
     return dt1.date().year() != dt2.date().year()
       || dt1.date().month() != dt2.date().month();
@@ -348,7 +348,7 @@ private:
 
   void showArchive(WContainerWidget *parent) {
     static const char* dateFormat = "MMMM yyyy";
-    
+
     parent->addWidget(Wt::cpp14::make_unique<Wt::WText>(tr("archive-title")));
 
     Posts posts = session_.find<Post>("order by date desc");
@@ -358,19 +358,19 @@ private:
       if (post->state != Post::Published)
 	continue;
 
-      if (formerDate.isNull() 
+      if (formerDate.isNull()
           || yearMonthDiffer(formerDate, post->date)) {
         Wt::WText *title
           = parent->addWidget(Wt::cpp14::make_unique<Wt::WText>(post->date.date().toString(dateFormat)));
 	title->setStyleClass("archive-month-title");
       }
-      
+
       Wt::WAnchor *a = parent->addWidget(Wt::cpp14::make_unique<Wt::WAnchor>(
                                        Wt::WLink(Wt::LinkType::InternalPath,
                                        basePath_ + post->permaLink()),
                                        post->title));
       a->setInline(false);
-      
+
       formerDate = post->date;
     }
   }
