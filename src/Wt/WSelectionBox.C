@@ -18,7 +18,7 @@ WSelectionBox::WSelectionBox()
   : verticalSize_(5),
     selectionMode_(SelectionMode::Single),
     configChanged_(false)
-{ 
+{
   noSelectionEnabled_ = true;
 }
 
