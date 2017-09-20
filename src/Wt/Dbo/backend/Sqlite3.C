@@ -74,11 +74,11 @@ public:
 
 #if SQLITE_VERSION_NUMBER >= 3003009
     int err = sqlite3_prepare_v2(db_.connection(), sql.c_str(),
-				 static_cast<int>(sql.length() + 1), &st_, 
+				 static_cast<int>(sql.length() + 1), &st_,
 				 nullptr);
 #else
     int err = sqlite3_prepare(db_.connection(), sql.c_str(),
-			      static_cast<int>(sql.length() + 1), &st_, 
+			      static_cast<int>(sql.length() + 1), &st_,
 			      nullptr);
 #endif
 
@@ -245,7 +245,7 @@ public:
 
     if (value.size() == 0)
       err = sqlite3_bind_blob(st_, column + 1, "", 0, SQLITE_TRANSIENT);
-    else 
+    else
       err = sqlite3_bind_blob(st_, column + 1, &(*(value.begin())),
 			      static_cast<int>(value.size()), SQLITE_TRANSIENT);
 
@@ -288,7 +288,7 @@ public:
   {
     return sqlite3_changes(db_.connection());
   }
-  
+
   virtual bool nextRow() override
   {
     switch (state_) {
@@ -316,7 +316,7 @@ public:
     case Done:
       done();
       throw Sqlite3Exception("Sqlite3: nextRow(): statement already finished");
-    }      
+    }
 
     return false;
   }
@@ -328,7 +328,7 @@ public:
 
     *value = (const char *)sqlite3_column_text(st_, column);
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result string " << column << " " << *value << std::endl);
 
     return true;
@@ -352,7 +352,7 @@ public:
     *value = 42;
     *value = sqlite3_column_int(st_, column);
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result int " << column << " " << *value << std::endl);
 
     return true;
@@ -365,7 +365,7 @@ public:
 
     *value = sqlite3_column_int64(st_, column);
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result long long " << column << " " << *value << std::endl);
 
     return true;
@@ -378,7 +378,7 @@ public:
 
     *value = static_cast<float>(sqlite3_column_double(st_, column));
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result float " << column << " " << *value << std::endl);
 
     return true;
@@ -390,8 +390,8 @@ public:
       return false;
 
     *value = sqlite3_column_double(st_, column);
-  
-    DEBUG(std::cerr << this 
+
+    DEBUG(std::cerr << this
 	  << " result double " << column << " " << *value << std::endl);
 
     return true;
@@ -406,7 +406,7 @@ public:
 
     *value = std::chrono::milliseconds(msec);
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
       << " result time_duration " << column << " " << value->count() << "ms" << std::endl);
 
     return true;
@@ -521,14 +521,14 @@ public:
     value->resize(s);
     std::copy(v, v + s, value->begin());
 
-    DEBUG(std::cerr << this 
+    DEBUG(std::cerr << this
 	  << " result blob " << column << " (blob, size = " << s << ")"
 	  << std::endl);
 
     return true;
   }
 
- 
+
   virtual std::string sql() const override {
     return sql_;
   }
@@ -618,10 +618,10 @@ Sqlite3::Sqlite3(const Sqlite3& other)
   : SqlConnection(other),
     conn_(other.conn_)
 {
-  dateTimeStorage_[static_cast<unsigned>(SqlDateTimeType::Date)] 
+  dateTimeStorage_[static_cast<unsigned>(SqlDateTimeType::Date)]
     = other
     .dateTimeStorage_[static_cast<unsigned>(SqlDateTimeType::Date)];
-  dateTimeStorage_[static_cast<unsigned>(SqlDateTimeType::DateTime)] 
+  dateTimeStorage_[static_cast<unsigned>(SqlDateTimeType::DateTime)]
     = other
     .dateTimeStorage_[static_cast<unsigned>(SqlDateTimeType::DateTime)];
 
@@ -668,14 +668,14 @@ std::string Sqlite3::autoincrementSql() const
   return "autoincrement";
 }
 
-std::vector<std::string> 
+std::vector<std::string>
 Sqlite3::autoincrementCreateSequenceSql(const std::string &table,
 					const std::string &id) const
 {
   return std::vector<std::string>();
 }
 
-std::vector<std::string> 
+std::vector<std::string>
 Sqlite3::autoincrementDropSequenceSql(const std::string &table,
 				      const std::string &id) const
 {
@@ -728,17 +728,17 @@ DateTimeStorage Sqlite3::dateTimeStorage(SqlDateTimeType type) const
   return dateTimeStorage_[static_cast<unsigned>(type)];
 }
 
-void Sqlite3::startTransaction() 
+void Sqlite3::startTransaction()
 {
   executeSql("begin transaction");
 }
 
-void Sqlite3::commitTransaction() 
+void Sqlite3::commitTransaction()
 {
   executeSql("commit transaction");
 }
 
-void Sqlite3::rollbackTransaction() 
+void Sqlite3::rollbackTransaction()
 {
   executeSql("rollback transaction");
 }
