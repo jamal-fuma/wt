@@ -58,7 +58,7 @@ WIOService::~WIOService()
 }
 
 void WIOService::setThreadCount(int count)
-{ 
+{
   impl_->threadCount_ = count;
 }
 
