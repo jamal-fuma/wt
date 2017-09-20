@@ -154,7 +154,7 @@ BOOST_AUTO_TEST_CASE( dbo2_test1 )
     std::cerr << " user " << (*i)->name
 	      << " with karma of " << (*i)->karma << std::endl;
 
-  joe = session.find<User>("where \"name\" = ?").bind("Joe");    
+  joe = session.find<User>("where \"name\" = ?").bind("Joe");
   joe.modify()->karma++;
   joe.modify()->password = "public";
 
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE( dbo2_test1 )
   {
     dbo::Session& session = *f.session_;
     dbo::Transaction transactionBindTooMuch(session);
-    
+
     bool caught = false;
     try {
       Users allUsers2 = session.find<User>().bind("Joe");
