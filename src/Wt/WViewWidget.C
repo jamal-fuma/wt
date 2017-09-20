@@ -54,7 +54,7 @@ void WViewWidget::render(WFlags<RenderFlag> flags)
 void WViewWidget::updateDom(DomElement& element, bool all)
 {
   WApplication *app = WApplication::instance();
-  
+
   if (!app->session()->renderer().preLearning()) {
     if (all && !contents_) {
       needContentsUpdate_ = true;
