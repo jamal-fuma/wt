@@ -29,14 +29,14 @@ Wt::cpp17::any SombreroData::data(int row, int column, Wt::ItemDataRole role,
 
 Wt::cpp17::any SombreroData::data(const Wt::WModelIndex& index,
                               Wt::ItemDataRole role) const
-{ 
+{
   double delta_y = (yEnd_ - yStart_)/(nbYPts_-1);
   if (index.row() == 0) { // give back y-abscis
     if (index.column() == 0)
       return 0.0;
     return yStart_ + (index.column()-1)*delta_y;
   }
-  
+
   double delta_x = (xEnd_ - xStart_)/(nbXPts_-1);
   if (index.column() == 0) { // give back x-abscis
     if (index.row() == 0)
@@ -102,7 +102,7 @@ Wt::cpp17::any PlaneData::data(const Wt::WModelIndex& index,
   x = xStart_ + index.row() * xDelta_;
   if (yVar_)
     value = 0.5*y;
-  else 
+  else
     value = 0.5*x;
 
   if (role == Wt::ItemDataRole::Display) {
