@@ -432,7 +432,7 @@ void WCartesian3DChart::initializeGL()
   if (restoringContext()) {
     updateChart(ChartUpdates::GLContext | ChartUpdates::GLTextures);
   } else {
-    updateChart(ChartUpdates::GLContext | ChartUpdates::GLTextures | 
+    updateChart(ChartUpdates::GLContext | ChartUpdates::GLTextures |
 		ChartUpdates::CameraMatrix);
   }
 }
@@ -828,7 +828,7 @@ void WCartesian3DChart::loadCubeTextures()
   initLayout();
 
   // Two horizontal and one vertical axis texture
-  std::unique_ptr<WPaintDevice> cpdHoriz0 
+  std::unique_ptr<WPaintDevice> cpdHoriz0
     = createPaintDevice(WLength(1024), WLength(8*256));
   std::unique_ptr<WPaintDevice> cpdHoriz1
     = createPaintDevice(WLength(1024), WLength(8*256));
@@ -1029,7 +1029,7 @@ void WCartesian3DChart::initLegend()
     currentLeftOffset_ += legendWidth + MARGIN;
   } else if (legend_.legendSide() == Side::Right) {
     space = (int)(height().value()) - currentTopOffset_ - currentBottomOffset_;
-    painter.translate(width().value() 
+    painter.translate(width().value()
 		      - currentRightOffset_ - legendWidth - MARGIN, 0);
     currentRightOffset_ += legendWidth + MARGIN;
   } else if (legend_.legendSide() == Side::Top) {
@@ -1038,7 +1038,7 @@ void WCartesian3DChart::initLegend()
     currentTopOffset_ += legendHeight + MARGIN;
   } else if (legend_.legendSide() == Side::Bottom) {
     space = (int)(width().value()) - currentLeftOffset_ - currentRightOffset_;
-    painter.translate(0, height().value() 
+    painter.translate(0, height().value()
 		      - currentBottomOffset_ - legendHeight - MARGIN);
     currentBottomOffset_ += legendHeight + MARGIN;
   }
@@ -1061,7 +1061,7 @@ void WCartesian3DChart::initLegend()
       break; // legend-side does not match legend-alignment
     }
   }
-  if (legend_.legendSide() == Side::Top || 
+  if (legend_.legendSide() == Side::Top ||
       legend_.legendSide() == Side::Bottom) {
     painter.translate(currentLeftOffset_, 0);
     space = (int)(width().value()) - currentLeftOffset_ - currentRightOffset_;
@@ -1543,8 +1543,8 @@ void WCartesian3DChart::resizeGL(int width, int height)
       break;
     }
   }
-  if (intersectionLinesEnabled_ || 
-      clippingLinesEnabled || 
+  if (intersectionLinesEnabled_ ||
+      clippingLinesEnabled ||
       !intersectionPlanes_.empty())
     resizeOffscreenBuffer();
 
@@ -1606,21 +1606,21 @@ void WCartesian3DChart::resizeOffscreenBuffer()
   renderbufferStorage(RENDERBUFFER, DEPTH_COMPONENT16, w, h);
 
   bindFramebuffer(FRAMEBUFFER, intersectionLinesFramebuffer_);
-  framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0, 
+  framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0,
 		       TEXTURE_2D, intersectionLinesTexture_, 0);
-  framebufferRenderbuffer(FRAMEBUFFER, DEPTH_ATTACHMENT, 
+  framebufferRenderbuffer(FRAMEBUFFER, DEPTH_ATTACHMENT,
 			  RENDERBUFFER, offscreenDepthbuffer_);
 
   bindFramebuffer(FRAMEBUFFER, meshIndexFramebuffer_);
-  framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0, 
+  framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0,
 		       TEXTURE_2D, meshIndexTexture_, 0);
-  framebufferRenderbuffer(FRAMEBUFFER, DEPTH_ATTACHMENT, 
+  framebufferRenderbuffer(FRAMEBUFFER, DEPTH_ATTACHMENT,
 			  RENDERBUFFER, offscreenDepthbuffer_);
 
   bindFramebuffer(FRAMEBUFFER, positionFramebuffer_);
-  framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0, 
+  framebufferTexture2D(FRAMEBUFFER, COLOR_ATTACHMENT0,
 		       TEXTURE_2D, positionTexture_, 0);
-  framebufferRenderbuffer(FRAMEBUFFER, DEPTH_ATTACHMENT, 
+  framebufferRenderbuffer(FRAMEBUFFER, DEPTH_ATTACHMENT,
 			  RENDERBUFFER, offscreenDepthbuffer_);
 
   bindRenderbuffer(RENDERBUFFER, Renderbuffer());
@@ -1669,7 +1669,7 @@ void WCartesian3DChart::renderIntersectionLines()
   clear(COLOR_BUFFER_BIT | DEPTH_BUFFER_BIT);
 
   for (unsigned i = 0; i < dataSeriesVector_.size(); i++) {
-    WAbstractGridData *gridData 
+    WAbstractGridData *gridData
       = dynamic_cast<WAbstractGridData*>(dataSeriesVector_[i].get());
     if (gridData && gridData->type() == Series3DType::Surface) {
       gridData->paintGLIndex(i);
@@ -1776,7 +1776,7 @@ void WCartesian3DChart::renderIntersectionLinesWithInvisiblePlanes()
     } else {
       uniform1i(clippingPlane_clippingAxis_, 2);
     }
-    uniform3f(clippingPlane_clipPtUniform_, plane.position, 
+    uniform3f(clippingPlane_clipPtUniform_, plane.position,
 	      plane.position, plane.position);
     uniform3f(clippingPlane_dataMinPtUniform_, minX, minY, minZ);
     uniform3f(clippingPlane_dataMaxPtUniform_, maxX, maxY, maxZ);
@@ -1967,7 +1967,7 @@ void WCartesian3DChart::renderClippingLines(WAbstractGridData *data)
     //       when using more and larger surfaces.
     for (size_t j = 0; j < dataSeriesVector_.size(); ++j) {
       if (dataSeriesVector_[j].get() != data) {
-	WAbstractGridData *gridData 
+	WAbstractGridData *gridData
 	  = dynamic_cast<WAbstractGridData*>(dataSeriesVector_[j].get());
 	if (gridData &&
 	    gridData->type() == Series3DType::Surface &&
@@ -2552,9 +2552,9 @@ void WCartesian3DChart::paintGridLines(WPaintDevice *paintDevice, Plane plane)
       for (unsigned i = 0; i < pos.size(); i++) {
 	if (pos[i] == 0 || pos[i] == gridRenderWidth_)
 	  continue;
-	int texPos = (int)(pos[i]/renderLength * 
+	int texPos = (int)(pos[i]/renderLength *
 			   (gridRenderWidth_/textureScaling_));
-	painter.drawLine(texPos+0.5, 0.5, texPos+0.5, 
+	painter.drawLine(texPos+0.5, 0.5, texPos+0.5,
 			 gridRenderWidth_/textureScaling_-0.5);
       }
     }
@@ -2563,9 +2563,9 @@ void WCartesian3DChart::paintGridLines(WPaintDevice *paintDevice, Plane plane)
       for (unsigned i = 0; i < pos.size(); i++) {
 	if (pos[i] == 0 || pos[i] == gridRenderWidth_)
 	  continue;
-	int texPos = (int)(pos[i]/renderLength * 
+	int texPos = (int)(pos[i]/renderLength *
 			   (gridRenderWidth_/textureScaling_));
-	painter.drawLine(0.5, texPos+0.5, 
+	painter.drawLine(0.5, texPos+0.5,
 			 gridRenderWidth_/textureScaling_-0.5, texPos+0.5);
       }
     }
