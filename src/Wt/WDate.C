@@ -138,8 +138,8 @@ int WDate::toJulianDay() const
     int a = std::floor((14 - month())/12);
     int nyears = year() + 4800 - a;
     int nmonths = month() + 12*a -3;
-    return day() + std::floor((153*nmonths + 2)/5) 
-      + 365*nyears + std::floor(nyears/4) 
+    return day() + std::floor((153*nmonths + 2)/5)
+      + 365*nyears + std::floor(nyears/4)
       - std::floor(nyears/100) + std::floor(nyears/400) - 32045;
   }
 }
@@ -230,7 +230,7 @@ int WDate::parseShortDayName(const std::string& v, unsigned& pos)
     return -1;
 
   std::string d = v.substr(pos, 3);
-  
+
   for (int i = 1; i <= 7; ++i) {
     if (d == shortDayName(i).toUTF8()) {
       pos += 3;
@@ -287,7 +287,7 @@ int WDate::parseShortMonthName(const std::string& v, unsigned& pos)
     return -1;
 
   std::string m = v.substr(pos, 3);
-  
+
   for (int i = 1; i <= 12; ++i) {
     if (m == shortMonthName(i).toUTF8()) {
       pos += 3;
@@ -329,7 +329,7 @@ int WDate::parseLongMonthName(const std::string& v, unsigned& pos)
 
 WString WDate::defaultFormat()
 {
-  return WString::fromUTF8("ddd MMM d yyyy"); 
+  return WString::fromUTF8("ddd MMM d yyyy");
 }
 
 WDate WDate::fromString(const WString& s)
@@ -464,7 +464,7 @@ bool WDate::parseLast(const std::string& v, unsigned& vi,
       } catch (std::exception&) {
 	return false;
       }
-      
+
       break;
     }
     case 2: {
@@ -478,7 +478,7 @@ bool WDate::parseLast(const std::string& v, unsigned& vi,
 	parse.day = Utils::stoi(dstr);
       } catch (std::exception&) {
 	return false;
-      }      
+      }
 
       break;
     }
@@ -515,7 +515,7 @@ bool WDate::parseLast(const std::string& v, unsigned& vi,
       } catch (std::exception&) {
 	return false;
       }
-      
+
       break;
     }
     case 2: {
@@ -529,7 +529,7 @@ bool WDate::parseLast(const std::string& v, unsigned& vi,
 	parse.month = Utils::stoi(Mstr);
       } catch (std::exception&) {
 	return false;
-      }      
+      }
 
       break;
     }
@@ -567,7 +567,7 @@ bool WDate::parseLast(const std::string& v, unsigned& vi,
 	  parse.year += 1900;
       } catch (std::exception&) {
 	return false;
-      }      
+      }
 
       break;
     }
@@ -582,7 +582,7 @@ bool WDate::parseLast(const std::string& v, unsigned& vi,
 	parse.year = Utils::stoi(ystr);
       } catch (std::exception&) {
 	return false;
-      }      
+      }
 
       break;
     }
@@ -756,7 +756,7 @@ std::string WDate::extFormat(const WString& format)
   bool inQuote = false;
   bool gotQuoteInQuote = false;
 
-  int d = 0, M = 0, y = 0; 
+  int d = 0, M = 0, y = 0;
 
   for (unsigned i = 0; i < f.length(); ++i) {
     if (inQuote) {
@@ -895,7 +895,7 @@ WDate::RegExpInfo WDate::formatToRegExp(const WT_USTRING& format)
 
   static const std::string regexSpecial = "/[\\^$.|?*+()";
 
-  int d = 0, M = 0, y = 0; 
+  int d = 0, M = 0, y = 0;
 
   for (unsigned i = 0; i < f.length(); ++i) {
     if (inQuote) {
