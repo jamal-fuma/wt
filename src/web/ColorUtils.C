@@ -19,13 +19,13 @@ namespace Wt {
 
   namespace Color {
 
-int parseRgbArgument(const std::string& argument) 
+int parseRgbArgument(const std::string& argument)
 {
   std::string arg = boost::trim_copy(argument);
   try {
     if (boost::ends_with(arg, "%"))
       return (int) (Utils::stod(arg.substr(0, arg.size() - 1)) * 255 / 100);
-    else 
+    else
       return Utils::stoi(arg);
   } catch (std::exception& e) {
     LOG_ERROR("invalid color component: " << arg);
@@ -44,7 +44,7 @@ WColor parseCssColor(const std::string &name)
 {
   std::string n = name;
   boost::trim(n);
-      
+
   int red = 0;
   int green = 0;
   int blue = 0;
@@ -55,7 +55,7 @@ WColor parseCssColor(const std::string &name)
       red = replicateHex(n.substr(1, 1));
       green = replicateHex(n.substr(2,1));
       blue = replicateHex(n.substr(3,1));
-    } else if (n.size() - 1 == 6) {         // #rrggbb 
+    } else if (n.size() - 1 == 6) {         // #rrggbb
       red = Utils::hexToInt(n.substr(1,2).c_str());
       green = Utils::hexToInt(n.substr(3,2).c_str());
       blue = Utils::hexToInt(n.substr(5,2).c_str());
@@ -69,37 +69,37 @@ WColor parseCssColor(const std::string &name)
       LOG_ERROR("could not parse rgb format: " << n);
       return WColor(red, green, blue, alpha);
     }
-	
+
     bool has_alpha = (n[3] == 'a');
     int start_bracket = 3 + (has_alpha ? 1 : 0);
-	
+
     if (n[start_bracket] != '(' || n[n.size() - 1] != ')') {
       LOG_ERROR("could not parse rgb format: " << n);
       return WColor(red, green, blue, alpha);
     }
-	
-    std::string argumentsStr = n.substr(start_bracket + 1, 
+
+    std::string argumentsStr = n.substr(start_bracket + 1,
 					n.size() - 1 - (start_bracket + 1));
-	
+
     std::vector<std::string> arguments;
-    boost::split(arguments, 
+    boost::split(arguments,
 		 argumentsStr,
 		 boost::is_any_of(","));
-	
+
     if (!has_alpha && arguments.size() != 3) {
       LOG_ERROR("could not parse rgb format: " << n);
       return WColor(red, green, blue, alpha);
     }
-	
+
     if (has_alpha && arguments.size() != 4) {
       LOG_ERROR("could not parse rgb format: " << n);
       return WColor(red, green, blue, alpha);
     }
-	
+
     red = parseRgbArgument(arguments[0]);
     green = parseRgbArgument(arguments[1]);
     blue = parseRgbArgument(arguments[2]);
-	
+
     if (has_alpha) {
       try {
 	alpha = Utils::stoi(boost::trim_copy(arguments[3]));
@@ -113,6 +113,6 @@ WColor parseCssColor(const std::string &name)
 
   return WColor(red, green, blue, alpha);
 }
-    
+
   }
 }
