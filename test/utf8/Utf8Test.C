@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE( Utf8_test3 )
 
   BOOST_REQUIRE(s == ws.toUTF8());
 }
- 
+
 BOOST_AUTO_TEST_CASE( Utf8_test4 )
 {
   std::string u8 = "euro\xe2\x82\xac greek \xc6\x94 special \xf0\x90\x8e\xa7)";
