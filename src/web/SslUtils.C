@@ -12,12 +12,12 @@
 
 #ifdef WT_WITH_SSL
 namespace Wt {
-  namespace Ssl {  
+  namespace Ssl {
     std::vector<Wt::WSslCertificate::DnAttribute>
     getDnAttributes(struct X509_name_st *sn)
     {
       std::vector<Wt::WSslCertificate::DnAttribute> retval;
-      
+
       if (!sn)
 	return retval;
 
@@ -27,7 +27,7 @@ namespace Wt {
 	ASN1_OBJECT *obj = X509_NAME_ENTRY_get_object(entry);
 	ASN1_STRING *data = X509_NAME_ENTRY_get_data(entry);
 	int nid = OBJ_obj2nid(obj);
-      
+
 	std::string value;
 	{
 	  char *s;
@@ -82,9 +82,9 @@ namespace Wt {
         = getDnAttributes(X509_get_subject_name(x509));
       std::vector<Wt::WSslCertificate::DnAttribute> issuerDn
         = getDnAttributes(X509_get_issuer_name(x509));
-      Wt::WDateTime validityStart 
+      Wt::WDateTime validityStart
         = dateToWDate(X509_get_notBefore(x509));
-      Wt::WDateTime validityEnd 
+      Wt::WDateTime validityEnd
         = dateToWDate(X509_get_notAfter(x509));
 
       std::string pemCert = Wt::Ssl::exportToPem(x509);
@@ -96,8 +96,8 @@ namespace Wt {
     {
       // Got my wisdom from ITU-T rec X.680 (07/2002) and RFC 3280
       Wt::WDateTime retval;
-      
-      if (!date) 
+
+      if (!date)
 	return retval;
 
       switch (date->type) {
@@ -137,7 +137,7 @@ namespace Wt {
     std::string exportToPem(X509 *x509)
     {
       std::string bio;
-      
+
       if (!x509)
 	return bio;
 
@@ -157,13 +157,13 @@ namespace Wt {
     {
       BIO *bio;
       X509 *certificate;
-      
+
       bio = BIO_new(BIO_s_mem());
       BIO_puts(bio, pem.c_str());
       certificate = PEM_read_bio_X509(bio, nullptr, nullptr, nullptr);
 
       BIO_free_all(bio);
-      
+
       return certificate;
     }
   }
