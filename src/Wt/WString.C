@@ -30,14 +30,14 @@ WString::WString()
 
 WString::WString(const wchar_t *value)
   : impl_(nullptr)
-{ 
+{
   if (value)
     utf8_ = Wt::toUTF8(value);
 }
 
 WString::WString(const std::wstring& value)
   : impl_(nullptr)
-{ 
+{
   utf8_ = Wt::toUTF8(value);
 }
 
@@ -80,7 +80,7 @@ WString::WString(const char *value, CharEncoding encoding)
 
 WString::WString(const std::string& value, CharEncoding encoding)
   : impl_(nullptr)
-{ 
+{
   if (realEncoding(encoding) == CharEncoding::UTF8)
     utf8_ = value;
   else
@@ -599,7 +599,7 @@ void WString::setDefaultEncoding(Wt::CharEncoding encoding)
 
 CharEncoding WString::realEncoding(CharEncoding encoding)
 {
-  return encoding == CharEncoding::Default 
+  return encoding == CharEncoding::Default
     ? defaultEncoding_ : encoding;
 }
 
