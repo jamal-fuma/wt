@@ -37,7 +37,7 @@ namespace {
 }
 
 namespace Wt {
-  
+
 unsigned int WRandom::get()
 {
   if (!instance.get()) {
