@@ -23,7 +23,7 @@ FormBaseModel::FormBaseModel(const AuthService& baseAuth,
   : baseAuth_(baseAuth),
     users_(users),
     passwordAuth_(nullptr)
-{ 
+{
   WApplication *app = WApplication::instance();
   app->builtinLocalizedStrings().useBuiltin(skeletons::AuthStrings_xml1);
 }
@@ -62,7 +62,7 @@ void FormBaseModel::setValid(Field field, const Wt::WString& message)
 {
   setValidation(field,
 		WValidator::Result(ValidationState::Valid,
-				   message.empty() ? 
+				   message.empty() ?
 				   WString::tr("Wt.Auth.valid") : message));
 }
 
@@ -94,7 +94,7 @@ bool FormBaseModel::loginUser(Login& login, User& user, LoginState state)
     login.login(user, state);
 
     return true;
-  }  
+  }
 }
 
   }
