@@ -56,7 +56,7 @@ void WCheckBox::updateJSlot()
   if (!supportsIndeterminate(WApplication::instance()->environment())) {
     partialOff = "obj.style.opacity='';";
     partialOn = "obj.style.opacity='0.5';";
-    if (triState_ && !partialStateSelectable_) 
+    if (triState_ && !partialStateSelectable_)
       slot = new JSlot("function(obj, e) { " + partialOff + "}", this);
   } else {
     partialOn  = "obj.indeterminate=true;";
@@ -72,11 +72,11 @@ void WCheckBox::updateJSlot()
        << " obj.nextState='u';"
        << "} else if( obj.nextState=='i') {\n"
        << "obj.nextState='c';"
-       << partialOn 
+       << partialOn
        << " } else if( obj.nextState=='u') {\n"
        << "obj.nextState='i';"
        << "obj.checked=false;"
-       << partialOff 
+       << partialOff
        << " } else obj.nextState='i';"
        << "}";
     slot = new JSlot(ss.str(), this);
@@ -103,7 +103,7 @@ void WCheckBox::updateNextState() {
 
   if (partialStateSelectable_)
     doJavaScript(this->jsRef() + ".nextState='"+nextState+"';");
-  else 
+  else
     doJavaScript(this->jsRef() + ".nextState=null;");
 }
 
