@@ -256,7 +256,7 @@ std::unique_ptr<WWidget> WBoxLayout::createSpacer(const WLength& size)
   std::unique_ptr<Spacer> spacer(new Spacer());
 
   if (size.toPixels() > 0) {
-    if (direction_ == LayoutDirection::LeftToRight || 
+    if (direction_ == LayoutDirection::LeftToRight ||
 	direction_ == LayoutDirection::RightToLeft)
       spacer->setMinimumSize(size, WLength::Auto);
     else
