@@ -123,9 +123,9 @@ WValidator::Result WDoubleValidator::validate(const WT_USTRING& input) const
 {
   if (input.empty())
     return WValidator::validate(input);
-  
+
   std::string text = input.toUTF8();
-  
+
   if(ignoreTrailingSpaces_)
 	boost::trim(text);
 
