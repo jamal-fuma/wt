@@ -310,7 +310,7 @@ ScatterPlotExample::ScatterPlotExample():
     model->setData(i, 0, x);
     model->setData(i, 1, sin(x));
   }
- 
+
   /*
    * Create the scatter plot.
    */
@@ -359,7 +359,7 @@ PieExample::PieExample():
   std::unique_ptr<NumericItem> prototype
       = cpp14::make_unique<NumericItem>();
   model->setItemPrototype(std::move(prototype));
-  
+
   //headers
   model->insertColumns(model->columnCount(), 2);
   model->setHeaderData(0, WString("Item"));
