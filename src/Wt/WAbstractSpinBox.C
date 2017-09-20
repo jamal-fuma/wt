@@ -33,9 +33,9 @@ public:
     else
       return Result(ValidationState::Invalid);
   }
- 
+
   virtual std::string javaScriptValidate() const override {
-    return 
+    return
       "new function() { "
       """this.validate = function(t) {"
       ""  "return jQuery.data(" + spinBox_->jsRef() + ", 'obj').validate(t);"
@@ -68,13 +68,13 @@ bool WAbstractSpinBox::nativeControl() const
     }
 
     const WEnvironment& env = WApplication::instance()->environment();
-    if ((env.agentIsChrome() && 
-	 static_cast<unsigned int>(env.agent()) >= 
+    if ((env.agentIsChrome() &&
+	 static_cast<unsigned int>(env.agent()) >=
 	 static_cast<unsigned int>(UserAgent::Chrome5))
-	|| (env.agentIsSafari() && 
-	    static_cast<unsigned int>(env.agent()) >= 
+	|| (env.agentIsSafari() &&
+	    static_cast<unsigned int>(env.agent()) >=
 	    static_cast<unsigned int>(UserAgent::Safari4))
-	|| (env.agentIsOpera() && 
+	|| (env.agentIsOpera() &&
 	    static_cast<unsigned int>(env.agent()) >=
 	    static_cast<unsigned int>(UserAgent::Opera10)))
       return true;
@@ -131,7 +131,7 @@ void WAbstractSpinBox::render(WFlags<RenderFlag> flags)
 void WAbstractSpinBox::connectJavaScript(Wt::EventSignalBase& s,
 					 const std::string& methodName)
 {
-  std::string jsFunction = 
+  std::string jsFunction =
     "function(obj, event) {"
     """var o = jQuery.data(" + jsRef() + ", 'obj');"
     """if (o) o." + methodName + "(obj, event);"
@@ -239,7 +239,7 @@ void WAbstractSpinBox::refresh()
 {
   doJavaScript
     ("jQuery.data(" + jsRef() + ", 'obj')"
-     ".setLocale(" 
+     ".setLocale("
      + jsStringLiteral(WLocale::currentLocale().decimalPoint()) + ","
      + jsStringLiteral(WLocale::currentLocale().groupSeparator()) + ");");
 
