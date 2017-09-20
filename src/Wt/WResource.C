@@ -66,7 +66,7 @@ WResource::UseLock::~UseLock()
 WResource::WResource()
   : trackUploadProgress_(false),
     dispositionType_(ContentDisposition::None)
-{ 
+{
 #ifdef WT_THREADED
   mutex_.reset(new std::recursive_mutex());
   beingDeleted_ = false;
@@ -194,7 +194,7 @@ void WResource::handle(WebRequest *webRequest, WebResponse *webResponse,
     if (!useLock.use(this))
       return;
 
-    if (handler->haveLock() && 
+    if (handler->haveLock() &&
 	handler->lockOwner() == std::this_thread::get_id()) {
       handler->unlock();
     }
@@ -288,7 +288,7 @@ const std::string& WResource::generateUrl()
       c->removeUploadProgressUrl(currentUrl_);
     currentUrl_ = app->addExposedResource(this);
     if (c)
-      c->addUploadProgressUrl(currentUrl_);    
+      c->addUploadProgressUrl(currentUrl_);
   } else
     currentUrl_ = internalPath_;
 
