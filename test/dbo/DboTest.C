@@ -388,7 +388,7 @@ public:
 class C {
 public:
   std::string name;
-  
+
   dbo::weak_ptr<A> aOneToOne;
   dbo::ptr<B> b;
   dbo::weak_ptr<D> dOneToOne;
@@ -746,7 +746,7 @@ BOOST_AUTO_TEST_CASE( dbo_test3 )
     //this test case does not work in firebird,
     //the name field is of the 'blob subtype text' datatype,
     //and according to the firebird documentation,
-    //order by is not supported on columns of this datatype 
+    //order by is not supported on columns of this datatype
     //http://www.firebirdsql.org/refdocs/langrefupd21-blob.html
 #ifndef FIREBIRD
     typedef dbo::collection<dbo::ptr<C>> Cs;
@@ -763,7 +763,7 @@ BOOST_AUTO_TEST_CASE( dbo_test3 )
     c3_compare.push_back("c3");
     c3_compare.push_back("c2");
 
-    int c = 0; 
+    int c = 0;
     BOOST_REQUIRE(c2.size() == c2_compare.size());
     for (Cs::const_iterator i = c2.begin(); i != c2.end(); ++i)
       BOOST_REQUIRE((*i)->name == c2_compare[c++]);
@@ -819,8 +819,8 @@ BOOST_AUTO_TEST_CASE( dbo_test4 )
     typedef dbo::collection<BA> BAs;
 
     // The query below becomes:
-    //    select count(1) from ( select B."id", B."name", A."id", A."date", A."b_id" 
-    //    from "table_b" B join "table_a" A on A."b_id" = B."id"); 
+    //    select count(1) from ( select B."id", B."name", A."id", A."date", A."b_id"
+    //    from "table_b" B join "table_a" A on A."b_id" = B."id");
     // when it is used to return the size of the collection.
     // This is not valid SQL by the SQL standard definition,
     // because 2 id fields are mentioned in the select clause.
@@ -941,7 +941,7 @@ BOOST_AUTO_TEST_CASE( dbo_test4b )
 
 #if !defined(FIREBIRD) && !defined(MYSQL)
     dbo::Query<ABC> q = session_->query<ABC>
-      ("select A, B, C " 
+      ("select A, B, C "
        "from " SCHEMA "\"table_a\" A join " SCHEMA "\"table_b\" B on (A.\"b_id\" = B.\"id\") join " SCHEMA "\"table_c\" C on (C.\"b2_id\" = B.\"id\")")
         .orderBy("A.\"id\"");
 
@@ -1220,7 +1220,7 @@ BOOST_AUTO_TEST_CASE( dbo_test7 )
     BOOST_REQUIRE(result == "dima ' ? ");
   }
 #endif // ORACLE
-#endif //FIREBIRD 
+#endif //FIREBIRD
 
   int aId = -1;
   {
@@ -1334,9 +1334,9 @@ BOOST_AUTO_TEST_CASE( dbo_test10 )
     }
 
     dbo::ptr<D> d2 = session_->load<D>(Coordinate(42, 43));
- 
+
     BOOST_REQUIRE(d2 && d2.id() == Coordinate(42, 43));
-     
+
     dbo::ptr<C> c1 = session_->addNew<C>("c1");
     dbo::ptr<C> c2 = session_->addNew<C>("c2");
     dbo::ptr<C> c3 = session_->addNew<C>("c3");
@@ -1751,7 +1751,7 @@ BOOST_AUTO_TEST_CASE( dbo_test16 )
       model->addColumn ("checked");
       model->addColumn ("f");
       model->addColumn ("d");
-      
+
       Wt::WDate date(1982, 12, 2);
       Wt::WTime time(14, 15, 16, 0);
 
@@ -1776,7 +1776,7 @@ BOOST_AUTO_TEST_CASE( dbo_test16 )
       float f = (float)53.53;
       double d = 53.5353;
       bool checked = false;
-      
+
       model->setData(0, 0, Wt::cpp17::any(date));
       model->setData(0, 1, Wt::cpp17::any(time));
       model->setData(0, 2, Wt::cpp17::any(bin));
@@ -2330,7 +2330,7 @@ BOOST_AUTO_TEST_CASE( dbo_test25 )
 
       virtual std::string createOrderBy(int column, Wt::SortOrder order) override
       {
-        std::string dir 
+        std::string dir
 	  = (order == Wt::SortOrder::Ascending ? "asc" : "desc");
         return "\"" + fieldInfo(column).name() + "\" " + dir +
           ((column != 3) ? ", \"last_name\"" : "") +
@@ -2459,7 +2459,7 @@ BOOST_AUTO_TEST_CASE( dbo_test26 )
      */
     model->dataChanged().connect
       ([&checkExpected, &ExpectedFirstName] () {checkExpected(ExpectedFirstName); });
-    
+
     /*
      * The setItemData() convenience method commits
      * a transaction prior to emitting dataChanged()
@@ -2606,7 +2606,7 @@ BOOST_AUTO_TEST_CASE( dbo_test29 )
 BOOST_AUTO_TEST_CASE( dbo_test30 )
 {
   // Up until Wt 3.3.8, calling .size() on the result of a count(*) query
-  // returned the wrong result. 
+  // returned the wrong result.
   DboFixture f;
 
   dbo::Session *session_ = f.session_;
@@ -2626,7 +2626,7 @@ BOOST_AUTO_TEST_CASE( dbo_test30 )
   // the query
   // select count(1) from "table_a"
   // was executed instead
-  
+
   int count = *counts.begin();
   BOOST_REQUIRE(count == 2);
 }
