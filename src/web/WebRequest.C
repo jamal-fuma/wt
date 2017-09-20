@@ -64,7 +64,7 @@ void WebRequest::log()
 #ifndef BENCH
   if (start_.time_since_epoch().count() > 0) {
     auto end = std::chrono::high_resolution_clock::now();
-    double microseconds 
+    double microseconds
       = std::chrono::duration_cast<std::chrono::microseconds>(end - start_)
       .count();
     LOG_INFO("took " << (microseconds / 1000) << " ms");
@@ -90,7 +90,7 @@ void WebRequest::reset()
 }
 
 void WebRequest::readWebSocketMessage(const ReadCallback& callback)
-{ 
+{
   throw WException("should not get here");
 }
 
@@ -210,9 +210,9 @@ namespace {
     {
       definition(ValueListParser const& self)
       {
-	option 
+	option
 	  = ((ch_p('q') | ch_p('Q'))
-	     >> '=' 
+	     >> '='
 	     >> ureal_p
 	        [
 		  std::bind(&self_t::setQuality, self, std::placeholders::_1)
@@ -321,7 +321,7 @@ void WebRequest::emulateAsync(ResponseState state)
       fn(WebWriteEvent::Completed);
     }
   }
-    
+
   delete this;
 }
 
