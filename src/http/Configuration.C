@@ -267,7 +267,7 @@ void Configuration::setOptions(int argc, char **argv,
 
     if (argc)
       po::store(po::command_line_parser(argc, argv).options(all_options).allow_unregistered().run(), vm);
-      
+
     if (!configurationFile.empty()) {
       std::ifstream cfgFile(configurationFile.c_str(),
 	std::ios::in | std::ios::binary);
@@ -401,8 +401,8 @@ void Configuration::readOptions(const po::variables_map& vm)
 	      "Client authentication SSL CA certificates file",
 	      sslCaCertificates_, RegularFile);
 
-    if (sslClientVerification_ != "optional" && 
-	sslClientVerification_ != "once" && 
+    if (sslClientVerification_ != "optional" &&
+	sslClientVerification_ != "once" &&
 	sslClientVerification_ != "required") {
       throw Wt::WServer::Exception(
 	      "ssl-client-verification must be \"none\", \"optional\", \"once\" or "
@@ -417,7 +417,7 @@ void Configuration::readOptions(const po::variables_map& vm)
     throw Wt::WServer::Exception
       ("Specify http-listen, https-listen, http-address and/or https-address "
        "to run a HTTP and/or HTTPS server.");
-  } 
+  }
 }
 
 Wt::WLogEntry Configuration::log(const std::string& type) const
