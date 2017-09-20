@@ -59,7 +59,7 @@ WStringListModel::WStringListModel(const std::vector<WString>& strings)
 { }
 
 WStringListModel::~WStringListModel()
-{ 
+{
   delete otherData_;
 }
 
