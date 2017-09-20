@@ -33,7 +33,7 @@ WLineEdit::WLineEdit()
     maskChanged_(false),
     spaceChar_(' '),
     javaScriptDefined_(false)
-{ 
+{
   setInline(true);
   setFormObject(true);
 }
@@ -48,7 +48,7 @@ void WLineEdit::setText(const WT_USTRING& text)
 {
   WT_USTRING newDisplayText = inputText(text);
   WT_USTRING newText = removeSpaces(newDisplayText);
-  if (maskChanged_ || content_ != newText || 
+  if (maskChanged_ || content_ != newText ||
       displayContent_ != newDisplayText) {
     content_ = newText;
     displayContent_ = newDisplayText;
@@ -134,7 +134,7 @@ void WLineEdit::updateDom(DomElement& element, bool all)
   }
 
   if (all || flags_.test(BIT_ECHO_MODE_CHANGED)) {
-    element.setAttribute("type", echoMode_ == EchoMode::Normal 
+    element.setAttribute("type", echoMode_ == EchoMode::Normal
 			 ? "text" : "password");
     flags_.reset(BIT_ECHO_MODE_CHANGED);
   }
@@ -278,7 +278,7 @@ bool WLineEdit::hasSelectedText() const
 {
   return selectionStart() != -1;
 }
-  
+
 void WLineEdit::setSelection(int start, int length)
 {
   std::string s = std::to_string(start);
@@ -429,7 +429,7 @@ void WLineEdit::processInputMask() {
     char32_t currentChar = inputMask_[i];
     if (currentChar == '>' || currentChar == '<' || currentChar == '!') {
       mode = static_cast<char>(currentChar);
-    } else if (std::u32string(U"AaNnXx90Dd#HhBb").find(currentChar) 
+    } else if (std::u32string(U"AaNnXx90Dd#HhBb").find(currentChar)
 	       != std::wstring::npos) {
       mask_ += static_cast<char>(currentChar);
       raw_ += spaceChar_;
@@ -459,8 +459,8 @@ bool WLineEdit::acceptChar(char32_t chr, std::size_t position) const {
       return (chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z');
     case 'n':
     case 'N': // alphanumeric: A-Za-z0-9
-      return (chr >= 'a' && chr <= 'z') || 
-	(chr >= 'A' && chr <= 'Z') || 
+      return (chr >= 'a' && chr <= 'z') ||
+	(chr >= 'A' && chr <= 'Z') ||
 	(chr >= '0' && chr <= '9');
     case 'x':
     case 'X': // Anything goes
@@ -475,8 +475,8 @@ bool WLineEdit::acceptChar(char32_t chr, std::size_t position) const {
       return (chr >= '0' && chr <= '9') || (chr == '-' || chr == '+');
     case 'h':
     case 'H': // hex
-      return (chr >= 'A' && chr <= 'F') || 
-	(chr >= 'a' && chr <= 'f') || 
+      return (chr >= 'A' && chr <= 'F') ||
+	(chr >= 'a' && chr <= 'f') ||
 	(chr >= '0' && chr <= '9');
     case 'b':
     case 'B': // binary
@@ -572,9 +572,9 @@ bool WLineEdit::validateInputMask() const {
 	// Check whether we can skip the current position, if so, add
 	// it to positions vector, to be considered later (with the current
 	// input character still).
-	if (SKIPPABLE_MASK_CHARS.find(mask_[currentPosition]) 
+	if (SKIPPABLE_MASK_CHARS.find(mask_[currentPosition])
 	    != std::string::npos &&
-	    (j + 1 == positions->size() || 
+	    (j + 1 == positions->size() ||
 	     (*positions)[j + 1] != currentPosition + 1)) {
 	  positions->push_back(currentPosition + 1);
 	}
@@ -583,7 +583,7 @@ bool WLineEdit::validateInputMask() const {
 	// position, if so, the next position is added to the nextPositions
 	// vector.
 	if (acceptChar(toCheck[i], currentPosition) &&
-	    (nextPositions->empty() || 
+	    (nextPositions->empty() ||
 	     nextPositions->back() != currentPosition + 1)) {
 	  nextPositions->push_back(currentPosition + 1);
 	}
@@ -603,9 +603,9 @@ bool WLineEdit::validateInputMask() const {
 	return true;
       }
       // Check whether we can skip the rest of the mask.
-      if (SKIPPABLE_MASK_CHARS.find(mask_[currentPosition]) 
+      if (SKIPPABLE_MASK_CHARS.find(mask_[currentPosition])
 	  != std::string::npos &&
-	  (nextPositions->empty() || 
+	  (nextPositions->empty() ||
 	   nextPositions->back() != currentPosition + 1)) {
 	nextPositions->push_back(currentPosition + 1);
       }
