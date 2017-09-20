@@ -37,10 +37,10 @@ namespace {
     std::string wt_config_xml;
     Wt::WLogger stderrLogger;
     stderrLogger.setStream(std::cerr);
-    
+
     http::server::Configuration serverConfiguration(stderrLogger, true);
     serverConfiguration.setOptions(argc, argv, configurationFile);
-    
+
     wtConfigXml = serverConfiguration.configPath();
     appRoot = serverConfiguration.appRoot();
   }
@@ -74,7 +74,7 @@ struct WServer::Impl
 WServer::WServer(const std::string& applicationPath,
 		 const std::string& wtConfigurationFile)
   : impl_(new Impl())
-{ 
+{
   init(applicationPath, wtConfigurationFile);
 }
 
@@ -147,7 +147,7 @@ bool WServer::start()
 
   configuration().setUseSlashExceptionForInternalPaths
     (impl_->serverConfiguration_->defaultStatic());
-  
+
   if (!impl_->serverConfiguration_->sessionIdPrefix().empty())
     configuration().setSessionIdPrefix(impl_->serverConfiguration_
 				       ->sessionIdPrefix());
@@ -204,7 +204,7 @@ void WServer::resume()
     LOG_ERROR("resume(): server not yet started!");
     return;
   } else {
-    impl_->server_->resume();    
+    impl_->server_->resume();
   }
 }
 
