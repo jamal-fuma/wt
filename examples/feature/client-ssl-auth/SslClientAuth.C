@@ -32,7 +32,7 @@ namespace {
 	break;
       }
     }
-    
+
     std::string der = sslInfo->clientCertificate().toDer();
     return Auth::Identity("CLIENT_SSL", Utils::hexEncode(Utils::sha1(der)),
 			      name,
@@ -62,7 +62,7 @@ public:
       Auth::Identity id = createIdentity(sslInfo);
       Auth::User u = session_.users().findWithIdentity(id.provider(),
 							   id.id());
-      if (!u.isValid()) 
+      if (!u.isValid())
 	authWidget->registerNewUser(id);
       else
         session_.login().login(u, Auth::LoginState::Weak);
