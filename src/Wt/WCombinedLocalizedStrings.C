@@ -53,10 +53,10 @@ LocalizedString WCombinedLocalizedStrings::resolveKey(const WLocale& locale,
   return LocalizedString{};
 }
 #else
-std::string *WCombinedLocalizedStrings::resolveKey(const WLocale& locale, 
+std::string *WCombinedLocalizedStrings::resolveKey(const WLocale& locale,
 						   const std::string& key)
 {
-  std::string *result = 0; 
+  std::string *result = 0;
 
   for (unsigned i = 0; i < localizedStrings_.size(); ++i) {
     result = localizedStrings_[i]->resolveKey(locale, key);
