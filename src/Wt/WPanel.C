@@ -136,9 +136,9 @@ void WPanel::setCollapsible(bool on)
       (collapseIcon_ = new WIconPair(resources + "collapse.gif",
 				     resources + "expand.gif"));
     collapseIcon_->setFloatSide(Side::Left);
-    
+
     WApplication *app = WApplication::instance();
-    app->theme()->apply(this, collapseIcon_, 
+    app->theme()->apply(this, collapseIcon_,
 			WidgetThemeRole::PanelCollapseButton);
     titleBarWidget()->insertWidget(0, std::move(icon));
 
@@ -257,7 +257,7 @@ void WPanel::setCentralWidget(std::unique_ptr<WWidget> w)
     centralArea()->removeWidget(centralWidget_);
     centralWidget_ = nullptr;
   }
-    
+
   if (w) {
     centralWidget_ = w.get();
     centralWidget_->setInline(false);
