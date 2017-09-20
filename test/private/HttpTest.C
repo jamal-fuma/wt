@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_CASE( http_rangeTest1 )
 {
   // These are all tests wo filesize
   Request::ByteRangeSpecifier ranges;
-  
+
   // Basic tests
   ranges = Request::getRanges("bytes=0-24", -1);
   BOOST_REQUIRE(ranges.size() == 1);
