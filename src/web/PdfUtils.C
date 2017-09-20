@@ -10,7 +10,7 @@
 
 namespace Wt {
   namespace Pdf {
-#ifdef WT_TARGET_JAVA	
+#ifdef WT_TARGET_JAVA
     class PdfUtils {
     };
 #endif //WT_TARGET_JAVA
