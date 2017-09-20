@@ -22,7 +22,7 @@ WDataSeries::WDataSeries(int modelColumn, SeriesType type, Axis axis)
     axis_(axis),
     customFlags_(None),
     fillRange_(FillRangeType::None),
-    marker_(type == SeriesType::Point ? 
+    marker_(type == SeriesType::Point ?
 	    MarkerType::Circle : MarkerType::None),
     markerSize_(6),
     legend_(true),
@@ -36,12 +36,12 @@ WDataSeries::WDataSeries(int modelColumn, SeriesType type, Axis axis)
     scaleDirty_(true)
 { }
 
-void WDataSeries::setBarWidth(const double width) 
+void WDataSeries::setBarWidth(const double width)
 {
   barWidth_ = width;
 }
 
-double WDataSeries::barWidth() const 
+double WDataSeries::barWidth() const
 {
   return barWidth_;
 }
@@ -237,7 +237,7 @@ void WDataSeries::setHidden(bool hidden)
   hidden_ = hidden;
 }
 
-bool WDataSeries::isHidden() const 
+bool WDataSeries::isHidden() const
 {
   return hidden_;
 }
@@ -270,7 +270,7 @@ WPointF WDataSeries::mapToDevice(const cpp17::any& xValue, const cpp17::any& yVa
     return WPointF();
 }
 
-void WDataSeries::setXSeriesColumn(int modelColumn) 
+void WDataSeries::setXSeriesColumn(int modelColumn)
 {
   XSeriesColumn_ = modelColumn;
 }
