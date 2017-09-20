@@ -11,7 +11,7 @@
 namespace Wt {
   namespace XSS {
 
-#ifdef WT_TARGET_JAVA	
+#ifdef WT_TARGET_JAVA
     class XSSUtils {
     };
 #endif //WT_TARGET_JAVA
@@ -39,7 +39,7 @@ namespace Wt {
               || boost::iequals(name, "comment")
 	      || boost::iequals(name, "blink"));
     }
-  
+
     bool isBadAttribute(const std::string& name)
     {
       return (boost::istarts_with(name, "on")
@@ -109,6 +109,6 @@ namespace Wt {
 	    || boost::icontains(value, "javascript");
 	} else
 	  return false;
-    } 
+    }
   }
 }
