@@ -222,7 +222,7 @@ PayPalExpressCheckout::encodeMessage(const std::map<std::string, std::string>&
 
   for (StringMap::const_iterator i = map.begin(); i != map.end(); ++i)
     ans << "&" << i->first << "=" << Wt::Utils::urlEncode(i->second);
-  
+
   return ans.str();
 }
 
@@ -415,7 +415,7 @@ void PayPalExpressCheckout::onRedirect(int result)
   ApprovalOutcome outcome;
 
   if (result == -1) {
-    outcome = impl_->accepted_ 
+    outcome = impl_->accepted_
       ? ApprovalOutcome::Accepted : ApprovalOutcome::Denied;
   } else {
     outcome = ApprovalOutcome::Interrupted;
@@ -604,7 +604,7 @@ Result PayPalExpressCheckout::testMessage(AsioWrapper::error_code err,
       if (ack) {
         LOG_DEBUG("ACK = " << *ack);
         if (*ack == "Success") {
-          const std::string *token 
+          const std::string *token
 	    = Http::Utils::getParamValue(params, "TOKEN");
 
           if (token) {
@@ -613,7 +613,7 @@ Result PayPalExpressCheckout::testMessage(AsioWrapper::error_code err,
             result = Result(ERROR_MSG("missing-token"));
           }
         } else {
-          const std::string *errorCode 
+          const std::string *errorCode
 	    = Http::Utils::getParamValue(params, "ERRORCODE0");
 
           if (errorCode) {
@@ -647,7 +647,7 @@ std::string PayPalExpressCheckout::messageToString(Http::ParameterMap &params)
 {
   WStringStream ans;
 
-  for(Http::ParameterMap::const_iterator i = params.begin(); 
+  for(Http::ParameterMap::const_iterator i = params.begin();
       i != params.end(); ++i){
     const Http::ParameterValues &val = i->second;
     ans << i->first << " : " << val[0] << " \n ";
