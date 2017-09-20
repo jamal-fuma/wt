@@ -59,7 +59,7 @@ std::unique_ptr<WApplication> createApplication(const Wt::WEnvironment& env)
   app->messageResourceBundle().use(app->appRoot() + "report");
   app->messageResourceBundle().use(app->appRoot() + "text");
   app->messageResourceBundle().use(app->appRoot() + "src");
- 
+
 
   auto layout =
       app->root()->setLayout(cpp14::make_unique<WHBoxLayout>());
