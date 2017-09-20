@@ -12,7 +12,7 @@ const int WrapSize = 76;
 
 std::string loremIpsumText()
 {
-  return 
+  return
     "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod "
     "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim "
     "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea "
@@ -24,7 +24,7 @@ std::string loremIpsumText()
 
 std::string loremIpsumBase64(bool wrap)
 {
-  std::string base64 =  
+  std::string base64 =
     "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2ljaW5nIGVsaX"
     "QsIHNlZCBkbyBlaXVzbW9kIHRlbXBvciBpbmNpZGlkdW50IHV0IGxhYm9yZSBldCBkb2xvcmUg"
     "bWFnbmEgYWxpcXVhLiBVdCBlbmltIGFkIG1pbmltIHZlbmlhbSwgcXVpcyBub3N0cnVkIGV4ZX"
