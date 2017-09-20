@@ -60,7 +60,7 @@ std::vector<Contact> Composer::cc() const
 {
   return ccEdit_->addressees();
 }
- 
+
 std::vector<Contact> Composer::bcc() const
 {
   return bccEdit_->addressees();
@@ -175,7 +175,7 @@ void Composer::createUi()
   edits_->elementAt(5, 0)->addWidget(cpp14::make_unique<WImage>("icons/paperclip.png"));
   edits_->elementAt(5, 0)->setContentAlignment(AlignmentFlag::Right | AlignmentFlag::Top);
   edits_->elementAt(5, 0)->setPadding(3);
-  
+
   // Attachment edits: we always have the next attachmentedit ready
   // but hidden. This improves the response time, since the show()
   // and hide() slots are stateless.
@@ -390,6 +390,6 @@ void Composer::saved()
 }
 
 void Composer::discardIt()
-{ 
+{
   discard.emit();
 }
