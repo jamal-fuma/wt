@@ -255,7 +255,7 @@ WRasterImage::WRasterImage(const std::string& type,
   impl_->type_ = type;
   impl_->w_ = static_cast<unsigned long>(width.toPixels());
   impl_->h_ = static_cast<unsigned long>(height.toPixels());
-  
+
   if (!impl_->w_ || !impl_->h_) {
     impl_->bitmap_ = 0;
     return;
@@ -334,7 +334,7 @@ WRasterImage::WRasterImage(const std::string& type,
     throw WException(std::string("Error when initializing D2D: HRESULT ") + boost::lexical_cast<std::string>(hr));
   }
 }
-  
+
 void WRasterImage::clear()
 {
   impl_->beginDraw();
@@ -357,7 +357,7 @@ void WRasterImage::addFontCollection(const std::string& directory,
 {
   impl_->fontSupport_->addFontCollection(directory, recursive);
 }
-  
+
 WFlags<WPaintDevice::FeatureFlag> WRasterImage::features() const
 {
   return FeatureFlag::FontMetrics | FeatureFlag::WordWrap;
@@ -536,7 +536,7 @@ void WRasterImage::setChanged(WFlags<PainterChangeFlag> flags)
 	break;
       }
       }
-      
+
       SafeRelease(impl_->stroke_);
 
       hr = impl_->factory_->CreateStrokeStyle(
@@ -752,7 +752,7 @@ void WRasterImage::drawPath(const WPainterPath& path)
     ID2D1PathGeometry *p;
     impl_->factory_->CreatePathGeometry(&p);
     impl_->drawPlainPath(p, path, painter()->brush().style() != BrushStyle::None);
-    
+
     if (painter()->brush().style() != BrushStyle::None) {
       impl_->rt_->FillGeometry(p, impl_->fillBrush_);
     }
@@ -793,7 +793,7 @@ void WRasterImage::getPixels(void *data)
   impl_->resumeDraw();
 }
 
-WColor WRasterImage::getPixel(int x, int y) 
+WColor WRasterImage::getPixel(int x, int y)
 {
   impl_->suspendDraw();
   WICRect rect = { x, y, 1, 1 };
@@ -920,7 +920,7 @@ void WRasterImage::Impl::drawPlainPath(ID2D1PathGeometry *p, const WPainterPath&
   SafeRelease(sink);
 }
 
-void WRasterImage::drawText(const WRectF& rect, 
+void WRasterImage::drawText(const WRectF& rect,
 			    WFlags<AlignmentFlag> flags,
 			    TextFlag textFlag,
 			    const WString& text,
@@ -936,9 +936,9 @@ void WRasterImage::drawText(const WRectF& rect,
 
   AlignmentFlag horizontalAlign = flags & AlignHorizontalMask;
   AlignmentFlag verticalAlign = flags & AlignVerticalMask;
-  
+
   const WTransform& t = painter()->combinedTransform();
-  
+
   FontSupport::FontMatch &match = impl_->currentFontMatch_;
   switch (verticalAlign) {
   default:
@@ -952,7 +952,7 @@ void WRasterImage::drawText(const WRectF& rect,
     match.textFormat()->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
     break;
   }
-  
+
   switch (horizontalAlign) {
   default:
   case AlignmentFlag::Left:
