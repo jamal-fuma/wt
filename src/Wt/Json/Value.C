@@ -31,9 +31,9 @@ LOGGER("Json.Value");
 
 TypeException::TypeException(const std::string& name,
 			     Type actualType, Type expectedType)
-  : WException("Type error: " + name + " is " 
+  : WException("Type error: " + name + " is "
 	       + typeNames[static_cast<unsigned int>(actualType)]
-	       + ", expected " 
+	       + ", expected "
 	       + typeNames[static_cast<unsigned int>(expectedType)]),
     name_(name),
     actualType_(actualType),
@@ -41,9 +41,9 @@ TypeException::TypeException(const std::string& name,
 { }
 
 TypeException::TypeException(Type actualType, Type expectedType)
-  : WException(std::string("Type error: value is ") 
+  : WException(std::string("Type error: value is ")
 	       + typeNames[static_cast<unsigned int>(actualType)]
-	       + ", expected " 
+	       + ", expected "
 	       + typeNames[static_cast<unsigned int>(expectedType)]),
     actualType_(actualType),
     expectedType_(expectedType)
@@ -397,11 +397,11 @@ Value Value::toString() const
   else if(type() == Type::Number) {
     WString str = asString(v_);
     std::string sstr = str.toUTF8();
-    if (sstr.find("nan") != std::string::npos || 
+    if (sstr.find("nan") != std::string::npos ||
 	sstr.find("inf") != std::string::npos)
       throw WException(std::string("Value::toString(): Not a Number"));
     return Value(str);
-  } else 
+  } else
     return Value(asString(v_));
 }
 
