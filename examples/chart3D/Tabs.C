@@ -360,7 +360,7 @@ DataSelection::DataSelection(Wt::Chart::WCartesian3DChart *chart)
 	int index = notShown->currentIndex();
 	if (index == -1)
 	  return;
-  
+
         const Wt::WString currentText = notShown->currentText();
 	for (auto& item : dataCollection_) {
 	  if (item.first == currentText){
@@ -373,13 +373,13 @@ DataSelection::DataSelection(Wt::Chart::WCartesian3DChart *chart)
 	shown->setCurrentIndex(shown->count()-1);
 	notShown->removeItem(index);
 	notShown->clearSelection();
-	
+
       });
   removeSelected->clicked().connect([=] () {
 	int index = shown->currentIndex();
 	if (index == -1)
 	  return;
-  
+
         const Wt::WString currentText = shown->currentText();
 	for (auto& item : dataCollection_) {
 	  if (item.first == currentText)
@@ -397,7 +397,7 @@ void DataSelection::addDataToCollection(Wt::WString name,
 {
   DataSelectionItem item(name, data);
   dataCollection_.push_back(item);
-  notShown->addItem(name);  
+  notShown->addItem(name);
 }
 
 
