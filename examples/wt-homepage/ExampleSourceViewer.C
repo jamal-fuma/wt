@@ -182,7 +182,7 @@ void ExampleSourceViewer::setExample(const std::string& exampleDir,
 /*
  * Return the companion implementation/header file for a C++ source file.
  */
-static fs::path getCompanion(const fs::path& path) 
+static fs::path getCompanion(const fs::path& path)
 {
   std::string ext = fs::extension(path);
 
@@ -194,7 +194,7 @@ static fs::path getCompanion(const fs::path& path)
     return fs::path();
 }
 
-void ExampleSourceViewer::cppTraverseDir(WStandardItem* parent, 
+void ExampleSourceViewer::cppTraverseDir(WStandardItem* parent,
 					 const fs::path& path)
 {
   static const char *supportedFiles[] = {
@@ -211,7 +211,7 @@ void ExampleSourceViewer::cppTraverseDir(WStandardItem* parent,
     std::set<fs::path> paths;
 
     fs::directory_iterator end_itr;
-    for (fs::directory_iterator i(path); i != end_itr; ++i) 
+    for (fs::directory_iterator i(path); i != end_itr; ++i)
       paths.insert(*i);
 
     std::vector<std::unique_ptr<FileItem>> classes, files;
@@ -234,7 +234,7 @@ void ExampleSourceViewer::cppTraverseDir(WStandardItem* parent,
 	    supported = true;
 	    break;
 	  }
-	
+
 	if (!supported)
 	  continue;
       }
@@ -243,7 +243,7 @@ void ExampleSourceViewer::cppTraverseDir(WStandardItem* parent,
       fs::path companion = getCompanion(p);
       if (!companion.empty()) {
 	std::set<fs::path>::iterator it_companion = paths.find(companion);
- 
+
 	  if (it_companion != paths.end()) {
 	    std::string className = stem(p);
 	    escapeText(className);
@@ -262,7 +262,7 @@ void ExampleSourceViewer::cppTraverseDir(WStandardItem* parent,
 					 (*it_companion).string());
 	    classItem->appendRow(std::move(header));
 	    classItem->appendRow(std::move(cpp));
-	  
+
 	    classes.push_back(std::move(classItem));
 	    paths.erase(it_companion);
 	  } else {
@@ -321,7 +321,7 @@ void ExampleSourceViewer::javaTraversePackages(WStandardItem *parent,
 
   for (fs::directory_iterator i(srcPath); i != end_itr; ++i) {
     fs::path p = *i;
-    if (fs::is_directory(p)) {  
+    if (fs::is_directory(p)) {
       std::string pn = packageName;
       if (!pn.empty())
 	pn += ".";
@@ -332,7 +332,7 @@ void ExampleSourceViewer::javaTraversePackages(WStandardItem *parent,
   }
 }
 
-void ExampleSourceViewer::javaTraverseDir(WStandardItem* parent, 
+void ExampleSourceViewer::javaTraverseDir(WStandardItem* parent,
 					  const fs::path& path)
 {
   auto dir
