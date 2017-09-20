@@ -41,7 +41,7 @@ class GitViewApplication : public WApplication
 public:
   /*! \brief Constructor.
    */
-  GitViewApplication(const WEnvironment& env) 
+  GitViewApplication(const WEnvironment& env)
     : WApplication(env)
   {
     useStyleSheet("gitview.css");
