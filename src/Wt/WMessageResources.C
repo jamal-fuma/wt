@@ -50,7 +50,7 @@ struct CExpressionParser : grammar<CExpressionParser>
     bool condition_;
   };
 
-  CExpressionParser(::int64_t n, int &result, ParseState &state) : 
+  CExpressionParser(::int64_t n, int &result, ParseState &state) :
     n_(n),
     result_(result),
     state_(state)
@@ -110,13 +110,13 @@ struct CExpressionParser : grammar<CExpressionParser>
 
       expression
 	= or_expression[expression.value = arg1]
-	               [expression.condition = arg1] 
-	>> !( '?' 
+	               [expression.condition = arg1]
+	>> !( '?'
 	      >> expression[bind(&CExpressionParser::set_cond)
 			    (self, expression.condition)]
 	                   [bind(&CExpressionParser::ternary_op)
-			    (self, expression.value, arg1)] 
-	      >> ':' 
+			    (self, expression.value, arg1)]
+	      >> ':'
 	      >> expression[bind(&CExpressionParser::set_not_cond)
 			    (self, expression.condition)]
 	                   [bind(&CExpressionParser::ternary_op)
@@ -129,7 +129,7 @@ struct CExpressionParser : grammar<CExpressionParser>
 	  >> *( "||" >> and_expression[bind(&CExpressionParser::or_op)
 				       (self, or_expression.value, arg1)] )
         ;
-      
+
       and_expression
         = eq_expression[and_expression.value = arg1]
           >> *( "&&" >> eq_expression[bind(&CExpressionParser::and_op)
@@ -139,33 +139,33 @@ struct CExpressionParser : grammar<CExpressionParser>
       eq_expression
         = relational_expression[eq_expression.value = arg1]
           >> *( ("==" >> relational_expression[bind(&CExpressionParser::eq_op)
-					       (self, 
-						eq_expression.value, 
+					       (self,
+						eq_expression.value,
 						arg1)])
 	      | ("!=" >> relational_expression[bind(&CExpressionParser::neq_op)
-					       (self, 
-						eq_expression.value, 
+					       (self,
+						eq_expression.value,
 						arg1)])
             )
         ;
-	
+
       relational_expression
         = additive_expression[relational_expression.value = arg1]
           >> *( (">" >> additive_expression[bind(&CExpressionParser::gt_op)
-					    (self, 
-					     relational_expression.value, 
+					    (self,
+					     relational_expression.value,
 					     arg1)])
 	      | (">=" >> additive_expression[bind(&CExpressionParser::gte_op)
-					     (self, 
-					      relational_expression.value, 
+					     (self,
+					      relational_expression.value,
 					      arg1)])
 	      | ("<" >> additive_expression[bind(&CExpressionParser::lt_op)
-					    (self, 
-					     relational_expression.value, 
+					    (self,
+					     relational_expression.value,
 					     arg1)])
 	      | ("<=" >> additive_expression[bind(&CExpressionParser::lte_op)
-					     (self, 
-					      relational_expression.value, 
+					     (self,
+					      relational_expression.value,
 					      arg1)])
             )
         ;
@@ -180,33 +180,33 @@ struct CExpressionParser : grammar<CExpressionParser>
       eq_expression, relational_expression;
   };
 
-private: 
+private:
   ::int64_t get_n() const { return n_; }
-  
+
   void eq_op(::int64_t &x, ::int64_t y) const { x = x == y; }
   void neq_op(::int64_t &x, ::int64_t y) const { x = x != y; }
-  
+
   void lt_op(::int64_t &x, ::int64_t y) const { x = x < y;}
   void gt_op(::int64_t &x, ::int64_t y) const { x = x > y;}
   void lte_op(::int64_t &x, ::int64_t y) const { x = x <= y;}
   void gte_op(::int64_t &x, ::int64_t y) const { x = x >= y;}
 
-  void ternary_op(::int64_t &result, ::int64_t y) const 
-  { 
-    if (state_.condition_) 
-      result = y; 
-  } 
+  void ternary_op(::int64_t &result, ::int64_t y) const
+  {
+    if (state_.condition_)
+      result = y;
+  }
 
-  void set_cond(::int64_t condition) const 
-  { 
+  void set_cond(::int64_t condition) const
+  {
     state_.condition_ = condition;
-  } 
+  }
 
-  void set_not_cond(::int64_t condition) const 
-  { 
+  void set_not_cond(::int64_t condition) const
+  {
     state_.condition_ = !condition;
-  } 
-  
+  }
+
   void or_op(::int64_t &x, ::int64_t y) const { x = x || y; }
   void and_op(::int64_t &x, ::int64_t y) const { x = x && y; }
 
@@ -250,7 +250,7 @@ namespace {
   }
 
   std::string readElementContent(xml_node<> *x_parent,
-				 std::unique_ptr<char[]>& buf) 
+				 std::unique_ptr<char[]>& buf)
   {
     char *ptr = buf.get();
 
@@ -362,7 +362,7 @@ LocalizedString WMessageResources::resolve(const std::string& locale, const std:
 {
   if (resources_.find(locale) == resources_.end())
     load(locale);
-  
+
   const Resource& res = resources_[locale];
 
   KeyValuesMap::const_iterator j = res.map_.find(key);
@@ -375,7 +375,7 @@ LocalizedString WMessageResources::resolve(const std::string& locale, const std:
   return LocalizedString{};
 }
 
-std::string WMessageResources::findCase(const std::vector<std::string> &cases, 
+std::string WMessageResources::findCase(const std::vector<std::string> &cases,
 					std::string pluralExpression,
 					::uint64_t amount)
   const
@@ -387,15 +387,15 @@ std::string WMessageResources::findCase(const std::vector<std::string> &cases,
 
   if (c > (int)cases.size() - 1 || c < 0) {
     WStringStream error;
-    error << "Expression '" << pluralExpression << "' evaluates to '" 
+    error << "Expression '" << pluralExpression << "' evaluates to '"
 	  << c << "' for n=" << std::to_string(amount);
-    
-    if (c < 0) 
+
+    if (c < 0)
       error << " and values smaller than 0 are not allowed.";
     else
-      error << " which is greater than the list of cases (size=" 
+      error << " which is greater than the list of cases (size="
 	    << (int)cases.size() << ").";
-    
+
     throw WException(error.c_str());
   }
 
@@ -404,7 +404,7 @@ std::string WMessageResources::findCase(const std::vector<std::string> &cases,
 }
 
 LocalizedString WMessageResources::resolvePluralKey(const WLocale& locale,
-					 const std::string& key, 
+					 const std::string& key,
 					 ::uint64_t amount) const
 {
   LocalizedString result = resolvePlural(locale.name(), key, amount);
@@ -419,7 +419,7 @@ LocalizedString WMessageResources::resolvePlural(const std::string& locale,
 				      ::uint64_t amount) const
 {
   if (resources_.find(locale) == resources_.end())
-    load(locale);  
+    load(locale);
 
   Resource& res = resources_[locale];
 
@@ -558,7 +558,7 @@ bool WMessageResources::readResourceStream(std::istream &s,
 			x_root->value());
     if (x_nplurals && x_plural) {
       resource.pluralCount_ = attributeValueToInt(x_nplurals);
-      resource.pluralExpression_ 
+      resource.pluralExpression_
 	= std::string(x_plural->value(), x_plural->value_size());
     } else {
       resource.pluralCount_ = 0;
@@ -583,21 +583,21 @@ bool WMessageResources::readResourceStream(std::istream &s,
 
 	resource.map_[id] = std::vector<std::string>();
 	resource.map_[id].reserve(resource.pluralCount_);
-	
+
 	std::vector<bool> visited;
 	visited.reserve(resource.pluralCount_);
-	
+
 	for (unsigned i = 0; i < resource.pluralCount_; i++) {
 	  resource.map_[id].push_back(std::string());
 	  visited.push_back(false);
 	}
-	
+
 	for (; x_plural; x_plural = x_plural->next_sibling("plural")) {
 	  xml_attribute<> *x_case = x_plural->first_attribute("case");
 	  int c = attributeValueToInt(x_case);
 	  if (c >= (int)resource.pluralCount_)
 	    throw parse_error("The attribute 'case' used in <plural> is greater"
-			      " than the nplurals <messages> attribute.", 
+			      " than the nplurals <messages> attribute.",
 			      x_plural->value());
 	  visited[c] = true;
 	  resource.map_[id][c] = readElementContent(x_plural, buf);
@@ -605,7 +605,7 @@ bool WMessageResources::readResourceStream(std::istream &s,
 
 	for (unsigned i = 0; i < resource.pluralCount_; i++)
 	  if (!visited[i])
-	    throw parse_error("Missing plural case in <message>", 
+	    throw parse_error("Missing plural case in <message>",
 			      x_message->value());
       } else {
 	resource.map_[id] = std::vector<std::string>();
