@@ -41,7 +41,7 @@ void WServer::init(const std::string& wtApplicationPath,
 		   const std::string& configurationFile)
 {
   application_ = wtApplicationPath;
-  configurationFile_ = configurationFile; 
+  configurationFile_ = configurationFile;
 
   ownsIOService_ = true;
   dedicatedProcessEnabled_ = false;
@@ -230,7 +230,7 @@ void WServer::schedule(std::chrono::steady_clock::duration millis,
 void WServer::addEntryPoint(EntryPointType type, ApplicationCreator callback,
 			    const std::string& path, const std::string& favicon)
 {
-  if (!path.empty() && !boost::starts_with(path, "/")) 
+  if (!path.empty() && !boost::starts_with(path, "/"))
     throw WServer::Exception("WServer::addEntryPoint() error: "
 			     "deployment path should start with \'/\'");
 
@@ -239,7 +239,7 @@ void WServer::addEntryPoint(EntryPointType type, ApplicationCreator callback,
 
 void WServer::addResource(WResource *resource, const std::string& path)
 {
-  if (!boost::starts_with(path, "/")) 
+  if (!boost::starts_with(path, "/"))
     throw WServer::Exception("WServer::addResource() error: "
 			     "static resource path should start with \'/\'");
 
@@ -339,7 +339,7 @@ int WServer::waitForShutdown()
     // Wait for a signal to be raised
     rc= sigwait(&wait_mask, &sig);
 
-    // branch based on return value of sigwait(). 
+    // branch based on return value of sigwait().
     switch (rc) {
       case 0: // rc indicates one of the blocked signals was raised.
 
