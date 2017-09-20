@@ -37,14 +37,14 @@ public:
     rule_->modified();
   }
 
-  virtual void setMinimumSize(const WLength& width, const WLength& height) 
+  virtual void setMinimumSize(const WLength& width, const WLength& height)
     override
   {
     WWebWidget::setMinimumSize(width, height);
     rule_->modified();
   }
 
-  virtual void setMaximumSize(const WLength& width, const WLength& height) 
+  virtual void setMaximumSize(const WLength& width, const WLength& height)
     override
   {
     WWebWidget::setMaximumSize(width, height);
@@ -73,7 +73,7 @@ public:
     rule_->modified();
   }
 
-  virtual void setHidden(bool hidden, 
+  virtual void setHidden(bool hidden,
 			 const WAnimation& animation = WAnimation()) override {
     WWebWidget::setHidden(hidden, animation);
     rule_->modified();
@@ -103,8 +103,8 @@ public:
     rule_->modified();
   }
 
-  virtual DomElementType domElementType() const override { 
-    return DomElementType::SPAN; 
+  virtual DomElementType domElementType() const override {
+    return DomElementType::SPAN;
   }
 
 private:
@@ -165,7 +165,7 @@ WCssTextRule::WCssTextRule(const std::string& selector,
 
 std::string WCssTextRule::declarations()
 {
-  return declarations_.toUTF8(); 
+  return declarations_.toUTF8();
 }
 
 WCssStyleSheet::WCssStyleSheet()
