@@ -52,7 +52,7 @@ std::string MD5HashFunction::compute(const std::string& msg,
 
 std::string MD5HashFunction::name() const
 {
-  return "MD5"; 
+  return "MD5";
 }
 
 std::string SHA1HashFunction::compute(const std::string& msg,
@@ -81,7 +81,7 @@ std::string SHA1HashFunction::compute(const std::string& msg,
 
 std::string SHA1HashFunction::name() const
 {
-  return "SHA1"; 
+  return "SHA1";
 }
 
 BCryptHashFunction::BCryptHashFunction(int count)
@@ -127,7 +127,7 @@ bool BCryptHashFunction::verify(const std::string& msg,
 
 std::string BCryptHashFunction::name() const
 {
-  return "bcrypt"; 
+  return "bcrypt";
 }
 #endif
 	}
