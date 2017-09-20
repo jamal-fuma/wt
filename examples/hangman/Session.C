@@ -34,7 +34,7 @@ namespace {
 class UnixCryptHashFunction : public Auth::HashFunction
   {
   public:
-    virtual std::string compute(const std::string& msg, 
+    virtual std::string compute(const std::string& msg,
 				const std::string& salt) const
     {
       std::string md5Salt = "$1$" + salt;
@@ -191,7 +191,7 @@ std::vector<User> Session::topUsers(int limit)
 int Session::findRanking()
 {
   dbo::Transaction transaction(session_);
-  
+
   dbo::ptr<User> u = user();
   int ranking = -1;
 
@@ -200,7 +200,7 @@ int Session::findRanking()
       .where("score > ?").bind(u->score);
 
   transaction.commit();
-  
+
   return ranking + 1;
 }
 
