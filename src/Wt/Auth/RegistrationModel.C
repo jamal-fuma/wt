@@ -113,8 +113,8 @@ bool RegistrationModel::registerIdentified(const Identity& identity)
 
       if (!idpIdentity_.email().empty()) {
 	setValue(EmailField, idpIdentity_.email());
-	setValidation(EmailField, 
-		      WValidator::Result(ValidationState::Valid, 
+	setValidation(EmailField,
+		      WValidator::Result(ValidationState::Valid,
 					 WString::Empty));
       }
 
@@ -141,7 +141,7 @@ bool RegistrationModel::isVisible(Field field) const
 	return false;
       else
 	return true;
-  } else 
+  } else
     return true;
 }
 
@@ -152,7 +152,7 @@ bool RegistrationModel::isFederatedLoginVisible() const
 
 bool RegistrationModel::isConfirmUserButtonVisible() const
 {
-  return confirmIsExistingUser() != 
+  return confirmIsExistingUser() !=
     IdentityConfirmationMethod::ConfirmationNotPossible;
 }
 
@@ -213,7 +213,7 @@ bool RegistrationModel::validateField(Field field)
       bool exists = existingUser_.isValid();
       valid = !exists;
 
-      if (exists && confirmIsExistingUser() == 
+      if (exists && confirmIsExistingUser() ==
 	  IdentityConfirmationMethod::ConfirmationNotPossible)
 	error = WString::tr("Wt.Auth.user-name-exists");
     } else
@@ -285,7 +285,7 @@ RegistrationModel::confirmIsExistingUser() const
 
   return IdentityConfirmationMethod::ConfirmationNotPossible;
 }
-  
+
 void RegistrationModel::existingUserConfirmed()
 {
   if (idpIdentity_.isValid())
