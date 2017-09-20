@@ -252,6 +252,6 @@ bool WTimeEdit::wrapAroundEnabled() const
 {
   return timePicker_->wrapAroundEnabled();
 }
-  
+
 
 }
