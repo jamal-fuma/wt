@@ -53,7 +53,7 @@ LOGGER("WGLWidget");
 // TODO: allow VBO's to be served from a file
 
 WGLWidget::WGLWidget()
-  : renderOptions_(GLRenderOption::ClientSide | 
+  : renderOptions_(GLRenderOption::ClientSide |
 		   GLRenderOption::ServerSide |
 		   GLRenderOption::AntiAliasing),
     jsValues_(0),
@@ -63,21 +63,21 @@ WGLWidget::WGLWidget()
     contextRestored_(this, "contextRestored"),
     restoringContext_(false),
     valueChanged_(false),
-    mouseWentDownSlot_("function(o, e){" + this->glObjJsRef() 
+    mouseWentDownSlot_("function(o, e){" + this->glObjJsRef()
 		       + ".mouseDown(o, e);}", this),
-    mouseWentUpSlot_("function(o, e){" + this->glObjJsRef() 
+    mouseWentUpSlot_("function(o, e){" + this->glObjJsRef()
 		     + ".mouseUp(o, e);}", this),
-    mouseDraggedSlot_("function(o, e){" + this->glObjJsRef() 
+    mouseDraggedSlot_("function(o, e){" + this->glObjJsRef()
 		      + ".mouseDrag(o, e);}", this),
-    mouseMovedSlot_("function(o, e){" + this->glObjJsRef() 
+    mouseMovedSlot_("function(o, e){" + this->glObjJsRef()
 		    + ".mouseMove(o, e);}", this),
-    mouseWheelSlot_("function(o, e){" + this->glObjJsRef() 
+    mouseWheelSlot_("function(o, e){" + this->glObjJsRef()
 		    + ".mouseWheel(o, e);}", this),
-    touchStarted_("function(o, e){" + this->glObjJsRef() 
+    touchStarted_("function(o, e){" + this->glObjJsRef()
 		  + ".touchStart(o, e);}", this),
     touchEnded_("function(o, e){" + this->glObjJsRef()
 		+ ".touchEnd(o, e);}", this),
-    touchMoved_("function(o, e){" + this->glObjJsRef() 
+    touchMoved_("function(o, e){" + this->glObjJsRef()
 		+ ".touchMoved(o, e);}", this),
     repaintSlot_("function() {"
 		 "var o = " + this->glObjJsRef() + ";"
@@ -233,8 +233,8 @@ void WGLWidget::contextRestored()
   restoringContext_ = true;
   pImpl_->restoreContext(jsRef());
 
-  repaintGL(GLClientSideRenderer::UPDATE_GL | 
-	    GLClientSideRenderer::RESIZE_GL | 
+  repaintGL(GLClientSideRenderer::UPDATE_GL |
+	    GLClientSideRenderer::RESIZE_GL |
 	    GLClientSideRenderer::PAINT_GL);
   restoringContext_ = false;
 }
@@ -447,7 +447,7 @@ void WGLWidget::bufferSubDatafv(GLenum target, unsigned offset,
 #endif
 
 void WGLWidget::bufferSubDataiv(GLenum target,
-				unsigned offset, IntBuffer &buffer, 
+				unsigned offset, IntBuffer &buffer,
 				GLenum type)
 {
   pImpl_->bufferSubDataiv(target, offset, buffer, type);
@@ -486,7 +486,7 @@ void WGLWidget::compileShader(Shader shader)
 void WGLWidget::copyTexImage2D(GLenum target, int level,
                                GLenum internalFormat,
                                int x, int y,
-                               unsigned width, unsigned height, 
+                               unsigned width, unsigned height,
                                int border)
 {
   pImpl_->copyTexImage2D(target, level, internalFormat, x, y, width, height,
@@ -696,7 +696,7 @@ void WGLWidget::polygonOffset(double factor, double units)
   pImpl_->polygonOffset(factor, units);
 }
 
-void WGLWidget::renderbufferStorage(GLenum target, GLenum internalformat, 
+void WGLWidget::renderbufferStorage(GLenum target, GLenum internalformat,
   unsigned width, unsigned height)
 {
   pImpl_->renderbufferStorage(target, internalformat, width, height);
@@ -751,7 +751,7 @@ void WGLWidget::stencilOpSeparate(GLenum face, GLenum fail,
   pImpl_->stencilOpSeparate(face, fail, zfail, zpass);
 }
 
-void WGLWidget::texImage2D(GLenum target, int level, GLenum internalformat, 
+void WGLWidget::texImage2D(GLenum target, int level, GLenum internalformat,
                   unsigned width, unsigned height, int border, GLenum format)
 {
   pImpl_->texImage2D(target, level, internalformat, width, height, border,
@@ -826,7 +826,7 @@ void WGLWidget::uniform1i(const UniformLocation &location, int x)
   pImpl_->uniform1i(location, x);
 }
 
-void WGLWidget::uniform1iv(const UniformLocation &location, 
+void WGLWidget::uniform1iv(const UniformLocation &location,
 			   const WT_ARRAY int *value)
 {
   pImpl_->uniform1iv(location, value);
@@ -837,13 +837,13 @@ void WGLWidget::uniform2f(const UniformLocation &location, double x, double y)
   pImpl_->uniform2f(location, x, y);
 }
 
-void WGLWidget::uniform2fv(const UniformLocation &location, 
+void WGLWidget::uniform2fv(const UniformLocation &location,
 			   const WT_ARRAY float *value)
 {
   pImpl_->uniform2fv(location, value);
 }
 
-void WGLWidget::uniform2fv(const UniformLocation &location, 
+void WGLWidget::uniform2fv(const UniformLocation &location,
 			   const JavaScriptVector &v)
 {
   pImpl_->uniform2fv(location, v);
@@ -854,7 +854,7 @@ void WGLWidget::uniform2i(const UniformLocation &location, int x, int y)
   pImpl_->uniform2i(location, x, y);
 }
 
-void WGLWidget::uniform2iv(const UniformLocation &location, 
+void WGLWidget::uniform2iv(const UniformLocation &location,
 			   const WT_ARRAY int *value)
 {
   pImpl_->uniform2iv(location, value);
@@ -866,7 +866,7 @@ void WGLWidget::uniform3f(const UniformLocation &location,
   pImpl_->uniform3f(location, x, y, z);
 }
 
-void WGLWidget::uniform3fv(const UniformLocation &location, 
+void WGLWidget::uniform3fv(const UniformLocation &location,
 			   const WT_ARRAY float *value)
 {
   pImpl_->uniform3fv(location, value);
@@ -883,7 +883,7 @@ void WGLWidget::uniform3i(const UniformLocation &location, int x, int y, int z)
   pImpl_->uniform3i(location, x, y, z);
 }
 
-void WGLWidget::uniform3iv(const UniformLocation &location, 
+void WGLWidget::uniform3iv(const UniformLocation &location,
 			   const WT_ARRAY int *value)
 {
   pImpl_->uniform3iv(location, value);
@@ -895,7 +895,7 @@ void WGLWidget::uniform4f(const UniformLocation &location,
   pImpl_->uniform4f(location, x, y, z, w);
 }
 
-void WGLWidget::uniform4fv(const UniformLocation &location, 
+void WGLWidget::uniform4fv(const UniformLocation &location,
 			   const WT_ARRAY float *value)
 {
   pImpl_->uniform4fv(location, value);
@@ -907,20 +907,20 @@ void WGLWidget::uniform4fv(const UniformLocation &location,
   pImpl_->uniform4fv(location, v);
 }
 
-void WGLWidget::uniform4i(const UniformLocation &location, int x, int y, 
+void WGLWidget::uniform4i(const UniformLocation &location, int x, int y,
 			  int z, int w)
 {
   pImpl_->uniform4i(location, x, y, z, w);
 }
 
-void WGLWidget::uniform4iv(const UniformLocation &location, 
+void WGLWidget::uniform4iv(const UniformLocation &location,
 			   const WT_ARRAY int *value)
 {
   pImpl_->uniform4iv(location, value);
 }
 
 void WGLWidget::uniformMatrix2fv(const UniformLocation &location,
-				 bool transpose, 
+				 bool transpose,
 				 const WT_ARRAY double *value)
 {
   pImpl_->uniformMatrix2fv(location, transpose, value);
@@ -933,7 +933,7 @@ void WGLWidget::uniformMatrix2(const UniformLocation &location,
 }
 
 void WGLWidget::uniformMatrix3fv(const UniformLocation &location,
-				 bool transpose, 
+				 bool transpose,
 				 const WT_ARRAY double *value)
 {
   pImpl_->uniformMatrix3fv(location, transpose, value);
@@ -985,7 +985,7 @@ void WGLWidget::vertexAttrib2f(AttribLocation location, double x, double y) {
   pImpl_->vertexAttrib2f(location, x, y);
 }
 
-void WGLWidget::vertexAttrib3f(AttribLocation location, double x, double y, 
+void WGLWidget::vertexAttrib3f(AttribLocation location, double x, double y,
 			       double z) {
   pImpl_->vertexAttrib3f(location, x, y, z);
 }
@@ -1279,7 +1279,7 @@ WMatrix4x4 WGLWidget::JavaScriptMatrix4x4::value() const
       break;
     case op::INVERT:
 #ifndef WT_TARGET_JAVA
-      originalCpy = 
+      originalCpy =
 #endif
 	originalCpy.inverted();
       break;
@@ -1321,9 +1321,9 @@ WGLWidget::JavaScriptMatrix4x4 WGLWidget::JavaScriptMatrix4x4::transposed() cons
 
 #if !defined(WT_TARGET_JAVA)
 WGLWidget::JavaScriptMatrix4x4 WGLWidget::JavaScriptMatrix4x4::operator*(const WGenericMatrix<double, 4, 4> &m) const
-#else 
+#else
 WGLWidget::JavaScriptMatrix4x4 WGLWidget::JavaScriptMatrix4x4::multiply(const WGenericMatrix<double, 4, 4> &m) const
-#endif 
+#endif
 {
   if (!initialized())
     throw WException("JavaScriptMatrix4x4: matrix not initialized");
