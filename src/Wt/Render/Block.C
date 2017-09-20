@@ -257,7 +257,7 @@ void Block::determineDisplay()
 /*
  * Normalizes whitespace inbetween nodes.
  */
-bool Block::normalizeWhitespace(bool haveWhitespace, 
+bool Block::normalizeWhitespace(bool haveWhitespace,
 				Wt::rapidxml::xml_document<> &doc)
 {
   bool whitespaceIn = haveWhitespace;
@@ -266,9 +266,9 @@ bool Block::normalizeWhitespace(bool haveWhitespace,
     haveWhitespace = true;
 
   if (type_ == DomElementType::UNKNOWN && isText()) {
-    haveWhitespace = Render::Utils::normalizeWhitespace(this, 
-							node_, 
-							haveWhitespace, 
+    haveWhitespace = Render::Utils::normalizeWhitespace(this,
+							node_,
+							haveWhitespace,
 							doc);
   } else {
     for (unsigned i = 0; i < children_.size(); ++i) {
@@ -344,7 +344,7 @@ bool Block::inlineChildren() const
 
   return false;
 }
- 
+
 AlignmentFlag Block::horizontalAlignment() const
 {
   /* Based on CSS margins */
@@ -378,7 +378,7 @@ AlignmentFlag Block::verticalAlignment() const
     return AlignmentFlag::Top;
 }
 
-Block::CssLength Block::cssLength(Property top, Side side, 
+Block::CssLength Block::cssLength(Property top, Side side,
 				  double fontScale) const
 {
   Block::CssLength result;
@@ -627,7 +627,7 @@ Block::BorderElement Block::collapseCellBorders(Side side) const
       elements.push_back(BorderElement(s, Side::Left));
     else
       elements.push_back(BorderElement(t, Side::Right));
-    
+
     break;
   case Side::Bottom:
     elements.push_back(BorderElement(this, Side::Bottom));
@@ -657,7 +657,7 @@ Block::BorderElement Block::collapseCellBorders(Side side) const
     /*
       Disabled because I can't understand when a browser does this or not,
       and tinyMCE annoyingly alwasy puts this border attribute.
-     
+
     bool tableDefault = t->attributeValue("border", 0) > 0;
     if (tableDefault)
       return BorderElement(t, side);
@@ -775,7 +775,7 @@ WColor Block::collapsedBorderColor(Side side) const
 WColor Block::rawCssBorderColor(Side side) const
 {
   int index = sideToIndex(side);
-  Property property 
+  Property property
     = (Property)(static_cast<unsigned int>(Property::StyleBorderTop) + index);
 
   std::string borderStr = cssProperty(property);
@@ -1259,7 +1259,7 @@ double Block::layoutInline(Line& line, BlockList& floats,
 
 	if (c->isFloat()) {
 	  maxX = c->layoutFloat(line.y(), line.page(), floats, line.x(),
-				line.height(), 
+				line.height(),
 				minX, maxX, canIncreaseWidth, renderer);
 
 	  line.reflow(c);
@@ -1537,7 +1537,7 @@ void Block::tableDoLayout(double x, PageState &ps, double cellSpacing,
 		       renderer, -1);
     }
 
-    double rowHeight = (ps.page - startPage) 
+    double rowHeight = (ps.page - startPage)
       * renderer.textHeight(ps.page) // XXX
       + (ps.y - startY) - cellSpacing;
 
@@ -1591,8 +1591,8 @@ void Block::tableCellDoLayout(double x, const PageState& ps,
   std::string s = cssProperty(Property::StyleBackgroundColor);
 
   collapseMarginBottom = layoutBlock(cellPs, false, renderer,
-				     collapseMarginTop, 
-				     collapseMarginBottom, 
+				     collapseMarginTop,
+				     collapseMarginBottom,
 				     rowHeight);
 
   if (collapseMarginBottom < collapseMarginTop)
@@ -1654,7 +1654,7 @@ void Block::tableRowDoLayout(double x, PageState &ps,
       double rh = rowHeight;
 
       if (rh >= 0)
-	rh += (ps.page - cs.page) 
+	rh += (ps.page - cs.page)
 	  * renderer.textHeight(cs.page) // XXX
 	  + (ps.y - cs.y);
 
@@ -1690,7 +1690,7 @@ void Block::tableComputeColumnWidths(std::vector<double>& minima,
       Block *c = children_[i];
 
       if (c->isTableCell()) {
-	c->cellComputeColumnWidths(WidthType::AsSetWidth, asSet, renderer, 
+	c->cellComputeColumnWidths(WidthType::AsSetWidth, asSet, renderer,
 				   table);
 	c->cellComputeColumnWidths(WidthType::MinimumWidth, minima, renderer,
 				   table);
@@ -1819,7 +1819,7 @@ double Block::cssWidth(double fontScale) const
 
   if (node_) {
     result = cssDecodeLength(cssProperty(Property::StyleWidth),
-			     fontScale, result, 
+			     fontScale, result,
 			     PercentageRule::PercentageOfParentSize,
 			     currentParentWidth());
 
@@ -1842,12 +1842,12 @@ double Block::cssHeight(double fontScale) const
 
   if (node_) {
     result = cssDecodeLength(cssProperty(Property::StyleHeight),
-			     fontScale, result, 
+			     fontScale, result,
 			     PercentageRule::IgnorePercentage);
 
     if (type_ == DomElementType::IMG)
       result = cssDecodeLength(attributeValue("height"),
-			       fontScale, result, 
+			       fontScale, result,
 			       PercentageRule::IgnorePercentage);
   }
 
@@ -1917,7 +1917,7 @@ double Block::maxLayoutY(int page) const
 
   for (unsigned i = 0; i < inlineLayout.size(); ++i) {
     const InlineBox& ib = inlineLayout[i];
-  
+
     if (page == -1 || ib.page == page) {
       /* to be accurate, we need font metrics, see renderText() ! */
       result = std::max(result, ib.y + ib.height);
@@ -1947,7 +1947,7 @@ double Block::minLayoutY(int page) const
 
   for (unsigned i = 0; i < inlineLayout.size(); ++i) {
     const InlineBox& ib = inlineLayout[i];
-  
+
     if (page == -1 || ib.page == page) {
       /* to be accurate, we need font metrics, see renderText() ! */
       result = std::min(result, ib.y);
@@ -2152,7 +2152,7 @@ double Block::layoutBlock(PageState &ps,
 
 	renderer.painter()->setFont(cssFont(renderer.fontScale()));
 
-	cMaxX = layoutInline(line, ps.floats, 
+	cMaxX = layoutInline(line, ps.floats,
 			     cMinX, cMaxX, canIncreaseWidth, renderer);
 
 	line.setLineBreak(true);
@@ -2188,7 +2188,7 @@ double Block::layoutBlock(PageState &ps,
 	  Block *c = children_[i];
 
 	  if (c->isFloat())
-	    cMaxX = c->layoutFloat(ps.y, ps.page, ps.floats, 
+	    cMaxX = c->layoutFloat(ps.y, ps.page, ps.floats,
 				   cMinX, 0, cMinX, cMaxX,
 				   canIncreaseWidth, renderer);
 	  else if (c->isPositionedAbsolutely()) {
@@ -2213,9 +2213,9 @@ double Block::layoutBlock(PageState &ps,
 	    ps.minX = cMinX;
 	    ps.maxX = cMaxX;
 
-	    collapseMarginBottom 
+	    collapseMarginBottom
 	      = c->layoutBlock(ps, canIncreaseWidth,
-			       renderer, 
+			       renderer,
 			       collapseMarginTop, collapseMarginBottom);
 	    collapseMarginTop = collapseMarginBottom;
 
@@ -2284,7 +2284,7 @@ double Block::layoutBlock(PageState &ps,
   for (int i = startPage; i <= ps.page; ++i) {
     double boxY = (i == startPage) ? startY : 0;
     double boxH;
-    
+
     if (i == ps.page)
       boxH = ps.y - boxY;
     else
@@ -2471,9 +2471,9 @@ void Block::layoutAbsolute(const WTextRenderer& renderer)
   double staticLeft = staticLayout.x - containingLayout.x;
   /*
     useful only for RTL
-    
+
     double staticRight = (containingLayout.x + containingLayout.width)
-      - (staticLayout.x + staticLayout.width);  
+      - (staticLayout.x + staticLayout.width);
    */
 
   /*
@@ -2493,7 +2493,7 @@ void Block::layoutAbsolute(const WTextRenderer& renderer)
   // FIXME containing box: add border, padding widths
   double availableWidth = containingLayout.width;
 
-  double shrinkToFitWidth = 
+  double shrinkToFitWidth =
     std::min(std::max(preferredMinWidth, availableWidth), preferredWidth);
 
   double left = 0, width = 0, right = 0;
@@ -2623,7 +2623,7 @@ void Block::layoutAbsolute(const WTextRenderer& renderer)
   ps.y = containingLayout.y + top;
   ps.page = containingLayout.page;
 
-  /* 
+  /*
    * XXX this will only work if textHeight() is the same for all pages
    */
   while (ps.y > renderer.pageHeight(ps.page)) {
@@ -2632,7 +2632,7 @@ void Block::layoutAbsolute(const WTextRenderer& renderer)
   }
   ps.minX = containingLayout.x + left;
   ps.maxX = containingLayout.x + left + width;
- 
+
   layoutBlock(ps, false, renderer, 0, 0);
 }
 
@@ -2690,8 +2690,8 @@ double Block::layoutFloat(double y, int page, BlockList& floats,
     floatPs.minX = floatX;
     floatPs.maxX = floatX + currentWidth;
     collapseMarginBottom = layoutBlock(floatPs,
-				       unknownWidth || canIncreaseWidth, 
-				       renderer, 
+				       unknownWidth || canIncreaseWidth,
+				       renderer,
 				       0, collapseMarginBottom);
 
     double pw = floatPs.maxX - (floatPs.minX + currentWidth);
@@ -2712,7 +2712,7 @@ double Block::layoutFloat(double y, int page, BlockList& floats,
   }
 }
 
-void Block::adjustAvailableWidth(double y, int page, 
+void Block::adjustAvailableWidth(double y, int page,
 				 const BlockList& floats,
 				 Range &rangeX)
 {
@@ -3117,7 +3117,7 @@ void Block::renderText(const std::string& text, WTextRenderer& renderer,
 
   for (unsigned i = 0; i < inlineLayout.size(); ++i) {
     InlineBox& ib = inlineLayout[i];
-  
+
     if (ib.page == page) {
       double y = renderer.margin(Side::Top) + ib.y - metrics.leading()
 	+ (lineHeight - fontHeight)/2.0;
@@ -3328,7 +3328,7 @@ void Block::renderBorders(const LayoutBox& bb, WTextRenderer& renderer,
 	  else if (offsetFactor == 0)
 	    rightOffset = -borderWidth[i] / 2;
 
-	  painter.drawLine(left + leftOffset, 
+	  painter.drawLine(left + leftOffset,
 			   top + offsetFactor * borderWidth[i]/2,
 			   right - rightOffset,
 			   top + offsetFactor * borderWidth[i]/2);
