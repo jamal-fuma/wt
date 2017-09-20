@@ -15,9 +15,9 @@ class PaintApplication: public WApplication
 public:
   PaintApplication(const WEnvironment &env): WApplication(env) {
     setTitle("Paint example");
-    
+
     useStyleSheet("painting.css");
-    
+
     root()->addWidget(cpp14::make_unique<PaintExample>());
   }
 };
