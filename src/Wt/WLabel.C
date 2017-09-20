@@ -28,7 +28,7 @@ WLabel::WLabel(const WString& text)
 
 WLabel::WLabel(std::unique_ptr<WImage> image)
   : WLabel()
-{ 
+{
   manageWidget(image_, std::move(image));
 }
 
@@ -181,7 +181,7 @@ void WLabel::propagateRenderOk(bool deep)
 DomElementType WLabel::domElementType() const
 {
   // The label in <a><label /></a> eats an onclick event in IE
-  // We should explicitly continue to propagate the onclick event ? 
+  // We should explicitly continue to propagate the onclick event ?
   // For now we avoid to create a LABEL element if no buddy is set
   // (This is used e.g. in WTreeView)
   if (buddy_)
