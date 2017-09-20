@@ -86,7 +86,7 @@ std::string WPointF::jsValue() const
 WPointF WPointF::swapHV(double width) const
 {
   WPointF result(width - y(), x());
-  
+
   if (isJavaScriptBound()) {
     WStringStream ss;
     char buf[30];
