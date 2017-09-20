@@ -87,7 +87,7 @@ namespace {
     if (!response_stream || http_version.substr(0, 5) != "HTTP/")
       throw WException("Invalid response");
 
-    if (status_code == 200) { 
+    if (status_code == 200) {
       std::stringstream content;
 
       // Read the response headers, which are terminated by a blank line.
@@ -128,7 +128,7 @@ void WtClient::startWtSession(const std::string& host,
   int status = doGet(host, port, url, &result);
 
   if (status != 200)
-    throw WException("Http status != 200: " + std::to_string(status));    
+    throw WException("Http status != 200: " + std::to_string(status));
 
   static const std::regex session_e(".*\\?wtd=([a-zA-Z0-9]+)&amp;.*");
 
