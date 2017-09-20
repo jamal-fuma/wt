@@ -54,21 +54,21 @@ public:
       response.setStatus(404);
       return;
     }
-    
+
     std::vector<Http::UploadedFile> files;
     Utils::find(request.uploadedFiles(), "data", files);
     if (files.empty()) {
       response.setStatus(404);
       return;
     }
-  
+
     parent_->setUploadedFile(files[0]);
     // WServer::instance()->post(app_->sessionId(),
     // 			    boost::bind(&WFileDropWidget::setUploadedFile,
     // 					parent_, files[0]));
 #ifdef WT_TARGET_JAVA
     lock.release();
-#endif  
+#endif
   }
 
   void setCurrentFile(File *file) { currentFile_ = file; }
@@ -88,7 +88,7 @@ WFileDropWidget::File::File(int id, const std::string& fileName,
     uploadFinished_(false),
     cancelled_(false)
 { }
-  
+
 const Http::UploadedFile& WFileDropWidget::File::uploadedFile() const {
   if (!uploadFinished_)
     throw std::exception();
@@ -124,7 +124,7 @@ WFileDropWidget::WFileDropWidget()
   WApplication *app = WApplication::instance();
   if (!app->environment().ajax())
     return;
-  
+
   setup();
 }
 
@@ -164,7 +164,7 @@ void WFileDropWidget::handleDrop(const std::string& newDrops)
   Json::parse(newDrops, dropdata);
 
   std::vector<File*> drops;
-  
+
   Json::Array dropped = (Json::Array)dropdata;
   for (std::size_t i = 0; i < dropped.size(); ++i) {
     Json::Object upload = (Json::Object)dropped[i];
@@ -195,7 +195,7 @@ void WFileDropWidget::handleDrop(const std::string& newDrops)
       else
 	throw std::exception();
     }
-    
+
     File *file = new File(id, name, type, size);
     drops.push_back(file);
     uploads_.push_back(file);
@@ -248,7 +248,7 @@ void WFileDropWidget::handleTooLarge(::uint64_t size)
   tooLarge_.emit(uploads_[currentFileIdx_], size);
   currentFileIdx_++;
 }
-  
+
 void WFileDropWidget::stopReceiving()
 {
   if (currentFileIdx_ < uploads_.size()) {
@@ -275,7 +275,7 @@ void WFileDropWidget::setUploadedFile(Http::UploadedFile file)
 
   File *f = uploads_[currentFileIdx_];
   currentFileIdx_++;
-  
+
   f->setUploadedFile(file);
   // f->uploaded().emit();
   // uploaded().emit(f);
@@ -318,7 +318,7 @@ void WFileDropWidget::cancelUpload(File *file)
   int i = file->uploadId();
   doJavaScript(jsRef() + ".cancelUpload(" + std::to_string(i) + ");");
 }
-  
+
 bool WFileDropWidget::remove(File *file)
 {
   for (unsigned i=0; i < currentFileIdx_ && i < uploads_.size(); i++) {
@@ -369,5 +369,5 @@ void WFileDropWidget::setAcceptDrops(bool enable)
   doJavaScript(jsRef() + ".setAcceptDrops(" + (enable ? "true" : "false")
 	       + ");");
 }
-  
+
 }
