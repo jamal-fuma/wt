@@ -20,31 +20,31 @@ void FormWidgets::populateSubMenu(Wt::WMenu *menu)
   menu->addItem("Introduction", introduction())->setPathComponent("");
   menu->addItem("Line/Text editor",
 		deferCreate(std::bind(&FormWidgets::textEditors, this)));
-  menu->addItem("Check boxes", 
+  menu->addItem("Check boxes",
 		deferCreate(std::bind(&FormWidgets::checkBox, this)));
-  menu->addItem("Radio buttons", 
+  menu->addItem("Radio buttons",
 		deferCreate(std::bind(&FormWidgets::radioButton, this)));
-  menu->addItem("Combo box", 
+  menu->addItem("Combo box",
 		deferCreate(std::bind(&FormWidgets::comboBox, this)));
-  menu->addItem("Selection box", 
+  menu->addItem("Selection box",
 		deferCreate(std::bind(&FormWidgets::selectionBox, this)));
-  menu->addItem("Autocomplete", 
+  menu->addItem("Autocomplete",
 		deferCreate(std::bind(&FormWidgets::autoComplete, this)));
   menu->addItem("Date & Time entry",
 		deferCreate(std::bind(&FormWidgets::dateEntry, this)));
-  menu->addItem("In-place edit", 
+  menu->addItem("In-place edit",
 		deferCreate(std::bind(&FormWidgets::inPlaceEdit, this)));
-  menu->addItem("Slider", 
+  menu->addItem("Slider",
 		deferCreate(std::bind(&FormWidgets::slider, this)));
-  menu->addItem("Progress bar", 
+  menu->addItem("Progress bar",
 		deferCreate(std::bind(&FormWidgets::progressBar, this)));
-  menu->addItem("File upload", 
+  menu->addItem("File upload",
 		deferCreate(std::bind(&FormWidgets::fileUpload, this)));
-  menu->addItem("Push button", 
+  menu->addItem("Push button",
 		deferCreate(std::bind(&FormWidgets::pushButton, this)));
-  menu->addItem("Validation", 
+  menu->addItem("Validation",
 		deferCreate(std::bind(&FormWidgets::validation, this)));
-  menu->addItem("Integration example", 
+  menu->addItem("Integration example",
 		deferCreate(std::bind(&FormWidgets::example, this)));
 }
 
