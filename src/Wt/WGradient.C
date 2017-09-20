@@ -57,7 +57,7 @@ bool WGradient::operator==(const WGradient& other) const
   if (style_ == GradientStyle::Linear) {
     return gradientVector_ == other.gradientVector_;
   } else if (style_ == GradientStyle::Radial) {
-    return (center_ == other.center_) && 
+    return (center_ == other.center_) &&
       (focal_ == other.focal_) &&
       (radius_ == other.radius_);
   } else
