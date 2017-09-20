@@ -166,8 +166,8 @@ void WCssDecorationStyle::setBackgroundImage(const WLink& image,
 }
 
 #ifdef WT_TARGET_JAVA
-void WCssDecorationStyle::setBackgroundImage(const std::string& url, 
-					     Repeat repeat, 
+void WCssDecorationStyle::setBackgroundImage(const std::string& url,
+					     Repeat repeat,
 					     WFlags<Side> sides)
 {
   setBackgroundImage(WLink(url), repeat, sides);
@@ -278,7 +278,7 @@ void WCssDecorationStyle::updateDomElement(DomElement& element, bool all)
     }
 
     if (!cursorImage_.empty()) {
-      element.setProperty(Property::StyleCursor, 
+      element.setProperty(Property::StyleCursor,
 			  "url(" + cursorImage_ + "),"
 			  + element.getProperty(Property::StyleCursor));
     }
@@ -295,7 +295,7 @@ void WCssDecorationStyle::updateDomElement(DomElement& element, bool all)
   /*
    * set border
    */
-  Property properties[4] 
+  Property properties[4]
     = { Property::StyleBorderTop,
 	Property::StyleBorderRight,
 	Property::StyleBorderBottom,
@@ -345,7 +345,7 @@ void WCssDecorationStyle::updateDomElement(DomElement& element, bool all)
 			    + ")");
       }
 
-      if (backgroundImageRepeat_ != 
+      if (backgroundImageRepeat_ !=
 	  (Orientation::Horizontal | Orientation::Vertical) ||
 	  !backgroundImageLocation_.empty()) {
 	if (backgroundImageRepeat_ == (Orientation::Horizontal |
@@ -374,7 +374,7 @@ void WCssDecorationStyle::updateDomElement(DomElement& element, bool all)
 	    location += " center";
 	  else if (backgroundImageLocation_.test(Side::Right))
 	    location += " right";
-	  else 
+	  else
 	    location += " left";
 
 	  element.setProperty(Property::StyleBackgroundPosition, location);
