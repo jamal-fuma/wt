@@ -222,7 +222,7 @@ void WAbstractGridData::updateGL()
 			WGLWidget::CLAMP_TO_EDGE);
 
   initShaders();
-  
+
   if (!jsMinPt_.initialized()) {
     chart_->initJavaScriptVector(jsMinPt_);
   }
@@ -260,9 +260,9 @@ void WAbstractGridData::updateGL()
     if (isoLineHeights_.size() > 0) {
       chart_->useProgram(isoLineProgram_);
       if (isoLineColorMap_ != nullptr) {
-	min = chart_->toPlotCubeCoords(isoLineColorMap_->minimum(), 
+	min = chart_->toPlotCubeCoords(isoLineColorMap_->minimum(),
 				       Axis::Z3D);
-	max = chart_->toPlotCubeCoords(isoLineColorMap_->maximum(), 
+	max = chart_->toPlotCubeCoords(isoLineColorMap_->maximum(),
 				       Axis::Z3D);
 	chart_->uniform1f(isoLine_offset_, min);
 	chart_->uniform1f(isoLine_scaleFactor_, 1.0/(max-min));
@@ -457,7 +457,7 @@ std::vector<WSurfaceSelection> WAbstractGridData::pickSurface(int x, int y) cons
 	double resY = point.y() * (chart_->axis(Axis::Y3D).maximum() -
 				   chart_->axis(Axis::Y3D).minimum())
 	  + chart_->axis(Axis::Y3D).minimum();
-	double resZ = point.z() * (chart_->axis(Axis::Z3D).maximum() - 
+	double resZ = point.z() * (chart_->axis(Axis::Z3D).maximum() -
 				   chart_->axis(Axis::Z3D).minimum())
 	  + chart_->axis(Axis::Z3D).minimum();
 	result.push_back(WSurfaceSelection(distance, resX, resY, resZ));
@@ -554,7 +554,7 @@ void WAbstractGridData::linesForIsoLevel(double z, std::vector<float> &result) c
 			    simplePtsArrays[i][vertexIndices[j + 2] * 3 + 1],
 			    simplePtsArrays[i][vertexIndices[j + 2] * 3 + 2]);
       std::vector<WVector3> intersections;
-      if ((a.z() >= scaledZ && b.z() < scaledZ) || 
+      if ((a.z() >= scaledZ && b.z() < scaledZ) ||
 	  (a.z() < scaledZ && b.z() >= scaledZ)) {
 	double factor = (scaledZ - a.z()) / (b.z() - a.z());
 	WVector3 d = b - a;
@@ -1150,7 +1150,7 @@ void WAbstractGridData::generateTextureCoords(FloatBuffer& coordsOUT,
 	}
       }
     } else {
-      float min = (float)chart_->toPlotCubeCoords(colormap_->minimum(), 
+      float min = (float)chart_->toPlotCubeCoords(colormap_->minimum(),
 						  Axis::Z3D);
       float max = (float)chart_->toPlotCubeCoords(colormap_->maximum(),
 						  Axis::Z3D);
@@ -1758,7 +1758,7 @@ void WAbstractGridData::paintGLPositions(double marginX, double marginY, double 
   if (hidden_)
     return;
 
-  if (seriesType_ != Series3DType::Surface || 
+  if (seriesType_ != Series3DType::Surface ||
       chart_->type() != ChartType::Scatter)
     return;
 
