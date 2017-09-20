@@ -62,7 +62,7 @@ namespace {
       return 359.5;
     else if (std::fabs(d + 360) < 0.01)
       return -359.5;
-    else 
+    else
       return d;
   }
 
@@ -78,7 +78,7 @@ namespace {
     pp->opacity = ScaleCharToQuantum(255 - color.alpha());
   }
 
-  bool isTranslation(const Wt::WTransform& t) 
+  bool isTranslation(const Wt::WTransform& t)
   {
     return std::fabs(t.m11() - 1.0) < EPSILON
       && std::fabs(t.m12() - 0.0) < EPSILON
@@ -235,11 +235,11 @@ void WRasterImage::Impl::internalInit(bool applyChanges)
     DrawPushGraphicContext(context_); // for painter->combinedTransform()
 
     if (applyChanges)
-      rasterImage_->setChanged(PainterChangeFlag::Clipping | 
+      rasterImage_->setChanged(PainterChangeFlag::Clipping |
 			       PainterChangeFlag::Transform |
-			       PainterChangeFlag::Pen | 
+			       PainterChangeFlag::Pen |
 			       PainterChangeFlag::Brush |
-			       PainterChangeFlag::Font | 
+			       PainterChangeFlag::Font |
 			       PainterChangeFlag::Hints);
   }
 }
@@ -375,7 +375,7 @@ void WRasterImage::setChanged(WFlags<PainterChangeFlag> flags)
 
   if (flags.test(PainterChangeFlag::Transform)) {
     impl_->setTransform(painter()->combinedTransform());
-    flags = PainterChangeFlag::Pen | PainterChangeFlag::Brush | 
+    flags = PainterChangeFlag::Pen | PainterChangeFlag::Brush |
       PainterChangeFlag::Font | PainterChangeFlag::Hints;
   }
 
@@ -585,7 +585,7 @@ void WRasterImage::drawArc(const WRectF& rect,
 {
   impl_->internalInit();
 
-  DrawArc(impl_->context_, rect.left(), rect.top(), rect.right(), rect.bottom(), 
+  DrawArc(impl_->context_, rect.left(), rect.top(), rect.right(), rect.bottom(),
 	  startAngle, startAngle + spanAngle);
 }
 
@@ -610,7 +610,7 @@ void WRasterImage::drawImage(const WRectF& rect, const std::string& imgUri,
     else if (boost::istarts_with(uri.mimeType, "image/jpg")
 	     || boost::istarts_with(uri.mimeType, "image/jpeg"))
       strcpy(info.magick, "JPG");
-    else 
+    else
       throw WException("Unsupported image mimetype: " + uri.mimeType);
 
     cImage = ReadInlineImage(&info, imgUri.substr(imgUri.find(',') + 1).c_str(), &exception);
@@ -721,7 +721,7 @@ void WRasterImage::getPixels(void *data)
   DestroyExceptionInfo(&ei);
 }
 
-WColor WRasterImage::getPixel(int x, int y) 
+WColor WRasterImage::getPixel(int x, int y)
 {
   PixelPacket pixel = GetOnePixel(impl_->image_, x, y);
   return WColor(ScaleQuantumToChar(pixel.red),
@@ -818,7 +818,7 @@ void WRasterImage::Impl::drawPlainPath(const WPainterPath& path)
   }
 }
 
-void WRasterImage::drawText(const WRectF& rect, 
+void WRasterImage::drawText(const WRectF& rect,
 			    WFlags<AlignmentFlag> flags,
 			    TextFlag textFlag,
 			    const WString& text,
@@ -902,7 +902,7 @@ void WRasterImage::drawText(const WRectF& rect,
     DrawSetFillColor(impl_->context_, &pp);
     DrawSetFillOpacity(impl_->context_, painter()->pen().color().alpha() / 255.0);
     DrawSetStrokeOpacity(impl_->context_, 0);
-  
+
     DrawSetGravity(impl_->context_, gravity);
 
     std::string utf8 = text.toUTF8();
@@ -939,7 +939,7 @@ void WRasterImage::drawText(const WRectF& rect,
 	drawInfo->clip_units = UserSpaceOnUse;
 	DrawClipPath(impl_->image_, drawInfo, impl_->currentClipPathName().c_str());
 
-	DestroyDrawInfo(drawInfo);	
+	DestroyDrawInfo(drawInfo);
       } else {
 	SetImageClipMask(impl_->image_, nullptr);
       }
@@ -975,7 +975,7 @@ void WRasterImage::drawText(const WRectF& rect,
     WColor c = painter()->pen().color();
     PixelPacket pc;
     WColorToPixelPacket(c, &pc);
- 
+
     for (int y = 0; y < h; ++y) {
       int iy = y0 + y;
 
@@ -1045,7 +1045,7 @@ void WRasterImage::handleRequest(const Http::Request& request,
     }
 
     response.out().write((const char *)data, size);
- 
+
     free(data);
     DestroyExceptionInfo(&exception);
   }
