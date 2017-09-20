@@ -146,7 +146,7 @@ void WInPlaceEdit::setButtonsEnabled(bool enabled)
     save_->clicked().connect(save_, &WFormWidget::disable);
     save_->clicked().connect(cancel_, &WFormWidget::disable);
     save_->clicked().connect(this, &WInPlaceEdit::save);
-    
+
     cancel_->clicked().connect(editing_, &WWidget::hide);
     cancel_->clicked().connect(text_, &WWidget::show);
     cancel_->clicked().connect(this, &WInPlaceEdit::cancel);
