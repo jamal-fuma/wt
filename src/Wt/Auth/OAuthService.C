@@ -80,7 +80,7 @@ public:
 
       const std::string *stateE = request.getParameter("state");
       if (!stateE || *stateE != process_->oAuthState_) {
-	LOG_ERROR(ERROR_MSG("invalid-state") << 
+	LOG_ERROR(ERROR_MSG("invalid-state") <<
 		  ", state: " << (stateE ? *stateE : "(empty)"));
 	process_->setError(ERROR_MSG("invalid-state"));
 	sendError(response);
@@ -162,7 +162,7 @@ private:
 OAuthAccessToken::OAuthAccessToken()
 { }
 
-OAuthAccessToken::OAuthAccessToken(const std::string& accessToken, 
+OAuthAccessToken::OAuthAccessToken(const std::string& accessToken,
 				   const WDateTime& expires,
 				   const std::string& refreshToken)
   : accessToken_(accessToken),
@@ -202,9 +202,9 @@ OAuthProcess::OAuthProcess(const OAuthService& service,
 #ifndef WT_TARGET_JAVA
   WStringStream js;
   js << WT_CLASS ".PopupWindow(" WT_CLASS
-     << "," << WWebWidget::jsStringLiteral(authorizeUrl()) 
+     << "," << WWebWidget::jsStringLiteral(authorizeUrl())
      << ", " << service.popupWidth()
-     << ", " << service.popupHeight() << ");"; 
+     << ", " << service.popupHeight() << ");";
 
   implementJavaScript(&OAuthProcess::startAuthorize, js.str());
   implementJavaScript(&OAuthProcess::startAuthenticate, js.str());
@@ -262,7 +262,7 @@ void OAuthProcess::connectStartAuthenticate(EventSignalBase &s)
     WStringStream js;
     js << "function(object, event) {"
        << WT_CLASS ".PopupWindow(" WT_CLASS
-       << "," << WWebWidget::jsStringLiteral(authorizeUrl()) 
+       << "," << WWebWidget::jsStringLiteral(authorizeUrl())
        << ", " << service_.popupWidth()
        << ", " << service_.popupHeight() << ");"
        << "}";
@@ -319,7 +319,7 @@ void OAuthProcess::requestToken(const std::string& authorizationCode)
 
   WStringStream ss;
   ss << "grant_type=authorization_code"
-     << "&redirect_uri=" 
+     << "&redirect_uri="
      << Wt::Utils::urlEncode(service_.generateRedirectEndpoint())
      << "&code=" << authorizationCode;
 
@@ -438,26 +438,26 @@ OAuthAccessToken OAuthProcess::parseUrlEncodedToken(const Http::Message& respons
   Http::Utils::parseFormUrlEncoded(response, params);
 
   if (response.status() == 200) {
-    const std::string *accessTokenE 
+    const std::string *accessTokenE
       = Http::Utils::getParamValue(params, "access_token");
     if (accessTokenE) {
       std::string accessToken = *accessTokenE;
 
       WDateTime expires;
-      const std::string *expiresE 
+      const std::string *expiresE
 	= Http::Utils::getParamValue(params, "expires");
       if (expiresE)
 	expires = WDateTime::currentDateTime().addSecs
 	  (Wt::Utils::stoi(*expiresE));
 
       // FIXME refresh token
-      
+
       return OAuthAccessToken(accessToken, expires, std::string());
     } else
       throw TokenError(ERROR_MSG("badresponse"));
   } else {
     const std::string *errorE = Http::Utils::getParamValue(params, "error");
-    
+
     if (errorE)
       throw TokenError(ERROR_MSG(+ *errorE));
     else
@@ -510,13 +510,13 @@ OAuthAccessToken OAuthProcess::parseJsonToken(const Http::Message& response)
 }
 
 struct OAuthService::Impl
-{ 
+{
   Impl()
     : redirectResource_(nullptr)
   {
     try {
       secret_ = configurationProperty("oauth2-secret");
-    } catch (std::exception& e) {    
+    } catch (std::exception& e) {
       secret_ = WRandom::generateId(32);
     }
   }
@@ -611,7 +611,7 @@ std::string OAuthService::encodeState(const std::string& url) const
   /* Variant of base64 encoding which is resistant to broken OAuth2 peers
    * that do not properly re-encode the state */
   b = Wt::Utils::replace(b, "+", "-");
-  b = Wt::Utils::replace(b, "/", "_");  
+  b = Wt::Utils::replace(b, "/", "_");
   b = Wt::Utils::replace(b, "=", ".");
 
   return b;
@@ -672,7 +672,7 @@ std::string OAuthService::redirectEndpointPath() const
   }
 #endif
 
-  return path; 
+  return path;
 }
 
 void OAuthService::configureRedirectEndpoint() const
