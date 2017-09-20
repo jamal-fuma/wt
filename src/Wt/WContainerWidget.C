@@ -294,7 +294,7 @@ void WContainerWidget::setOverflow(Overflow value,
     overflow_[0] = value;
   if (orientation.test(Orientation::Vertical))
     overflow_[1] = value;
-  
+
   // Could be a workaround for IE, but sometimes causes other problems:
   // if (value == OverflowScroll || value == OverflowAuto)
   //   setPositionScheme(PositionScheme::Relative);
@@ -332,7 +332,7 @@ void WContainerWidget::updateDom(DomElement& element, bool all)
   if (flags_.test(BIT_CONTENT_ALIGNMENT_CHANGED) || all) {
     AlignmentFlag hAlign = contentAlignment_ & AlignHorizontalMask;
 
-    bool ltr = WApplication::instance()->layoutDirection() 
+    bool ltr = WApplication::instance()->layoutDirection()
       == LayoutDirection::LeftToRight;
 
     switch (hAlign) {
@@ -374,7 +374,7 @@ void WContainerWidget::updateDom(DomElement& element, bool all)
     }
   }
 
-  if (flags_.test(BIT_ADJUST_CHILDREN_ALIGN) || 
+  if (flags_.test(BIT_ADJUST_CHILDREN_ALIGN) ||
       flags_.test(BIT_CONTENT_ALIGNMENT_CHANGED) || all) {
     /*
      * Welcome to CSS hell.
@@ -435,13 +435,13 @@ void WContainerWidget::updateDom(DomElement& element, bool all)
 	 overflow_[1] == Overflow::Visible))) {
     static const char *cssText[] = { "visible", "auto", "hidden", "scroll" };
 
-    element.setProperty(Property::StyleOverflowX, 
+    element.setProperty(Property::StyleOverflowX,
 			cssText[static_cast<unsigned int>(overflow_[0])]);
     element.setProperty(Property::StyleOverflowY,
 			cssText[static_cast<unsigned int>(overflow_[1])]);
     // enable form object to retrieve scroll state
     setFormObject(true);
-    
+
     //declare javascript function Wt.encodeValue()
     this->doJavaScript(this->jsRef()
 	+ ".wtEncodeValue = function() {"
@@ -453,7 +453,7 @@ void WContainerWidget::updateDom(DomElement& element, bool all)
 
     /* If a container widget has overflow, then, if ever something
      * inside it has position scheme relative/absolute, it will not
-     * scroll properly unless every element up to the container and including 
+     * scroll properly unless every element up to the container and including
      * the container itself has overflow: relative.
      *
      * The following fixes the common case:
@@ -461,7 +461,7 @@ void WContainerWidget::updateDom(DomElement& element, bool all)
      */
     WApplication *app = WApplication::instance();
     if (app->environment().agentIsIE()
-	&& (overflow_[0] == Overflow::Auto || 
+	&& (overflow_[0] == Overflow::Auto ||
 	    overflow_[0] == Overflow::Scroll))
       if (positionScheme() == PositionScheme::Static)
 	element.setProperty(Property::StylePosition, "relative");
@@ -624,7 +624,7 @@ void WContainerWidget::updateDomChildren(DomElement& parent, WApplication *app)
 
 	for (unsigned i = 0; i < orderedInserts.size(); ++i) {
 	  int pos = orderedInserts[i];
-	
+
 	  DomElement *c = (children_)[pos]->createSDomElement(app);
 
 	  if (pos + (addedCount - insertCount) == totalCount)
@@ -704,7 +704,7 @@ void WContainerWidget::setGlobalUnfocused(bool b)
   globalUnfocused_ = b;
 }
 
-bool WContainerWidget::isGlobalUnfocussed() const 
+bool WContainerWidget::isGlobalUnfocussed() const
 {
   return globalUnfocused_;
 }
@@ -723,7 +723,7 @@ void WContainerWidget::setFormData(const FormData& formData)
       }catch (const std::exception& e) {
 	throw WException("WContainerWidget: error parsing: " + formData.values[0] + ": " + e.what());
       }
-    } else 
+    } else
       throw WException("WContainerWidget: error parsing: " + formData.values[0]);
 	  }
 
