@@ -216,7 +216,7 @@ WTransform& WTransform::rotate(double angle)
 
 double WTransform::degreesToRadians(double angle)
 {
-  return (angle / 180.) * M_PI;  
+  return (angle / 180.) * M_PI;
 }
 
 WTransform& WTransform::scale(double sx, double sy)
@@ -478,7 +478,7 @@ void WTransform::decomposeTranslateRotateScaleRotate(TRSRDecomposition& result)
 		 V[0], V[2], V[1], V[3],
 		 tmp2);
 
-  LOG_DEBUG("check: \n" << 
+  LOG_DEBUG("check: \n" <<
 	    tmp2[0] << " " << tmp2[1] << "\n"
 	    tmp2[2] << " " << tmp2[3]);
   */
