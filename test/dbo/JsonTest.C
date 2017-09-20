@@ -142,7 +142,7 @@ struct Coordinate {
   bool operator== (const Coordinate& other) const {
     return x == other.x && y == other.y;
   }
-  
+
   bool operator< (const Coordinate& other) const {
     if (x < other.x)
       return true;
@@ -257,7 +257,7 @@ BOOST_AUTO_TEST_CASE( dbo_json_empty_test )
     dbo::Transaction transaction(session);
 
     std::unique_ptr<Empty> empty{new Empty()};
-    
+
     std::stringstream ss;
     dbo::jsonSerialize(*empty, ss);
 
@@ -300,7 +300,7 @@ BOOST_AUTO_TEST_CASE( dbo_json_empty_and_null_test )
 
   std::string expected = "{\"id\":1,\"name\":\"John\",\"password\":\"Something\",\"role\":42,"
     "\"karma\":13,\"posts_user\":[],\"settings_\":null}";
-  
+
   std::stringstream ss;
   jsonSerialize(user, ss);
 
@@ -370,7 +370,7 @@ BOOST_AUTO_TEST_CASE( dbo_json_composite_key_test )
     hasCoordinateId.modify()->position = Coordinate(3, 4);
     hasCoordinateId.modify()->name = "foo";
   }
-  
+
   dbo::Transaction transaction(session);
 
   std::string expected = "{\"position_x\":3,\"position_y\":4,\"name\":\"foo\"}";
