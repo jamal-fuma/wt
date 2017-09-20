@@ -430,7 +430,7 @@ void DomElement::processProperties(WApplication *app) const
 {
   if (minMaxSizeProperties_
       && app->environment().agent() == UserAgent::IE6) {
-    DomElement *self = const_cast<DomElement *>(this); 
+    DomElement *self = const_cast<DomElement *>(this);
 
     PropertyMap::iterator w = self->properties_.find(Property::StyleWidth);
     PropertyMap::iterator minw = self->properties_.find(Property::StyleMinWidth);
@@ -522,7 +522,7 @@ void DomElement::setProperty(Property property, const std::string& value)
 void DomElement::addPropertyWord(Property property, const std::string& value)
 {
   PropertyMap::const_iterator i = properties_.find(property);
-  
+
   if (i != properties_.end()) {
     Utils::SplitSet words;
     Utils::split(words, i->second, " ", true);
@@ -536,7 +536,7 @@ void DomElement::addPropertyWord(Property property, const std::string& value)
 std::string DomElement::getProperty(Property property) const
 {
   PropertyMap::const_iterator i = properties_.find(property);
-  
+
   if (i != properties_.end())
     return i->second;
   else
@@ -680,7 +680,7 @@ std::string DomElement::cssStyle() const
     else if ((p >= static_cast<unsigned int>(Property::StylePosition)) &&
 	     (p < static_cast<unsigned int>(Property::LastPlusOne))) {
       if ((j->first == Property::StyleCursor) && (j->second == "pointer")) {
-	style << "cursor:pointer;cursor:hand;";	    
+	style << "cursor:pointer;cursor:hand;";
       } else {
 	if (!j->second.empty()) {
 	  style << cssNames_[p -
@@ -730,8 +730,8 @@ void DomElement::setJavaScriptEvent(EscapeOStream& out,
   out << "}\n";
 
   if (globalUnfocused_) {
-    out << app->javaScriptClass() 
-      <<  "._p_.bindGlobal('" << std::string(eventName) <<"', '" << id_ << "', f" << fid 
+    out << app->javaScriptClass()
+      <<  "._p_.bindGlobal('" << std::string(eventName) <<"', '" << id_ << "', f" << fid
       << ")\n";
     return;
   } else {
@@ -740,8 +740,8 @@ void DomElement::setJavaScriptEvent(EscapeOStream& out,
   }
 
   if (eventName == WInteractWidget::WHEEL_SIGNAL &&
-      app->environment().agentIsIE() && 
-      static_cast<unsigned int>(app->environment().agent()) >= 
+      app->environment().agentIsIE() &&
+      static_cast<unsigned int>(app->environment().agent()) >=
       static_cast<unsigned int>(UserAgent::IE9))
     out << ".addEventListener('wheel', f" << fid << ", false);\n";
   else
@@ -948,7 +948,7 @@ void DomElement::asHTML(EscapeOStream& out,
       if (!i->second.jsCode.empty()) {
         if (globalUnfocused_
 	    || (i->first == WInteractWidget::WHEEL_SIGNAL &&
-		app->environment().agentIsIE() && 
+		app->environment().agentIsIE() &&
 		static_cast<unsigned int>(app->environment().agent()) >=
 		static_cast<unsigned int>(UserAgent::IE9)))
 	  setJavaScriptEvent(javaScript, i->first, i->second, app);
@@ -1135,7 +1135,7 @@ bool DomElement::canWriteInnerHTML(WApplication *app) const
    *  innerHTML string it works fine.
    */
   /* http://msdn.microsoft.com/workshop/author/tables/buildtables.asp
-   * Note When using Dynamic HTML (DHTML) to create a document, you can 
+   * Note When using Dynamic HTML (DHTML) to create a document, you can
    * create objects and set the innerText or innerHTML property of the object.
    * However, because of the specific structure required by tables,
    * the innerText and innerHTML properties of the table and tr objects are
@@ -1195,7 +1195,7 @@ void DomElement::createTimeoutJs(WStringStream& out,
 {
   for (unsigned i = 0; i < timeouts.size(); ++i)
     out << app->javaScriptClass()
-	<< "._p_.addTimerEvent('" << timeouts[i].event << "', " 
+	<< "._p_.addTimerEvent('" << timeouts[i].event << "', "
 	<< timeouts[i].msec << ","
 	<< timeouts[i].repeat << ");\n";
 }
@@ -1238,7 +1238,7 @@ void DomElement::createElement(EscapeOStream& out, WApplication *app,
     renderInnerHtmlJS(out, app);
     renderDeferredJavaScript(out);
   } else {
-    out << "document.createElement('" 
+    out << "document.createElement('"
 	<< elementNames_[static_cast<unsigned int>(type_)] << "');";
     out << domInsertJS;
     asJavaScript(out, Priority::Create);
@@ -1352,7 +1352,7 @@ std::string DomElement::asJavaScript(EscapeOStream& out,
     }
 
     if (unwrapped_)
-      out << WT_CLASS ".unwrap('" << id_ << "');\n";      
+      out << WT_CLASS ".unwrap('" << id_ << "');\n";
 
     processEvents(app);
     processProperties(app);
@@ -1494,7 +1494,7 @@ void DomElement::renderInnerHtmlJS(EscapeOStream& out, WApplication *app) const
 
       for (unsigned i = 0; i < timeouts.size(); ++i) {
 	out << app->javaScriptClass()
-	    << "._p_.addTimerEvent('" << timeouts[i].event << "', " 
+	    << "._p_.addTimerEvent('" << timeouts[i].event << "', "
 	    << timeouts[i].msec << ','
 	    << timeouts[i].repeat << ");\n";
       }
@@ -1759,7 +1759,7 @@ std::string DomElement::tagName(DomElementType type)
 
 const std::string& DomElement::cssName(Property property)
 {
-  return cssNames_[static_cast<unsigned int>(property) - 
+  return cssNames_[static_cast<unsigned int>(property) -
 		   static_cast<unsigned int>(Property::StylePosition)];
 }
 
