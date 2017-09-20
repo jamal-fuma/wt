@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(test_trampoline1)
 
   {
     Wt::WImage img("http://www.google.be");
-    
+
     std::stringstream s;
     img.htmlText(s);
 
@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE(test_trampoline1)
 
   {
     Wt::WAnchor img("http://www.google.be");
-    
+
     std::stringstream s;
     img.htmlText(s);
 
@@ -103,5 +103,5 @@ BOOST_AUTO_TEST_CASE(test_trampoline1)
       ("?request=redirect&amp;url=http%3a%2f%2fwww.google.be&amp;hash=");
 
     BOOST_REQUIRE(red != std::string::npos);
-  }    
+  }
 }
