@@ -128,11 +128,11 @@ struct sql_query_grammar : qi::grammar<Iterator, ascii::space_type>
     using phoenix::val;
     using phoenix::throw_;
 
-    query_expression 
+    query_expression
       = select_expression % compound_operator
       ;
 
-    select_expression 
+    select_expression
       = with_clause
         >> no_case["select"][
 			     boost::bind(&Self::handleSelect, this)
@@ -162,7 +162,7 @@ struct sql_query_grammar : qi::grammar<Iterator, ascii::space_type>
     fields
       = raw[field][
 		   boost::bind(&Self::handleField, this, _1)
-		   ] 
+		   ]
         % ','
       ;
 
@@ -200,7 +200,7 @@ struct sql_query_grammar : qi::grammar<Iterator, ascii::space_type>
     */
     on_error<fail>
       (query_expression,
-       std::cerr 
+       std::cerr
        << val("Error parsing SQL query: Expected ")
        << boost::spirit::_4
        << val(" here: \"")
@@ -223,7 +223,7 @@ struct sql_query_grammar : qi::grammar<Iterator, ascii::space_type>
   {
     fieldLists_.push_back(SelectFieldList());
   }
-  
+
   void handleField(const boost::iterator_range<std::string::const_iterator>& s)
   {
     SelectField field;
