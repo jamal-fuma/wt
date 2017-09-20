@@ -46,7 +46,7 @@ static std::string replaceUrlInStyle(std::string& style, WApplication *app)
     if (url.length() > 2)
       if (url[0] == '\'' || url[1] == '"')
 	url = url.substr(1, url.length() - 2);
-    
+
     result << WWebWidget::jsStringLiteral(app->encodeUntrustedUrl(url), '\'');
 
     pos = i->position(1) + i->length(1);
