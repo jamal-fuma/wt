@@ -32,7 +32,7 @@ bool isEpsilonMore(double x, double limit) {
   return x - EPSILON > limit;
 }
 
-double pangoUnitsToDouble(const int u) 
+double pangoUnitsToDouble(const int u)
 {
   return ((double)u) / PANGO_SCALE;
 }
@@ -381,7 +381,7 @@ WFontMetrics FontSupport::fontMetrics(const WFont& font)
 
   double ascent
     = pangoUnitsToDouble(pango_font_metrics_get_ascent(metrics));
-  double descent 
+  double descent
     = pangoUnitsToDouble(pango_font_metrics_get_descent(metrics));
 
   double leading = (ascent + descent) - font.sizeLength(12).toPixels();
@@ -551,7 +551,7 @@ void FontSupport::drawText(const WFont& font, const WRectF& rect,
 
   double ascent
     = pangoUnitsToDouble(pango_font_metrics_get_ascent(metrics));
-  double descent 
+  double descent
     = pangoUnitsToDouble(pango_font_metrics_get_descent(metrics));
 
   pango_font_metrics_unref(metrics);
