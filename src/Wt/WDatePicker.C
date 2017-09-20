@@ -113,7 +113,7 @@ void WDatePicker::onPopupHidden()
 }
 
 void WDatePicker::setGlobalPopup(bool global)
-{ 
+{
   popup_->toggleStyleClass("wt-no-reparent", global);
 }
 
@@ -215,11 +215,11 @@ WDate WDatePicker::bottom() const
   std::shared_ptr<WDateValidator> dv = dateValidator();
   if (dv)
     return dv->bottom();
-  else 
+  else
     return WDate();
 }
-  
-void WDatePicker::setTop(const WDate& top) 
+
+void WDatePicker::setTop(const WDate& top)
 {
   std::shared_ptr<WDateValidator> dv = dateValidator();
   if (dv) {
@@ -233,7 +233,7 @@ WDate WDatePicker::top() const
   std::shared_ptr<WDateValidator> dv = dateValidator();
   if (dv)
     return dv->top();
-  else 
+  else
     return WDate();
 }
 
