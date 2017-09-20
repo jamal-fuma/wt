@@ -172,7 +172,7 @@ WLength WFont::sizeLength(double mediumSize) const
   case FontSize::XLarge:
     return WLength(mediumSize * 1.2 * 1.2);
   case FontSize::XXLarge:
-    return WLength(mediumSize * 1.2 * 1.2 * 1.2);    
+    return WLength(mediumSize * 1.2 * 1.2 * 1.2);
   case FontSize::Smaller:
     return WLength(1 / 1.2, LengthUnit::FontEm);
   case FontSize::Larger:
