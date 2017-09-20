@@ -119,9 +119,9 @@ private:
 
 	WApplication::instance()->pushExposedConstraint(this);
       }
-	
+
       dialog->doJavaScript("setTimeout(function() {"
-       + WApplication::instance()->javaScriptClass() 
+       + WApplication::instance()->javaScriptClass()
        + "._p_.updateGlobal('" + dialog->layoutContainer_->id() + "') }"
        ", 0);"
        );
@@ -131,12 +131,12 @@ private:
       setStyleClass(userCoverClasses(dialog));
 
       WApplication *app = WApplication::instance();
-      app->theme()->apply(app->domRoot(), this, 
+      app->theme()->apply(app->domRoot(), this,
 			  WidgetThemeRole::DialogCoverWidget);
     } else {
 	//call updateGlobal(null)
       WApplication::instance()->doJavaScript("setTimeout(function() {"
-	    + WApplication::instance()->javaScriptClass() 
+	    + WApplication::instance()->javaScriptClass()
 	    + "._p_.updateGlobal(null) });");
       if (!isHidden()) {
 	if (!animation.empty())
@@ -225,14 +225,14 @@ void WDialog::create()
       app->styleSheet().addRule("body", "height: 100%;");
 
     std::string position
-      = app->environment().agent() 
+      = app->environment().agent()
       == UserAgent::IE6 ? "absolute" : "fixed";
 
     // we use left: 50%, top: 50%, margin hack when JavaScript is not available
     // see below for an IE workaround
     app->styleSheet().addRule("div.Wt-dialog", std::string() +
 			      (app->environment().ajax() ?
-			       "visibility: hidden;" : "") 
+			       "visibility: hidden;" : "")
 			      //"position: " + position + ';'
 			      + (!app->environment().ajax() ?
 				 "left: 50%; top: 50%;"
@@ -283,7 +283,7 @@ void WDialog::create()
   caption_ = new WText();
   caption_->setInline(false);
   titleBar_->addWidget(std::unique_ptr<WText>(caption_));
-  
+
   contents_ = new WContainerWidget();
   app->theme()->apply(this, contents_, WidgetThemeRole::DialogBody);
 
@@ -405,12 +405,12 @@ void WDialog::render(WFlags<RenderFlag> flags)
 		 + "," + titleBar_->jsRef()
 		 + "," + (movable_ ? "1" : "0")
 		 + "," + (centerX ? "1" : "0")
-		 + "," + (centerY ? "1" : "0") 
+		 + "," + (centerY ? "1" : "0")
 		 + "," + (moved_.isConnected()
-			  ? '"' + moved_.name() + '"' 
+			  ? '"' + moved_.name() + '"'
 			  : "null")
 		 + "," + (resized_.isConnected()
-			  ? '"' + resized_.name() + '"' 
+			  ? '"' + resized_.name() + '"'
 			  : "null")
 		 + ");");
 
@@ -493,7 +493,7 @@ DialogCode WDialog::exec(const WAnimation& animation)
 
 #ifdef WT_TARGET_JAVA
   if (!WebController::isAsyncSupported())
-     throw WException("WDialog#exec() requires a Servlet 3.0 enabled servlet " 
+     throw WException("WDialog#exec() requires a Servlet 3.0 enabled servlet "
 		      "container and an application with async-supported "
 		      "enabled.");
 #endif
@@ -610,7 +610,7 @@ void WDialog::setHidden(bool hidden, const WAnimation& animation)
     if (!hidden) {
       if (c)
 	c->pushDialog(this, animation);
-    
+
       if (modal_) {
 	doJavaScript
 	  ("try {"
@@ -650,7 +650,7 @@ void WDialog::positionAt(const Wt::WMouseEvent& ev)
   }
 }
 
-DialogCover *WDialog::cover() 
+DialogCover *WDialog::cover()
 {
   WApplication *app = WApplication::instance();
 
@@ -682,7 +682,7 @@ void WDialog::raiseToFront()
 {
   doJavaScript("jQuery.data(" + jsRef() + ", 'obj').bringToFront()");
   DialogCover *c = cover();
-  c->bringToFront(this);  
+  c->bringToFront(this);
 }
 
 EventSignal<WKeyEvent>& WDialog::keyWentDown()
