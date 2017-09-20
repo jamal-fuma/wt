@@ -48,7 +48,7 @@ bool WText::RichText::setFormat(TextFormat newFormat)
 
 bool WText::RichText::checkWellFormed()
 {
-  if (format == TextFormat::XHTML && 
+  if (format == TextFormat::XHTML &&
       (text.literal() || !text.args().empty())) {
     return removeScript(text);
   } else
@@ -84,7 +84,7 @@ WText::WText(const WString& text, TextFormat format)
   setText(text);
 }
 
-WText::~WText() 
+WText::~WText()
 {
   delete[] padding_;
 }
@@ -175,7 +175,7 @@ void WText::updateDom(DomElement& element, bool all)
   if (flags_.test(BIT_PADDINGS_CHANGED)
       || (all && padding_ &&
 	  !(padding_[0].isAuto() && padding_[1].isAuto()))) {
-    
+
     element.setProperty(Property::StylePaddingRight, padding_[0].cssText());
     element.setProperty(Property::StylePaddingLeft, padding_[1].cssText());
 
