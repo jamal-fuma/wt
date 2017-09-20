@@ -117,7 +117,7 @@ bool FacebookService::configured()
 
     return false;
   }
-}    
+}
 
 std::string FacebookService::name() const
 {
