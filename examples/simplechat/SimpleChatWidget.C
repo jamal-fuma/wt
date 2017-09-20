@@ -198,7 +198,7 @@ bool SimpleChatWidget::startChat(const Wt::WString& user)
     loggedIn_ = true;
     connect();
 
-    user_ = user;    
+    user_ = user;
 
     clear();
     userNameEdit_ = 0;
@@ -297,7 +297,7 @@ bool SimpleChatWidget::startChat(const Wt::WString& user)
     joinMsg->setStyleClass("chat-msg");
 
     updateUsers();
-    
+
     return true;
   } else
     return false;
