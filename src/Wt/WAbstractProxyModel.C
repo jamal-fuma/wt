@@ -142,7 +142,7 @@ void WAbstractProxyModel::startShiftModelIndexes(const WModelIndex& sourceParent
   if (!startIndex.isValid())
     return;
 #endif
-  
+
   for (ItemMap::iterator it = items.lower_bound(startIndex);
        it != items.end();) {
 #ifndef WT_TARGET_JAVA
@@ -153,7 +153,7 @@ void WAbstractProxyModel::startShiftModelIndexes(const WModelIndex& sourceParent
     if (i == sourceParent) {
 #ifndef WT_TARGET_JAVA
       it = n;
-#endif      
+#endif
       continue;
     }
 
@@ -207,7 +207,7 @@ void WAbstractProxyModel::startShiftModelIndexes(const WModelIndex& sourceParent
   if (count > 0)
     endShiftModelIndexes(sourceParent, start, count, items);
 }
- 
+
 void WAbstractProxyModel::endShiftModelIndexes(const WModelIndex& sourceParent,
 					       int start, int count,
 					       ItemMap& items)
