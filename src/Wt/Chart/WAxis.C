@@ -363,7 +363,7 @@ void WAxis::setLabelAngle(double angle)
   else
     set(labelAngle_, angle);
 }
-  
+
 void WAxis::setTitleOrientation(const Orientation& orientation)
 {
   set(titleOrientation_, orientation);
@@ -409,7 +409,7 @@ void WAxis::setLabelFont(const WFont& labelFont)
   set(labelFont_, labelFont);
 }
 
-double WAxis::calcTitleSize(WPaintDevice *d, Orientation orientation) const 
+double WAxis::calcTitleSize(WPaintDevice *d, Orientation orientation) const
 {
   WMeasurePaintDevice device(d);
 
@@ -418,8 +418,8 @@ double WAxis::calcTitleSize(WPaintDevice *d, Orientation orientation) const
   // Set Painter props
   painter.setFont(titleFont_);
   painter.drawText( 0, 0, 100, 100, AlignmentFlag::Center, title());
-  
-  return orientation == Orientation::Vertical ? 
+
+  return orientation == Orientation::Vertical ?
     device.boundingRect().height() : device.boundingRect().width();
 }
 
@@ -439,12 +439,12 @@ double WAxis::calcMaxTickLabelSize(WPaintDevice *d, Orientation orientation)
   for(int i = 0; i< segmentCount(); ++i) {
     AxisConfig cfg;
     cfg.zoomLevel = 1;
-    if (location() == AxisValue::Minimum || 
+    if (location() == AxisValue::Minimum ||
 	location() == AxisValue::Both) {
       cfg.side = AxisValue::Minimum;
       getLabelTicks(ticks, i, cfg);
     }
-    if (location() == AxisValue::Maximum || 
+    if (location() == AxisValue::Maximum ||
 	location() == AxisValue::Both) {
       cfg.side = AxisValue::Maximum;
       getLabelTicks(ticks, i, cfg);
@@ -460,7 +460,7 @@ double WAxis::calcMaxTickLabelSize(WPaintDevice *d, Orientation orientation)
     painter.drawText(0, 0, 100, 100, AlignmentFlag::Right, ticks[i].label);
   }
 
-  return orientation == Orientation::Vertical ? 
+  return orientation == Orientation::Vertical ?
     device.boundingRect().height() : device.boundingRect().width();
 }
 
@@ -501,7 +501,7 @@ bool WAxis::prepareRender(Orientation orientation, double length) const
 
   double totalRenderLength = length;
   double totalRenderStart = clipMin;
-  
+
   const double SEGMENT_MARGIN = 40;
 
   // 6 pixels additional margin to avoid clipping lines that render
@@ -520,7 +520,7 @@ bool WAxis::prepareRender(Orientation orientation, double length) const
    */
   unsigned numIterations = 2;
   for (unsigned it = 0; it < numIterations; ++it) {
-    double rs = totalRenderStart; 
+    double rs = totalRenderStart;
     double TRR = totalRenderRange;
     totalRenderRange = 0;
 
@@ -528,7 +528,7 @@ bool WAxis::prepareRender(Orientation orientation, double length) const
       const Segment& s = segments_[i];
 
       bool roundMinimumLimit = i == 0 && roundLimits_.test(AxisValue::Minimum);
-      bool roundMaximumLimit = i == segments_.size() - 1 && 
+      bool roundMaximumLimit = i == segments_.size() - 1 &&
 	roundLimits_.test(AxisValue::Maximum);
 
       double diff = s.renderMaximum - s.renderMinimum;
@@ -578,12 +578,12 @@ bool WAxis::prepareRender(Orientation orientation, double length) const
 	      s.renderMinimum = labelBasePoint_ - interv;
 	    }
 	  }
-	  
+
 	  if (roundMaximumLimit)
 	    s.renderMaximum
 	      = roundUp125(s.renderMaximum, renderInterval_);
 	}
-      } else if (scale_ == AxisScale::Date || 
+      } else if (scale_ == AxisScale::Date ||
 		 scale_ == AxisScale::DateTime) {
 	double daysInterval = 0.0;
 
@@ -606,7 +606,7 @@ bool WAxis::prepareRender(Orientation orientation, double length) const
 
 	if (daysInterval > 200) {
 	  s.dateTimeRenderUnit = DateTimeUnit::Years;
-	  interval = std::max(1, 
+	  interval = std::max(1,
 			      static_cast<int>(round125(daysInterval / 365)));
 
 	  if (roundMinimumLimit)
@@ -630,7 +630,7 @@ bool WAxis::prepareRender(Orientation orientation, double length) const
 	    interval = 4;
 	  else
 	    interval = 6;
-	
+
 	  /* push min and max to a round month (at interval boundary) */
 	  if (roundMinimumLimit) {
 	    if ((min.date().month() - 1) % interval != 0) {
@@ -668,7 +668,7 @@ bool WAxis::prepareRender(Orientation orientation, double length) const
 	  } else {
 	    interval = 7 * std::max(1,
 				    static_cast<int>((daysInterval + 5) / 7));
-	   
+
 	    /* push min to midnight start of the week */
 	    if (roundMinimumLimit) {
 	      int dw = min.date().dayOfWeek();
@@ -685,9 +685,9 @@ bool WAxis::prepareRender(Orientation orientation, double length) const
 		++days;
 
 	      days = roundUp(days, interval);
-	      
+
 	      max = WDateTime(min.addDays(days));
-	    }	    
+	    }
 	  }
 
 	} else {
@@ -886,7 +886,7 @@ void WAxis::computeRange(const Segment& segment) const
 	segment.renderMaximum
 	  = std::max(maximum, findMinimum ? minimum : segment.minimum);
     }
-    
+
     double diff = segment.renderMaximum - segment.renderMinimum;
 
     if (scale_ == AxisScale::Log) {
@@ -982,7 +982,7 @@ double WAxis::getValue(const cpp17::any& v) const
     if (v.type() == typeid(WDate)) {
       WDate d = cpp17::any_cast<WDate>(v);
       return static_cast<double>(d.toJulianDay());
-    } 
+    }
 
 #ifndef WT_TARGET_JAVA
     else if (v.type() == typeid(WDateTime)) {
@@ -1368,10 +1368,10 @@ void WAxis::getLabelTicks(std::vector<TickLabel>& ticks, int segment, AxisConfig
 	  t = label(v);
 	}
       }
- 
+
       ticks.push_back
-	(TickLabel(v, 
-		   i % 2 == (firstTickIsLong ? 0 : 1) ? TickLength::Long 
+	(TickLabel(v,
+		   i % 2 == (firstTickIsLong ? 0 : 1) ? TickLength::Long
 		   : TickLength::Short, t));
     }
 
@@ -1525,8 +1525,8 @@ void WAxis::getLabelTicks(std::vector<TickLabel>& ticks, int segment, AxisConfig
     }
 
     bool atTick = (interval > 1) ||
-      (static_cast<unsigned int>(unit) <= 
-       static_cast<unsigned int>(DateTimeUnit::Days)) || 
+      (static_cast<unsigned int>(unit) <=
+       static_cast<unsigned int>(DateTimeUnit::Days)) ||
       !(roundLimits_ & AxisValue::Minimum);
 
     for (;;) {
@@ -1577,7 +1577,7 @@ void WAxis::getLabelTicks(std::vector<TickLabel>& ticks, int segment, AxisConfig
 	double tl = (getDateNumber(next) + dl)/2;
 
 	if (tl >= s.renderMinimum && tl <= s.renderMaximum) {
-	  ticks.push_back(TickLabel(static_cast<double>(tl), 
+	  ticks.push_back(TickLabel(static_cast<double>(tl),
 				    TickLength::Zero,
 				    text));
 	}
@@ -1590,7 +1590,7 @@ void WAxis::getLabelTicks(std::vector<TickLabel>& ticks, int segment, AxisConfig
   }
 }
 
-WString WAxis::autoDateFormat(const WDateTime& dt, DateTimeUnit unit, bool atTick) const 
+WString WAxis::autoDateFormat(const WDateTime& dt, DateTimeUnit unit, bool atTick) const
 {
   if (atTick) {
     switch (unit) {
@@ -1660,8 +1660,8 @@ WString WAxis::defaultDateTimeFormat(const Segment& s) const
   DateTimeUnit unit = s.dateTimeRenderUnit;
 
   bool atTick = (interval > 1) ||
-    (static_cast<unsigned int>(unit) <= 
-     static_cast<unsigned int>(DateTimeUnit::Days)) || 
+    (static_cast<unsigned int>(unit) <=
+     static_cast<unsigned int>(DateTimeUnit::Days)) ||
     !(roundLimits_ & AxisValue::Minimum);
 
   return autoDateFormat(dt, unit, atTick);
@@ -1732,9 +1732,9 @@ void WAxis::render(WPainter& painter,
       painter.setPen(pen());
 #endif
 
-      WPointF begin = interpolate(axisStart, axisEnd, 
+      WPointF begin = interpolate(axisStart, axisEnd,
 				  mapToDevice(s.renderMinimum, segment));
-      WPointF end = interpolate(axisStart, axisEnd, 
+      WPointF end = interpolate(axisStart, axisEnd,
 				mapToDevice(s.renderMaximum, segment));
 
       {
@@ -1761,7 +1761,7 @@ void WAxis::render(WPainter& painter,
   	if (rotate)
   	  painter.rotate(90);
   	painter.drawPath(TildeEndMarker((int)segmentMargin_));
-  	painter.restore();	
+  	painter.restore();
       }
     }
 
@@ -1892,8 +1892,8 @@ void WAxis::renderLabels(WPainter &painter,
   }
 
   bool clipping = painter.hasClipping();
-  if (!partialLabelClipping_ && clipping && 
-      tickDirection() == TickDirection::Outwards && 
+  if (!partialLabelClipping_ && clipping &&
+      tickDirection() == TickDirection::Outwards &&
       location() != AxisValue::Zero) {
     painter.setClipping(false);
   }
@@ -1922,7 +1922,7 @@ std::vector<double> WAxis::gridLinePositions(AxisConfig config) const
       if (ticks[i].tickLength == TickLength::Long)
 	pos.push_back(mapToDevice(ticks[i].u, segment));
   }
-  
+
   return pos;
 }
 
