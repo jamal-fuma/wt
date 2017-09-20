@@ -50,7 +50,7 @@ void WTimer::setSingleShot(bool singleShot)
 void WTimer::start()
 {
   if (!active_) {
-    WApplication *app = WApplication::instance();    
+    WApplication *app = WApplication::instance();
     if (app && app->timerRoot())
       app->timerRoot()->addWidget(std::unique_ptr<WWidget>(timerWidget_));
   }
@@ -82,7 +82,7 @@ void WTimer::gotTimeout()
   if (active_) {
     if (!singleShot_) {
       *timeout_ = Time() + interval_.count();
-      timerWidget_->timerStart(false);    
+      timerWidget_->timerStart(false);
     } else
       stop();
   }
