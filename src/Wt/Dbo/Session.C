@@ -75,7 +75,7 @@ MappingInfo::~MappingInfo()
 { }
 
 void MappingInfo::init(Session& session)
-{ 
+{
   throw Exception("Not to be done.");
 }
 
@@ -86,7 +86,7 @@ void MappingInfo::dropTable(Session& session,
 }
 
 void MappingInfo::rereadAll()
-{ 
+{
   throw Exception("Not to be done.");
 }
 
@@ -335,7 +335,7 @@ void Session::prepareStatements(Impl::MappingInfo *mapping)
     sql << "\"" << mapping->versionFieldName << "\" = ?";
     firstField = false;
   }
-  
+
   for (unsigned i = 0; i < mapping->fields.size(); ++i) {
     if (!firstField)
       sql << ", ";
@@ -483,7 +483,7 @@ void Session::prepareStatements(Impl::MappingInfo *mapping)
     }
 
     sql << " from \"" << Impl::quoteSchemaDot(otherMapping->tableName);
-    
+
     switch (info.type) {
     case ManyToOne:
       // where joinfield_id(s) = ?
@@ -651,7 +651,7 @@ void Session::mergeDuplicates(Impl::MappingInfo *mapping)
 			  + f.name() + "' mapped multiple times");
 			  "for " + mapping->tableName + "."
 			  + set.joinName);
-	  
+
       }
     }
   }
@@ -703,7 +703,7 @@ std::string Session::tableCreationSql()
        i != classRegistry_.end(); ++i)
     createRelations(i->second, tablesCreated, &sout);
 
-  t.commit();  
+  t.commit();
 
   return sout.str();
 }
@@ -801,7 +801,7 @@ void Session::createTable(Impl::MappingInfo *mapping,
   for (unsigned i = 0; i < mapping->fields.size();) {
     const FieldInfo& field = mapping->fields[i];
 
-    if (field.isForeignKey() && 
+    if (field.isForeignKey() &&
 	(createConstraints || !connection(false)->supportAlterTable())) {
       if (!firstField)
 	sql << ",\n";
@@ -823,7 +823,7 @@ void Session::createTable(Impl::MappingInfo *mapping,
     std::string tableName = Impl::quoteSchemaDot(mapping->tableName);
     std::string idFieldName = mapping->surrogateIdFieldName;
 
-    std::vector<std::string> sql = 
+    std::vector<std::string> sql =
       connection(false)->autoincrementCreateSequenceSql(tableName,
 							idFieldName);
 
@@ -991,7 +991,7 @@ void Session::createJoinIndex(Impl::MappingInfo& joinTableMapping,
   executeSql(sql, sout);
 }
 
-std::vector<Session::JoinId> 
+std::vector<Session::JoinId>
 Session::getJoinIds(Impl::MappingInfo *mapping, const std::string& joinId, bool literalJoinId)
 {
   std::vector<Session::JoinId> result;
@@ -1178,7 +1178,7 @@ void Session::discardUnflushed()
 }
 
 std::string Session::statementId(const char *tableName, int statementIdx)
-{  
+{
   return std::string(tableName) + ":" + std::to_string(statementIdx);
 }
 
