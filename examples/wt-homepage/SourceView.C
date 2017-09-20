@@ -26,10 +26,10 @@ SourceView::SourceView(ItemDataRole fileNameRole,
       imageResource_(0)
 {}
 
-SourceView::~SourceView() 
+SourceView::~SourceView()
 { }
 
-bool SourceView::setIndex(const WModelIndex& index) 
+bool SourceView::setIndex(const WModelIndex& index)
 {
   if (index != index_ && index.isValid()) {
     std::string fp = index.data(filePathRole_).empty() ? std::string()
@@ -47,7 +47,7 @@ bool SourceView::setIndex(const WModelIndex& index)
   return false;
 }
 
-std::string tempFileName() 
+std::string tempFileName()
 {
 #ifndef WT_WIN32
   char spool[20];
@@ -72,17 +72,17 @@ std::string getLanguageFromFileExtension(const std::string &fileName)
     return "xml";
   else if (boost::iends_with(fileName, ".html"))
     return "html";
-  else if (boost::iends_with(fileName, ".java")) 
+  else if (boost::iends_with(fileName, ".java"))
     return "java";
-  else if (boost::iends_with(fileName, ".js")) 
+  else if (boost::iends_with(fileName, ".js"))
     return "javascript";
-  else if (boost::iends_with(fileName, ".css")) 
+  else if (boost::iends_with(fileName, ".css"))
     return "css";
   else
     return std::string();
-} 
+}
 
-std::string readFileToString(const std::string& fileName) 
+std::string readFileToString(const std::string& fileName)
 {
   std::size_t outputFileSize = (std::size_t)fs::file_size(fileName);
   std::fstream file (fileName.c_str(), std::ios::in | std::ios::binary);
@@ -111,7 +111,7 @@ std::unique_ptr<WWidget> SourceView::renderView()
   if (!contentsData.empty())
    content = asString(contentsData).toUTF8();
   cpp17::any fileNameData = index_.data(fileNameRole_);
-  std::string fileName = 
+  std::string fileName =
     asString(fileNameData).toUTF8();
   cpp17::any filePathData = index_.data(filePathRole_);
   std::string filePath;
@@ -135,12 +135,12 @@ std::unique_ptr<WWidget> SourceView::renderView()
       inputFileName = filePath;
     else {
       inputFileName = tempFileName();
-      std::ofstream out(inputFileName.c_str(), 
+      std::ofstream out(inputFileName.c_str(),
 			std::ios::out | std::ios::binary);
       out.write(content.c_str(), (std::streamsize)content.length());
       out.close();
     }
-    
+
     outputFileName = tempFileName();
 
     std::string sourceHighlightCommand = "source-highlight ";
@@ -162,7 +162,7 @@ std::unique_ptr<WWidget> SourceView::renderView()
 
     if (filePathData.empty())
       unlink(inputFileName.c_str());
-  } 
+  }
 
   if (content == "")
     // do not load binary files, we would need to perform proper UTF-8
