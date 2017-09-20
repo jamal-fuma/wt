@@ -3,7 +3,7 @@
  *
  * All rights reserved.
  */
-// 
+//
 // connection.cpp
 // ~~~~~~~~~~~~~~
 //
@@ -68,7 +68,7 @@ void TcpConnection::startAsyncReadRequest(Buffer& buffer, int timeout)
 
   setReadTimeout(timeout);
 
-  std::shared_ptr<TcpConnection> sft 
+  std::shared_ptr<TcpConnection> sft
     = std::static_pointer_cast<TcpConnection>(shared_from_this());
   socket_.async_read_some(asio::buffer(buffer),
 			  strand_.wrap
@@ -93,7 +93,7 @@ void TcpConnection::startAsyncReadBody(ReplyPtr reply,
 
   setReadTimeout(timeout);
 
-  std::shared_ptr<TcpConnection> sft 
+  std::shared_ptr<TcpConnection> sft
     = std::static_pointer_cast<TcpConnection>(shared_from_this());
   socket_.async_read_some(asio::buffer(buffer),
 			  strand_.wrap
@@ -121,7 +121,7 @@ void TcpConnection::startAsyncWriteResponse
 
   setWriteTimeout(timeout);
 
-  std::shared_ptr<TcpConnection> sft 
+  std::shared_ptr<TcpConnection> sft
     = std::static_pointer_cast<TcpConnection>(shared_from_this());
   asio::async_write(socket_, buffers,
 		    strand_.wrap
