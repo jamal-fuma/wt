@@ -539,7 +539,7 @@ private:
 	 *
 	 * Alternatively you could call WPopupMenu::exec(), which returns
 	 * the result, but while waiting for it, blocks the thread.
-	 */      
+	 */
 	popup_->aboutToHide().connect(this, &TreeViewDragDrop::popupAction);
       }
 
@@ -688,7 +688,7 @@ std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
   app->useStyleSheet("styles.css");
   app->messageResourceBundle().use(WApplication::appRoot() + "about");
   app->refresh();
-  
+
   return std::move(app);
 }
 
