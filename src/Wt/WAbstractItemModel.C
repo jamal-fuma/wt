@@ -241,7 +241,7 @@ void WAbstractItemModel::copyData(const WAbstractItemModel *source,
   DataMap values = destination->itemData(dIndex);
   for (DataMap::const_iterator i = values.begin(); i != values.end(); ++i)
     destination->setData(dIndex, cpp17::any(), i->first);
-  
+
   destination->setItemData(dIndex, source->itemData(sIndex));
 }
 
@@ -262,7 +262,7 @@ void WAbstractItemModel::dropEvent(const WDropEvent& e, DropAction action,
     if (action == DropAction::Move || row == -1) {
       if (row == -1)
 	row = rowCount(parent);
-      
+
       if (!insertRows(row, selectionModel->selectedIndexes().size(), parent)) {
 	LOG_ERROR("dropEvent(): could not insertRows()");
 	return;
@@ -291,7 +291,7 @@ void WAbstractItemModel::dropEvent(const WDropEvent& e, DropAction action,
 
 	++r;
       } else {
-	  
+
       }
     }
 
@@ -311,7 +311,7 @@ void WAbstractItemModel::dropEvent(const WDropEvent& e, DropAction action,
   }
 }
 
-void WAbstractItemModel::beginInsertColumns(const WModelIndex& parent, 
+void WAbstractItemModel::beginInsertColumns(const WModelIndex& parent,
 					    int first, int last)
 {
   first_ = first;
