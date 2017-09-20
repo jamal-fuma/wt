@@ -18,7 +18,7 @@ namespace Wt {
 WTableRow::WTableRow()
   : hidden_(false),
     hiddenChanged_(false)
-{ 
+{
   implementStateless(&WTableRow::hide, &WTableRow::undoHide);
   implementStateless(&WTableRow::show, &WTableRow::undoHide);
 }
@@ -116,7 +116,7 @@ void WTableRow::addStyleClass(const WT_USTRING& style)
   std::string currentClass = styleClass_.toUTF8();
   Utils::SplitSet classes;
   Utils::split(classes, currentClass, " ", true);
-  
+
   if (classes.find(style.toUTF8()) == classes.end()) {
     styleClass_ = WT_USTRING::fromUTF8(Utils::addWord(styleClass_.toUTF8(),
 						      style.toUTF8()));
