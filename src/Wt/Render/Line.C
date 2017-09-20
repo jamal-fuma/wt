@@ -164,7 +164,7 @@ void Line::finish(AlignmentFlag textAlign,
 
   Range rangeX(minX, maxX);
   Block::adjustAvailableWidth(y_, page_, floats, rangeX);
-  
+
   /* Compute total width and total StandardColor::White space width */
   double whitespace = 0;
   double content = 0;
