@@ -32,7 +32,7 @@ namespace {
       return b - '0';
     else if (b <= 'F')
       return (b - 'A') + 0x0A;
-    else 
+    else
       return (b - 'a') + 0x0A;
   }
 
@@ -78,7 +78,7 @@ ReplyPtr RequestHandler::handleRequest(Request& req,
     return ReplyPtr(new StockReply(req, Reply::not_implemented, "", config_));
 
   if ((req.http_version_major != 1)
-      || (req.http_version_minor != 0 
+      || (req.http_version_minor != 0
 	  && req.http_version_minor != 1))
     return ReplyPtr(new StockReply(req, Reply::version_not_supported, "", config_));
 
@@ -172,7 +172,7 @@ bool RequestHandler::url_decode(const buffer_string& in, std::string& path,
     if (d[i] == '%') {
       if (i + 2 < len) {
 	path += fromHex(d[i + 1], d[i + 2]);
-	i += 2;	
+	i += 2;
       } else
         return false;
     } else if (d[i] == '?') {
