@@ -49,7 +49,7 @@ namespace {
   }
 
   void appendAttribute(Wt::EscapeOStream& eos,
-		       const std::string& name, 
+		       const std::string& name,
 		       const std::string& value) {
     eos << ' ' << name << "=\"";
     eos.pushEscape(Wt::EscapeOStream::HtmlAttribute);
@@ -206,7 +206,7 @@ WebRenderer::AckState WebRenderer::ackUpdate(int updateId)
    *
    * WebSocket requests are pipelined so this simple mechanism will
    * not work. When switching from web sockets to AJAX or vice-versa ?
-   * 
+   *
    * If normal AJAX request -> web socket closes. We assume everything
    * got delivered and start doing ack updates again.
    *
@@ -327,7 +327,7 @@ void WebRenderer::setPageVars(FileServe& page)
   page.setCondition("BOOT_STYLE", true);
 }
 
-void WebRenderer::streamBootContent(WebResponse& response, 
+void WebRenderer::streamBootContent(WebResponse& response,
 				    FileServe& boot, bool hybrid)
 {
   Configuration& conf = session_.controller()->configuration();
@@ -337,7 +337,7 @@ void WebRenderer::streamBootContent(WebResponse& response,
   FileServe bootJs(skeletons::Boot_js1);
 
   boot.setVar("BLANK_HTML",
-	      session_.bootstrapUrl(response, 
+	      session_.bootstrapUrl(response,
 				    WebSession::BootstrapOption::ClearInternalPath)
 	      + "&amp;request=resource&amp;resource=blank");
   boot.setVar("SESSION_ID", session_.sessionId());
@@ -387,7 +387,7 @@ void WebRenderer::serveLinkedCss(WebResponse& response)
 
   if (!initialStyleRendered_) {
     WApplication *app = session_.app();
-    
+
     WStringStream out(response.out());
 
     if (app->theme())
@@ -434,7 +434,7 @@ void WebRenderer::serveBootstrap(WebResponse& response)
   WStringStream noJsRedirectUrl;
   DomElement::htmlAttributeValue
     (noJsRedirectUrl,
-     session_.bootstrapUrl(response, 
+     session_.bootstrapUrl(response,
 			   WebSession::BootstrapOption::KeepInternalPath) + "&js=no");
 
   boot.setVar("REDIRECT_URL", noJsRedirectUrl.str());
@@ -446,7 +446,7 @@ void WebRenderer::serveBootstrap(WebResponse& response)
   WStringStream bootStyleUrl;
   DomElement::htmlAttributeValue
     (bootStyleUrl,
-     session_.bootstrapUrl(response, 
+     session_.bootstrapUrl(response,
 			   WebSession::BootstrapOption::ClearInternalPath)
      + "&request=style&page=" + std::to_string(pageId_));
 
@@ -700,7 +700,7 @@ void WebRenderer::addResponseAckPuzzle(WStringStream& out)
     addContainerWidgets(app->domRoot_.get(), widgets);
     if (app->domRoot2_)
       addContainerWidgets(app->domRoot2_.get(), widgets);
-    
+
     unsigned r = WRandom::get() % widgets.size();
 
     WContainerWidget *wc = widgets[r];
@@ -787,7 +787,7 @@ bool WebRenderer::checkResponsePuzzle(const WebRequest& request)
 
     if (j < answer.size() - 1)
       fail = true;
-   
+
     if (fail) {
       LOG_SECURE("Ajax puzzle fail: '" << ackPuzzle << "' vs '"
 		 << solution_ << '\'');
@@ -817,7 +817,7 @@ void WebRenderer::collectJavaScript()
    * in a hybrid page.
    */
   LOG_DEBUG("Rendering invisible: " << invisibleJS_.str());
-  
+
   collectedJS1_ << invisibleJS_.str();
   invisibleJS_.clear();
 
@@ -919,7 +919,7 @@ void WebRenderer::serveMainscript(WebResponse& response)
   Configuration& conf = session_.controller()->configuration();
   bool widgetset = session_.type() == EntryPointType::WidgetSet;
 
-  bool serveSkeletons = !conf.splitScript() 
+  bool serveSkeletons = !conf.splitScript()
     || response.getParameter("skeleton");
   bool serveRest = !conf.splitScript() || !serveSkeletons;
 
@@ -1345,7 +1345,7 @@ void WebRenderer::renderStyleSheet(WStringStream& out,
 
   if (!sheet.media().empty() && sheet.media() != "all")
     out << " media=\"" << sheet.media() << '"';
-  
+
   closeSpecial(out);
 }
 
@@ -1801,7 +1801,7 @@ void WebRenderer::collectJS(WStringStream* js)
 	  << "._p_.setCloseMessage(" << app->closeMessage().jsStringLiteral()
 	  << ");\n";
     }
-    
+
 	if (app->localeChanged_) {
       *js << app->javaScriptClass()
 	  << "._p_.setLocale(" << WString(app->locale().name()).jsStringLiteral()
@@ -1916,7 +1916,7 @@ void WebRenderer::learningIncomplete()
 std::string WebRenderer::headDeclarations() const
 {
   EscapeOStream result;
- 
+
   const Configuration& conf = session_.env().server()->configuration();
 
   const std::vector<HeadMatter>& headMatters = conf.headMatter();
@@ -2006,7 +2006,7 @@ std::string WebRenderer::headDeclarations() const
 
       result << "<link";
 
-      appendAttribute(result, "href", ml.href); 
+      appendAttribute(result, "href", ml.href);
       appendAttribute(result, "rel", ml.rel);
       if (!ml.media.empty())
 	appendAttribute(result, "media", ml.media);
@@ -2024,7 +2024,7 @@ std::string WebRenderer::headDeclarations() const
   } else
     if (session_.env().agentIsIE()) {
       /*
-       * WARNING: Similar code in WApplication.C must be kept in sync for 
+       * WARNING: Similar code in WApplication.C must be kept in sync for
        *          progressive boot.
        */
       if (session_.env().agentIsIElt(9)) {
