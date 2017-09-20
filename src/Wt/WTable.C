@@ -19,7 +19,7 @@ WTable::WTable()
   : rowsAdded_(0),
     headerRowCount_(0),
     headerColumnCount_(0)
-{ 
+{
   setInline(false);
 }
 
@@ -268,13 +268,13 @@ DomElement *WTable::createDomElement(WApplication *app)
   }
 
   table->addChild(colgroup);
-  
+
   flags_.reset(BIT_COLUMNS_CHANGED);
 
   for (unsigned row = 0; row < (unsigned)rowCount(); ++row)
     for (unsigned col = 0; col < (unsigned)columnCount(); ++col)
       itemAt(row, col)->overSpanned_ = false;
-  
+
   for (unsigned row = 0; row < (unsigned)rowCount(); ++row) {
     DomElement *tr = createRowDomElement(row, withIds, app);
     if (row < static_cast<unsigned>(headerRowCount_))
