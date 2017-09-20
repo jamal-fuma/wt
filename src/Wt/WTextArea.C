@@ -20,7 +20,7 @@ WTextArea::WTextArea()
     rows_(5),
     contentChanged_(false),
     attributesChanged_(false)
-{ 
+{
   setInline(true);
   setFormObject(true);
 }
@@ -31,7 +31,7 @@ WTextArea::WTextArea(const WT_USTRING& text)
     rows_(5),
     contentChanged_(false),
     attributesChanged_(false)
-{ 
+{
   setInline(true);
   setFormObject(true);
 }
@@ -88,7 +88,7 @@ void WTextArea::propagateRenderOk(bool deep)
 {
   attributesChanged_ = false;
   contentChanged_ = false;
-  
+
   WFormWidget::propagateRenderOk(deep);
 }
 
