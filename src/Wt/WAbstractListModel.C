@@ -25,7 +25,7 @@ WModelIndex WAbstractListModel::index(int row, int column,
 {
   return createIndex(row, column, nullptr);
 }
- 
+
 int WAbstractListModel::columnCount(const WModelIndex& parent) const
 {
   return parent.isValid() ? 0 : 1;
