@@ -73,7 +73,7 @@ bool WRectF::operator==(const WRectF& rhs) const
 {
   if (!sameBindingAs(rhs)) return false;
 
-  return 
+  return
        x_ == rhs.x_
     && y_ == rhs.y_
     && width_ == rhs.width_
