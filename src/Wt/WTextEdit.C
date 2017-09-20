@@ -55,7 +55,7 @@ void WTextEdit::init()
      "function(e, w, h) { var obj = $('#" + id() + "').data('obj'); "
      "obj.wtResize(e, w, h); };");
 
-  std::string direction 
+  std::string direction
     = app->layoutDirection() == LayoutDirection::LeftToRight ? "ltr" : "rtl";
   setConfigurationSetting("directionality", direction);
 
@@ -79,7 +79,7 @@ void WTextEdit::init()
     //this setting is no longer mentioned in the tinymce documenation though...
     setConfigurationSetting("button_tile_map", true);
     setConfigurationSetting("theme", std::string("advanced"));
-    setConfigurationSetting("theme_advanced_toolbar_location", 
+    setConfigurationSetting("theme_advanced_toolbar_location",
 			    std::string("top"));
     setConfigurationSetting("theme_advanced_toolbar_align",
 			    std::string("left"));
@@ -324,7 +324,7 @@ void WTextEdit::getDomChanges(std::vector<DomElement *>& result,
    * is to listen for the onInit() event -> we should be able to add a
    * wrapping ... .onInit(function(ed) { .... }) around the changes
    *
-   * New version of tinyMCE uses divs instead of table and removing the _tbl 
+   * New version of tinyMCE uses divs instead of table and removing the _tbl
    * makes it work on all version
    */
   DomElement *e = DomElement::getForUpdate(formName()/* + "_tbl" */ ,
@@ -351,7 +351,7 @@ int WTextEdit::boxBorder(Orientation orientation) const
   return 0;
 }
 
-void WTextEdit::setConfigurationSetting(const std::string& name, 
+void WTextEdit::setConfigurationSetting(const std::string& name,
 					const cpp17::any& value)
 {
   if (!value.empty())
