@@ -225,7 +225,7 @@ double WTextRenderer::render(const WString& text, double y)
       currentPs.minX = minX;
       currentPs.maxX = maxX;
 
-      collapseMarginBottom 
+      collapseMarginBottom
 	= docBlock.layoutBlock(currentPs, false, *this,
 			       std::numeric_limits<double>::max(),
 			       collapseMarginBottom);
