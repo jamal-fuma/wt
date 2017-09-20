@@ -90,7 +90,7 @@ namespace {
     }
 
     void handleWithContinuation(const Http::Request& request,
-				Http::Response& response) 
+				Http::Response& response)
     {
       if (request.continuation()) {
 	response.out() << "Hello";
@@ -115,13 +115,13 @@ namespace {
 	= { "test",
 	    "--http-address", "127.0.0.1",
 	    "--http-port", "0",
-	    "--docroot", "." 
+	    "--docroot", "."
           };
       setServerConfiguration(argc, (char **)argv);
       addResource(&resource_, "/test");
     }
 
-    std::string address() 
+    std::string address()
     {
       return "127.0.0.1:" + std::to_string(httpPort());
     }
@@ -138,7 +138,7 @@ namespace {
     Client()
       : done_(false),
 	abortAfterHeaders_(false)
-    { 
+    {
       done().connect(this, &Client::onDone);
       headersReceived().connect(this, &Client::onHeadersReceived);
       bodyDataReceived().connect(this, &Client::onDataReceived);
@@ -157,7 +157,7 @@ namespace {
 	doneCondition_.wait(guard);
     }
 
-    void reset() 
+    void reset()
     {
       done_ = false;
     }
@@ -279,7 +279,7 @@ BOOST_AUTO_TEST_CASE( http_client_server_test4 )
     for (;;) {
       bool alldone = true;
 
-      for (unsigned i = 0; i < clients.size(); ++i) {	
+      for (unsigned i = 0; i < clients.size(); ++i) {
 	if (!clients[i]->isDone()) {
 	  if (i % 100 == 0) {
 	    clients[i]->abort();
