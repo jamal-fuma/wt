@@ -77,7 +77,7 @@ WString WChart3DImplementation::categoryLabel(int u, Axis axis) const
 WAbstractChartImplementation::RenderRange WChart3DImplementation::computeRenderRange(Axis axis, AxisScale scale) const
 {
   WAbstractChartImplementation::RenderRange range;
-  
+
   const std::vector<WAbstractDataSeries3D*> series = chart_->dataSeries();
   if (series.size() == 0) {
     range.minimum = 0;
@@ -108,7 +108,7 @@ WAbstractChartImplementation::RenderRange WChart3DImplementation::computeRenderR
   case ChartType::Category:
     for (unsigned k = 0; k < series.size(); k++) {
       griddata = dynamic_cast<WAbstractGridData*>(series[k]);
-      if ( griddata == 0 
+      if ( griddata == 0
 	   || griddata->type() != Series3DType::Bar) {
 	throw WException("WChart3DImplementation: not all data is categorical");
       }
