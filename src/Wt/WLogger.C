@@ -217,7 +217,7 @@ WLogger::WLogger()
 }
 
 WLogger::~WLogger()
-{ 
+{
   if (ownStream_)
     delete o_;
 }
@@ -245,7 +245,7 @@ void WLogger::setFile(const std::string& path)
     ofs = new std::ofstream(path.c_str(), std::ios_base::out | std::ios_base::ate);
   }
 #else
-  ofs = new std::ofstream(path.c_str(), 
+  ofs = new std::ofstream(path.c_str(),
 			  std::ios_base::out | std::ios_base::ate);
   if (!ofs->is_open()) {
     // maybe a special file (pipe, /dev/null) that does not support ate?
@@ -253,18 +253,18 @@ void WLogger::setFile(const std::string& path)
     ofs = new std::ofstream(path.c_str(), std::ios_base::out);
   }
 #endif
-  
+
   if (ofs->is_open()) {
-    std::cerr 
-      << "INFO: Opened log file (" << path.c_str() << ")." 
+    std::cerr
+      << "INFO: Opened log file (" << path.c_str() << ")."
       << std::endl;
     o_ = ofs;
     ownStream_ = true;
   } else {
     delete ofs;
 
-    std::cerr 
-      << "ERROR: Could not open log file (" << path.c_str() << ")." 
+    std::cerr
+      << "ERROR: Could not open log file (" << path.c_str() << ")."
       << "We will be logging to std::cerr again."
       << std::endl;
     o_ = &std::cerr;
@@ -355,7 +355,7 @@ bool WLogger::logging(const std::string& type, const std::string& scope) const
 }
 
 WLogger& logInstance()
-{ 
+{
   WebSession *session = WebSession::instance();
 
   if (session)
