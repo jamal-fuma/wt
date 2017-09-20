@@ -42,7 +42,7 @@ void serialize(const Value& val, int indentation, EscapeOStream &result)
       result << ("false");
 	return;
     break;
-  case Type::Number: 
+  case Type::Number:
     {
       double intpart;
       if (fabs(std::modf(val, &intpart)) == 0.0 && fabs(intpart) < 9.22E18)
@@ -81,7 +81,7 @@ void serialize(const Object& obj, int indentation, EscapeOStream& result)
   result << ("{\n");
 
   for( Object::const_iterator it = obj.begin(); it != obj.end(); ++it) {
-    
+
 	// indent values
     for (int i=0; i<indentation; ++i)
       result << ("\t");
