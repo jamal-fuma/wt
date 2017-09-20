@@ -108,7 +108,7 @@ bool WTemplate::Functions::id(WTemplate *t, const std::vector<WString>& args,
 
 #else
 
-bool WTemplate::TrFunction::evaluate(WTemplate *t, 
+bool WTemplate::TrFunction::evaluate(WTemplate *t,
 				     const std::vector<WString>& args,
 				     std::ostream& result) const
 {
@@ -116,7 +116,7 @@ bool WTemplate::TrFunction::evaluate(WTemplate *t,
     return t->_tr(args, result);
   } catch (std::io_exception ioe) {
     return false;
-  } 
+  }
 }
 
 bool WTemplate::BlockFunction::evaluate(WTemplate *t,
@@ -141,7 +141,7 @@ bool WTemplate::WhileFunction::evaluate(WTemplate *t,
   }
 }
 
-bool WTemplate::IdFunction::evaluate(WTemplate *t, 
+bool WTemplate::IdFunction::evaluate(WTemplate *t,
 				     const std::vector<WString>& args,
 				     std::ostream& result) const
 {
@@ -193,7 +193,7 @@ void WTemplate::clear()
   conditions_.clear();
 
   changed_ = true;
-  repaint(RepaintFlag::SizeAffected);  
+  repaint(RepaintFlag::SizeAffected);
 }
 
 #ifndef WT_TARGET_JAVA
@@ -271,7 +271,7 @@ void WTemplate::bindWidget(const std::string& varName,
   manageWidget(widgets_[varName], std::move(widget));
 
   changed_ = true;
-  repaint(RepaintFlag::SizeAffected);  
+  repaint(RepaintFlag::SizeAffected);
 }
 
 std::unique_ptr<WWidget> WTemplate::removeWidget(const std::string& varName)
@@ -320,7 +320,7 @@ void WTemplate::bindString(const std::string& varName, const WString& value,
     strings_[varName] = v;
 
     changed_ = true;
-    repaint(RepaintFlag::SizeAffected);  
+    repaint(RepaintFlag::SizeAffected);
   }
 }
 
