@@ -50,7 +50,7 @@ WModelIndex GitModel::parent(const WModelIndex& index) const
     // ... and construct that identifies the parent:
     //   row = child index in the grand parent
     //   internalId = id of the grand parent
-    return createIndex(item.index(), 0, item.parentId()); 
+    return createIndex(item.index(), 0, item.parentId());
   }
 }
 
