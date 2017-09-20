@@ -35,7 +35,7 @@ FileDropApplication::FileDropApplication(const Wt::WEnvironment& env)
   drop_->uploaded().connect(this, &FileDropApplication::saveFile);
   drop_->uploadFailed().connect(this, &FileDropApplication::failed);
   drop_->tooLarge().connect(this, &FileDropApplication::tooLarge);
-  
+
   log_ = root()->addWidget(Wt::cpp14::make_unique<Wt::WText>());
   log_->setInline(false);
   log_->setTextFormat(Wt::TextFormat::XHTML);
@@ -62,7 +62,7 @@ void FileDropApplication::handleDrop(std::vector<Wt::WFileDropWidget::File *> fi
     icons_[files[i]] = block;
     nbUploads_++;
   }
-  
+
   if (nbUploads_ >= MAX_FILES) {
     log_->setText("That's enough ...");
     drop_->setAcceptDrops(false);
@@ -73,7 +73,7 @@ void FileDropApplication::cancelUpload()
 {
   if (drop_->uploads().size() == drop_->currentIndex())
     return;
-  
+
   Wt::WFileDropWidget::File *currentFile = drop_->uploads()[drop_->currentIndex()];
   drop_->cancelUpload(currentFile);
   icons_[currentFile]->addStyleClass("cancelled");
@@ -82,14 +82,14 @@ void FileDropApplication::cancelUpload()
 void FileDropApplication::tooLarge(Wt::WFileDropWidget::File *file, ::uint64_t)
 {
   icons_[file]->addStyleClass("invalid");
-  
+
   log_->setText("File too large: " + file->clientFileName());
 }
 
 void FileDropApplication::failed(Wt::WFileDropWidget::File *file)
 {
   icons_[file]->addStyleClass("invalid");
-  
+
   log_->setText("Upload failed: " + file->clientFileName());
 }
 
@@ -105,7 +105,7 @@ void FileDropApplication::saveFile(Wt::WFileDropWidget::File *file)
   // 	      << std::endl;
   //   return;;
   // }
-  
+
   // dest << src.rdbuf();
 
   if (icons_.find(file) != icons_.end()) {
