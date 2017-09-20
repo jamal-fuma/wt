@@ -83,10 +83,10 @@ namespace {
   std::string bindError(Wt::AsioWrapper::asio::ip::tcp::endpoint ep,
 			Wt::AsioWrapper::system_error e) {
     std::stringstream ss;
-    ss << "Error occurred when binding to " 
-       << ep.address().to_string() 
+    ss << "Error occurred when binding to "
+       << ep.address().to_string()
        << ":"
-       << ep.port() 
+       << ep.port()
        << std::endl
        << e.what();
     return ss.str();
@@ -226,13 +226,13 @@ void Server::start()
     ssl_context_.use_private_key_file(config_.sslPrivateKeyFile(),
 				      asio::ssl::context::pem);
     ssl_context_.use_tmp_dh_file(config_.sslTmpDHFile());
-    
+
     SSL_CTX *native_ctx = nativeContext(ssl_context_);
-    
+
 #if defined(SSL_CTX_set_ecdh_auto)
       SSL_CTX_set_ecdh_auto(native_ctx, 1);
 #endif
-    
+
     if (!config_.sslCipherList().empty()) {
       if (!SSL_CTX_set_cipher_list(native_ctx, config_.sslCipherList().c_str())) {
         throw Wt::WServer::Exception(
@@ -240,7 +240,7 @@ void Server::start()
           + config_.sslCipherList());
       }
     }
-    
+
     if (config_.sslPreferServerCiphers()) {
       SSL_CTX_set_options(native_ctx, SSL_OP_CIPHER_SERVER_PREFERENCE);
     }
@@ -518,7 +518,7 @@ void Server
     std::shared_ptr<std::string> buf(new std::string(
       boost::lexical_cast<std::string>(tcp_listeners_.front().acceptor.local_endpoint().port())));
     socket->async_send(asio::buffer(*buf),
-		       std::bind(&Server::handlePortSent, this, 
+		       std::bind(&Server::handlePortSent, this,
 				 socket, err, buf));
   } else {
     LOG_ERROR_S(&wt_, "child process couldn't connect to parent to "
@@ -532,7 +532,7 @@ void Server
 		 const std::shared_ptr<std::string>& /*buf*/)
 {
   if (err) {
-    LOG_ERROR_S(&wt_, "child process couldn't send listening port: " 
+    LOG_ERROR_S(&wt_, "child process couldn't send listening port: "
 		<< err.message());
   }
 
@@ -574,7 +574,7 @@ void Server::handleResume()
     ssl_listeners_[i].acceptor.close();
   ssl_listeners_.clear();
 #endif // HTTP_WITH_SSL
-  
+
   start();
 }
 
