@@ -64,7 +64,7 @@ void TopicTemplate::resolveString(const std::string& varName,
 #ifndef WT_TARGET_JAVA
     boost::replace_all(className, "-", "::");
 #else
-    boost::replace_all(className, "Render-", "render.");    
+    boost::replace_all(className, "Render-", "render.");
 #endif
 
     result << "<a href=\"" << docUrl(className)
