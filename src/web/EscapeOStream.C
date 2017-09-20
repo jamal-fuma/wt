@@ -44,7 +44,7 @@ const EscapeOStream::Entry EscapeOStream::jsStringLiteralDQuoteEntries_[] = {
   { '"', "\\\"" },
 };
 
-const std::vector<EscapeOStream::Entry> EscapeOStream::standardSets_[] = { 
+const std::vector<EscapeOStream::Entry> EscapeOStream::standardSets_[] = {
   std::vector<EscapeOStream::Entry>(),
   std::vector<EscapeOStream::Entry>(htmlAttributeEntries_,
 				    htmlAttributeEntries_ + 3),
@@ -58,7 +58,7 @@ const std::vector<EscapeOStream::Entry> EscapeOStream::standardSets_[] = {
 				    plainTextNewLinesEntries_ + 4)
 };
 
-const std::string EscapeOStream::standardSetsSpecial_[] = { 
+const std::string EscapeOStream::standardSetsSpecial_[] = {
   std::string(),
   std::string("&\"<"),
   std::string("\\\n\r\t'"),
@@ -206,7 +206,7 @@ void EscapeOStream::put(const char *s, const EscapeOStream& rules)
     const char *f = std::strpbrk(s, rules.c_special_);
     if (f != 0) {
       stream_.append(s, static_cast<int>(f - s));
-      
+
       unsigned i = 0;
       for (; i < rules.mixed_.size(); ++i)
 	if (rules.mixed_[i].c == *f) {
