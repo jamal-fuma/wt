@@ -125,7 +125,7 @@ void WebController::shutdown()
 
     for (unsigned i = 0; i < sessionList.size(); ++i) {
       std::shared_ptr<WebSession> session = sessionList[i];
-      WebSession::Handler handler(session, 
+      WebSession::Handler handler(session,
 				  WebSession::Handler::LockOption::TakeLock);
       session->expire();
     }
@@ -377,7 +377,7 @@ void WebController::socketNotify(int descriptor, WSocketNotifier::Type type)
   {
     std::unique_lock<std::recursive_mutex> lock(notifierMutex_);
     SocketNotifierMap &notifiers = socketNotifiers(type);
-    SocketNotifierMap::iterator k = notifiers.find(descriptor);	
+    SocketNotifierMap::iterator k = notifiers.find(descriptor);
     if (k != notifiers.end()) {
       notifier = k->second;
       notifiers.erase(k);
@@ -677,7 +677,7 @@ void WebController::handleRequest(WebRequest *request)
 	// If it is another request to take over the persistent session,
 	// it should be handled by the persistent session. We can distinguish
 	// using the type of the request
-	LOG_INFO_S(&server_, 
+	LOG_INFO_S(&server_,
 		   "persistent session requested Id: " << sessionId << ", "
 		   << "persistent Id: " << singleSessionId_);
 
@@ -772,7 +772,7 @@ void WebController::handleRequest(WebRequest *request)
 std::unique_ptr<WApplication> WebController
 ::doCreateApplication(WebSession *session)
 {
-  const EntryPoint *ep 
+  const EntryPoint *ep
     = WebSession::Handler::instance()->request()->entryPoint_;
 
   return ep->appCallback()(session->env());
@@ -791,7 +791,7 @@ WebController::generateNewSessionId(const std::shared_ptr<WebSession>& session)
 {
 #ifdef WT_THREADED
   std::unique_lock<std::recursive_mutex> lock(mutex_);
-#endif // WT_THREADED  
+#endif // WT_THREADED
 
   std::string newSessionId;
   do {
@@ -815,7 +815,7 @@ void WebController::newAjaxSession()
 {
 #ifdef WT_THREADED
   std::unique_lock<std::recursive_mutex> lock(mutex_);
-#endif // WT_THREADED  
+#endif // WT_THREADED
 
   --plainHtmlSessions_;
   ++ajaxSessions_;
