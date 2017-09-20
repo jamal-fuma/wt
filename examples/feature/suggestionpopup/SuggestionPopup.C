@@ -233,7 +233,7 @@ private:
         v += U"a";
 
       v += (U"a"[0] + i);
-      
+
       fourCharModel_->addString(v);
     }
   }
@@ -262,7 +262,7 @@ private:
 	 return function(suggestion) {
 	   if (!suggestion)
 	     return value;
-	   
+
 	   var i, il,
 	     names = suggestion.split(';'),
 	     val = value.toUpperCase(),
