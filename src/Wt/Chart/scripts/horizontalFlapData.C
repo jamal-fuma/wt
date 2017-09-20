@@ -88,7 +88,7 @@ void writeAll() {
       for (int k=0; k<ptsPerPlane; k++) {
 	if (i == faces-1 && j == planes-1 && k == ptsPerPlane-1)
 	  break;
-	myfile << inPlaneNormals[i][j].x << ", " << inPlaneNormals[i][j].y 
+	myfile << inPlaneNormals[i][j].x << ", " << inPlaneNormals[i][j].y
 	       << ", " << inPlaneNormals[i][j].z << ", ";
       }
     }
@@ -106,7 +106,7 @@ void writeAll() {
       for (int k=0; k<ptsPerPlane; k++) {
 	if (i == faces-1 && j == planes-1 && k == ptsPerPlane-1)
 	  break;
-	myfile << outOfPlaneNormals[i][j].x << ", " <<outOfPlaneNormals[i][j].y 
+	myfile << outOfPlaneNormals[i][j].x << ", " <<outOfPlaneNormals[i][j].y
 	       << ", " << outOfPlaneNormals[i][j].z << ", ";
       }
     }
@@ -287,7 +287,7 @@ void generateBottomAndTopFaceData(CompositeTexture& axesTexture) {
     inPlaneBools[0][i] = 0.0;
   }
 
-  
+
   // Vertices of the TOP PLANE
   // first in-plane
   put(topVertexPos[0][0], 1.0 + extension, 1.0, -size);
@@ -377,7 +377,7 @@ int main() {
 			       CompositeTexture::vec2(0.0, 0.875-i/8.0),
 			       CompositeTexture::vec2(1.0, 0.875-i/8.0),
 			       CompositeTexture::vec2(1.0, 1.0-i/8.0 - 0.001));
-  
+
 
   generateBottomAndTopFaceData(axesTexture);
   generateSideFaceData(axesTexture);
