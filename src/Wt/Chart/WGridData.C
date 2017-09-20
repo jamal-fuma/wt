@@ -163,7 +163,7 @@ void WGridData::findRange() const
       }
     }
   }
-  
+
   zMin_ = minSoFar;
   zMax_ = maxSoFar;
   rangeCached_ = true;
@@ -191,7 +191,7 @@ void WGridData::pointDataFromModel(FloatBuffer& simplePtsArray,
   for (int i=0; i<nbModelRows; i++) {
     if (i == YAbscisRow_)
       continue;
-    scaledXAxis.push_back((float)((Wt::asNumber(model_->data(i,XAbscisColumn_)) 
+    scaledXAxis.push_back((float)((Wt::asNumber(model_->data(i,XAbscisColumn_))
 				   - xMin)/(xMax - xMin)));
   }
   for (int j=0; j<nbModelCols; j++) {
@@ -263,7 +263,7 @@ void WGridData::surfaceDataFromModel(std::vector<FloatBuffer>& simplePtsArrays) 
   for (int i=0; i<nbModelRows; i++) {
     if (i == YAbscisRow_)
       continue;
-    scaledXAxis.push_back((float)((Wt::asNumber(model_->data(i,XAbscisColumn_)) 
+    scaledXAxis.push_back((float)((Wt::asNumber(model_->data(i,XAbscisColumn_))
 				   - xMin)/(xMax - xMin)));
   }
   for (int j=0; j<nbModelCols; j++) {
@@ -391,7 +391,7 @@ void WGridData::barDataFromModel(std::vector<FloatBuffer>& simplePtsArrays) cons
 	yDim = griddata->nbYPoints();
 	first = false;
       }
-      if ( griddata->nbXPoints() != xDim || griddata->nbYPoints() != yDim 
+      if ( griddata->nbXPoints() != xDim || griddata->nbYPoints() != yDim
 	   || griddata->isHidden()) {
 	continue;
       }
@@ -475,7 +475,7 @@ void WGridData::barDataFromModel(std::vector<FloatBuffer>& simplePtsArrays,
 	yDim = griddata->nbYPoints();
 	first = false;
       }
-      if ( griddata->nbXPoints() != xDim || griddata->nbYPoints() != yDim 
+      if ( griddata->nbXPoints() != xDim || griddata->nbYPoints() != yDim
 	   || griddata->isHidden()) {
 	continue;
       }
