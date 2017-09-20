@@ -33,7 +33,7 @@ namespace Wt {
 
 UploadedFile::UploadedFile()
 {}
-    
+
 UploadedFile::UploadedFile(const std::string& spoolName,
 			   const std::string& clientFileName,
 			   const std::string& contentType)
@@ -94,7 +94,7 @@ Request::ByteRangeSpecifier::ByteRangeSpecifier()
 
 const std::string *get(const ParameterMap& map, const std::string& name)
 {
-  ParameterMap::const_iterator i = map.find(name);  
+  ParameterMap::const_iterator i = map.find(name);
 
   if (i != map.end())
     return &i->second[0];
