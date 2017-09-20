@@ -92,7 +92,7 @@ void WEquidistantGridData::findRange() const
       }
     }
   }
-  
+
   zMin_ = minSoFar;
   zMax_ = maxSoFar;
   rangeCached_ = true;
@@ -137,7 +137,7 @@ void WEquidistantGridData::pointDataFromModel(FloatBuffer& simplePtsArray,
   double yMax = chart_->axis(Axis::Y3D).maximum();
   double zMin = chart_->axis(Axis::Z3D).minimum();
   double zMax = chart_->axis(Axis::Z3D).maximum();
-  
+
   for (int i=0; i<Nx; i++) {
     scaledXAxis.push_back((float)(((XMinimum_ + i*deltaX_) - xMin)
 				  /(xMax - xMin)));
@@ -180,7 +180,7 @@ void WEquidistantGridData::pointDataFromModel(FloatBuffer& simplePtsArray,
   }
 }
 
-void WEquidistantGridData::surfaceDataFromModel(std::vector<FloatBuffer>& 
+void WEquidistantGridData::surfaceDataFromModel(std::vector<FloatBuffer>&
 						simplePtsArrays) const {
   int Nx = model_->rowCount();
   int Ny = model_->columnCount();
@@ -290,7 +290,7 @@ void WEquidistantGridData::barDataFromModel(std::vector<FloatBuffer>& simplePtsA
 	yDim = griddata->nbYPoints();
 	first = false;
       }
-      if ( griddata->nbXPoints() != xDim || griddata->nbYPoints() != yDim 
+      if ( griddata->nbXPoints() != xDim || griddata->nbYPoints() != yDim
 	   || griddata->isHidden()) {
 	continue;
       }
@@ -322,13 +322,13 @@ void WEquidistantGridData::barDataFromModel(std::vector<FloatBuffer>& simplePtsA
   for (int j=0; j < Ny; j++) {
     scaledYAxis.push_back((float)((yMin + 0.5 + j - yMin)/(yMax-yMin)));
   }
-  
+
   int simpleBufferIndex = 0;
   int simpleCount = 0;
   for (int i=0; i < Nx; i++) {
     for (int j=0; j < Ny; j++) {
       float z0 = stackAllValues(prevDataseries, i,j);
-    
+
       if (simpleCount == BAR_BUFFER_LIMIT) {
 	simpleBufferIndex++;
 	simpleCount = 0;
@@ -367,7 +367,7 @@ void WEquidistantGridData::barDataFromModel(std::vector<FloatBuffer>& simplePtsA
 	yDim = griddata->nbYPoints();
 	first = false;
       }
-      if ( griddata->nbXPoints() != xDim || griddata->nbYPoints() != yDim 
+      if ( griddata->nbXPoints() != xDim || griddata->nbYPoints() != yDim
 	   || griddata->isHidden()) {
 	continue;
       }
@@ -400,13 +400,13 @@ void WEquidistantGridData::barDataFromModel(std::vector<FloatBuffer>& simplePtsA
     scaledYAxis.push_back((float)((yMin + 0.5 + j - yMin)/(yMax-yMin)));
   }
 
-  
+
   int simpleBufferIndex = 0, coloredBufferIndex = 0;
   int simpleCount = 0, coloredCount = 0;
   for (int i=0; i < Nx; i++) {
     for (int j=0; j < Ny; j++) {
       float z0 = stackAllValues(prevDataseries, i,j);
-      
+
       if (model_->data(i,j,ItemDataRole::MarkerBrushColor).empty()) {
 	if (simpleCount == BAR_BUFFER_LIMIT) {
 	  simpleBufferIndex++;
