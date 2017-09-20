@@ -81,7 +81,7 @@ std::unique_ptr<WWidget> JWtHome::examples()
 			tr("chat"));
   examplesMenu_->addTab(std::move(wrapView(&JWtHome::figtreeExample)),
 			tr("figtree"));
-  
+
   // Enable internal paths for the example menu
   examplesMenu_->setInternalPathEnabled("/examples");
   examplesMenu_->currentChanged().connect(this, &Home::googleAnalyticsLogger);
