@@ -80,7 +80,7 @@ struct WServer::Impl
   void startSharedProcess()
   {
     Configuration& conf = server_.configuration();
-    
+
     if (!Server::bindUDStoStdin(conf.runDirectory() + "/server-"
 				+ std::to_string(getpid()),
 				server_))
@@ -144,7 +144,7 @@ void handleSigHup(int)
 WServer::WServer(const std::string& applicationPath,
 		 const std::string& wtConfigurationFile)
   : impl_(new Impl(*this))
-{ 
+{
   init(applicationPath, wtConfigurationFile);
 }
 
@@ -170,7 +170,7 @@ std::vector<WServer::SessionInfo> WServer::sessions() const
 void WServer::setServerConfiguration(int argc, char *argv[],
 				     const std::string&)
 {
-  bool isRelayServer = argc < 2 || strcmp(argv[1], "client") != 0; 
+  bool isRelayServer = argc < 2 || strcmp(argv[1], "client") != 0;
 
   if (isRelayServer) {
     LOG_INFO_S(this, "initializing relay server");
@@ -205,10 +205,10 @@ bool WServer::start()
   if (signal(SIGTERM, Wt::handleSigTerm) == SIG_ERR)
     LOG_ERROR_S(this, "cannot catch SIGTERM: signal(): "
 		<< (const char *)strerror(errno));
-  if (signal(SIGUSR1, Wt::handleSigUsr1) == SIG_ERR) 
+  if (signal(SIGUSR1, Wt::handleSigUsr1) == SIG_ERR)
     LOG_ERROR_S(this, "cannot catch SIGUSR1: signal(): "
 		<< (const char *)strerror(errno));
-  if (signal(SIGHUP, Wt::handleSigHup) == SIG_ERR) 
+  if (signal(SIGHUP, Wt::handleSigHup) == SIG_ERR)
     LOG_ERROR_S(this, "cannot catch SIGHUP: signal(): "
 		<< (const char *)strerror(errno));
 
@@ -254,7 +254,7 @@ void WServer::resume()
   }
 }
 
-void WServer::setSslPasswordCallback(const std::function<std::string 
+void WServer::setSslPasswordCallback(const std::function<std::string
 			 (std::size_t max_length, int purpose)>& cb)
 {
   LOG_INFO_S(this,
