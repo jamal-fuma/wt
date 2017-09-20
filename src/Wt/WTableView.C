@@ -115,7 +115,7 @@ void WTableView::setup()
     canvas_->clicked().preventPropagation();
     canvas_->mouseWentDown().connect
       (this, std::bind(&WTableView::handleMouseWentDown, this, false,
-		       std::placeholders::_1)); 
+		       std::placeholders::_1));
     canvas_->mouseWentDown().preventPropagation();
     canvas_->mouseWentDown().connect("function(o, e) { "
                                      "$(document).trigger($.event.fix(e));"
@@ -158,10 +158,10 @@ void WTableView::setup()
 		       std::placeholders::_1));
     headerColumnsCanvas_->mouseWentDown().connect
       (this, std::bind(&WTableView::handleMouseWentDown, this, true,
-		       std::placeholders::_1)); 
+		       std::placeholders::_1));
     headerColumnsCanvas_->mouseWentUp().connect
       (this, std::bind(&WTableView::handleMouseWentUp, this, true,
-		       std::placeholders::_1)); 
+		       std::placeholders::_1));
     headerColumnsCanvas_->addWidget
       (std::unique_ptr<WWidget>(headerColumnsTable_));
 
@@ -177,7 +177,7 @@ void WTableView::setup()
 		       std::placeholders::_1));
     headerColumnsContainer_->mouseWentUp().connect
       (this, std::bind(&WTableView::handleRootMouseWentUp, this, 0,
-		       std::placeholders::_1)); 
+		       std::placeholders::_1));
 
     layout->addWidget(std::unique_ptr<WWidget>(headerColumnsHeaderContainer_),
 		      0, 0);
@@ -255,7 +255,7 @@ void WTableView::resize(const WLength& width, const WLength& height)
 }
 
 WTableView::~WTableView()
-{ 
+{
   impl_->clear();
 }
 
@@ -273,7 +273,7 @@ void WTableView::updateTableBackground()
 }
 
 void WTableView::setModel(const std::shared_ptr<WAbstractItemModel>& model)
-{  
+{
   WAbstractItemView::setModel(model);
 
   typedef WTableView Self;
@@ -304,7 +304,7 @@ void WTableView::setModel(const std::shared_ptr<WAbstractItemModel>& model)
   adjustSize();
 }
 
-std::unique_ptr<WWidget> WTableView::renderWidget(WWidget* widget, const WModelIndex& index) 
+std::unique_ptr<WWidget> WTableView::renderWidget(WWidget* widget, const WModelIndex& index)
 {
   auto itemDelegate = this->itemDelegate(index.column());
 
@@ -564,7 +564,7 @@ void WTableView::renderTable(const int fr, const int lr,
 {
   assert(ajaxMode());
 
-  if (fr > lastRow() || firstRow() > lr || 
+  if (fr > lastRow() || firstRow() > lr ||
       fc > lastColumn() || firstColumn() > lc)
     reset();
 
@@ -589,7 +589,7 @@ void WTableView::renderTable(const int fr, const int lr,
 
   int leftColsToAdd = 0;
   int rightColsToAdd = 0;
- 
+
   if (oldLastCol - oldFirstCol < 0) {
     leftColsToAdd = 0;
     setSpannerCount(Side::Left, fc);
@@ -681,7 +681,7 @@ void WTableView::renderTable(const int fr, const int lr,
     << scrollX1 << ", " << scrollX2 << ", " << scrollY1 << ", " << scrollY2
     << ");";
 
-  doJavaScript(s.str());			
+  doJavaScript(s.str());
 }
 
 void WTableView::setHidden(bool hidden, const WAnimation& animation)
@@ -801,7 +801,7 @@ void WTableView::defineJavaScript()
     app->addAutoJavaScript
       ("{var obj = $('#" + id() + "').data('obj');"
        "if (obj) obj.autoJavaScript();}");
-  
+
     connectObjJS(canvas_->mouseWentDown(), "mouseDown");
     connectObjJS(canvas_->mouseWentUp(), "mouseUp");
 
@@ -838,7 +838,7 @@ void WTableView::render(WFlags<RenderFlag> flags)
       defineJavaScript();
 
     if (!canvas_->doubleClicked().isConnected()
-	&& (editTriggers().test(EditTrigger::DoubleClicked) || 
+	&& (editTriggers().test(EditTrigger::DoubleClicked) ||
 	    doubleClicked().isConnected())) {
       canvas_->doubleClicked().connect
 	(this, std::bind(&WTableView::handleDblClick, this, false,
@@ -940,9 +940,9 @@ void WTableView::rerenderData()
   if (ajaxMode()) {
     reset();
 
-    renderTable(renderedFirstRow_, 
-		renderedLastRow_, 
-		renderedFirstColumn_, 
+    renderTable(renderedFirstRow_,
+		renderedLastRow_,
+		renderedFirstColumn_,
 		renderedLastColumn_);
   } else {
     pageChanged().emit();
@@ -1069,7 +1069,7 @@ void WTableView::setColumnWidth(int column, const WLength& width)
     headers_->setWidth(headers_->width().toPixels() + delta);
     canvas_->setWidth(canvas_->width().toPixels() + delta);
 
-    if (static_cast<unsigned int>(renderState_) >= 
+    if (static_cast<unsigned int>(renderState_) >=
 	static_cast<unsigned int>(RenderState::NeedRerenderHeader))
       return;
 
@@ -1214,7 +1214,7 @@ void WTableView::setRowHeight(const WLength& rowHeight)
   int renderedRowCount = model() ? lastRow() - firstRow() + 1 : 0;
 
   // Avoid floating point error which might lead to incorrect viewport calculation
-  WLength len = WLength((int)rowHeight.toPixels()); 
+  WLength len = WLength((int)rowHeight.toPixels());
 
   WAbstractItemView::setRowHeight(len);
 
@@ -1272,7 +1272,7 @@ WWidget* WTableView::headerWidget(int column, bool contentsOnly)
 void WTableView::shiftModelIndexRows(int start, int count)
 {
   WModelIndexSet& set = selectionModel()->selection_;
-  
+
   std::vector<WModelIndex> toShift;
   std::vector<WModelIndex> toErase;
 
@@ -1310,7 +1310,7 @@ void WTableView::shiftModelIndexRows(int start, int count)
 void WTableView::shiftModelIndexColumns(int start, int count)
 {
   WModelIndexSet& set = selectionModel()->selection_;
-  
+
   std::vector<WModelIndex> toShift;
   std::vector<WModelIndex> toErase;
 
@@ -1344,7 +1344,7 @@ void WTableView::shiftModelIndexColumns(int start, int count)
     selectionChanged().emit();
 }
 
-void WTableView::modelColumnsInserted(const WModelIndex& parent, 
+void WTableView::modelColumnsInserted(const WModelIndex& parent,
 				      int start, int end)
 {
   if (parent != rootIndex())
@@ -1363,12 +1363,12 @@ void WTableView::modelColumnsInserted(const WModelIndex& parent,
   if (ajaxMode())
     canvas_->setWidth(canvas_->width().toPixels() + width);
 
-  if (static_cast<unsigned int>(renderState_) < 
+  if (static_cast<unsigned int>(renderState_) <
       static_cast<unsigned int>(RenderState::NeedRerenderHeader))
     scheduleRerender(RenderState::NeedRerenderHeader);
 
-  if (start > (lastColumn() + 1) || 
-      renderState_ == RenderState::NeedRerender || 
+  if (start > (lastColumn() + 1) ||
+      renderState_ == RenderState::NeedRerender ||
       renderState_ == RenderState::NeedRerenderData)
     return;
 
@@ -1376,7 +1376,7 @@ void WTableView::modelColumnsInserted(const WModelIndex& parent,
   adjustSize();
 }
 
-void WTableView::modelColumnsAboutToBeRemoved(const WModelIndex& parent, 
+void WTableView::modelColumnsAboutToBeRemoved(const WModelIndex& parent,
 					      int start, int end)
 {
   if (parent != rootIndex())
@@ -1412,8 +1412,8 @@ void WTableView::modelColumnsAboutToBeRemoved(const WModelIndex& parent,
       static_cast<unsigned int>(RenderState::NeedRerenderHeader))
     scheduleRerender(RenderState::NeedRerenderHeader);
 
-  if (start > lastColumn() || 
-      renderState_ == RenderState::NeedRerender || 
+  if (start > lastColumn() ||
+      renderState_ == RenderState::NeedRerender ||
       renderState_ == RenderState::NeedRerenderData)
     return;
 
@@ -1423,7 +1423,7 @@ void WTableView::modelColumnsAboutToBeRemoved(const WModelIndex& parent,
   adjustSize();
 }
 
-void WTableView::modelRowsInserted(const WModelIndex& parent, 
+void WTableView::modelRowsInserted(const WModelIndex& parent,
 				   int start, int end)
 {
   if (parent != rootIndex())
@@ -1461,7 +1461,7 @@ void WTableView::modelRowsAboutToBeRemoved(const WModelIndex& parent,
     }
   }
 
-  shiftModelIndexRows(start, -(end - start + 1));  
+  shiftModelIndexRows(start, -(end - start + 1));
 }
 
 void WTableView::modelRowsRemoved(const WModelIndex& parent, int start, int end)
@@ -1477,7 +1477,7 @@ void WTableView::modelRowsRemoved(const WModelIndex& parent, int start, int end)
     if (start >= firstRow() && start <= lastRow()) {
       int toRemove = std::min(lastRow(), end) - start + 1;
       int first = start - firstRow();
-      
+
       for (int i = 0; i < renderedColumnsCount(); ++i) {
 	ColumnWidget *column = columnContainer(i);
 	for (int j = 0; j < toRemove; ++j)
@@ -1496,7 +1496,7 @@ void WTableView::modelRowsRemoved(const WModelIndex& parent, int start, int end)
 }
 
 
-void WTableView::modelDataChanged(const WModelIndex& topLeft, 
+void WTableView::modelDataChanged(const WModelIndex& topLeft,
 				  const WModelIndex& bottomRight)
 {
   if (topLeft.parent() != rootIndex())
@@ -1567,7 +1567,7 @@ void WTableView::updateItem(const WModelIndex& index,
     }
   }
 }
- 
+
 void WTableView::onViewportChange(int left, int top, int width, int height)
 {
   assert(ajaxMode());
@@ -1585,7 +1585,7 @@ void WTableView::onViewportChange(int left, int top, int width, int height)
 
   computeRenderedArea();
 
-  scheduleRerender(RenderState::NeedAdjustViewPort);  
+  scheduleRerender(RenderState::NeedAdjustViewPort);
 }
 
 void WTableView::onColumnResize()
@@ -1682,13 +1682,13 @@ void WTableView::adjustToViewport()
 {
   assert(ajaxMode());
 
-  if (renderedFirstRow_ != firstRow() || 
+  if (renderedFirstRow_ != firstRow() ||
       renderedLastRow_ != lastRow() ||
       renderedFirstColumn_ != firstColumn()||
       renderedLastColumn_ != lastColumn()) {
-    renderTable(renderedFirstRow_, 
-		renderedLastRow_, 
-		renderedFirstColumn_, 
+    renderTable(renderedFirstRow_,
+		renderedLastRow_,
+		renderedFirstColumn_,
 		renderedLastColumn_);
   }
 }
@@ -1938,7 +1938,7 @@ void WTableView::setCurrentPage(int page)
 			       model()->rowCount(rootIndex()) - 1);
   else
     renderedLastRow_ = renderedFirstRow_;
- 
+
   scheduleRerender(RenderState::NeedRerenderData);
 }
 
@@ -2040,7 +2040,7 @@ void WTableView::scrollTo(int x, int y)
   }
 }
 
-void WTableView::setOverflow(Overflow overflow, 
+void WTableView::setOverflow(Overflow overflow,
 			     WFlags< Orientation > orientation)
 {
   if (contentsContainer_)
