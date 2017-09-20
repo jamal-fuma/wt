@@ -57,7 +57,7 @@ namespace {
 
   std::string host(const std::string& url) {
     std::size_t pos = 0;
-    for (unsigned i = 0; i < 3; ++i) { 
+    for (unsigned i = 0; i < 3; ++i) {
       pos = url.find('/', pos);
       if (pos == std::string::npos)
 	return url;
@@ -151,7 +151,7 @@ WebSession::WebSession(WebController *controller,
     applicationName_ = deploymentPath_.substr(slashpos + 1);
   } else { // ?
     basePath_ = "";
-    applicationName_ = applicationUrl_; 
+    applicationName_ = applicationUrl_;
   }
 
 #ifndef WT_TARGET_JAVA
@@ -255,7 +255,7 @@ WebSession::~WebSession()
   if (deferredResponse_) {
     deferredResponse_->flush();
     deferredResponse_ = nullptr;
-  }    
+  }
 
 #ifdef WT_BOOST_THREADS
   updatesPendingEvent_.notify_one();
@@ -284,7 +284,7 @@ void WebSession::destruct()
   if (deferredResponse_) {
     deferredResponse_->flush();
     deferredResponse_ = nullptr;
-  }    
+  }
 
   mutex_.lock();
   updatesPendingEvent_.notify_one();
@@ -302,12 +302,12 @@ std::string WebSession::docType() const
     /*
      * This would be what we want, but it is too strict (does not
      * validate iframe's and target attribute for links):
-     
+
      "\"-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN\" "
      "\"http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd\">"
      * so instead we use transitional xhtml -- it will fail to
      * validate properly when we have svg !
-     */ 
+     */
     return "<!DOCTYPE html PUBLIC "
       "\"-//W3C//DTD XHTML 1.0 Transitional//EN\" "
       "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
@@ -374,10 +374,10 @@ void WebSession::init(const WebRequest& request)
 
   bool useAbsoluteUrls;
 #ifndef WT_TARGET_JAVA
-  useAbsoluteUrls 
+  useAbsoluteUrls
     = app_->readConfigurationProperty("baseURL", absoluteBaseUrl_);
 #else
-  std::string* absoluteBaseUrl 
+  std::string* absoluteBaseUrl
     = app_->readConfigurationProperty("baseURL", absoluteBaseUrl_);
   if (absoluteBaseUrl != &absoluteBaseUrl_) {
     absoluteBaseUrl_ = *absoluteBaseUrl;
@@ -586,7 +586,7 @@ std::string WebSession::mostRelativeUrl(const std::string& internalPath) const
 std::string WebSession::appendSessionQuery(const std::string& url) const
 {
   std::string result = url;
-  
+
   if (env_->agentIsSpiderBot())
     return result;
 
@@ -687,7 +687,7 @@ std::string WebSession::getCgiValue(const std::string& varName) const
     return str(request->envValue(varName.c_str()));
   else if(varName == "DOCUMENT_ROOT")
 	return docRoot_;
-  else 
+  else
     return std::string();
 }
 
@@ -820,7 +820,7 @@ WebSession::Handler::Handler(WebSession *session)
 
 WebSession::Handler::Handler(const std::shared_ptr<WebSession>& session,
 			     WebRequest& request, WebResponse& response)
-  : nextSignal(-1),  
+  : nextSignal(-1),
 #ifndef WT_TARGET_JAVA
     sessionPtr_(session),
 #endif // WT_TARGET_JAVA
@@ -1137,7 +1137,7 @@ void WebSession::doRecursiveEventLoop()
    *
    * It could be that handler does not have a request/response:
    *  if it is actually a long polling server push request.
-   *  if we are somehow recursing recursive event loops: e.g. 
+   *  if we are somehow recursing recursive event loops: e.g.
    *    processEvents() during exec()
    *
    * In that case, we do not need to finish it.
@@ -1414,8 +1414,8 @@ void WebSession::handleRequest(Handler& handler)
 	  // In other cases we can simply start
 
 	  if (requestE) {
-	    if (*requestE == "jsupdate" || 
-		*requestE == "jserror" || 
+	    if (*requestE == "jsupdate" ||
+		*requestE == "jserror" ||
 		*requestE == "script") {
 	      handler.response()->setResponseType
 		(WebResponse::ResponseType::Update);
@@ -1545,7 +1545,7 @@ void WebSession::handleRequest(Handler& handler)
 
 	    // See:
 	    // http://www.blaze.io/mobile/ios5-top10-performance-changes/
-	    // Mozilla/5.0 (iPad; CPU OS 5_1_1 like Mac OS X) 
+	    // Mozilla/5.0 (iPad; CPU OS 5_1_1 like Mac OS X)
 	    //  AppleWebKit/534.46 (KHTML, like Gecko)
 	    //  Version/5.1 Mobile/9B206 Safari/7534.48.3
 	    bool ios5 = env_->agentIsMobileWebKit()
@@ -1558,7 +1558,7 @@ void WebSession::handleRequest(Handler& handler)
 	    const std::string *jsE = request.getParameter("js");
 	    bool nojs = jsE && *jsE == "no";
 
-	    bool bootStyle = 
+	    bool bootStyle =
 	      (app_ || (!ios5 && !nojs)) &&
 	      page && *page == std::to_string(renderer_.pageId());
 
@@ -1615,7 +1615,7 @@ void WebSession::handleRequest(Handler& handler)
 	if (!app_) {
 	  const std::string *resourceE = request.getParameter("resource");
 
-	  if (handler.response()->responseType() == 
+	  if (handler.response()->responseType() ==
 	      WebResponse::ResponseType::Script) {
 	    if (!request.getParameter("skeleton")) {
 	      env_->enableAjax(request);
@@ -1673,12 +1673,12 @@ void WebSession::handleRequest(Handler& handler)
 
 	    if (env_->ajax()) {
 	      if (state_ != State::ExpectLoad &&
-		  handler.response()->responseType() == 
+		  handler.response()->responseType() ==
 		  WebResponse::ResponseType::Update)
 	        setLoaded();
 	    } else if (state_ != State::ExpectLoad &&
 		       !controller_->limitPlainHtmlSessions())
-	      setLoaded();	    
+	      setLoaded();
           }
         } else {
 #ifndef WT_TARGET_JAVA
@@ -1776,7 +1776,7 @@ void WebSession::handleWebSocketRequest(Handler& handler)
 
   webSocket_->flush
     (WebRequest::ResponseState::ResponseFlush,
-     std::bind(&WebSession::webSocketConnect,				    
+     std::bind(&WebSession::webSocketConnect,
 	       std::weak_ptr<WebSession>(shared_from_this()),
 	       std::placeholders::_1));
 
@@ -1820,7 +1820,7 @@ void WebSession::webSocketConnect(std::weak_ptr<WebSession> session,
       break;
     }
   }
-  
+
 }
 #endif // WT_TARGET_JAVA
 
@@ -1963,7 +1963,7 @@ void WebSession::handleWebSocketMessage(std::weak_ptr<WebSession> session,
 	    lock->webSocket_->readWebSocketMessage
 	      (std::bind(&WebSession::handleWebSocketMessage, session,
 			 std::placeholders::_1));
-	    
+
 	    delete message;
 
 	    return;
@@ -2290,7 +2290,7 @@ void WebSession::notify(const WEvent& event)
        *       persistent session configuration option
        */
       if (!env_->agentIsIE())
-	if (str(handler.request()->headerValue("User-Agent")) 
+	if (str(handler.request()->headerValue("User-Agent"))
 	    != env_->userAgent()) {
 	  LOG_SECURE("change of user-agent not allowed.");
 	  LOG_INFO("old user agent: " << env_->userAgent());
@@ -2375,13 +2375,13 @@ void WebSession::notify(const WEvent& event)
 	if (!resource && hashE)
 	  resource = app_->decodeExposedResource
 	    ("/path/" + *hashE);
-      } 
+      }
 
       const std::string *resourceE = request.getParameter("resource");
       const std::string *signalE = getSignal(request, "");
 
       if (signalE)
-	progressiveBoot_ = false; 
+	progressiveBoot_ = false;
 
       if (resource || (requestE && *requestE == "resource" && resourceE)) {
 	if (resourceE && *resourceE == "blank") {
@@ -2423,7 +2423,7 @@ void WebSession::notify(const WEvent& event)
 	   */
 	  const std::string *ackIdE = request.getParameter("ackId");
 
-	  bool invalidAckId = env_->ajax() 
+	  bool invalidAckId = env_->ajax()
 	    && !request.isWebSocketMessage();
 
 	  WebRenderer::AckState ackState = WebRenderer::CorrectAck;
@@ -2452,7 +2452,7 @@ void WebSession::notify(const WEvent& event)
 	    handler.flushResponse();
 	    return;
 	  }
-	  
+
 	  /*
 	   * In case we are not using websocket but long polling, the client
 	   * aborts the previous poll request to indicate a client-side event.
@@ -2552,7 +2552,7 @@ void WebSession::notify(const WEvent& event)
 	}
 
 	if (handler.response()
-	    && handler.response()->responseType() == 
+	    && handler.response()->responseType() ==
 	       WebResponse::ResponseType::Page
 	    && (!env_->ajax() ||
 		!controller_->configuration().reloadIsNewSession())) {
@@ -2606,10 +2606,10 @@ void WebSession::changeInternalPath(const std::string& path,
 }
 
 EventType WebSession::getEventType(const WEvent& event) const
-{  
-  if (event.impl_.handler == nullptr) 
+{
+  if (event.impl_.handler == nullptr)
     return EventType::Other;
-    
+
   Handler& handler = *event.impl_.handler;
 
 #ifndef WT_TARGET_JAVA
@@ -2644,7 +2644,7 @@ EventType WebSession::getEventType(const WEvent& event) const
       if (resource || (requestE && *requestE == "resource" && resourceE))
 	return EventType::Resource;
       else if (signalE) {
-	if (*signalE == "none" || *signalE == "load" || 
+	if (*signalE == "none" || *signalE == "load" ||
 	    *signalE == "hash" || *signalE == "poll" ||
 	    *signalE == "keepAlive")
 	  return EventType::Other;
@@ -2659,7 +2659,7 @@ EventType WebSession::getEventType(const WEvent& event) const
 	    std::string se = signalI > 0
 	      ? 'e' + std::to_string(signalI) : std::string();
 	    const std::string *s = getSignal(request, se);
-	  
+
 	    if (!s)
 	      break;
 	    else if (*signalE == "user")
@@ -2833,7 +2833,7 @@ WObject::FormData WebSession::getFormData(const WebRequest& request,
   return WObject::FormData(request.getParameterValues(name), files);
 }
 
-std::vector<unsigned int> 
+std::vector<unsigned int>
 WebSession::getSignalProcessingOrder(const WEvent& e) const
 {
   // Rush 'onChange' events. Reason: if a user edits a text area and
