@@ -110,7 +110,7 @@ bool matchValue(const cpp17::any& value, const cpp17::any& query,
     switch (f.value()) {
     case static_cast<int>(MatchFlag::StringExactly):
       return boost::iequals(value_str, query_str);
-    case static_cast<int>(MatchFlag::StringExactly) | 
+    case static_cast<int>(MatchFlag::StringExactly) |
       static_cast<int>(MatchFlag::CaseSensitive):
       return boost::equals(value_str, query_str);
 
@@ -122,7 +122,7 @@ bool matchValue(const cpp17::any& value, const cpp17::any& query,
 
     case static_cast<int>(MatchFlag::EndsWith):
       return boost::iends_with(value_str, query_str);
-    case static_cast<int>(MatchFlag::EndsWith) | 
+    case static_cast<int>(MatchFlag::EndsWith) |
       static_cast<int>(MatchFlag::CaseSensitive):
       return boost::ends_with(value_str, query_str);
 
@@ -154,7 +154,7 @@ std::string asJSLiteral(const cpp17::any& v, TextFormat textFormat)
     return s.jsStringLiteral();
   } else if (v.type() == typeid(std::string)
 	     || v.type() == typeid(const char *)) {
-    WString s = v.type() == typeid(std::string) 
+    WString s = v.type() == typeid(std::string)
       ? WString::fromUTF8(cpp17::any_cast<std::string>(v))
       : WString::fromUTF8(cpp17::any_cast<const char *>(v));
 
@@ -377,21 +377,21 @@ WString asString(const cpp17::any& v, const WT_USTRING& format)
     return WString::tr(cpp17::any_cast<bool>(v) ? "Wt.true" : "Wt.false");
   else if (v.type() == typeid(WDate)) {
     const WDate& d = cpp17::any_cast<WDate>(v);
-    return d.toString(format.empty() ? 
+    return d.toString(format.empty() ?
 		      WLocale::currentLocale().dateFormat() :
 		      format);
   } else if (v.type() == typeid(WDateTime)) {
     const WDateTime& dt = cpp17::any_cast<WDateTime>(v);
-    return dt.toString(format.empty() ? 
-			   WLocale::currentLocale().dateTimeFormat() : 
+    return dt.toString(format.empty() ?
+			   WLocale::currentLocale().dateTimeFormat() :
 		       format);
   } else if (v.type() == typeid(WLocalDateTime)) {
     const WLocalDateTime& dt = cpp17::any_cast<WLocalDateTime>(v);
     return dt.toString();
   } else if (v.type() == typeid(WTime)) {
     const WTime& t = cpp17::any_cast<WTime>(v);
-    return t.toString(format.empty() ? 
-		WLocale::currentLocale().timeFormat() : 
+    return t.toString(format.empty() ?
+		WLocale::currentLocale().timeFormat() :
 		format);
   } else if(v.type() == typeid(std::chrono::system_clock::time_point)){
       const std::chrono::system_clock::time_point& tp
@@ -583,22 +583,22 @@ extern WT_API cpp17::any convertAnyToAny(const cpp17::any& v,
     return s.toUTF8().c_str();
   else if (type == typeid(WDate)) {
     return WDate::fromString
-      (s, format.empty() ? 
+      (s, format.empty() ?
        WLocale::currentLocale().dateFormat() :
        format);
   } else if (type == typeid(WDateTime)) {
     return WDateTime::fromString
-      (s, format.empty() ? 
+      (s, format.empty() ?
 	   WLocale::currentLocale().dateTimeFormat() : format);
   } else if (type == typeid(WLocalDateTime)) {
     return WLocalDateTime::fromString(s);
   } else if (type == typeid(WTime)) {
     return WTime::fromString
-      (s, format.empty() ? 
+      (s, format.empty() ?
 	   WLocale::currentLocale().timeFormat() :  format);
   } else if (type == typeid(std::chrono::system_clock::time_point)) {
     return WDateTime::fromString
-      (s, format.empty() ? 
+      (s, format.empty() ?
        WLocale::currentLocale().dateTimeFormat() : format).toTimePoint();
   } else if (type == typeid(std::chrono::duration<int, std::milli>)) {
     return WTime::fromString
