@@ -10,14 +10,14 @@
 namespace Wt {
 
 WMemoryResource::WMemoryResource()
-{ 
+{
   create();
 }
 
 WMemoryResource::WMemoryResource(const std::string& mimeType)
   : mimeType_(mimeType),
     data_(new std::vector<unsigned char>())
-{ 
+{
   create();
 }
 
@@ -25,7 +25,7 @@ WMemoryResource::WMemoryResource(const std::string& mimeType,
 				 const std::vector<unsigned char> &data)
   : mimeType_(mimeType),
     data_(new std::vector<unsigned char>(data))
-{ 
+{
   create();
 }
 
