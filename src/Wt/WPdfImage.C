@@ -164,8 +164,8 @@ void WPdfImage::setChanged(WFlags<PainterChangeFlag> flags)
 
     applyTransform(painter()->combinedTransform());
 
-    flags = PainterChangeFlag::Pen | 
-      PainterChangeFlag::Brush | 
+    flags = PainterChangeFlag::Pen |
+      PainterChangeFlag::Brush |
       PainterChangeFlag::Font;
   }
 
@@ -394,12 +394,12 @@ void WPdfImage::drawImage(const WRectF& rect, const std::string& imgUrl,
 #if HAVE_LOAD_FROM_MEM
     DataUri uri(imgUrl);
     if ("image/png" == uri.mimeType)
-      img = HPDF_LoadPngImageFromMem(pdf_, 
-				     (HPDF_BYTE*)&uri.data[0], 
-				     uri.data.size()); 
+      img = HPDF_LoadPngImageFromMem(pdf_,
+				     (HPDF_BYTE*)&uri.data[0],
+				     uri.data.size());
     else if ("image/jpeg" == uri.mimeType)
-      img = HPDF_LoadJpegImageFromMem(pdf_, 
-				      (HPDF_BYTE*)&uri.data[0], 
+      img = HPDF_LoadJpegImageFromMem(pdf_,
+				      (HPDF_BYTE*)&uri.data[0],
 				      uri.data.size());
 #else
       LOG_ERROR("drawImage: data URI support requires libharu 2.2.0 or later");
@@ -410,7 +410,7 @@ void WPdfImage::drawImage(const WRectF& rect, const std::string& imgUrl,
       img = HPDF_LoadPngImageFromFile2(pdf_, imgUrl.c_str());
     else if ("image/jpeg" == mimeType)
       img = HPDF_LoadJpegImageFromFile(pdf_, imgUrl.c_str());
-  } 
+  }
 
   if (!img)
     throw WException("WPdfImage::drawImage(): cannot load image: " + imgUrl);
@@ -535,14 +535,14 @@ void WPdfImage::drawPlainPath(const WPainterPath& path)
   }
 }
 
-void WPdfImage::drawText(const WRectF& rect, 
+void WPdfImage::drawText(const WRectF& rect,
 			 WFlags<AlignmentFlag> flags,
 			 TextFlag textFlag,
 			 const WString& text,
 			 const WPointF *clipPoint)
 {
   // FIXME: textFlag
-  
+
   if (clipPoint && painter() && !painter()->clipPath().isEmpty()) {
     if (!painter()->clipPathTransform().map(painter()->clipPath())
 	  .isPointInPath(painter()->worldTransform().map(*clipPoint)))
@@ -685,7 +685,7 @@ void WPdfImage::handleRequest(const Http::Request& request,
     HPDF_BYTE buf[4096];
     HPDF_UINT32 siz = 4096;
     HPDF_ReadFromStream (pdf_, buf, &siz);
- 
+
     if (siz == 0)
         break;
 
