@@ -22,7 +22,7 @@ void pluralResourceBundleException(const std::string &resourceName)
 
   std::string file = app.appRoot() + resourceName;
   BOOST_REQUIRE(Wt::FileUtils::exists(file + ".xml"));
-  
+
   app.messageResourceBundle().use(file);
 
   BOOST_REQUIRE(Wt::WString::tr("file").toUTF8() == "??file??");
@@ -38,7 +38,7 @@ std::string trn(const std::string &key, int n)
 BOOST_AUTO_TEST_CASE( I18n_messageResourceBundleTest )
 {
   BOOST_REQUIRE(Wt::WString::tr("welcome-text").toUTF8() == "??welcome-text??");
-  
+
   Wt::Test::WTestEnvironment environment;
   Wt::WApplication app(environment);
 
@@ -47,14 +47,14 @@ BOOST_AUTO_TEST_CASE( I18n_messageResourceBundleTest )
   app.messageResourceBundle().use(app.appRoot() + "private/i18n/plain");
 
   std::string welcome = Wt::WString::tr("welcome-text").arg("Joske").toUTF8();
-  BOOST_REQUIRE(welcome == 
+  BOOST_REQUIRE(welcome ==
 		"Welcome dear visitor, Joske of the WFooBar magic website !");
 
   BOOST_REQUIRE(Wt::WString::tr("welcome").toUTF8() == "??welcome??");
 
   app.setLocale("nl");
   welcome = Wt::WString::tr("welcome-text").arg("Joske").toUTF8();
-  BOOST_REQUIRE(welcome == 
+  BOOST_REQUIRE(welcome ==
 		"Welkom beste bezoeker, Joske van de WFooBar magic website !");
 
   std::string programmer = Wt::WString::tr("programmer").toUTF8();
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE( I18n_messageResourceBundleTest )
 
   app.setLocale("pl");
   welcome = Wt::WString::tr("welcome-text").arg("Joske").toUTF8();
-  BOOST_REQUIRE(welcome == 
+  BOOST_REQUIRE(welcome ==
 		"Welcome dear visitor, Joske of the WFooBar magic website !");
 }
 
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE( I18n_pluralResourceBundle1 )
   BOOST_REQUIRE(trn("programmer", 6) == "6 programmers");
 
   app.setLocale("pl");
-  
+
   BOOST_REQUIRE(trn("file", 0) == "0 pliko'w");
   BOOST_REQUIRE(trn("file", 1) == "1 plik");
   BOOST_REQUIRE(trn("file", 2) == "2 pliki");
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE( I18n_findCaseException1 )
     error = e.what();
   }
 
-  BOOST_REQUIRE(error == 
+  BOOST_REQUIRE(error ==
 		"Expression 'n-10' evaluates to '-9' for n=1 and values "
 		"smaller than 0 are not allowed.");
 }
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE( I18n_findCaseException2 )
   Wt::Test::WTestEnvironment environment;
   Wt::WApplication app(environment);
 
-  app.messageResourceBundle().use(app.appRoot() + 
+  app.messageResourceBundle().use(app.appRoot() +
 				  "private/i18n/plural_findcase_err2");
 
   std::string error;
@@ -170,7 +170,7 @@ BOOST_AUTO_TEST_CASE( I18n_findCaseException2 )
     error = e.what();
   }
 
-  BOOST_REQUIRE(error == 
+  BOOST_REQUIRE(error ==
 		"Expression '2' evaluates to '2' for n=1 which is greater "
 		"than the list of cases (size=1).");
 }
@@ -179,19 +179,19 @@ BOOST_AUTO_TEST_CASE( I18n_internalArgument1 )
 {
   Wt::Test::WTestEnvironment environment;
   Wt::WApplication app(environment);
-  
-  app.messageResourceBundle().use(app.appRoot() + 
+
+  app.messageResourceBundle().use(app.appRoot() +
 				  "private/i18n/international_argument_1");
-  
+
   Wt::WString text = Wt::WString::tr("text").arg(Wt::WString::tr("hello"));
 
-  BOOST_REQUIRE(text.toUTF8() == 
+  BOOST_REQUIRE(text.toUTF8() ==
 		"Internationalized text containing an "
 		"internationalized argument: hello");
 
   app.setLocale("nl");
 
-  BOOST_REQUIRE(text.toUTF8() == 
+  BOOST_REQUIRE(text.toUTF8() ==
 		"Geïnternationaliseerde tekst met een geïnternationaliseerd "
 		"argument: hallo");
 }
