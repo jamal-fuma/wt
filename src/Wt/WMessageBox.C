@@ -14,16 +14,16 @@
 
 namespace Wt {
 
-StandardButton WMessageBox::order_[] = { 
+StandardButton WMessageBox::order_[] = {
   StandardButton::Ok,
-  StandardButton::Yes, 
-  StandardButton::YesAll, 
-  StandardButton::Retry, 
+  StandardButton::Yes,
+  StandardButton::YesAll,
+  StandardButton::Retry,
   StandardButton::No,
-  StandardButton::NoAll, 
-  StandardButton::Abort, 
-  StandardButton::Ignore, 
-  StandardButton::Cancel 
+  StandardButton::NoAll,
+  StandardButton::Abort,
+  StandardButton::Ignore,
+  StandardButton::Cancel
 };
 
 const char *WMessageBox::buttonText_[]
@@ -88,7 +88,7 @@ void WMessageBox::addButton(std::unique_ptr<WPushButton> button,
   buttons_.push_back(Button());
   buttons_.back().button = button.get();
   buttons_.back().result = result;
-  
+
   button->clicked().connect
     (this, std::bind(&WMessageBox::onButtonClick, this, result));
 
@@ -246,9 +246,9 @@ void WMessageBox::setHidden(bool hidden, const WAnimation& animation)
   if (!hidden) {
     if (!defaultButton_) {
       for (unsigned i = 0; i < buttons_.size(); ++i) {
-	if (buttons_[i].result == StandardButton::Ok || 
+	if (buttons_[i].result == StandardButton::Ok ||
 	    buttons_[i].result == StandardButton::Yes) {
-	  buttons_[i].button->setDefault(true);	
+	  buttons_[i].button->setDefault(true);
 	  break;
 	}
       }
