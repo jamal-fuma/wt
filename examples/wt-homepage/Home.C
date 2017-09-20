@@ -33,7 +33,7 @@ using namespace Wt;
 
 static const std::string SRC_INTERNAL_PATH = "src";
 
-Home::~Home() 
+Home::~Home()
 {
 }
 
@@ -363,11 +363,11 @@ void Home::readReleases(WTable *releaseTable)
       releaseTable->elementAt(row, 2)->addWidget(cpp14::make_unique<WText>(*(++i)));
 
       ++i;
-      std::string url = "http://prdownloads.sourceforge.net/witty/" 
+      std::string url = "http://prdownloads.sourceforge.net/witty/"
 	+ fileName + "?download";
       if (i != tok.end())
 	url = *i;
-	
+
       releaseTable->elementAt(row, 0)->addWidget
         (cpp14::make_unique<WText>(href(url, description)));
 
@@ -430,7 +430,7 @@ WString Home::tr(const char *key)
 void Home::googleAnalyticsLogger()
 {
   doJavaScript("if (window.ga) ga('send','pageview',"
-	       + WWebWidget::jsStringLiteral(environment().deploymentPath() 
+	       + WWebWidget::jsStringLiteral(environment().deploymentPath()
 					     + internalPath()) + ");");
 }
 
