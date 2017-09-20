@@ -501,7 +501,7 @@ WTime::RegExpInfo WTime::formatHourToRegExp(WTime::RegExpInfo& result,
     next = -1;
     sf = format[i];
   }
-  
+
   if (sf == "HH" || (sf == "hh" && !ap)) { //Hour with leading 0 0-23
     result.regexp += "([0-1][0-9]|[2][0-3])";
   } else if (sf == "hh" && ap) {          //Hour with leading 0 01-12
@@ -511,7 +511,7 @@ WTime::RegExpInfo WTime::formatHourToRegExp(WTime::RegExpInfo& result,
   } else if (sf == "h" && ap) {                  //Hour without leading 0 0-12
     result.regexp += "([1-9]|1[012])";
   }
-  result.hourGetJS = "return parseInt(results[" + 
+  result.hourGetJS = "return parseInt(results[" +
     std::to_string(currentGroup++) + "], 10);";
   return result;
 }
@@ -523,7 +523,7 @@ WTime::RegExpInfo WTime::formatMinuteToRegExp(WTime::RegExpInfo& result,
   char next = -1;
   std::string sf;
   if (i < format.size() - 1) next = format[i + 1];
-  
+
   if (next == 'm') {
     sf = "mm";
     i++;
@@ -531,7 +531,7 @@ WTime::RegExpInfo WTime::formatMinuteToRegExp(WTime::RegExpInfo& result,
     sf = "m";
     next = -1;
   }
-  
+
   if (sf == "m") /* Minutes without leading 0 */
     result.regexp += "(0|[1-5]?[0-9])";
   else /* Minutes with leading 0 */
@@ -551,7 +551,7 @@ WTime::RegExpInfo WTime::formatSecondToRegExp(WTime::RegExpInfo& result,
   std::string sf;
 
   if (i < format.size() - 1) next = format[i + 1];
-  
+
   if (next == 's') {
     sf = "ss";
     i++;
@@ -559,7 +559,7 @@ WTime::RegExpInfo WTime::formatSecondToRegExp(WTime::RegExpInfo& result,
     sf = "s";
     next = -1;
   }
-  
+
   if (sf == "s") /* Seconds without leading 0 */
     result.regexp += "(0|[1-5]?[0-9])";
   else /* Seconds with leading 0 */
@@ -594,7 +594,7 @@ WTime::RegExpInfo WTime::formatMSecondToRegExp(WTime::RegExpInfo& result,
 
   if (sf == "z") /* The Ms without trailing 0 */
     result.regexp += "(0|[1-9][0-9]{0,2})";
-  else if (sf == "zzz") 
+  else if (sf == "zzz")
     result.regexp += "([0-9]{3})";
 
   result.msecGetJS = "return parseInt(results["
@@ -616,7 +616,7 @@ WTime::RegExpInfo WTime::formatAPToRegExp(WTime::RegExpInfo& result,
 	  result.regexp += "([ap]m)";
 	  i++;
 	}
-  } else 
+  } else
 	result.regexp += format[i];
 
   return result;
@@ -670,7 +670,7 @@ WTime::RegExpInfo WTime::formatToRegExp(const WT_USTRING& format)
     case '\'':
       if (i < f.size() - 2 && f[i+1] == f[i+2] && f[i+1] == '\'')
         result.regexp += f[i];
-      else 
+      else
         inQuote = !inQuote;
     case 'h':
     case 'H':
@@ -741,7 +741,7 @@ bool WTime::usesAmPm(const WString& format)
       }
     }
   }
-  
+
   return useAMPM;
 }
 
