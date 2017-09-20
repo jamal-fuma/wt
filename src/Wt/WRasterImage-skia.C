@@ -98,7 +98,7 @@ WRasterImage::WRasterImage(const std::string& type,
   impl_->type_ = type;
   impl_->w_ = static_cast<unsigned long>(width.toPixels());
   impl_->h_ = static_cast<unsigned long>(height.toPixels());
-  
+
   if (!impl_->w_ || !impl_->h_) {
     impl_->bitmap_ = 0;
     return;
@@ -123,9 +123,9 @@ WRasterImage::WRasterImage(const std::string& type,
   impl_->textPaint_.setTextEncoding(SkPaint::kUTF8_TextEncoding);
   impl_->strokePaint_.setStyle(SkPaint::kStroke_Style);
   impl_->fillPaint_.setStyle(SkPaint::kFill_Style);
-  
+
 }
-  
+
 void WRasterImage::clear()
 {
   impl_->canvas_->clear(0);
@@ -143,7 +143,7 @@ void WRasterImage::addFontCollection(const std::string& directory,
   fontSupport_->addFontCollection(directory, recursive);
 #endif
 }
-  
+
 WFlags<PaintDeviceFeatureFlag> WRasterImage::features() const
 {
   return HasFontMetrics;
@@ -199,7 +199,7 @@ void WRasterImage::Impl::setTransform(const WTransform& t)
 void WRasterImage::setChanged(WFlags<ChangeFlag> flags)
 {
   if (flags & Clipping) {
-    
+
     if (painter()->hasClipping()) {
       impl_->setTransform(painter()->clipPathTransform());
       SkPath clipPath;
@@ -481,7 +481,7 @@ void WRasterImage::drawPath(const WPainterPath& path)
   if (!path.isEmpty()) {
     SkPath p;
     impl_->drawPlainPath(p, path);
-    
+
     if (painter()->brush().style() != BrushStyle::None) {
       impl_->canvas_->drawPath(p, impl_->fillPaint_);
     }
@@ -522,7 +522,7 @@ void WRasterImage::getPixels(void *data)
   }
 }
 
-WColor WRasterImage::getPixel(int x, int y) 
+WColor WRasterImage::getPixel(int x, int y)
 {
   impl_->canvas_->flush();
   SkColor c = impl_->bitmap_->getColor(x, y);
@@ -574,7 +574,7 @@ void WRasterImage::Impl::drawPlainPath(SkPath &p, const WPainterPath& path)
 				     SkDoubleToScalar(y - height),
 				     SkDoubleToScalar(width * 2.0),
 				     SkDoubleToScalar(height * 2.0));
-      if (sweepAngle != 360) 
+      if (sweepAngle != 360)
 	p.arcTo(rect,
 		SkDoubleToScalar(-startAngle), SkDoubleToScalar(-sweepAngle),
 		false);
@@ -592,7 +592,7 @@ void WRasterImage::Impl::drawPlainPath(SkPath &p, const WPainterPath& path)
       const double y1 = s.y();
       const double x2 = segments[i+1].x();
       const double y2 = segments[i+1].y();
-      
+
       p.quadTo(SkDoubleToScalar(x1), SkDoubleToScalar(y1),
               SkDoubleToScalar(x2), SkDoubleToScalar(y2));
 
@@ -606,7 +606,7 @@ void WRasterImage::Impl::drawPlainPath(SkPath &p, const WPainterPath& path)
   }
 }
 
-void WRasterImage::drawText(const WRectF& rect, 
+void WRasterImage::drawText(const WRectF& rect,
 			    WFlags<AlignmentFlag> flags,
 			    TextFlag textFlag,
 			    const WString& text,
@@ -629,16 +629,16 @@ void WRasterImage::drawText(const WRectF& rect,
 
   AlignmentFlag horizontalAlign = flags & AlignHorizontalMask;
   AlignmentFlag verticalAlign = flags & AlignVerticalMask;
-  
+
   const WTransform& t = painter()->combinedTransform();
-  
+
   WPointF p;
-  
+
   struct SkPaint::FontMetrics metrics;
   impl_->textPaint_.getFontMetrics(&metrics);
   double ascent = SkScalarToFloat(metrics.fAscent);
   double descent = SkScalarToFloat(metrics.fDescent);
-  
+
   switch (verticalAlign) {
   case AlignmentFlag::Top:
     p = rect.topLeft();
@@ -656,7 +656,7 @@ void WRasterImage::drawText(const WRectF& rect,
   default:
     break;
   }
-  
+
   switch (horizontalAlign) {
   case AlignmentFlag::Left:
     impl_->textPaint_.setTextAlign(SkPaint::kLeft_Align);
@@ -673,7 +673,7 @@ void WRasterImage::drawText(const WRectF& rect,
   default:
     break;
   }
-  
+
   impl_->canvas_->drawText(txt.c_str(), txt.size(),
 		    SkDoubleToScalar(p.x()), SkDoubleToScalar(p.y()),
 		    impl_->textPaint_);
