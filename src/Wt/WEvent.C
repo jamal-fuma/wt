@@ -28,7 +28,7 @@ namespace {
     prefix.resize(prefixLength);
     prefix += s2;
     return prefix;
-  } 
+  }
 #else
   std::string concat(const std::string& prefix, int prefixLength, const char *s2)
   {
@@ -52,7 +52,7 @@ namespace {
       try {
 	return asInt(*p);
       } catch (const std::exception& ee) {
-	LOG_ERROR("Could not cast event property '" << name 
+	LOG_ERROR("Could not cast event property '" << name
 		  << ": " << *p << "' to int");
 	return ifMissing;
       }
@@ -76,7 +76,7 @@ namespace {
 
     std::vector<std::string> s;
     boost::split(s, str, boost::is_any_of(";"));
-    
+
     if (s.size() % 9) {
       LOG_ERROR("Could not parse touches array '" << str << "'");
       return;
@@ -99,7 +99,7 @@ namespace {
 
 namespace Wt {
 
-EventType WEvent::eventType() const 
+EventType WEvent::eventType() const
 {
   if (!impl_.handler)
     return EventType::Other;
@@ -210,7 +210,7 @@ void JavaScriptEvent::get(const WebRequest& request, const std::string& se)
   decodeTouches(getStringParameter(request, concat(s, seLength, "ttouches")),
 				   targetTouches);
   decodeTouches(getStringParameter(request, concat(s, seLength, "ctouches")),
-				   changedTouches);  
+				   changedTouches);
 }
 
 WMouseEvent::WMouseEvent()
