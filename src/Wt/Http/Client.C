@@ -991,16 +991,15 @@ void Client::handleRedirect(Http::Method method,
 		method == Http::Method::Get) || status == 303)) {
     const std::string *newUrl = response.getHeader("Location");
     ++ redirectCount_;
-    if (newUrl && redirectCount_ <= maxRedirects_) {
-       this->request(method, *newUrl, request);
+    if (newUrl) {
+      if (redirectCount_ <= maxRedirects_) {
+	get(*newUrl, request.headers());
        return;
-    }
-    if(!newUrl) {
-       LOG_WARN("No 'Location' header for redirect : " << redirectCount_ << " redirects");
       } else {
 	LOG_WARN("Redirect count of " << maxRedirects_
 		 << " exceeded! Redirect URL: " << *newUrl);
       }
+  }
   }
   emitDone(err, response);
 }
