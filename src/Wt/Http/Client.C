@@ -977,11 +977,6 @@ void Client::setMaxRedirects(int maxRedirects)
   maxRedirects_ = maxRedirects;
 }
 
-// 301 Moved Permanently  = new request with same method if idomponent or rewritten to GET otherwise
-// 302 Found              = new request with same method if idomponent or rewritten to GET otherwise
-// 303 See Other          = new request with GET method
-// 307 Temporary Redirect = new request with same method / body
-// 308 Permanent Redirect = new request with same method / body
 void Client::handleRedirect(Http::Method method,
 			    AsioWrapper::error_code err,
 			    const Message& response, const Message& request)
