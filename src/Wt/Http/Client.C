@@ -987,10 +987,8 @@ void Client::handleRedirect(Http::Method method,
   }
   impl_.reset();
   int status = response.status();
-  if (!err && (status == 301 || status == 302 || status == 303 || status == 307 || status == 308)) {
-    if(status == 303 || (status < 307 && (method == Put || method == Patch || method == Delete || method == Post))) {
-        method = Get;
-    }
+  if (!err && (((status == 301 || status == 302 || status == 307) &&
+		method == Http::Method::Get) || status == 303)) {
     const std::string *newUrl = response.getHeader("Location");
     ++ redirectCount_;
     if (newUrl && redirectCount_ <= maxRedirects_) {
