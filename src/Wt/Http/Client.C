@@ -827,7 +827,7 @@ bool Client::get(const std::string& url)
 }
 
 bool Client::get(const std::string& url,
-		 const std::vector<Message::Header> & headers)
+		 const std::vector<Message::Header> headers)
 {
   Message m(headers);
   return request(Http::Method::Get, url, m);
