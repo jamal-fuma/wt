@@ -286,7 +286,6 @@ int Configuration::maxNumSessions() const
   return maxRequestSize_;
 }
 
-  
 ::int64_t Configuration::maxFormDataSize() const
 {
   return maxFormDataSize_;
