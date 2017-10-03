@@ -249,7 +249,7 @@ public:
    *
    * \sa request(), done()
    */
-  bool get(const std::string& url, const std::vector<Message::Header> headers);
+  bool get(const std::string& url, const std::vector<Message::Header> & headers);
 
   /*! \brief Starts a POST request.
    *
