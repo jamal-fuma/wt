@@ -14,18 +14,18 @@
 
 class TopicTemplate : public Wt::WTemplate
 {
-public:
-  TopicTemplate(const char *trKey);
+    public:
+        TopicTemplate(const char * trKey);
 
-  virtual void resolveString(const std::string& varName,
-			     const std::vector<Wt::WString>& args,
-			     std::ostream& result);
+        virtual void resolveString(const std::string & varName,
+                                   const std::vector<Wt::WString> & args,
+                                   std::ostream & result);
 
-private:
-  std::string docUrl(const std::string& className);
-  std::string getString(const std::string& varName);
-  
-  static std::string escape(const std::string& name);
+    private:
+        std::string docUrl(const std::string & className);
+        std::string getString(const std::string & varName);
+
+        static std::string escape(const std::string & name);
 };
 
 #endif // TOPIC_TEMPLATE_H_

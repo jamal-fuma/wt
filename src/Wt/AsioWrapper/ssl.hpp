@@ -11,11 +11,11 @@
 
 #ifdef WT_ASIO_IS_BOOST_ASIO
 
-#include <boost/asio/ssl.hpp>
+    #include <boost/asio/ssl.hpp>
 
 #else // WT_ASIO_IS_STANDALONE_ASIO
 
-#include <asio/ssl.hpp>
+    #include <asio/ssl.hpp>
 
 #endif // WT_ASIO_IS_BOOST_ASIO
 

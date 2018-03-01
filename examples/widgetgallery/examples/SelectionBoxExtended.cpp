@@ -6,7 +6,7 @@ SAMPLE_BEGIN(SelectionBoxExtended)
 
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-Wt::WSelectionBox *sb2 =
+Wt::WSelectionBox * sb2 =
     container->addWidget(Wt::cpp14::make_unique<Wt::WSelectionBox>());
 sb2->addItem("Bacon");
 sb2->addItem("Cheese");
@@ -23,19 +23,22 @@ selection.insert(4);        // Index 4 corresponds to the 5th item.
 sb2->setSelectedIndexes(selection);
 sb2->setMargin(10, Wt::Side::Right);
 
-Wt::WText *out = container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
+Wt::WText * out = container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
 out->addStyleClass("help-block");
 
-sb2->activated().connect([=] {
+sb2->activated().connect([=]
+{
     Wt::WString selected;
 
     std::set<int> selection = sb2->selectedIndexes();
-    for (std::set<int>::iterator it = selection.begin();
-	 it != selection.end(); ++it) {
-	if (!selected.empty())
-	    selected += ", ";
-
-	selected += sb2->itemText(*it);
+    for(std::set<int>::iterator it = selection.begin();
+    it != selection.end(); ++it)
+    {
+        if(!selected.empty())
+        {
+            selected += ", ";
+        }
+        selected += sb2->itemText(*it);
     }
 
     out->setText(Wt::WString("You choose {1}.").arg(selected));

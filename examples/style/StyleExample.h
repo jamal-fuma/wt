@@ -10,9 +10,10 @@
 
 #include <Wt/WContainerWidget.h>
 
-namespace Wt {
-  class WLineEdit;
-  class WText;
+namespace Wt
+{
+    class WLineEdit;
+    class WText;
 }
 
 using namespace Wt;
@@ -30,19 +31,19 @@ class RoundedWidget;
  */
 class StyleExample : public WContainerWidget
 {
-public:
-  /*! \brief Create a StyleExample.
-   */
-  StyleExample();
+    public:
+        /*! \brief Create a StyleExample.
+         */
+        StyleExample();
 
-private:
-  RoundedWidget *w_;
-  WText *error_;
+    private:
+        RoundedWidget * w_;
+        WText * error_;
 
-  WLineEdit *radius_, *r_, *g_, *b_;
+        WLineEdit * radius_, *r_, *g_, *b_;
 
-  WLineEdit *createValidateLineEdit(int value, int min, int max);
-  void updateStyle();
+        WLineEdit * createValidateLineEdit(int value, int min, int max);
+        void updateStyle();
 };
 
 /*@}*/

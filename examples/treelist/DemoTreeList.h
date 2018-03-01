@@ -11,8 +11,9 @@
 
 using namespace Wt;
 
-namespace Wt {
-  class WPushButton;
+namespace Wt
+{
+    class WPushButton;
 }
 
 class TreeNode;
@@ -28,42 +29,42 @@ class TreeNode;
  */
 class DemoTreeList : public WContainerWidget
 {
-public:
-  /*! \brief Create a DemoTreeList.
-   */
-  DemoTreeList();
+    public:
+        /*! \brief Create a DemoTreeList.
+         */
+        DemoTreeList();
 
-private:
-  TreeNode    *tree_;
-  TreeNode    *testFolder_;
-  int          testCount_;
+    private:
+        TreeNode  *  tree_;
+        TreeNode  *  testFolder_;
+        int          testCount_;
 
-  WPushButton *addFolderButton_;
-  WPushButton *removeFolderButton_;
+        WPushButton * addFolderButton_;
+        WPushButton * removeFolderButton_;
 
-  /*!\brief Add a folder.
-   */
-  void addFolder();
+        /*!\brief Add a folder.
+         */
+        void addFolder();
 
-  /*!\brief Remove a folder.
-   */ 
-  void removeFolder();
+        /*!\brief Remove a folder.
+         */
+        void removeFolder();
 
-  /*!\brief Create a "folder" node, and insert in the given parent.
-   */
-  TreeNode *makeTreeFolder(const std::string name, TreeNode *parent);
+        /*!\brief Create a "folder" node, and insert in the given parent.
+         */
+        TreeNode * makeTreeFolder(const std::string name, TreeNode * parent);
 
-  /*!\brief Create a "folder" root.
-   */
-  std::unique_ptr<TreeNode> makeTreeFolder(const std::string name);
+        /*!\brief Create a "folder" root.
+         */
+        std::unique_ptr<TreeNode> makeTreeFolder(const std::string name);
 
-  /*!\brief Create a "file" node, and insert in the given parent.
-   */
-  TreeNode *makeTreeFile(const std::string name, TreeNode *parent);
+        /*!\brief Create a "file" node, and insert in the given parent.
+         */
+        TreeNode * makeTreeFile(const std::string name, TreeNode * parent);
 
-  /*!\brief Create a "file" root.
-   */
-  std::unique_ptr<TreeNode> makeTreeFile(const std::string name);
+        /*!\brief Create a "file" root.
+         */
+        std::unique_ptr<TreeNode> makeTreeFile(const std::string name);
 };
 
 /*@}*/

@@ -8,64 +8,66 @@
 
 #include "WAbstractChartModel.h"
 
-namespace Wt {
-  namespace Chart {
-
-WAbstractChartModel::WAbstractChartModel()
-{ }
-
-WAbstractChartModel::~WAbstractChartModel()
-{ }
-
-WString WAbstractChartModel::displayData(int row, int column) const
+namespace Wt
 {
-  return boost::lexical_cast<std::string>(data(row, column));
-}
+    namespace Chart
+    {
 
-WString WAbstractChartModel::headerData(int column) const
-{
-  return Wt::WString();
-}
+        WAbstractChartModel::WAbstractChartModel()
+        { }
 
-WString WAbstractChartModel::toolTip(int row, int column) const
-{
-  return Wt::WString();
-}
+        WAbstractChartModel::~WAbstractChartModel()
+        { }
 
-WFlags<ItemFlag> WAbstractChartModel::flags(int row, int column) const
-{
-  return None;
-}
+        WString WAbstractChartModel::displayData(int row, int column) const
+        {
+            return boost::lexical_cast<std::string>(data(row, column));
+        }
 
-WLink *WAbstractChartModel::link(int row, int column) const
-{
-  return 0;
-}
+        WString WAbstractChartModel::headerData(int column) const
+        {
+            return Wt::WString();
+        }
 
-const WColor *WAbstractChartModel::markerPenColor(int row, int column) const
-{
-  return nullptr;
-}
+        WString WAbstractChartModel::toolTip(int row, int column) const
+        {
+            return Wt::WString();
+        }
 
-const WColor *WAbstractChartModel::markerBrushColor(int row, int column) const
-{
-  return nullptr;
-}
+        WFlags<ItemFlag> WAbstractChartModel::flags(int row, int column) const
+        {
+            return None;
+        }
 
-const WColor *WAbstractChartModel::barPenColor(int row, int column) const
-{
-  return nullptr;
-}
+        WLink * WAbstractChartModel::link(int row, int column) const
+        {
+            return 0;
+        }
 
-const WColor *WAbstractChartModel::barBrushColor(int row, int column) const
-{
-  return nullptr;
-}
+        const WColor * WAbstractChartModel::markerPenColor(int row, int column) const
+        {
+            return nullptr;
+        }
 
-const double *WAbstractChartModel::markerScaleFactor(int row, int column) const
-{
-  return nullptr;
-}
+        const WColor * WAbstractChartModel::markerBrushColor(int row, int column) const
+        {
+            return nullptr;
+        }
 
-  }
+        const WColor * WAbstractChartModel::barPenColor(int row, int column) const
+        {
+            return nullptr;
+        }
+
+        const WColor * WAbstractChartModel::barBrushColor(int row, int column) const
+        {
+            return nullptr;
+        }
+
+        const double * WAbstractChartModel::markerScaleFactor(int row, int column) const
+        {
+            return nullptr;
+        }
+
+    }
 }

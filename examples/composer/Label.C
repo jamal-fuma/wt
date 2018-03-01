@@ -8,9 +8,9 @@
 
 #include "Label.h"
 
-Label::Label(const WString& text, WContainerWidget *parent)
-  : WText(text)
+Label::Label(const WString & text, WContainerWidget * parent)
+    : WText(text)
 {
-  setStyleClass(L"label");
-  parent->setContentAlignment(AlignmentFlag::Right);
+    setStyleClass(L"label");
+    parent->setContentAlignment(AlignmentFlag::Right);
 }

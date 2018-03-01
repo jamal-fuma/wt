@@ -21,27 +21,31 @@ auto outPtr = Wt::cpp14::make_unique<Wt::WText>();
 auto out = outPtr.get();
 
 // Create some menu items for the popup menu
-popup->addItem("Connect")->triggered().connect([=] {
+popup->addItem("Connect")->triggered().connect([=]
+{
     out->setText("<p>Connecting...</p>");
 });
 
-popup->addItem("Disconnect")->triggered().connect([=] {
+popup->addItem("Disconnect")->triggered().connect([=]
+{
     out->setText("<p>You are disconnected now.</p>");
 });
 
 popup->addSeparator();
 
-popup->addItem("icons/house.png", "I'm home")->triggered().connect([=] {
+popup->addItem("icons/house.png", "I'm home")->triggered().connect([=]
+{
     out->setText("");
 });
 
-Wt::WMenuItem *item = popup->addItem("Don't disturb");
+Wt::WMenuItem * item = popup->addItem("Don't disturb");
 item->setCheckable(true);
 
-item->triggered().connect([=] {
+item->triggered().connect([=]
+{
     out->setText(Wt::WString("<p>{1} item is {2}.</p>")
-		 .arg(item->text())
-		 .arg(item->isChecked() ? "checked" : "unchecked"));
+    .arg(item->text())
+    .arg(item->isChecked() ? "checked" : "unchecked"));
 });
 
 popup->addSeparator();
@@ -50,37 +54,41 @@ popup->addSeparator();
 auto subMenuPtr = Wt::cpp14::make_unique<Wt::WPopupMenu>();
 auto subMenu = subMenuPtr.get();
 
-subMenu->addItem("Contents")->triggered().connect([=] {
+subMenu->addItem("Contents")->triggered().connect([=]
+{
     out->setText("<p>This could be a link to /contents.html.</p>");
 });
 
-subMenu->addItem("Index")->triggered().connect([=] {
+subMenu->addItem("Index")->triggered().connect([=]
+{
     out->setText("<p>This could be a link to /index.html.</p>");
 });
 
 subMenu->addSeparator();
-subMenu->addItem("About")->triggered().connect([=] {
+subMenu->addItem("About")->triggered().connect([=]
+{
     auto messageBox = subMenu->addChild(
-	    Wt::cpp14::make_unique<Wt::WMessageBox>
-	    ("About", "<p>This is a program to make connections.</p>",
-	     Wt::Icon::Information, Wt::StandardButton::Ok));
+        Wt::cpp14::make_unique<Wt::WMessageBox>
+        ("About", "<p>This is a program to make connections.</p>",
+    Wt::Icon::Information, Wt::StandardButton::Ok));
     messageBox->show();
     messageBox->buttonClicked().connect([=] {
-      subMenu->removeChild(messageBox);
+        subMenu->removeChild(messageBox);
     });
 });
 
 // Assign the submenu to the parent popup menu.
 popup->addMenu("Help", std::move(subMenuPtr));
 
-Wt::WPushButton *button = container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>());
+Wt::WPushButton * button = container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>());
 button->setMenu(std::move(popupPtr));
 
 // React to an item selection
-popup->itemSelected().connect([=] (Wt::WMenuItem *item) {
+popup->itemSelected().connect([=](Wt::WMenuItem * item)
+{
     status->setText
-        (Wt::WString("Selected menu item: {1}.")
-	 .arg(item->text()));
+    (Wt::WString("Selected menu item: {1}.")
+     .arg(item->text()));
 });
 
 container->addWidget(std::move(statusPtr));

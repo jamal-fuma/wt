@@ -16,34 +16,32 @@
 
 using namespace Wt;
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-  try {
-    WServer server(argc, argv, WTHTTP_CONFIGURATION);
-
-    BlogSession::configureAuth();
-
-    std::unique_ptr<Dbo::SqlConnectionPool> blogDb
-      = BlogSession::createConnectionPool(server.appRoot() + "blog.db");
-
-    BlogRSSFeed rssFeed(*blogDb, "Wt and JWt blog",
-			"http://www.webtoolkit.eu/wt/blog",
-			"We care about our webtoolkits.");
-
-    server.addResource(&rssFeed, "/wt/blog/feed/");
-
-    server.addEntryPoint(EntryPointType::Application,
-                         std::bind(&createJWtHomeApplication, std::placeholders::_1, blogDb.get()),
-                         "/jwt", "/css/jwt/favicon.ico");
-    server.addEntryPoint(EntryPointType::Application,
-                         std::bind(&createWtHomeApplication, std::placeholders::_1, blogDb.get()),
-                         "", "/css/wt/favicon.ico");
-
-    server.run();
-
-  } catch (Wt::WServer::Exception& e) {
-    std::cerr << e.what() << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "exception: " << e.what() << std::endl;
-  }
+    try
+    {
+        WServer server(argc, argv, WTHTTP_CONFIGURATION);
+        BlogSession::configureAuth();
+        std::unique_ptr<Dbo::SqlConnectionPool> blogDb
+            = BlogSession::createConnectionPool(server.appRoot() + "blog.db");
+        BlogRSSFeed rssFeed(*blogDb, "Wt and JWt blog",
+                            "http://www.webtoolkit.eu/wt/blog",
+                            "We care about our webtoolkits.");
+        server.addResource(&rssFeed, "/wt/blog/feed/");
+        server.addEntryPoint(EntryPointType::Application,
+                             std::bind(&createJWtHomeApplication, std::placeholders::_1, blogDb.get()),
+                             "/jwt", "/css/jwt/favicon.ico");
+        server.addEntryPoint(EntryPointType::Application,
+                             std::bind(&createWtHomeApplication, std::placeholders::_1, blogDb.get()),
+                             "", "/css/wt/favicon.ico");
+        server.run();
+    }
+    catch(Wt::WServer::Exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    catch(std::exception & e)
+    {
+        std::cerr << "exception: " << e.what() << std::endl;
+    }
 }

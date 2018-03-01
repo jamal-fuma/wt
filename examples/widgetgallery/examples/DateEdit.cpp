@@ -24,32 +24,42 @@ auto button = form->bindWidget("save", Wt::cpp14::make_unique<Wt::WPushButton>("
 
 auto out = form->bindWidget("out", Wt::cpp14::make_unique<Wt::WText>());
 
-de1->changed().connect([=] {
-    if (de1->validate() == Wt::ValidationState::Valid) {
+de1->changed().connect([=]
+{
+    if(de1->validate() == Wt::ValidationState::Valid)
+    {
         de2->setBottom(de1->date());
         out->setText("Date picker 1 is changed.");
     }
 });
 
-de2->changed().connect([=] {
-    if (de1->validate() == Wt::ValidationState::Valid) {
+de2->changed().connect([=]
+{
+    if(de1->validate() == Wt::ValidationState::Valid)
+    {
         de1->setTop(de2->date());
         out->setText("Date picker 2 is changed.");
     }
 });
 
-button->clicked().connect([=] {
-    if (de1->text().empty() || de2->text().empty())
+button->clicked().connect([=]
+{
+    if(de1->text().empty() || de2->text().empty())
         out->setText("You should enter two dates!");
-    else {
+    else
+    {
         int days = de1->date().daysTo(de2->date()) + 1;
-	if (days == 1)
-	    out->setText("It's fine to take holiday just for one day!");
-	else if (days > 1) 
-	    out->setText(Wt::WString("So, you want to take holiday for a period of "
-				     "{1} days?").arg(days));
-	else
-	    out->setText("Invalid period!");
+        if(days == 1)
+        {
+            out->setText("It's fine to take holiday just for one day!");
+        }
+        else if(days > 1)
+            out->setText(Wt::WString("So, you want to take holiday for a period of "
+                                     "{1} days?").arg(days));
+        else
+        {
+            out->setText("Invalid period!");
+        }
     }
 });
 

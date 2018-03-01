@@ -15,198 +15,225 @@
 #include "Wt/WEnvironment.h"
 #include "Wt/WStatelessSlot.h"
 
-namespace Wt {
-
-class WebRequest;
-class WebResponse;
-class WebStream;
-class DomElement;
-class EscapeOStream;
-class FileServe;
-class MetaHeader;
-
-class WApplication;
-class WWidget;
-class WWebWidget;
-class WObject;
-class WResource;
-class WStatelessSlot;
-class WWidget;
-
-class WT_API WebRenderer : public Wt::SlotLearnerInterface
+namespace Wt
 {
-public:
-  typedef std::map<std::string, WObject *> FormObjectsMap;
 
-  WebRenderer(WebSession& session);
+    class WebRequest;
+    class WebResponse;
+    class WebStream;
+    class DomElement;
+    class EscapeOStream;
+    class FileServe;
+    class MetaHeader;
 
-  void setTwoPhaseThreshold(int bytes);
+    class WApplication;
+    class WWidget;
+    class WWebWidget;
+    class WObject;
+    class WResource;
+    class WStatelessSlot;
+    class WWidget;
 
-  bool visibleOnly() const { return visibleOnly_; }
-  void setVisibleOnly(bool how) { visibleOnly_ = how; }
-  bool isRendered() const { return rendered_; }
-  void setRendered(bool how);
+    class WT_API WebRenderer : public Wt::SlotLearnerInterface
+    {
+        public:
+            typedef std::map<std::string, WObject *> FormObjectsMap;
 
-  void needUpdate(WWidget *w, bool laterOnly);
-  void doneUpdate(WWidget *w);
-  void updateFormObjects(WWebWidget *w, bool checkDescendants);
+            WebRenderer(WebSession & session);
 
-  void updateFormObjectsList(WApplication *app);
-  const FormObjectsMap& formObjects() const;
+            void setTwoPhaseThreshold(int bytes);
 
-  void saveChanges();
-  void discardChanges();
-  void letReloadJS(WebResponse& request, bool newSession,
-		   bool embedded = false);
-  void letReloadHTML(WebResponse& request, bool newSession);
+            bool visibleOnly() const
+            {
+                return visibleOnly_;
+            }
+            void setVisibleOnly(bool how)
+            {
+                visibleOnly_ = how;
+            }
+            bool isRendered() const
+            {
+                return rendered_;
+            }
+            void setRendered(bool how);
 
-  bool isDirty() const;
-  int scriptId() const { return scriptId_; }
-  int pageId() const { return pageId_; }
+            void needUpdate(WWidget * w, bool laterOnly);
+            void doneUpdate(WWidget * w);
+            void updateFormObjects(WWebWidget * w, bool checkDescendants);
 
-  void serveResponse(WebResponse& request);
-  void serveError(int status, WebResponse& request, 
-		  const std::string& message);
-  void serveLinkedCss(WebResponse& request);
+            void updateFormObjectsList(WApplication * app);
+            const FormObjectsMap & formObjects() const;
 
-  void setCookie(const std::string name, const std::string value,
-		 const WDateTime& expires, const std::string domain,
-		 const std::string path, bool secure);
+            void saveChanges();
+            void discardChanges();
+            void letReloadJS(WebResponse & request, bool newSession,
+                             bool embedded = false);
+            void letReloadHTML(WebResponse & request, bool newSession);
 
-  bool preLearning() const { return learning_; }
-  void learningIncomplete();
+            bool isDirty() const;
+            int scriptId() const
+            {
+                return scriptId_;
+            }
+            int pageId() const
+            {
+                return pageId_;
+            }
 
-  void updateLayout() { updateLayout_ = true; }
+            void serveResponse(WebResponse & request);
+            void serveError(int status, WebResponse & request,
+                            const std::string & message);
+            void serveLinkedCss(WebResponse & request);
 
-  enum AckState {
-    CorrectAck,
-    ReasonableAck,
-    BadAck
-  };
-  
-  AckState ackUpdate(int updateId);
+            void setCookie(const std::string name, const std::string value,
+                           const WDateTime & expires, const std::string domain,
+                           const std::string path, bool secure);
 
-  void streamRedirectJS(WStringStream& out, const std::string& redirect);
+            bool preLearning() const
+            {
+                return learning_;
+            }
+            void learningIncomplete();
 
-  bool checkResponsePuzzle(const WebRequest& request);
+            void updateLayout()
+            {
+                updateLayout_ = true;
+            }
 
-  bool jsSynced() const;
+            enum AckState
+            {
+                CorrectAck,
+                ReasonableAck,
+                BadAck
+            };
 
-  void setJSSynced(bool invisibleToo);
+            AckState ackUpdate(int updateId);
 
-  void setStatelessSlotNotStateless() { currentStatelessSlotIsActuallyStateless_ = false; }
+            void streamRedirectJS(WStringStream & out, const std::string & redirect);
 
-  // Keep stubbed widget in vector marking it as stubbed,
-  // so we don't discard the JavaScript effects of a stateless
-  // slot executed before the widget was unstubbed.
-  void markAsStubbed(const WWidget *widget);
+            bool checkResponsePuzzle(const WebRequest & request);
 
-  // Check whether the given object (which should be a widget)
-  // was marked as stubbed.
-  bool wasStubbed(const WObject *widget) const;
+            bool jsSynced() const;
 
-private:
-  struct CookieValue {
-    std::string value;
-    std::string path;
-    std::string domain;
-    WDateTime expires;
-    bool secure;
+            void setJSSynced(bool invisibleToo);
 
-    CookieValue();
-    CookieValue(const std::string& v, const std::string& p,
-		const std::string& d, const WDateTime& e, bool secure);
-  };
+            void setStatelessSlotNotStateless()
+            {
+                currentStatelessSlotIsActuallyStateless_ = false;
+            }
 
-  WebSession& session_;
+            // Keep stubbed widget in vector marking it as stubbed,
+            // so we don't discard the JavaScript effects of a stateless
+            // slot executed before the widget was unstubbed.
+            void markAsStubbed(const WWidget * widget);
 
-  bool visibleOnly_, rendered_, initialStyleRendered_;
-  int twoPhaseThreshold_, pageId_, expectedAckId_, scriptId_, ackErrs_;
-  int linkedCssCount_;
-  std::string solution_;
+            // Check whether the given object (which should be a widget)
+            // was marked as stubbed.
+            bool wasStubbed(const WObject * widget) const;
 
-  bool currentStatelessSlotIsActuallyStateless_;
+        private:
+            struct CookieValue
+            {
+                std::string value;
+                std::string path;
+                std::string domain;
+                WDateTime expires;
+                bool secure;
 
-  std::map<std::string, CookieValue> cookiesToSet_;
+                CookieValue();
+                CookieValue(const std::string & v, const std::string & p,
+                            const std::string & d, const WDateTime & e, bool secure);
+            };
 
-  FormObjectsMap currentFormObjects_;
-  std::string currentFormObjectsList_;
-  bool formObjectsChanged_;
-  bool updateLayout_;
+            WebSession & session_;
 
-  std::vector<int> wsRequestsToHandle_;
-  bool multiSessionCookieUpdateNeeded_;
+            bool visibleOnly_, rendered_, initialStyleRendered_;
+            int twoPhaseThreshold_, pageId_, expectedAckId_, scriptId_, ackErrs_;
+            int linkedCssCount_;
+            std::string solution_;
 
-  // A vector of all widgets that were stubbed.
-  // Kept around until the first event after they're unstubbed,
-  // then the vector is cleared.
-  std::vector<const WWidget*> stubbedWidgets_;
+            bool currentStatelessSlotIsActuallyStateless_;
 
-  void setHeaders(WebResponse& request, const std::string mimeType);
-  void setCaching(WebResponse& response, bool allowCache);
+            std::map<std::string, CookieValue> cookiesToSet_;
 
-  void serveJavaScriptUpdate(WebResponse& response);
-  void serveMainscript(WebResponse& response);
-  void serveBootstrap(WebResponse& request);
-  void serveMainpage(WebResponse& response);
-  void serveMainAjax(WStringStream& out);
-  void serveWidgetSet(WebResponse& request);
-  void collectJavaScript();
+            FormObjectsMap currentFormObjects_;
+            std::string currentFormObjectsList_;
+            bool formObjectsChanged_;
+            bool updateLayout_;
 
-  void collectChanges(std::vector<DomElement *>& changes);
+            std::vector<int> wsRequestsToHandle_;
+            bool multiSessionCookieUpdateNeeded_;
 
-  void collectJavaScriptUpdate(WStringStream& out);
-  void loadStyleSheet(WStringStream& out, WApplication *app,
-		      const WLinkedCssStyleSheet& sheet);
-  void loadStyleSheets(WStringStream& out, WApplication *app);
-  void removeStyleSheets(WStringStream& out, WApplication *app);
-  int loadScriptLibraries(WStringStream& out, WApplication *app,
-			  int count = -1);
-  void updateLoadIndicator(WStringStream& out, WApplication *app, bool all);
-  void renderSetServerPush(WStringStream& out);
-  void renderStyleSheet(WStringStream& out, const WLinkedCssStyleSheet& sheet,
-			WApplication *app);
+            // A vector of all widgets that were stubbed.
+            // Kept around until the first event after they're unstubbed,
+            // then the vector is cleared.
+            std::vector<const WWidget *> stubbedWidgets_;
 
-  std::string createFormObjectsList(WApplication *app);
+            void setHeaders(WebResponse & request, const std::string mimeType);
+            void setCaching(WebResponse & response, bool allowCache);
 
-  void preLearnStateless(WApplication *app, WStringStream& out);
-  WStringStream collectedJS1_, collectedJS2_, invisibleJS_, statelessJS_,
-    beforeLoadJS_;
-  void collectJS(WStringStream *js);
+            void serveJavaScriptUpdate(WebResponse & response);
+            void serveMainscript(WebResponse & response);
+            void serveBootstrap(WebResponse & request);
+            void serveMainpage(WebResponse & response);
+            void serveMainAjax(WStringStream & out);
+            void serveWidgetSet(WebResponse & request);
+            void collectJavaScript();
 
-  void setPageVars(FileServe& page);
-  void streamBootContent(WebResponse& response, 
-			 FileServe& boot, bool hybrid);
-  void addResponseAckPuzzle(WStringStream& out);
-  void addContainerWidgets(WWebWidget *w,
-			   std::vector<WContainerWidget *>& v);
+            void collectChanges(std::vector<DomElement *> & changes);
 
-  std::string headDeclarations() const;
-  std::string bodyClassRtl() const;
-  std::string sessionUrl() const;
+            void collectJavaScriptUpdate(WStringStream & out);
+            void loadStyleSheet(WStringStream & out, WApplication * app,
+                                const WLinkedCssStyleSheet & sheet);
+            void loadStyleSheets(WStringStream & out, WApplication * app);
+            void removeStyleSheets(WStringStream & out, WApplication * app);
+            int loadScriptLibraries(WStringStream & out, WApplication * app,
+                                    int count = -1);
+            void updateLoadIndicator(WStringStream & out, WApplication * app, bool all);
+            void renderSetServerPush(WStringStream & out);
+            void renderStyleSheet(WStringStream & out, const WLinkedCssStyleSheet & sheet,
+                                  WApplication * app);
 
-  typedef std::set<WWidget *> UpdateMap;
-  UpdateMap updateMap_;
-  bool learning_, learningIncomplete_, moreUpdates_;
+            std::string createFormObjectsList(WApplication * app);
 
-  std::string safeJsStringLiteral(const std::string& value);
+            void preLearnStateless(WApplication * app, WStringStream & out);
+            WStringStream collectedJS1_, collectedJS2_, invisibleJS_, statelessJS_,
+                          beforeLoadJS_;
+            void collectJS(WStringStream * js);
 
-  void addWsRequestId(int wsRqId);
-  void renderWsRequestsDone(WStringStream &out);
+            void setPageVars(FileServe & page);
+            void streamBootContent(WebResponse & response,
+                                   FileServe & boot, bool hybrid);
+            void addResponseAckPuzzle(WStringStream & out);
+            void addContainerWidgets(WWebWidget * w,
+                                     std::vector<WContainerWidget *> & v);
 
-  void updateMultiSessionCookie(const WebRequest &request);
-  void renderMultiSessionCookieUpdate(WStringStream &out);
+            std::string headDeclarations() const;
+            std::string bodyClassRtl() const;
+            std::string sessionUrl() const;
 
-  // If we're already past the loading phase, and the first non-load
-  // event was handled, we can clear the vector of stubbed widgets
-  void clearStubbedWidgets();
+            typedef std::set<WWidget *> UpdateMap;
+            UpdateMap updateMap_;
+            bool learning_, learningIncomplete_, moreUpdates_;
 
-public:
-  virtual std::string learn(WStatelessSlot* slot) final override;
+            std::string safeJsStringLiteral(const std::string & value);
 
-  friend class WApplication;
-  friend class WebSession;
-};
+            void addWsRequestId(int wsRqId);
+            void renderWsRequestsDone(WStringStream & out);
+
+            void updateMultiSessionCookie(const WebRequest & request);
+            void renderMultiSessionCookieUpdate(WStringStream & out);
+
+            // If we're already past the loading phase, and the first non-load
+            // event was handled, we can clear the vector of stubbed widgets
+            void clearStubbedWidgets();
+
+        public:
+            virtual std::string learn(WStatelessSlot * slot) final override;
+
+            friend class WApplication;
+            friend class WebSession;
+    };
 
 }
 

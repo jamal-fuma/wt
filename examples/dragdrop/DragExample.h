@@ -14,8 +14,8 @@ using namespace Wt;
 /// Class demonstrating drag and drop in Wt
 class DragExample: public WContainerWidget
 {
- public:
-  DragExample();
+    public:
+        DragExample();
 };
 
 #endif

@@ -15,48 +15,52 @@
 
 #include "MimeTypes.h"
 
-namespace http {
-namespace server {
-namespace mime_types {
-
-struct mapping
+namespace http
 {
-  const char *extension;
-  const char * mime_type;
-} mappings[] =
-{
-  { "css", "text/css" },
-  { "gif", "image/gif" },
-  { "htm", "text/html" },
-  { "html", "text/html" },
-  { "jpg", "image/jpeg" },
-  { "png", "image/png" },
-  { "js", "text/javascript" },
-  { "oga", "audio/ogg" },
-  { "ogg", "audio/ogg" },
-  { "ogv", "video/ogg" },
-  { "swf", "application/x-shockwave-flash" },
-  { "mp4", "video/mp4" },
-  { "mv4", "video/mp4" },
-  { "mp3", "audio/mp3" },
-  { "svg", "image/svg+xml" },
-  { "webm", "video/webm" },
-  { "xml", "application/xml" },
-  { "pdf", "application/pdf" },
-  { 0, 0 } // Marks end of list.
-};
+    namespace server
+    {
+        namespace mime_types
+        {
 
-const char *extensionToType(const std::string& extension)
-{
-  for (mapping* m = mappings; m->extension; ++m) {
-    if (m->extension == extension) {
-      return m->mime_type;
-    }
-  }
+            struct mapping
+            {
+                const char * extension;
+                const char * mime_type;
+            } mappings[] =
+            {
+                { "css", "text/css" },
+                { "gif", "image/gif" },
+                { "htm", "text/html" },
+                { "html", "text/html" },
+                { "jpg", "image/jpeg" },
+                { "png", "image/png" },
+                { "js", "text/javascript" },
+                { "oga", "audio/ogg" },
+                { "ogg", "audio/ogg" },
+                { "ogv", "video/ogg" },
+                { "swf", "application/x-shockwave-flash" },
+                { "mp4", "video/mp4" },
+                { "mv4", "video/mp4" },
+                { "mp3", "audio/mp3" },
+                { "svg", "image/svg+xml" },
+                { "webm", "video/webm" },
+                { "xml", "application/xml" },
+                { "pdf", "application/pdf" },
+                { 0, 0 } // Marks end of list.
+            };
 
-  return "application/octet-stream";
-}
+            const char * extensionToType(const std::string & extension)
+            {
+                for(mapping * m = mappings; m->extension; ++m)
+                {
+                    if(m->extension == extension)
+                    {
+                        return m->mime_type;
+                    }
+                }
+                return "application/octet-stream";
+            }
 
-} // namespace mime_types
-} // namespace server
+        } // namespace mime_types
+    } // namespace server
 } // namespace http

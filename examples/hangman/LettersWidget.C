@@ -15,47 +15,56 @@
 using namespace Wt;
 
 LettersWidget::LettersWidget()
-  : WCompositeWidget()
+    : WCompositeWidget()
 {
-  impl_ = new WTable();
-  setImplementation(std::unique_ptr<WTable>(impl_));
-
-  impl_->resize(13*30, WLength::Auto);
-
-  for (unsigned int i = 0; i < 26; ++i) {
-    std::string c(1, 'A' + i);
-    WPushButton *character
-        = impl_->elementAt(i / 13, i % 13)->addWidget(cpp14::make_unique<WPushButton>(c));
-    letterButtons_.push_back(character);
-    character->resize(WLength(30), WLength::Auto);
-
-    character->clicked().connect
-      (std::bind(&LettersWidget::processButton, this, character));
-
-	WApplication::instance()->globalKeyPressed().connect
-	  (std::bind(&LettersWidget::processButtonPushed, this, std::placeholders::_1, character));
-  }
+    impl_ = new WTable();
+    setImplementation(std::unique_ptr<WTable>(impl_));
+    impl_->resize(13*30, WLength::Auto);
+    for(unsigned int i = 0; i < 26; ++i)
+    {
+        std::string c(1, 'A' + i);
+        WPushButton * character
+            = impl_->elementAt(i / 13, i % 13)->addWidget(cpp14::make_unique<WPushButton>(c));
+        letterButtons_.push_back(character);
+        character->resize(WLength(30), WLength::Auto);
+        character->clicked().connect
+        (std::bind(&LettersWidget::processButton, this, character));
+        connections_.push_back(WApplication::instance()->globalKeyPressed().connect
+                               (std::bind(&LettersWidget::processButtonPushed, this, std::placeholders::_1, character)));
+    }
 }
 
-void LettersWidget::processButton(WPushButton *b)
+LettersWidget::~LettersWidget()
 {
-  b->disable();
-  letterPushed_.emit(b->text().toUTF8()[0]);
+    for(auto & connection : connections_)
+    {
+        connection.disconnect();
+    }
 }
 
-void LettersWidget::processButtonPushed(const WKeyEvent &e, WPushButton *b)
+void LettersWidget::processButton(WPushButton * b)
 {
-  if(isHidden())
-	  return;
+    b->disable();
+    letterPushed_.emit(b->text().toUTF8()[0]);
+}
 
-  if(e.key() == static_cast<Key>(b->text().toUTF8()[0]))
-    processButton(b);
+void LettersWidget::processButtonPushed(const WKeyEvent & e, WPushButton * b)
+{
+    if(isHidden())
+    {
+        return;
+    }
+    if(e.key() == static_cast<Key>(b->text().toUTF8()[0]))
+    {
+        processButton(b);
+    }
 }
 
 void LettersWidget::reset()
 {
-  for (auto& letterButton : letterButtons_)
-    letterButton->enable();
-
-  show();
+    for(auto & letterButton : letterButtons_)
+    {
+        letterButton->enable();
+    }
+    show();
 }

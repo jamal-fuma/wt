@@ -11,12 +11,12 @@
 
 class CoderApplication : public Wt::WApplication
 {
-public:
-  CoderApplication(const Wt::WEnvironment& environment);
+    public:
+        CoderApplication(const Wt::WEnvironment & environment);
 
-private:
-  void handlePathChange();
-  void createUI(const std::string& path);
+    private:
+        void handlePathChange();
+        void createUI(const std::string & path);
 };
 
 #endif // CODER_APPLICATION_H_

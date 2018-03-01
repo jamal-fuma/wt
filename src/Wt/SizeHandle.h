@@ -7,14 +7,16 @@
 #ifndef WT_SIZE_HANDLE_H_
 #define WT_SIZE_HANDLE_H_
 
-namespace Wt {
+namespace Wt
+{
 
-  class WApplication;
+    class WApplication;
 
-  class SizeHandle {
-  public:
-    static void loadJavaScript(WApplication *app);
-  };
+    class SizeHandle
+    {
+        public:
+            static void loadJavaScript(WApplication * app);
+    };
 }
 
 #endif // WT_SIZE_HANDLE_H_

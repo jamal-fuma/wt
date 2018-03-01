@@ -9,105 +9,109 @@
 #include "Wt/WPopupWidget.h"
 
 #ifndef WT_DEBUG_JS
-#include "js/WPopupWidget.min.js"
+    #include "js/WPopupWidget.min.js"
 #endif
 
-namespace Wt {
-
-WPopupWidget::WPopupWidget(std::unique_ptr<WWidget> impl)
-  : anchorWidget_(nullptr),
-    orientation_(Orientation::Vertical),
-    transient_(false),
-    autoHideDelay_(0),
-    jsHidden_(impl.get(), "hidden"),
-    jsShown_(impl.get(), "shown")
+namespace Wt
 {
-  setImplementation(std::move(impl));
 
-  WApplication::instance()->addGlobalWidget(this);
+    WPopupWidget::WPopupWidget(std::unique_ptr<WWidget> impl)
+        : anchorWidget_(nullptr),
+          orientation_(Orientation::Vertical),
+          transient_(false),
+          autoHideDelay_(0),
+          jsHidden_(impl.get(), "hidden"),
+          jsShown_(impl.get(), "shown")
+    {
+        setImplementation(std::move(impl));
+        WApplication::instance()->addGlobalWidget(this);
+        hide();
+        setPopup(true);
+        setPositionScheme(PositionScheme::Absolute);
+        jsHidden_.connect(this, &WWidget::hide);
+        jsShown_.connect(this, &WWidget::show);
+        WApplication::instance()->internalPathChanged().connect(this, &WPopupWidget::onPathChange);
+    }
 
-  hide();
-  setPopup(true);
-  setPositionScheme(PositionScheme::Absolute);
+    WPopupWidget::~WPopupWidget()
+    {
+        WApplication::instance()->removeGlobalWidget(this);
+    }
 
-  jsHidden_.connect(this, &WWidget::hide);
-  jsShown_.connect(this, &WWidget::show);
+    void WPopupWidget::setAnchorWidget(WWidget * anchorWidget,
+                                       Orientation orientation)
+    {
+        anchorWidget_ = anchorWidget;
+        orientation_ = orientation;
+    }
 
-  WApplication::instance()->internalPathChanged()
-    .connect(this, &WWidget::hide);
-}
+    void WPopupWidget::setTransient(bool isTransient, int autoHideDelay)
+    {
+        transient_ = isTransient;
+        autoHideDelay_ = autoHideDelay;
+        if(isRendered())
+        {
+            WStringStream ss;
+            ss << "jQuery.data(" << jsRef() << ", 'popup').setTransient("
+               << transient_ << ',' << autoHideDelay_ << ");";
+            doJavaScript(ss.str());
+        }
+    }
 
-WPopupWidget::~WPopupWidget()
-{
-  WApplication::instance()->removeGlobalWidget(this);
-}
+    void WPopupWidget::onPathChange()
+    {
+        hide();
+    }
 
-void WPopupWidget::setAnchorWidget(WWidget *anchorWidget,
-				   Orientation orientation)
-{
-  anchorWidget_ = anchorWidget;
-  orientation_ = orientation;
-}
+    void WPopupWidget::setHidden(bool hidden, const WAnimation & animation)
+    {
+        if(WWebWidget::canOptimizeUpdates() && hidden == isHidden())
+        {
+            return;
+        }
+        WCompositeWidget::setHidden(hidden, animation);
+        if(!hidden && anchorWidget_)
+        {
+            positionAt(anchorWidget_.get(), orientation_);
+        }
+        if(hidden)
+        {
+            this->hidden().emit();
+        }
+        else
+        {
+            this->shown().emit();
+        }
+        if(!WWebWidget::canOptimizeUpdates() || isRendered())
+        {
+            if(hidden)
+                doJavaScript("var o = jQuery.data(" + jsRef() + ", 'popup');"
+                             "if (o) o.hidden();");
+            else
+                doJavaScript("var o = jQuery.data(" + jsRef() + ", 'popup');"
+                             "if (o) o.shown();");
+        }
+    }
 
-void WPopupWidget::setTransient(bool isTransient, int autoHideDelay)
-{
-  transient_ = isTransient;
-  autoHideDelay_ = autoHideDelay;
-  if (isRendered()) {
-    WStringStream ss;
-    ss << "jQuery.data(" << jsRef() << ", 'popup').setTransient("
-       << transient_ << ',' << autoHideDelay_ << ");";
-    doJavaScript(ss.str());
-  }
-}
+    void WPopupWidget::defineJS()
+    {
+        WApplication * app = WApplication::instance();
+        LOAD_JAVASCRIPT(app, "js/WPopupWidget.js", "WPopupWidget", wtjs1);
+        WStringStream jsObj;
+        jsObj << "new " WT_CLASS ".WPopupWidget("
+              << app->javaScriptClass() << ',' << jsRef() << ','
+              << transient_ << ',' << autoHideDelay_ << ','
+              << !isHidden() << ");";
+        setJavaScriptMember(" WPopupWidget", jsObj.str());
+    }
 
-void WPopupWidget::setHidden(bool hidden, const WAnimation& animation)
-{
-  if (WWebWidget::canOptimizeUpdates() && hidden == isHidden())
-    return;
-
-  WCompositeWidget::setHidden(hidden, animation);
-
-  if (!hidden && anchorWidget_)
-    positionAt(anchorWidget_.get(), orientation_);
-
-  if (hidden)
-    this->hidden().emit();
-  else
-    this->shown().emit();
-
-  if (!WWebWidget::canOptimizeUpdates() || isRendered()) {
-    if (hidden)
-      doJavaScript("var o = jQuery.data(" + jsRef() + ", 'popup');"
-		   "if (o) o.hidden();");
-    else
-      doJavaScript("var o = jQuery.data(" + jsRef() + ", 'popup');"
-		   "if (o) o.shown();");
-  }
-}
-
-void WPopupWidget::defineJS()
-{
-  WApplication *app = WApplication::instance();
-
-  LOAD_JAVASCRIPT(app, "js/WPopupWidget.js", "WPopupWidget", wtjs1);
-
-  WStringStream jsObj;
-
-  jsObj << "new " WT_CLASS ".WPopupWidget("
-	<< app->javaScriptClass() << ',' << jsRef() << ','
-	<< transient_ << ',' << autoHideDelay_ << ','
-	<< !isHidden() << ");";
-
-  setJavaScriptMember(" WPopupWidget", jsObj.str());
-}
-
-void WPopupWidget::render(WFlags<RenderFlag> flags)
-{
-  if (flags.test(RenderFlag::Full))
-    defineJS();
-
-  WCompositeWidget::render(flags);
-}
+    void WPopupWidget::render(WFlags<RenderFlag> flags)
+    {
+        if(flags.test(RenderFlag::Full))
+        {
+            defineJS();
+        }
+        WCompositeWidget::render(flags);
+    }
 
 }

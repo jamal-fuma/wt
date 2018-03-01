@@ -10,39 +10,41 @@
 #include <Wt/WStackedWidget.h>
 #include <Wt/WTemplate.h>
 
-namespace Wt {
-  class WLineEdit;
-  class WPushButton;
-  namespace Dbo {
-    class Session;
-  }
+namespace Wt
+{
+    class WLineEdit;
+    class WPushButton;
+    namespace Dbo
+    {
+        class Session;
+    }
 }
 
 class EditUsers : public Wt::WTemplate
 {
-public:
-  EditUsers(Wt::Dbo::Session& aSesssion, const std::string& basePath);
-private:
-  void onUserClicked(Wt::Dbo::dbo_traits<User>::IdType id);
-  void limitList();
+    public:
+        EditUsers(Wt::Dbo::Session & aSesssion, const std::string & basePath);
+    private:
+        void onUserClicked(Wt::Dbo::dbo_traits<User>::IdType id);
+        void limitList();
 
-  Wt::Dbo::Session  &session_;
-  std::string    basePath_;
-  Wt::WLineEdit     *limitEdit_;
+        Wt::Dbo::Session & session_;
+        std::string    basePath_;
+        Wt::WLineEdit   *  limitEdit_;
 };
 
 class EditUser : public Wt::WTemplate
 {
-public:
-  EditUser(Wt::Dbo::Session& aSesssion);
-  void switchUser(Wt::Dbo::ptr<User> target);
-private:
-  void bindTemplate();
-  void switchRole();
+    public:
+        EditUser(Wt::Dbo::Session & aSesssion);
+        void switchUser(Wt::Dbo::ptr<User> target);
+    private:
+        void bindTemplate();
+        void switchRole();
 
-  Wt::Dbo::Session   &session_;
-  Wt::Dbo::ptr<User>  target_;
-  Wt::WPushButton    *roleButton_;
+        Wt::Dbo::Session  & session_;
+        Wt::Dbo::ptr<User>  target_;
+        Wt::WPushButton  *  roleButton_;
 };
 
 #endif

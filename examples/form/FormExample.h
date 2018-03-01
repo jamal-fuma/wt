@@ -10,8 +10,9 @@
 
 #include <Wt/WContainerWidget.h>
 
-namespace Wt {
-  class WText;
+namespace Wt
+{
+    class WText;
 }
 
 using namespace Wt;
@@ -28,19 +29,19 @@ using namespace Wt;
  */
 class FormExample : public WContainerWidget
 {
-public:
-  /*!\brief Instantiate a new form example.
-   */
-  FormExample();
+    public:
+        /*!\brief Instantiate a new form example.
+         */
+        FormExample();
 
-private:
-  std::vector<WText *> languageSelects_;
+    private:
+        std::vector<WText *> languageSelects_;
 
-  /*!\brief Change the language.
-   */
-  void changeLanguage(WText *t);
+        /*!\brief Change the language.
+         */
+        void changeLanguage(WText * t);
 
-  void setLanguage(const std::string lang);
+        void setLanguage(const std::string lang);
 };
 
 /*@}*/

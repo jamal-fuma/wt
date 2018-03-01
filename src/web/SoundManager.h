@@ -9,28 +9,29 @@
 
 #include <Wt/WMediaPlayer.h>
 
-namespace Wt {
-
-class WApplication;
-class WSound;
-
-class SoundManager : public WMediaPlayer
+namespace Wt
 {
-public:
-  SoundManager();
 
-  void add(WSound *sound);
-  void play(WSound *sound, int loops);
-  void stop(WSound *sound);
+    class WApplication;
+    class WSound;
 
-  bool isFinished(WSound *sound) const;
-  virtual void refresh() override;
+    class SoundManager : public WMediaPlayer
+    {
+        public:
+            SoundManager();
 
-private:
-  WSound *current_;
+            void add(WSound * sound);
+            void play(WSound * sound, int loops);
+            void stop(WSound * sound);
 
-  void setup(WSound *sound);
-};
+            bool isFinished(WSound * sound) const;
+            virtual void refresh() override;
+
+        private:
+            WSound * current_;
+
+            void setup(WSound * sound);
+    };
 
 }
 

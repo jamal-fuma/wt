@@ -31,70 +31,82 @@ using namespace Wt;
  */
 class Popup : public WObject
 {
-public:
-  /*! \brief Popup type.
-   */
-  enum Type { Confirm, Alert, Prompt };
+    public:
+        /*! \brief Popup type.
+         */
+        enum Type { Confirm, Alert, Prompt };
 
-  /*! \brief Popup constructor.
-   */
-  Popup(Type t, const WString& message, const std::string defaultValue);
+        /*! \brief Popup constructor.
+         */
+        Popup(Type t, const WString & message, const std::string defaultValue);
 
-  /*! \brief Create a confirm dialog.
-   */
-  static std::unique_ptr<Popup> createConfirm(const WString& message);
+        /*! \brief Create a confirm dialog.
+         */
+        static std::unique_ptr<Popup> createConfirm(const WString & message);
 
-  /*! \brief Create a prompt dialog with the given default value
-   */
-  static std::unique_ptr<Popup> createPrompt(const WString& message,
-                             const std::string defaultValue);
+        /*! \brief Create a prompt dialog with the given default value
+         */
+        static std::unique_ptr<Popup> createPrompt(const WString & message,
+                const std::string defaultValue);
 
-  /*! \brief Create an alert dialog.
-   */
-  static std::unique_ptr<Popup> createAlert(const WString& message);
+        /*! \brief Create an alert dialog.
+         */
+        static std::unique_ptr<Popup> createAlert(const WString & message);
 
-  /*! \brief Change the message
-   */
-  void setMessage(const WString& message);
+        /*! \brief Change the message
+         */
+        void setMessage(const WString & message);
 
-  /*! \brief Change the default value for a prompt dialog.
-   */
-  void setDefaultValue(const std::string defaultValue);
+        /*! \brief Change the default value for a prompt dialog.
+         */
+        void setDefaultValue(const std::string defaultValue);
 
-  /*! \brief Get the current message.
-   */
-  const WString& message() const { return message_; }
+        /*! \brief Get the current message.
+         */
+        const WString & message() const
+        {
+            return message_;
+        }
 
-  /*! \brief Get the default value for a prompt dialog.
-   */
-  const std::string& defaultValue() const { return defaultValue_; }
+        /*! \brief Get the default value for a prompt dialog.
+         */
+        const std::string & defaultValue() const
+        {
+            return defaultValue_;
+        }
 
-  /*! \brief Show the dialog.
-   *
-   * Use show.exec() to show the dialog, or connect the slot to an EventSignal
-   * to directly show the dialog without a server round trip.
-   */
-  JSlot show;
+        /*! \brief Show the dialog.
+         *
+         * Use show.exec() to show the dialog, or connect the slot to an EventSignal
+         * to directly show the dialog without a server round trip.
+         */
+        JSlot show;
 
-  /*! \brief Signal emitted when ok pressed.
-   */
-  JSignal<std::string>& okPressed() { return okPressed_; }
+        /*! \brief Signal emitted when ok pressed.
+         */
+        JSignal<std::string> & okPressed()
+        {
+            return okPressed_;
+        }
 
-  /*! \brief Signal emitted when cancel is pressed.
-   */
-  JSignal<>&        cancelPressed() { return cancelPressed_; }
+        /*! \brief Signal emitted when cancel is pressed.
+         */
+        JSignal<>    &    cancelPressed()
+        {
+            return cancelPressed_;
+        }
 
-private:
-  JSignal<std::string>  okPressed_;
-  JSignal<>             cancelPressed_;
+    private:
+        JSignal<std::string>  okPressed_;
+        JSignal<>             cancelPressed_;
 
-  Type t_;
-  WString message_;
-  std::string defaultValue_;
+        Type t_;
+        WString message_;
+        std::string defaultValue_;
 
-  /*! \brief Update the javascript code.
-   */
-  void setJavaScript();
+        /*! \brief Update the javascript code.
+         */
+        void setJavaScript();
 };
 
 /*@}*/

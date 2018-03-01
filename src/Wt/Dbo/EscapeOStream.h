@@ -9,12 +9,14 @@
 
 #include "StringStream.h"
 
-namespace Wt {
-  namespace Dbo {
+namespace Wt
+{
+    namespace Dbo
+    {
 
 #include "../../web/EscapeOStream.h"
 
-  }
+    }
 }
 
 #endif // WT_DBO_ESCAPE_OSTREAM_H_

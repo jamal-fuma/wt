@@ -10,199 +10,209 @@
 #include <Wt/WFormWidget.h>
 #include <Wt/WText.h>
 
-namespace Wt {
-
-class WLabel;
-
-/*! \brief An abstract base class for radio buttons and check boxes.
- *
- * A toggle button provides a button with a boolean state (checked or
- * unchecked), and a text label.
- *
- * To act on a change of the state, either connect a slot to the changed()
- * signal, or connect a slot to the checked() or unChecked() signals.
- *
- * The current state (checked or unchecked) may be inspected using the
- * isChecked() method.
- */
-class WT_API WAbstractToggleButton : public WFormWidget
+namespace Wt
 {
-protected:
-  /*! \brief Creates an unchecked toggle button without label.
-   */
-  WAbstractToggleButton();
 
-  /*! \brief Creates an unchecked toggle button with given text label.
-   *
-   * The text label is rendered to the right side of the button.
-   */
-  WAbstractToggleButton(const WString& text);
+    class WLabel;
 
-public:
-  /*! \brief Destructor.
-   */
-  virtual ~WAbstractToggleButton();
+    /*! \brief An abstract base class for radio buttons and check boxes.
+     *
+     * A toggle button provides a button with a boolean state (checked or
+     * unchecked), and a text label.
+     *
+     * To act on a change of the state, either connect a slot to the changed()
+     * signal, or connect a slot to the checked() or unChecked() signals.
+     *
+     * The current state (checked or unchecked) may be inspected using the
+     * isChecked() method.
+     */
+    class WT_API WAbstractToggleButton : public WFormWidget
+    {
+        protected:
+            /*! \brief Creates an unchecked toggle button without label.
+             */
+            WAbstractToggleButton();
 
-  /*! \brief Sets the label text.
-   *
-   * The label is rendered to the right of the button.
-   */
-  void setText(const WString& text);
+            /*! \brief Creates an unchecked toggle button with given text label.
+             *
+             * The text label is rendered to the right side of the button.
+             */
+            WAbstractToggleButton(const WString & text);
 
-  /*! \brief Returns the label text.
-   *
-   * \sa setText()
-   */
-  const WString text() const { return text_.text; }
+        public:
+            /*! \brief Destructor.
+             */
+            virtual ~WAbstractToggleButton();
 
-  /*! \brief Sets the text format.
-   *
-   * The textFormat controls how the string should be interpreted:
-   * either as plain text, which is displayed literally, or as
-   * XHTML-markup.
-   *
-   * When changing the textFormat to Wt::TextFormat::XHTML, and the
-   * current text is literal (not created using WString::tr()), the
-   * current text is parsed using an XML parser which discards
-   * malicious tags and attributes silently. When the parser
-   * encounters an XML parse error, the textFormat is left unchanged,
-   * and this method returns false.
-   *
-   * Returns whether the textFormat could be set for the current text.
-   *
-   * The default format is Wt::TextFormat::Plain.
-   */
-  bool setTextFormat(TextFormat format);
+            /*! \brief Sets the label text.
+             *
+             * The label is rendered to the right of the button.
+             */
+            void setText(const WString & text);
 
-  /*! \brief Returns the text format.
-   *
-   * \sa setTextFormat()
-   */
-  TextFormat textFormat() const { return text_.format; }
+            /*! \brief Returns the label text.
+             *
+             * \sa setText()
+             */
+            const WString text() const
+            {
+                return text_.text;
+            }
 
-  /*! \brief Returns the button state.
-   *
-   * \sa setChecked()
-   */
-  bool isChecked() const { return state_ == CheckState::Checked; }
+            /*! \brief Sets the text format.
+             *
+             * The textFormat controls how the string should be interpreted:
+             * either as plain text, which is displayed literally, or as
+             * XHTML-markup.
+             *
+             * When changing the textFormat to Wt::TextFormat::XHTML, and the
+             * current text is literal (not created using WString::tr()), the
+             * current text is parsed using an XML parser which discards
+             * malicious tags and attributes silently. When the parser
+             * encounters an XML parse error, the textFormat is left unchanged,
+             * and this method returns false.
+             *
+             * Returns whether the textFormat could be set for the current text.
+             *
+             * The default format is Wt::TextFormat::Plain.
+             */
+            bool setTextFormat(TextFormat format);
 
-  /*! \brief Sets the button state.
-   *
-   * This method does not emit one of the checked() or unChecked()
-   * signals.
-   *
-   * \sa setChecked(), setUnChecked()
-   */
-  void setChecked(bool checked);
+            /*! \brief Returns the text format.
+             *
+             * \sa setTextFormat()
+             */
+            TextFormat textFormat() const
+            {
+                return text_.format;
+            }
 
-  /*! \brief Checks the button.
-   *
-   * Does not emit the checked() signal.
-   *
-   * \sa setChecked(bool)
-   */
-  virtual void setChecked();
+            /*! \brief Returns the button state.
+             *
+             * \sa setChecked()
+             */
+            bool isChecked() const
+            {
+                return state_ == CheckState::Checked;
+            }
 
-  /*! \brief Unchecks the button.
-   *
-   * Does not emit the unChecked() signal.
-   *
-   * \sa setChecked(bool)
-   */
-  virtual void setUnChecked();
+            /*! \brief Sets the button state.
+             *
+             * This method does not emit one of the checked() or unChecked()
+             * signals.
+             *
+             * \sa setChecked(), setUnChecked()
+             */
+            void setChecked(bool checked);
 
-  /*! \brief Returns the current value.
-   *
-   * Returns "yes" when checked, "maybe" when partially checked, and 
-   * "no" when unchecked.
-   */
-  virtual WT_USTRING valueText() const override;
+            /*! \brief Checks the button.
+             *
+             * Does not emit the checked() signal.
+             *
+             * \sa setChecked(bool)
+             */
+            virtual void setChecked();
 
-  /*! \brief Sets the current value.
-   *
-   * This interprets text values of "yes", "maybe" or "no".
-   */
-  virtual void setValueText(const WT_USTRING& text) override;
+            /*! \brief Unchecks the button.
+             *
+             * Does not emit the unChecked() signal.
+             *
+             * \sa setChecked(bool)
+             */
+            virtual void setUnChecked();
 
-  /*! \brief %Signal emitted when the button gets checked.
-   *
-   * This signal is emitted when the user checks the button.
-   *
-   * You can use the changed() signal to react to any change of the
-   * button state.
-   */
-  EventSignal<>& checked();
+            /*! \brief Returns the current value.
+             *
+             * Returns "yes" when checked, "maybe" when partially checked, and
+             * "no" when unchecked.
+             */
+            virtual WT_USTRING valueText() const override;
 
-  /*! \brief %Signal emitted when the button gets un-checked.
-   *
-   * This signal is emitted when the user unchecks the button.
-   *
-   * You can use the changed() signal to react to any change of the
-   * button state.
-   */
-  EventSignal<>& unChecked();
+            /*! \brief Sets the current value.
+             *
+             * This interprets text values of "yes", "maybe" or "no".
+             */
+            virtual void setValueText(const WT_USTRING & text) override;
 
-  virtual void refresh() override;
-  
-  /*! \brief Configures word wrapping.
-   *
-   * When \p wordWrap is \c true, the widget may break lines, creating a
-   * multi-line text. When \p wordWrap is \c false, the text will displayed
-   * on a single line, unless the text contains end-of-lines (for
-   * Wt::TextFormat::Plain) or &lt;br /&gt; tags or other block-level tags
-   * (for Wt::TextFormat::XHTML).
-   *
-   * The default value is \c false.
-   *
-   * \sa wordWrap()
-   */
-  void setWordWrap(bool wordWrap);
+            /*! \brief %Signal emitted when the button gets checked.
+             *
+             * This signal is emitted when the user checks the button.
+             *
+             * You can use the changed() signal to react to any change of the
+             * button state.
+             */
+            EventSignal<> & checked();
 
-  /*! \brief Returns whether word wrapping is on.
-   *
-   * \sa setWordWrap()
-   */
-  bool wordWrap() const;
+            /*! \brief %Signal emitted when the button gets un-checked.
+             *
+             * This signal is emitted when the user unchecks the button.
+             *
+             * You can use the changed() signal to react to any change of the
+             * button state.
+             */
+            EventSignal<> & unChecked();
 
-protected:
-  CheckState state_;
+            virtual void refresh() override;
 
-  virtual void updateInput(DomElement& input, bool all) = 0;
-  virtual void updateDom(DomElement& element, bool all) override;
-  virtual void getFormObjects(FormObjectsMap& formObjects) override;
-  virtual void setFormData(const FormData& formData) override;
-  virtual void propagateRenderOk(bool deep) override;
-  virtual DomElementType domElementType() const override;
-  virtual bool supportsIndeterminate(const WEnvironment& env) const;
-  virtual std::string formName() const override;
+            /*! \brief Configures word wrapping.
+             *
+             * When \p wordWrap is \c true, the widget may break lines, creating a
+             * multi-line text. When \p wordWrap is \c false, the text will displayed
+             * on a single line, unless the text contains end-of-lines (for
+             * Wt::TextFormat::Plain) or &lt;br /&gt; tags or other block-level tags
+             * (for Wt::TextFormat::XHTML).
+             *
+             * The default value is \c false.
+             *
+             * \sa wordWrap()
+             */
+            void setWordWrap(bool wordWrap);
 
-  virtual WStatelessSlot *getStateless(Method method) override;
+            /*! \brief Returns whether word wrapping is on.
+             *
+             * \sa setWordWrap()
+             */
+            bool wordWrap() const;
 
-private:
-  static const char *CHECKED_SIGNAL;
-  static const char *UNCHECKED_SIGNAL;
-  static const char *UNDETERMINATE_CLICK_SIGNAL;
+        protected:
+            CheckState state_;
 
-  WText::RichText text_;
+            virtual void updateInput(DomElement & input, bool all) = 0;
+            virtual void updateDom(DomElement & element, bool all) override;
+            virtual void getFormObjects(FormObjectsMap & formObjects) override;
+            virtual void setFormData(const FormData & formData) override;
+            virtual void propagateRenderOk(bool deep) override;
+            virtual DomElementType domElementType() const override;
+            virtual bool supportsIndeterminate(const WEnvironment & env) const;
+            virtual std::string formName() const override;
 
-  static const int BIT_NAKED = 0;
-  static const int BIT_STATE_CHANGED = 1;
-  static const int BIT_TEXT_CHANGED = 2;
-  static const int BIT_WORD_WRAP_CHANGED = 3;
-  static const int BIT_WORD_WRAP = 4;
+            virtual WStatelessSlot * getStateless(Method method) override;
 
-  std::bitset<5> flags_;
+        private:
+            static const char * CHECKED_SIGNAL;
+            static const char * UNCHECKED_SIGNAL;
+            static const char * UNDETERMINATE_CLICK_SIGNAL;
 
-  CheckState prevState_;
+            WText::RichText text_;
 
-  void undoSetChecked();
-  void undoSetUnChecked();
-  void setCheckState(CheckState state);
+            static const int BIT_NAKED = 0;
+            static const int BIT_STATE_CHANGED = 1;
+            static const int BIT_TEXT_CHANGED = 2;
+            static const int BIT_WORD_WRAP_CHANGED = 3;
+            static const int BIT_WORD_WRAP = 4;
 
-  friend class WCheckBox;
-  friend class WRadioButton;
-  friend class WButtonGroup;
-};
+            std::bitset<5> flags_;
+
+            CheckState prevState_;
+
+            void undoSetChecked();
+            void undoSetUnChecked();
+            void setCheckState(CheckState state);
+
+            friend class WCheckBox;
+            friend class WRadioButton;
+            friend class WButtonGroup;
+    };
 
 }
 

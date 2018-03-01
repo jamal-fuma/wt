@@ -21,25 +21,25 @@
 
 class CategoryExample: public Wt::WContainerWidget
 {
-public:
-  CategoryExample();
-  ~CategoryExample();
-  
-private:
-  void setUpData();
+    public:
+        CategoryExample();
+        ~CategoryExample();
 
-  Wt::WText *title_;
-  Wt::Chart::WCartesian3DChart *chart_;
+    private:
+        void setUpData();
 
-  std::shared_ptr<Wt::WAbstractItemModel> isotopeModel_;
-  std::shared_ptr<Wt::WAbstractItemModel> planeModel_;
-  std::shared_ptr<Wt::WAbstractItemModel> randomModel_;
-  std::shared_ptr<Wt::WAbstractItemModel> yPlaneModel0_;
-  std::shared_ptr<Wt::WAbstractItemModel> yPlaneModel_;
-  std::shared_ptr<Wt::WAbstractItemModel> xPlaneModel_;
-  std::shared_ptr<Wt::WAbstractItemModel> xPlaneModelColor_;
+        Wt::WText * title_;
+        Wt::Chart::WCartesian3DChart * chart_;
 
-  std::vector<Wt::Chart::WAbstractDataSeries3D*> series_;
+        std::shared_ptr<Wt::WAbstractItemModel> isotopeModel_;
+        std::shared_ptr<Wt::WAbstractItemModel> planeModel_;
+        std::shared_ptr<Wt::WAbstractItemModel> randomModel_;
+        std::shared_ptr<Wt::WAbstractItemModel> yPlaneModel0_;
+        std::shared_ptr<Wt::WAbstractItemModel> yPlaneModel_;
+        std::shared_ptr<Wt::WAbstractItemModel> xPlaneModel_;
+        std::shared_ptr<Wt::WAbstractItemModel> xPlaneModelColor_;
+
+        std::vector<Wt::Chart::WAbstractDataSeries3D *> series_;
 };
 
 #endif

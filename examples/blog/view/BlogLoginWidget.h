@@ -17,11 +17,11 @@ class BlogSession;
  */
 class BlogLoginWidget : public Wt::Auth::AuthWidget
 {
-public:
-  BlogLoginWidget(BlogSession& session, const std::string& basePath);
+    public:
+        BlogLoginWidget(BlogSession & session, const std::string & basePath);
 
-  virtual void createLoginView() override;
-  virtual void createLoggedInView() override;
+        virtual void createLoginView() override;
+        virtual void createLoggedInView() override;
 };
 
 #endif // BLOG_LOGIN_WIDGET_H_

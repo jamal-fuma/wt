@@ -18,28 +18,28 @@
  */
 class Attachment
 {
-public:
-  /*! \brief The file name.
-   */
-  std::u32string fileName;
+    public:
+        /*! \brief The file name.
+         */
+        std::u32string fileName;
 
-  /*! \brief The content description.
-   */
-  std::u32string contentDescription;
+        /*! \brief The content description.
+         */
+        std::u32string contentDescription;
 
-  /*! \brief the spooled file name.
-   */
-  std::string spoolFileName;
+        /*! \brief the spooled file name.
+         */
+        std::string spoolFileName;
 
-  /*! \brief Create an attachment.
-   */
-  Attachment(const std::u32string aFileName,
-             const std::u32string aContentDescription,
-	     const std::string aSpoolFileName)
-    : fileName(aFileName),
-      contentDescription(aContentDescription),
-      spoolFileName(aSpoolFileName)
-  { }
+        /*! \brief Create an attachment.
+         */
+        Attachment(const std::u32string aFileName,
+                   const std::u32string aContentDescription,
+                   const std::string aSpoolFileName)
+            : fileName(aFileName),
+              contentDescription(aContentDescription),
+              spoolFileName(aSpoolFileName)
+        { }
 };
 
 /*@}*/

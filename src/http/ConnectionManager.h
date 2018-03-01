@@ -20,43 +20,45 @@
 #include <set>
 #include "Connection.h" // On WIN32, must be before thread stuff
 #ifdef WT_THREADED
-#include <mutex>
+    #include <mutex>
 #endif // WT_THREADED
 
 
-namespace http {
-namespace server {
-
-/// Manages open connections so that they may be cleanly stopped when the server
-/// needs to shut down.
-class ConnectionManager
+namespace http
 {
-public:
-  ConnectionManager() = default;
+    namespace server
+    {
 
-  ConnectionManager(const ConnectionManager&) = delete;
-  ConnectionManager& operator=(const ConnectionManager&) = delete;
+        /// Manages open connections so that they may be cleanly stopped when the server
+        /// needs to shut down.
+        class ConnectionManager
+        {
+            public:
+                ConnectionManager() = default;
 
-  /// Add the specified connection to the manager and start it.
-  void start(ConnectionPtr c);
+                ConnectionManager(const ConnectionManager &) = delete;
+                ConnectionManager & operator=(const ConnectionManager &) = delete;
 
-  /// Stop the specified connection.
-  void stop(ConnectionPtr c);
+                /// Add the specified connection to the manager and start it.
+                void start(ConnectionPtr c);
 
-  /// Stop all connections.
-  void stopAll();
+                /// Stop the specified connection.
+                void stop(ConnectionPtr c);
 
-private:
-  /// The managed connections.
-  std::set<ConnectionPtr> connections_;
+                /// Stop all connections.
+                void stopAll();
+
+            private:
+                /// The managed connections.
+                std::set<ConnectionPtr> connections_;
 
 #ifdef WT_THREADED
-  /// Mutex to protect access to connections_
-  std::mutex mutex_;
+                /// Mutex to protect access to connections_
+                std::mutex mutex_;
 #endif // WT_THREADED
-};
+        };
 
-} // namespace server
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_CONNECTION_MANAGER_HPP

@@ -16,25 +16,25 @@ class QRTokenDatabase;
 
 class QRAuthWidget : public Auth::AuthWidget
 {
-public:
-  QRAuthWidget(Auth::Login& login);
+    public:
+        QRAuthWidget(Auth::Login & login);
 
-  void configureQRAuth(const QRAuthService& service, QRTokenDatabase& database);
+        void configureQRAuth(const QRAuthService & service, QRTokenDatabase & database);
 
-  virtual void processEnvironment();
-  virtual void createLoginView();
+        virtual void processEnvironment();
+        virtual void createLoginView();
 
-private:
-  const QRAuthService      *qrService_;
-  QRTokenDatabase          *qrDatabase_;
+    private:
+        const QRAuthService   *   qrService_;
+        QRTokenDatabase     *     qrDatabase_;
 
-  std::string               qrToken_;
-  std::unique_ptr<WDialog>  dialog_;
+        std::string               qrToken_;
+        std::unique_ptr<WDialog>  dialog_;
 
-  void confirmRemoteLogin();
-  void doRemoteLogin(StandardButton button);
-  void showQRDialog();
-  void dialogDone();
+        void confirmRemoteLogin();
+        void doRemoteLogin(StandardButton button);
+        void showQRDialog();
+        void dialogDone();
 };
 
 #endif // QR_AUTH_WIDGET

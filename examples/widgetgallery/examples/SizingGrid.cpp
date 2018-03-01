@@ -6,7 +6,7 @@
 SAMPLE_BEGIN(SizingGrid)
 auto parentContainer = cpp14::make_unique<WContainerWidget>();
 
-WLineEdit *edit =
+WLineEdit * edit =
     parentContainer->addWidget(cpp14::make_unique<WLineEdit>());
 edit->setEmptyText(".span8");
 edit->setStyleClass("span8");

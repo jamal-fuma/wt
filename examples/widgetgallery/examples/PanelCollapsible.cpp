@@ -10,7 +10,7 @@ panel->setCollapsible(true);
 
 Wt::WAnimation animation(Wt::AnimationEffect::SlideInFromTop,
                          Wt::TimingFunction::EaseOut,
-			 100);
+                         100);
 
 panel->setAnimation(animation);
 panel->setCentralWidget(Wt::cpp14::make_unique<Wt::WText>("This panel can be collapsed."));

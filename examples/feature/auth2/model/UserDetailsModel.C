@@ -12,15 +12,15 @@
 const WFormModel::Field
 UserDetailsModel::FavouritePetField = "favourite-pet";
 
-UserDetailsModel::UserDetailsModel(Session& session)
-  : WFormModel(),
-    session_(session)
+UserDetailsModel::UserDetailsModel(Session & session)
+    : WFormModel(),
+      session_(session)
 {
-  addField(FavouritePetField, WString::tr("favourite-pet-info"));
+    addField(FavouritePetField, WString::tr("favourite-pet-info"));
 }
 
-void UserDetailsModel::save(const Auth::User& authUser)
+void UserDetailsModel::save(const Auth::User & authUser)
 {
-  Dbo::ptr<User> user = session_.user(authUser);
-  user.modify()->favouritePet = valueText(FavouritePetField).toUTF8();
+    Dbo::ptr<User> user = session_.user(authUser);
+    user.modify()->favouritePet = valueText(FavouritePetField).toUTF8();
 }

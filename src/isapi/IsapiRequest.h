@@ -2,119 +2,130 @@
 #include <sstream>
 #include <httpext.h>
 
-namespace Wt {
-  namespace isapi {
-
-class IsapiServer;
-
-class IsapiRequest : public WebRequest
+namespace Wt
 {
-public:
-  IsapiRequest(LPEXTENSION_CONTROL_BLOCK ecb, IsapiServer *server,
-    bool forceSynchronous);
+    namespace isapi
+    {
 
-  ~IsapiRequest();
+        class IsapiServer;
 
-  // Signal ISAPI that this connection is to be closed and that we're
-  // done with it. The IsapiRequest object must be deleted after calling
-  // this method.
-  void abort();
+        class IsapiRequest : public WebRequest
+        {
+            public:
+                IsapiRequest(LPEXTENSION_CONTROL_BLOCK ecb, IsapiServer * server,
+                             bool forceSynchronous);
 
-  // Returns true if the HTTP request was received without errors
-  bool isGood();
+                ~IsapiRequest();
 
-  virtual bool isSynchronous() const;
+                // Signal ISAPI that this connection is to be closed and that we're
+                // done with it. The IsapiRequest object must be deleted after calling
+                // this method.
+                void abort();
 
-  virtual void flush(ResponseState state = ResponseState::ResponseDone,
-		     const WriteCallback& callback = WriteCallback());
+                // Returns true if the HTTP request was received without errors
+                bool isGood();
 
-  // Sends a simple text reply
-  void sendSimpleReply(int status, const std::string &msg);
+                virtual bool isSynchronous() const;
 
-  virtual std::istream& in() { return *in_; }
-  virtual std::ostream& out() { return out_; }
-  virtual std::ostream& err() { return err_; }
+                virtual void flush(ResponseState state = ResponseState::ResponseDone,
+                                   const WriteCallback & callback = WriteCallback());
 
-  virtual void setStatus(int status);
+                // Sends a simple text reply
+                void sendSimpleReply(int status, const std::string & msg);
 
-  virtual void setContentLength(::int64_t length);
+                virtual std::istream & in()
+                {
+                    return *in_;
+                }
+                virtual std::ostream & out()
+                {
+                    return out_;
+                }
+                virtual std::ostream & err()
+                {
+                    return err_;
+                }
 
-  virtual void setContentType(const std::string& value);
+                virtual void setStatus(int status);
 
-  virtual void addHeader(const std::string& name, const std::string& value);
+                virtual void setContentLength(::int64_t length);
 
-  virtual void setRedirect(const std::string& url);
+                virtual void setContentType(const std::string & value);
 
-  virtual const char *headerValue(const char *name) const;
+                virtual void addHeader(const std::string & name, const std::string & value);
 
-  virtual std::vector<Wt::Http::Message::Header> headers() const;
+                virtual void setRedirect(const std::string & url);
 
-  virtual const char *envValue(const char *name) const;
+                virtual const char * headerValue(const char * name) const;
 
-  virtual const std::string &scriptName() const;
+                virtual std::vector<Wt::Http::Message::Header> headers() const;
 
-  virtual const std::string &serverName() const;
+                virtual const char * envValue(const char * name) const;
 
-  virtual const char *requestMethod() const;
+                virtual const std::string & scriptName() const;
 
-  virtual const std::string &queryString() const;
+                virtual const std::string & serverName() const;
 
-  virtual const std::string &serverPort() const;
+                virtual const char * requestMethod() const;
 
-  virtual const std::string &pathInfo() const;
+                virtual const std::string & queryString() const;
 
-  virtual const std::string &remoteAddr() const;
+                virtual const std::string & serverPort() const;
 
-  virtual const char *urlScheme() const;
+                virtual const std::string & pathInfo() const;
 
-  virtual WSslInfo *sslInfo() const;
+                virtual const std::string & remoteAddr() const;
 
-private:
-  LPEXTENSION_CONTROL_BLOCK ecb_;
-  IsapiServer *server_;
-  bool good_;
+                virtual const char * urlScheme() const;
 
-  bool synchronous_;
-  bool reading_;
-  DWORD bytesToRead_;
-  char buffer_[1024];
-  DWORD bufferSize_;
+                virtual WSslInfo * sslInfo() const;
 
-  //boost::mutex intermediateBufferedLock_;
-  //int intermediateBufferedCounter_;
+            private:
+                LPEXTENSION_CONTROL_BLOCK ecb_;
+                IsapiServer * server_;
+                bool good_;
 
-  void processAsyncRead(DWORD cbIO, DWORD dwError, bool first);
-  static void WINAPI completionCallback(LPEXTENSION_CONTROL_BLOCK lpECB,
-    PVOID pContext, DWORD cbIO, DWORD dwError);
-  void writeSync();
-  void writeAsync(DWORD cbIO, DWORD dwError, bool first);
-  void flushDone();
+                bool synchronous_;
+                bool reading_;
+                DWORD bytesToRead_;
+                char buffer_[1024];
+                DWORD bufferSize_;
 
-  std::vector<std::string> writeData_;
-  unsigned int writeIndex_; // next index to be written in writeData_
-  unsigned int writeOffset_; // offset withing current item of writeData_
-  ResponseState flushState_;
+                //boost::mutex intermediateBufferedLock_;
+                //int intermediateBufferedCounter_;
 
-  std::stringstream header_, in_mem_, out_, err_;
-  std::iostream *in_;
-  std::string requestFileName_;
+                void processAsyncRead(DWORD cbIO, DWORD dwError, bool first);
+                static void WINAPI completionCallback(LPEXTENSION_CONTROL_BLOCK lpECB,
+                                                      PVOID pContext, DWORD cbIO, DWORD dwError);
+                void writeSync();
+                void writeAsync(DWORD cbIO, DWORD dwError, bool first);
+                void flushDone();
 
-  bool chunking_;
-  std::int64_t contentLength_;
-  bool headerSent_;
-  void sendHeader();
-  enum {HTTP_1_0, HTTP_1_1} version_;
+                std::vector<std::string> writeData_;
+                unsigned int writeIndex_; // next index to be written in writeData_
+                unsigned int writeOffset_; // offset withing current item of writeData_
+                ResponseState flushState_;
 
-  // Returns a reference to a string that's safe to use until this object is
-  // deleted (we used to return by value but the built-in httpd optimizations
-  // required a different approach)
-  std::string *persistentEnvValue(const char *name) const;
+                std::stringstream header_, in_mem_, out_, err_;
+                std::iostream * in_;
+                std::string requestFileName_;
 
-  // storage used by persistentEnvValue
-  mutable std::vector<std::string *> strings_;
-  std::string emptyString_;
-};
+                bool chunking_;
+                std::int64_t contentLength_;
+                bool headerSent_;
+                void sendHeader();
+                enum {HTTP_1_0, HTTP_1_1} version_;
 
-}
+                // Returns a reference to a string that's safe to use until this object is
+                // deleted (we used to return by value but the built-in httpd optimizations
+                // required a different approach)
+                std::string * persistentEnvValue(const char * name) const;
+
+                // storage used by persistentEnvValue
+                mutable std::vector<std::string *> strings_;
+                std::string emptyString_;
+        };
+
+    }
 }
 

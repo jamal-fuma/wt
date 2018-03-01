@@ -10,32 +10,36 @@
 #include "StdLayoutItemImpl.h"
 #include "Wt/WLayoutImpl.h"
 
-namespace Wt {
-
-class WLayout;
-
-class StdLayoutImpl : public StdLayoutItemImpl, public WLayoutImpl
+namespace Wt
 {
-public:
-  StdLayoutImpl(WLayout *layout);
-  virtual ~StdLayoutImpl();
 
-  virtual void updateDom(DomElement& parent) = 0;
+    class WLayout;
 
-  // Returns whether updateDom() is needed
-  virtual bool itemResized(WLayoutItem *item) = 0;
-  virtual bool parentResized() = 0;
+    class StdLayoutImpl : public StdLayoutItemImpl, public WLayoutImpl
+    {
+        public:
+            StdLayoutImpl(WLayout * layout);
+            virtual ~StdLayoutImpl();
 
-  virtual WLayoutItem *layoutItem() const override;
+            virtual void updateDom(DomElement & parent) = 0;
 
-protected:
-  WLayout *layout() const { return layout_; }
+            // Returns whether updateDom() is needed
+            virtual bool itemResized(WLayoutItem * item) = 0;
+            virtual bool parentResized() = 0;
 
-  static StdLayoutItemImpl *getImpl(WLayoutItem *item);
+            virtual WLayoutItem * layoutItem() const override;
 
-private:
-  WLayout *layout_;
-};
+        protected:
+            WLayout * layout() const
+            {
+                return layout_;
+            }
+
+            static StdLayoutItemImpl * getImpl(WLayoutItem * item);
+
+        private:
+            WLayout * layout_;
+    };
 
 }
 

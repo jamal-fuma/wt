@@ -23,38 +23,40 @@
 #include "Reply.h"
 #include "WHttpDllDefs.h"
 
-namespace http {
-namespace server {
-
-/// A stock reply to be sent to a client.
-class WTHTTP_API StockReply final : public Reply
+namespace http
 {
-public:
-  StockReply(Request& request, status_type status,
-	     const Configuration& configuration);
+    namespace server
+    {
 
-  StockReply(Request& request, status_type status,
-	     std::string extraContent,
-	     const Configuration& configuration);
+        /// A stock reply to be sent to a client.
+        class WTHTTP_API StockReply final : public Reply
+        {
+            public:
+                StockReply(Request & request, status_type status,
+                           const Configuration & configuration);
 
-  virtual void reset(const Wt::EntryPoint *ep) override;
+                StockReply(Request & request, status_type status,
+                           std::string extraContent,
+                           const Configuration & configuration);
 
-  virtual bool consumeData(const char *begin,
-			   const char *end,
-			   Request::State state) override;
+                virtual void reset(const Wt::EntryPoint * ep) override;
 
-protected:
-  virtual std::string contentType() override;
-  virtual ::int64_t contentLength() override;
+                virtual bool consumeData(const char * begin,
+                                         const char * end,
+                                         Request::State state) override;
 
-  virtual bool nextContentBuffers(std::vector<asio::const_buffer>& result) override;
+            protected:
+                virtual std::string contentType() override;
+                virtual ::int64_t contentLength() override;
 
-private:
-  std::string content_;
-  bool transmitted_;
-};
+                virtual bool nextContentBuffers(std::vector<asio::const_buffer> & result) override;
 
-} // namespace server
+            private:
+                std::string content_;
+                bool transmitted_;
+        };
+
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_STOCK_REPLY_HPP

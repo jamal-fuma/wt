@@ -14,21 +14,21 @@ using namespace Wt;
 
 class WidgetFunction
 {
-public:
-  typedef std::function<std::unique_ptr<WWidget> (const std::vector<WString>&)>
-    InstantiateWidget;
+    public:
+        typedef std::function<std::unique_ptr<WWidget> (const std::vector<WString>&)>
+        InstantiateWidget;
 
-  bool operator()(WTemplate *t, const std::vector<WString>& args,
-		  std::ostream& result);
+        bool operator()(WTemplate * t, const std::vector<WString> & args,
+                        std::ostream & result);
 
-  void registerType(const std::string& name, InstantiateWidget instantiate);
+        void registerType(const std::string & name, InstantiateWidget instantiate);
 
-private:
-  typedef std::map<std::string, InstantiateWidget> RegistryMap;
-  RegistryMap registeredTypes_;
+    private:
+        typedef std::map<std::string, InstantiateWidget> RegistryMap;
+        RegistryMap registeredTypes_;
 
-  static std::string getArg(const std::string& name,
-                            const std::vector<WString>& args);
+        static std::string getArg(const std::string & name,
+                                  const std::vector<WString> & args);
 };
 
 #endif // WIDGET_FUNCTION_H_

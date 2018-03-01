@@ -10,7 +10,7 @@ container->setStyleClass("yellow-box");
 
 auto layout = container->setLayout(Wt::cpp14::make_unique<Wt::WBorderLayout>());
 
-const char *cell = "{1} item";
+const char * cell = "{1} item";
 
 auto item = Wt::cpp14::make_unique<Wt::WText>(Wt::WString(cell).arg("North"));
 item->setStyleClass("green-box");

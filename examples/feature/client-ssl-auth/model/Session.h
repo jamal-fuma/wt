@@ -23,21 +23,24 @@ typedef Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 class Session : public dbo::Session
 {
-public:
-  static void configureAuth();
+    public:
+        static void configureAuth();
 
-  Session(const std::string& sqliteDb);
+        Session(const std::string & sqliteDb);
 
-  dbo::ptr<User> user() const;
+        dbo::ptr<User> user() const;
 
-  Auth::AbstractUserDatabase& users();
-  Auth::Login& login() { return login_; }
+        Auth::AbstractUserDatabase & users();
+        Auth::Login & login()
+        {
+            return login_;
+        }
 
-  static const Auth::AuthService& auth();
+        static const Auth::AuthService & auth();
 
-private:
-  std::unique_ptr<UserDatabase> users_;
-  Auth::Login login_;
+    private:
+        std::unique_ptr<UserDatabase> users_;
+        Auth::Login login_;
 };
 
 #endif // SESSION_H_

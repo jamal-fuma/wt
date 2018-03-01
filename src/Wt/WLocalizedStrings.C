@@ -8,30 +8,31 @@
 #include "Wt/WLocalizedStrings.h"
 #include "Wt/WMessageResources.h"
 
-namespace Wt {
+namespace Wt
+{
 
-WLocalizedStrings::~WLocalizedStrings()
-{ }
+    WLocalizedStrings::~WLocalizedStrings()
+    { }
 
-void WLocalizedStrings::hibernate()
-{ }
+    void WLocalizedStrings::hibernate()
+    { }
 
 #ifndef WT_TARGET_JAVA
-LocalizedString WLocalizedStrings::resolvePluralKey(const WLocale& locale,
-					 const std::string& key,
-					 ::uint64_t amount)
-{
-  throw WException("WLocalizedStrings::resolvePluralKey is not supported");
-}
+    LocalizedString WLocalizedStrings::resolvePluralKey(const WLocale & locale,
+            const std::string & key,
+            ::uint64_t amount)
+    {
+        throw WException("WLocalizedStrings::resolvePluralKey is not supported");
+    }
 
-int WLocalizedStrings::evaluatePluralExpression(const std::string& expression,
-						::uint64_t n)
-{
-  return WMessageResources::evalPluralCase(expression, n);
-}
+    int WLocalizedStrings::evaluatePluralExpression(const std::string & expression,
+            ::uint64_t n)
+    {
+        return WMessageResources::evalPluralCase(expression, n);
+    }
 
 #else
-  //TODO
+    //TODO
 #endif
 
 }

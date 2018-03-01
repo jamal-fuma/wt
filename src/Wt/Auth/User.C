@@ -8,184 +8,174 @@
 #include "AbstractUserDatabase.h"
 #include "Wt/WException.h"
 
-namespace Wt {
-  namespace Auth {
-
-User::User()
-  : db_(nullptr)
-{ }
-
-User::User(const std::string& id, const AbstractUserDatabase& userDatabase)
-  : id_(id),
-    db_(const_cast<AbstractUserDatabase *>(&userDatabase))
-{ }
-
-bool User::operator==(const User& other) const
+namespace Wt
 {
-  return id_ == other.id_ && db_ == other.db_;
-}
+    namespace Auth
+    {
 
-bool User::operator!=(const User& other) const
-{
-  return !(*this == other);
-}
+        User::User()
+            : db_(nullptr)
+        { }
 
-PasswordHash User::password() const
-{
-  checkValid();
+        User::User(const std::string & id, const AbstractUserDatabase & userDatabase)
+            : id_(id),
+              db_(const_cast<AbstractUserDatabase *>(&userDatabase))
+        { }
 
-  return db_->password(*this);
-}
+        bool User::operator==(const User & other) const
+        {
+            return id_ == other.id_ && db_ == other.db_;
+        }
 
-void User::setPassword(const PasswordHash& password) const
-{
-  checkValid();
+        bool User::operator!=(const User & other) const
+        {
+            return !(*this == other);
+        }
 
-  db_->setPassword(*this, password);
-}
+        PasswordHash User::password() const
+        {
+            checkValid();
+            return db_->password(*this);
+        }
 
-std::string User::email() const
-{
-  return db_->email(*this);
-}
+        void User::setPassword(const PasswordHash & password) const
+        {
+            checkValid();
+            db_->setPassword(*this, password);
+        }
 
-void User::setEmail(const std::string& address) const
-{
-  checkValid();
+        std::string User::email() const
+        {
+            return db_->email(*this);
+        }
 
-  db_->setEmail(*this, address);
-}
+        void User::setEmail(const std::string & address) const
+        {
+            checkValid();
+            db_->setEmail(*this, address);
+        }
 
-std::string User::unverifiedEmail() const
-{
-  checkValid();
+        std::string User::unverifiedEmail() const
+        {
+            checkValid();
+            return db_->unverifiedEmail(*this);
+        }
 
-  return db_->unverifiedEmail(*this);
-}
+        void User::setUnverifiedEmail(const std::string & address) const
+        {
+            checkValid();
+            db_->setUnverifiedEmail(*this, address);
+        }
 
-void User::setUnverifiedEmail(const std::string& address) const
-{
-  checkValid();
+        AccountStatus User::status() const
+        {
+            checkValid();
+            return db_->status(*this);
+        }
 
-  db_->setUnverifiedEmail(*this, address);
-}
+        void User::setStatus(AccountStatus status)
+        {
+            checkValid();
+            db_->setStatus(*this, status);
+        }
 
-AccountStatus User::status() const
-{
-  checkValid();
+        void User::addIdentity(const std::string & provider, const WT_USTRING & identity)
+        {
+            checkValid();
+            db_->addIdentity(*this, provider, identity);
+        }
 
-  return db_->status(*this);
-}
+        void User::setIdentity(const std::string & provider, const WT_USTRING & identity)
+        {
+            checkValid();
+            db_->setIdentity(*this, provider, identity);
+        }
 
-void User::setStatus(AccountStatus status)
-{
-  checkValid();
+        void User::removeIdentity(const std::string & provider)
+        {
+            checkValid();
+            db_->removeIdentity(*this, provider);
+        }
 
-  db_->setStatus(*this, status);
-}
+        WT_USTRING User::identity(const std::string & provider) const
+        {
+            checkValid();
+            return db_->identity(*this, provider);
+        }
 
-void User::addIdentity(const std::string& provider, const WT_USTRING& identity)
-{
-  checkValid();
+        Token User::emailToken() const
+        {
+            return db_->emailToken(*this);
+        }
 
-  db_->addIdentity(*this, provider, identity);
-}
+        EmailTokenRole User::emailTokenRole() const
+        {
+            return db_->emailTokenRole(*this);
+        }
 
-void User::setIdentity(const std::string& provider, const WT_USTRING& identity)
-{
-  checkValid();
+        void User::setEmailToken(const Token & token, EmailTokenRole role) const
+        {
+            checkValid();
+            db_->setEmailToken(*this, token, role);
+        }
 
-  db_->setIdentity(*this, provider, identity);
-}
+        void User::clearEmailToken() const
+        {
+            checkValid();
+            db_->setEmailToken(*this, Token(), EmailTokenRole::LostPassword);
+        }
 
-void User::removeIdentity(const std::string& provider)
-{
-  checkValid();
+        void User::addAuthToken(const Token & token) const
+        {
+            checkValid();
+            db_->addAuthToken(*this, token);
+        }
 
-  db_->removeIdentity(*this, provider);
-}
+        void User::removeAuthToken(const std::string & token) const
+        {
+            checkValid();
+            db_->removeAuthToken(*this, token);
+        }
 
-WT_USTRING User::identity(const std::string& provider) const
-{
-  checkValid();
+        int User::updateAuthToken(const std::string & hash,
+                                  const std::string & newHash) const
+        {
+            checkValid();
+            return db_->updateAuthToken(*this, hash, newHash);
+        }
 
-  return db_->identity(*this, provider);
-}
+        int User::failedLoginAttempts() const
+        {
+            return db_->failedLoginAttempts(*this);
+        }
 
-Token User::emailToken() const
-{
-  return db_->emailToken(*this);
-}
+        WDateTime User::lastLoginAttempt() const
+        {
+            return db_->lastLoginAttempt(*this);
+        }
 
-EmailTokenRole User::emailTokenRole() const
-{
-  return db_->emailTokenRole(*this);
-}
+        void User::setAuthenticated(bool success) const
+        {
+            checkValid();
+            if(success)
+            {
+                db_->setFailedLoginAttempts(*this, 0);
+            }
+            else
+            {
+                db_->setFailedLoginAttempts(*this, db_->failedLoginAttempts(*this) + 1);
+            }
+            db_->setLastLoginAttempt(*this, WDateTime::currentDateTime());
+        }
 
-void User::setEmailToken(const Token& token, EmailTokenRole role) const
-{
-  checkValid();
-
-  db_->setEmailToken(*this, token, role);
-}
-
-void User::clearEmailToken() const
-{
-  checkValid();
-
-  db_->setEmailToken(*this, Token(), EmailTokenRole::LostPassword);
-}
-
-void User::addAuthToken(const Token& token) const
-{
-  checkValid();
-
-  db_->addAuthToken(*this, token);
-}
-
-void User::removeAuthToken(const std::string& token) const
-{
-  checkValid();
-
-  db_->removeAuthToken(*this, token);
-}
-
-int User::updateAuthToken(const std::string& hash,
-			  const std::string& newHash) const
-{
-  checkValid();
-
-  return db_->updateAuthToken(*this, hash, newHash);
-}
-
-int User::failedLoginAttempts() const
-{
-  return db_->failedLoginAttempts(*this);
-}
-
-WDateTime User::lastLoginAttempt() const
-{
-  return db_->lastLoginAttempt(*this);
-}
-
-void User::setAuthenticated(bool success) const
-{
-  checkValid();
-
-  if (success)
-    db_->setFailedLoginAttempts(*this, 0);
-  else
-    db_->setFailedLoginAttempts(*this, db_->failedLoginAttempts(*this) + 1);
-
-  db_->setLastLoginAttempt(*this, WDateTime::currentDateTime());
-}
-
-void User::checkValid() const
-{
-  if (!db_)
-    throw WException("Method called on invalid Auth::User");
-}
+        void User::checkValid() const
+        {
+            if(!db_)
+            {
+                throw WException("Method called on invalid Auth::User");
+            }
+        }
 
 
-  }
+    }
 }

@@ -13,9 +13,9 @@ auto model =
 model->setHeaderData(0, WString("X"));
 model->setHeaderData(1, WString("Y = sin(X)"));
 
-for (unsigned i = 0; i < 40; ++i) {
+for(unsigned i = 0; i < 40; ++i)
+{
     double x = (static_cast<double>(i) - 20) / 4;
-
     model->setData(i, 0, x);
     model->setData(i, 1, std::sin(x));
 }
@@ -23,7 +23,7 @@ for (unsigned i = 0; i < 40; ++i) {
 /*
  * Create the scatter plot.
  */
-Chart::WCartesianChart *chart =
+Chart::WCartesianChart * chart =
     container->addWidget(cpp14::make_unique<Chart::WCartesianChart>());
 chart->setModel(model);        // Set the model.
 chart->setXSeriesColumn(0);    // Set the column that holds the X data.

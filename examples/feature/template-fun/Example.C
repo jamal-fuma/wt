@@ -14,24 +14,22 @@ using namespace Wt;
 
 WidgetFunction widgetFunction;
 
-std::unique_ptr<WWidget> createLineEdit(const std::vector<WString>& args)
+std::unique_ptr<WWidget> createLineEdit(const std::vector<WString> & args)
 {
-  return cpp14::make_unique<WLineEdit>();
+    return cpp14::make_unique<WLineEdit>();
 }
 
-std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+std::unique_ptr<WApplication> createApplication(const WEnvironment & env)
 {
-  auto app = cpp14::make_unique<WApplication>(env);
-
-  WTemplate *t =
-      app->root()->addWidget(cpp14::make_unique<WTemplate>("${widget:line-edit}"));
-  t->addFunction("widget", widgetFunction);
-  return app;
+    auto app = cpp14::make_unique<WApplication>(env);
+    WTemplate * t =
+        app->root()->addWidget(cpp14::make_unique<WTemplate>("${widget:line-edit}"));
+    t->addFunction("widget", widgetFunction);
+    return app;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-  widgetFunction.registerType("line-edit", createLineEdit);
-
-  return WRun(argc, argv, &createApplication);
+    widgetFunction.registerType("line-edit", createLineEdit);
+    return WRun(argc, argv, &createApplication);
 }

@@ -13,27 +13,31 @@ std::string oggAudio =
 
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-Wt::WMediaPlayer *player =
+Wt::WMediaPlayer * player =
     container->addWidget(Wt::cpp14::make_unique<Wt::WMediaPlayer>(Wt::MediaType::Audio));
 player->addSource(Wt::MediaEncoding::MP3, Wt::WLink(mp3Audio));
 player->addSource(Wt::MediaEncoding::OGA, Wt::WLink(oggAudio));
 player->setTitle("La Sera - Never Come Around");
 
-Wt::WText *out = container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
+Wt::WText * out = container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
 
-player->playbackStarted().connect([=] {
+player->playbackStarted().connect([=]
+{
     out->setText("<p>Song playing</p>");
 });
 
-player->playbackPaused().connect([=] {
+player->playbackPaused().connect([=]
+{
     out->setText("<p>Song paused</p>");
 });
 
-player->ended().connect([=] {
+player->ended().connect([=]
+{
     out->setText("<p>Song ended</p>");
 });
 
-player->volumeChanged().connect([=] {
+player->volumeChanged().connect([=]
+{
     out->setText("<p>Volume changed</p>");
 });
 

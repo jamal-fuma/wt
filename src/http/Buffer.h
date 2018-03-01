@@ -10,12 +10,14 @@
 
 #include <array>
 
-namespace http {
-namespace server {
+namespace http
+{
+    namespace server
+    {
 
-typedef std::array<char, 8192> Buffer;
+        typedef std::array<char, 8192> Buffer;
 
-}
+    }
 }
 
 #endif // HTTP_BUFFER_HPP

@@ -10,60 +10,71 @@
 #include <cmath>
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846
+    #define M_PI 3.14159265358979323846
 #endif
 
-class SinModel : public Chart::WAbstractChartModel {
-public:
-  SinModel(double minimum, double maximum)
-    : Chart::WAbstractChartModel(),
-      minimum_(minimum),
-      maximum_(maximum)
-  { }
+class SinModel : public Chart::WAbstractChartModel
+{
+    public:
+        SinModel(double minimum, double maximum)
+            : Chart::WAbstractChartModel(),
+              minimum_(minimum),
+              maximum_(maximum)
+        { }
 
-  virtual double data(int row, int column) const
-  {
-    double x = minimum_ + row * (maximum_ - minimum_) / (rowCount() - 1);
-    if (column == 0) {
-      return x;
-    } else {
-      return std::sin(x) + std::sin(x * 100.0) / 40.0;
-    }
-  }
+        virtual double data(int row, int column) const
+        {
+            double x = minimum_ + row * (maximum_ - minimum_) / (rowCount() - 1);
+            if(column == 0)
+            {
+                return x;
+            }
+            else
+            {
+                return std::sin(x) + std::sin(x * 100.0) / 40.0;
+            }
+        }
 
-  virtual int columnCount() const
-  {
-    return 2;
-  }
+        virtual int columnCount() const
+        {
+            return 2;
+        }
 
-  virtual int rowCount() const
-  {
-    return 100;
-  }
+        virtual int rowCount() const
+        {
+            return 100;
+        }
 
-  double minimum() const { return minimum_; }
-  double maximum() const { return maximum_; }
+        double minimum() const
+        {
+            return minimum_;
+        }
+        double maximum() const
+        {
+            return maximum_;
+        }
 
-private:
-  double minimum_;
-  double maximum_;
+    private:
+        double minimum_;
+        double maximum_;
 };
 
-struct ChartState : WObject {
-  ChartState()
-    : WObject()
+struct ChartState : WObject
+{
+    ChartState()
+        : WObject()
 #ifndef WT_TARGET_JAVA
-      , model(nullptr)
+        , model(nullptr)
 #endif
-  { }
+    { }
 
 #ifndef WT_TARGET_JAVA
-  virtual ~ChartState()
-  {
-  }
+    virtual ~ChartState()
+    {
+    }
 #endif
 
-  std::shared_ptr<SinModel> model;
+    std::shared_ptr<SinModel> model;
 };
 
 SAMPLE_BEGIN(AxisSliderWidgetDifferentDataSeries)
@@ -106,24 +117,26 @@ series->setXSeriesColumn(0);
 series->setShadow(WShadow(3, 3, WColor(0, 0, 0, 127), 3));
 chart->addSeries(std::move(seriesPtr));
 
-chart->axis(Chart::Axis::X).zoomRangeChanged().connect([=] {
-  double minX = chart->axis(Chart::Axis::X).zoomMinimum();
-  double maxX = chart->axis(Chart::Axis::X).zoomMaximum();
-  /*
-   * Determine the range of the model.
-   */
-  double dX = maxX - minX;
-  minX = minX - dX / 2.0;
-  if (minX < -M_PI)
-    minX = -M_PI;
-  maxX = maxX + dX / 2.0;
-  if (maxX > M_PI)
-    maxX = M_PI;
-  if (state->model->minimum() != minX || state->model->maximum() != maxX) {
-    // Change the model
-    state->model = std::make_shared<SinModel>(minX, maxX);
-    series->setModel(state->model);
-  }
+chart->axis(Chart::Axis::X).zoomRangeChanged().connect([=]
+{
+    double minX = chart->axis(Chart::Axis::X).zoomMinimum();
+    double maxX = chart->axis(Chart::Axis::X).zoomMaximum();
+    /*
+     * Determine the range of the model.
+     */
+    double dX = maxX - minX;
+    minX = minX - dX / 2.0;
+    if(minX < -M_PI)
+        minX = -M_PI;
+    maxX = maxX + dX / 2.0;
+    if(maxX > M_PI)
+        maxX = M_PI;
+    if(state->model->minimum() != minX || state->model->maximum() != maxX)
+    {
+        // Change the model
+        state->model = std::make_shared<SinModel>(minX, maxX);
+        series->setModel(state->model);
+    }
 });
 
 chart->axis(Chart::Axis::X).setMinimumZoomRange(M_PI / 8.0);

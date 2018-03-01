@@ -23,8 +23,8 @@ using namespace Wt;
  */
 class Label : public WText
 {
-public:
-  Label(const WString& text, WContainerWidget *parent);
+    public:
+        Label(const WString & text, WContainerWidget * parent);
 };
 
 /*@}*/

@@ -11,49 +11,47 @@
 #include <Wt/WMenu.h>
 
 Layout::Layout()
-  : TopicWidget()
+    : TopicWidget()
 {
-  addText(tr("layout-intro"), this);
+    addText(tr("layout-intro"), this);
 }
 
-void Layout::populateSubMenu(Wt::WMenu *menu)
+void Layout::populateSubMenu(Wt::WMenu * menu)
 {
-  menu->addItem("Containers", containers())->setPathComponent("");
-  menu->addItem("HTML Templates",
-                deferCreate(std::bind
-			    (&Layout::templates, this)));
-  menu->addItem("Text",
-                deferCreate(std::bind
-			    (&Layout::text, this)));
-  menu->addItem("Grouping widgets",
-                deferCreate(std::bind
-			    (&Layout::grouping, this)));
-  menu->addItem("Layout managers",
-                deferCreate(std::bind
-			    (&Layout::layoutManagers, this)));
-  menu->addItem("Dialogs",
-                deferCreate(std::bind
-			    (&Layout::dialogs, this)));
-  menu->addItem("Images",
-                deferCreate(std::bind
-			    (&Layout::images, this)));
-  menu->addItem("CSS",
-                deferCreate(std::bind
-			    (&Layout::css, this)));
-  menu->addItem("Themes",
-                deferCreate(std::bind
-			    (&Layout::themes, this)));
+    menu->addItem("Containers", containers())->setPathComponent("");
+    menu->addItem("HTML Templates",
+                  deferCreate(std::bind
+                              (&Layout::templates, this)));
+    menu->addItem("Text",
+                  deferCreate(std::bind
+                              (&Layout::text, this)));
+    menu->addItem("Grouping widgets",
+                  deferCreate(std::bind
+                              (&Layout::grouping, this)));
+    menu->addItem("Layout managers",
+                  deferCreate(std::bind
+                              (&Layout::layoutManagers, this)));
+    menu->addItem("Dialogs",
+                  deferCreate(std::bind
+                              (&Layout::dialogs, this)));
+    menu->addItem("Images",
+                  deferCreate(std::bind
+                              (&Layout::images, this)));
+    menu->addItem("CSS",
+                  deferCreate(std::bind
+                              (&Layout::css, this)));
+    menu->addItem("Themes",
+                  deferCreate(std::bind
+                              (&Layout::themes, this)));
 }
 
 #include "examples/Container.cpp"
 
 std::unique_ptr<Wt::WWidget> Layout::containers()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Containers");
-
-  result->bindWidget("Container", Container());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Containers");
+    result->bindWidget("Container", Container());
+    return std::move(result);
 }
 
 
@@ -61,15 +59,12 @@ std::unique_ptr<Wt::WWidget> Layout::containers()
 
 std::unique_ptr<Wt::WWidget> Layout::templates()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Template");
-
-  result->bindWidget("Template", Template());
-
-  // Show the XML-template as text
-  result->bindString("template-text", reindent(tr("WTemplate-example")),
-		     Wt::TextFormat::Plain);
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Template");
+    result->bindWidget("Template", Template());
+    // Show the XML-template as text
+    result->bindString("template-text", reindent(tr("WTemplate-example")),
+                       Wt::TextFormat::Plain);
+    return std::move(result);
 }
 
 
@@ -82,16 +77,14 @@ std::unique_ptr<Wt::WWidget> Layout::templates()
 
 std::unique_ptr<Wt::WWidget> Layout::text()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Text");
-
-  result->bindWidget("TextPlain", TextPlain());
-  result->bindWidget("TextXHTML", TextXHTML());
-  result->bindWidget("TextXSS", TextXSS());
-  result->bindWidget("TextEvents", TextEvents());
-  result->bindWidget("TextToolTip", TextToolTip());
-  result->bindWidget("TextDeferredToolTip", TextDeferredToolTip());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Text");
+    result->bindWidget("TextPlain", TextPlain());
+    result->bindWidget("TextXHTML", TextXHTML());
+    result->bindWidget("TextXSS", TextXSS());
+    result->bindWidget("TextEvents", TextEvents());
+    result->bindWidget("TextToolTip", TextToolTip());
+    result->bindWidget("TextDeferredToolTip", TextDeferredToolTip());
+    return std::move(result);
 }
 
 
@@ -102,14 +95,12 @@ std::unique_ptr<Wt::WWidget> Layout::text()
 
 std::unique_ptr<Wt::WWidget> Layout::grouping()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Grouping");
-
-  result->bindWidget("GroupBox", GroupBox());
-  result->bindWidget("PanelNoTitle", PanelNoTitle());
-  result->bindWidget("Panel", Panel());
-  result->bindWidget("PanelCollapsible", PanelCollapsible());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Grouping");
+    result->bindWidget("GroupBox", GroupBox());
+    result->bindWidget("PanelNoTitle", PanelNoTitle());
+    result->bindWidget("Panel", Panel());
+    result->bindWidget("PanelCollapsible", PanelCollapsible());
+    return std::move(result);
 }
 
 
@@ -123,17 +114,15 @@ std::unique_ptr<Wt::WWidget> Layout::grouping()
 
 std::unique_ptr<Wt::WWidget> Layout::layoutManagers()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Managers");
-
-  result->bindWidget("HBoxLayout", HBoxLayout());
-  result->bindWidget("HBoxLayoutStretch", HBoxLayoutStretch());
-  result->bindWidget("VBoxLayout", VBoxLayout());
-  result->bindWidget("VBoxLayoutStretch", VBoxLayoutStretch());
-  result->bindWidget("NestedLayout", NestedLayout());
-  result->bindWidget("GridLayout", GridLayout());
-  result->bindWidget("BorderLayout", BorderLayout());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Managers");
+    result->bindWidget("HBoxLayout", HBoxLayout());
+    result->bindWidget("HBoxLayoutStretch", HBoxLayoutStretch());
+    result->bindWidget("VBoxLayout", VBoxLayout());
+    result->bindWidget("VBoxLayoutStretch", VBoxLayoutStretch());
+    result->bindWidget("NestedLayout", NestedLayout());
+    result->bindWidget("GridLayout", GridLayout());
+    result->bindWidget("BorderLayout", BorderLayout());
+    return std::move(result);
 }
 
 
@@ -143,13 +132,11 @@ std::unique_ptr<Wt::WWidget> Layout::layoutManagers()
 
 std::unique_ptr<Wt::WWidget> Layout::dialogs()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Dialogs");
-
-  result->bindWidget("Dialog", Dialog());
-  result->bindWidget("MessageBox", MessageBox());
-  result->bindWidget("MessageBoxSync", MessageBoxSync());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Dialogs");
+    result->bindWidget("Dialog", Dialog());
+    result->bindWidget("MessageBox", MessageBox());
+    result->bindWidget("MessageBoxSync", MessageBoxSync());
+    return std::move(result);
 }
 
 
@@ -158,12 +145,10 @@ std::unique_ptr<Wt::WWidget> Layout::dialogs()
 
 std::unique_ptr<Wt::WWidget> Layout::images()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Images");
-
-  result->bindWidget("Image", Image());
-  result->bindWidget("ImageArea", ImageArea());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Images");
+    result->bindWidget("Image", Image());
+    result->bindWidget("ImageArea", ImageArea());
+    return std::move(result);
 }
 
 
@@ -171,24 +156,19 @@ std::unique_ptr<Wt::WWidget> Layout::images()
 
 std::unique_ptr<Wt::WWidget> Layout::css()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-CSS");
-
-  result->bindWidget("CSS", CSS());
-
-  // Show the style sheet as text
-  result->bindString("CSS-example-style", reindent(tr("CSS-example-style")),
-		     Wt::TextFormat::Plain);
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-CSS");
+    result->bindWidget("CSS", CSS());
+    // Show the style sheet as text
+    result->bindString("CSS-example-style", reindent(tr("CSS-example-style")),
+                       Wt::TextFormat::Plain);
+    return std::move(result);
 }
 
 
 std::unique_ptr<Wt::WWidget> Layout::themes()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Themes");
-
-  // Show the source code only for the theme example.
-  result->bindString("Theme", reindent(tr("theme")), Wt::TextFormat::Plain);
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("layout-Themes");
+    // Show the source code only for the theme example.
+    result->bindString("Theme", reindent(tr("theme")), Wt::TextFormat::Plain);
+    return std::move(result);
 }

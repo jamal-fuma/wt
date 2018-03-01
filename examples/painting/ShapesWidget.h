@@ -10,33 +10,40 @@
 
 #include <Wt/WPaintedWidget.h>
 
-namespace Wt {
-  class WPainter;
+namespace Wt
+{
+    class WPainter;
 }
 
 using namespace Wt;
 
 class ShapesWidget : public WPaintedWidget
 {
-public:
-  ShapesWidget();
+    public:
+        ShapesWidget();
 
-  void setAngle(double angle);
-  double angle() const { return angle_; }
+        void setAngle(double angle);
+        double angle() const
+        {
+            return angle_;
+        }
 
-  void setRelativeSize(double size);
-  double relativeSize() const { return size_; }
+        void setRelativeSize(double size);
+        double relativeSize() const
+        {
+            return size_;
+        }
 
-protected:
-  virtual void paintEvent(WPaintDevice *paintDevice) override;
+    protected:
+        virtual void paintEvent(WPaintDevice * paintDevice) override;
 
-private:
-  double angle_;
-  double size_;
+    private:
+        double angle_;
+        double size_;
 
-  void drawEmwebLogo(WPainter& p);
-  void drawEmwebE(WPainter& p);
-  void drawEmwebMW(WPainter& p);
+        void drawEmwebLogo(WPainter & p);
+        void drawEmwebE(WPainter & p);
+        void drawEmwebMW(WPainter & p);
 };
 
 #endif // SHAPES_WIDGET_H_

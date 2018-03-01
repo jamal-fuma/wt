@@ -11,11 +11,11 @@
 
 #ifdef WT_ASIO_IS_BOOST_ASIO
 
-#include <boost/asio.hpp>
+    #include <boost/asio.hpp>
 
 #else // WT_ASIO_IS_STANDALONE_ASIO
 
-#include <asio.hpp>
+    #include <asio.hpp>
 
 #endif // WT_ASIO_IS_BOOST_ASIO
 

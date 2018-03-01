@@ -14,64 +14,68 @@
 #include "WStringStream.h"
 #include "WComboBox.h"
 
-namespace Wt {
-
-class WTimeEdit;
-
-class WT_API WTimePicker : public WCompositeWidget
+namespace Wt
 {
-public:
-    WTimePicker(WTimeEdit *timeEdit);
 
-    WTime time() const;
+    class WTimeEdit;
 
-    void setTime(const WTime& time);
+    class WT_API WTimePicker : public WCompositeWidget
+    {
+        public:
+            WTimePicker(WTimeEdit * timeEdit);
 
-    Signal<>& selectionChanged() { return selectionChanged_; }
+            WTime time() const;
 
-    void setHourStep(int step);
-    int hourStep() const;
+            void setTime(const WTime & time);
 
-    void setMinuteStep(int step);
-    int minuteStep() const;
+            Signal<> & selectionChanged()
+            {
+                return selectionChanged_;
+            }
 
-    void setSecondStep(int step);
-    int secondStep() const;
+            void setHourStep(int step);
+            int hourStep() const;
 
-    void setMillisecondStep(int step);
-    int millisecondStep() const;
+            void setMinuteStep(int step);
+            int minuteStep() const;
 
-    void setWrapAroundEnabled(bool enabled);
-    bool wrapAroundEnabled() const;
+            void setSecondStep(int step);
+            int secondStep() const;
 
-    void configure();
+            void setMillisecondStep(int step);
+            int millisecondStep() const;
 
-private:
+            void setWrapAroundEnabled(bool enabled);
+            bool wrapAroundEnabled() const;
 
-    void init(const WTime &time = WTime());
+            void configure();
 
-    WT_USTRING format_;
+        private:
 
-    WSpinBox *sbhour_;
-    WSpinBox *sbminute_;
-    WSpinBox *sbsecond_;
-    WSpinBox *sbmillisecond_;
-    WComboBox *cbAP_;
+            void init(const WTime & time = WTime());
 
-    WTimeEdit *timeEdit_;
+            WT_USTRING format_;
 
-    void hourValueChanged();
-    void minuteValueChanged();
-    void secondValueChanged();
-    void msecValueChanged();
-    void ampmValueChanged();
-    bool formatAp() const;
-    bool formatMs() const;
-    bool formatS() const;
+            WSpinBox * sbhour_;
+            WSpinBox * sbminute_;
+            WSpinBox * sbsecond_;
+            WSpinBox * sbmillisecond_;
+            WComboBox * cbAP_;
 
-    Signal<> selectionChanged_;
-    JSlot toggleAmPm_;
-};
+            WTimeEdit * timeEdit_;
+
+            void hourValueChanged();
+            void minuteValueChanged();
+            void secondValueChanged();
+            void msecValueChanged();
+            void ampmValueChanged();
+            bool formatAp() const;
+            bool formatMs() const;
+            bool formatS() const;
+
+            Signal<> selectionChanged_;
+            JSlot toggleAmPm_;
+    };
 
 
 } // end namespace Wt

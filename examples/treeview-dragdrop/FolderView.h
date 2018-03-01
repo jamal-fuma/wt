@@ -20,22 +20,22 @@ using namespace Wt;
  */
 class FolderView : public WTreeView
 {
-public:
-  /*! \brief Constant that indicates the mime type for a selection of files.
-   *
-   * Every kind of dragged data should be identified using a unique mime type.
-   */
-  static const char *FileSelectionMimeType;
+    public:
+        /*! \brief Constant that indicates the mime type for a selection of files.
+         *
+         * Every kind of dragged data should be identified using a unique mime type.
+         */
+        static const char * FileSelectionMimeType;
 
-  /*! \brief Constructor.
-   */
-  FolderView();
+        /*! \brief Constructor.
+         */
+        FolderView();
 
-protected:
-  /*! \brief Drop event.
-   */
-  virtual void dropEvent(const WDropEvent &event,
-                         const WModelIndex &target);
+    protected:
+        /*! \brief Drop event.
+         */
+        virtual void dropEvent(const WDropEvent & event,
+                               const WModelIndex & target);
 };
 
 /*@}*/

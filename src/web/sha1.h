@@ -8,13 +8,13 @@
  * Freeware Public License (FPL)
  *
  * This software is licensed as "freeware."  Permission to distribute
- * this software in source and binary forms, including incorporation 
- * into other products, is hereby granted without a fee.  THIS SOFTWARE 
- * IS PROVIDED 'AS IS' AND WITHOUT ANY EXPRESSED OR IMPLIED WARRANTIES, 
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
- * AND FITNESS FOR A PARTICULAR PURPOSE.  THE AUTHOR SHALL NOT BE HELD 
- * LIABLE FOR ANY DAMAGES RESULTING FROM THE USE OF THIS SOFTWARE, EITHER 
- * DIRECTLY OR INDIRECTLY, INCLUDING, BUT NOT LIMITED TO, LOSS OF DATA 
+ * this software in source and binary forms, including incorporation
+ * into other products, is hereby granted without a fee.  THIS SOFTWARE
+ * IS PROVIDED 'AS IS' AND WITHOUT ANY EXPRESSED OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS FOR A PARTICULAR PURPOSE.  THE AUTHOR SHALL NOT BE HELD
+ * LIABLE FOR ANY DAMAGES RESULTING FROM THE USE OF THIS SOFTWARE, EITHER
+ * DIRECTLY OR INDIRECTLY, INCLUDING, BUT NOT LIMITED TO, LOSS OF DATA
  * OR DATA BEING RENDERED INACCURATE.
  *
  *****************************************************************************
@@ -36,7 +36,7 @@
 #ifndef _SHA1_H_
 #define _SHA1_H_
 
-/* 
+/*
  *  This structure will hold context information for the hashing
  *  operation
  */
@@ -59,8 +59,8 @@ typedef struct SHA1Context
  */
 void wt_SHA1Reset(SHA1Context *);
 int wt_SHA1Result(SHA1Context *);
-void wt_SHA1Input( SHA1Context *,
-                const unsigned char *,
-                unsigned);
+void wt_SHA1Input(SHA1Context *,
+                  const unsigned char *,
+                  unsigned);
 
 #endif

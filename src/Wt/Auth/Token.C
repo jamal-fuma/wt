@@ -6,16 +6,18 @@
 
 #include "Token.h"
 
-namespace Wt {
-  namespace Auth {
+namespace Wt
+{
+    namespace Auth
+    {
 
-Token::Token()
-{ }
+        Token::Token()
+        { }
 
-Token::Token(const std::string& hash, const WDateTime& expirationTime)
-  : hash_(hash),
-    expirationTime_(expirationTime)
-{ }
+        Token::Token(const std::string & hash, const WDateTime & expirationTime)
+            : hash_(hash),
+              expirationTime_(expirationTime)
+        { }
 
-  }
+    }
 }

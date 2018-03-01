@@ -19,13 +19,13 @@ IssuedToken::IssuedToken(std::string value,
                          std::string redirectUri,
                          Wt::Dbo::ptr<User> user,
                          Wt::Dbo::ptr<OAuthClient> authClient)
-  : value(value),
-    expires(expires),
-    purpose(purpose),
-    scope(scope),
-    redirectUri(redirectUri),
-    user(user),
-    authClient(authClient)
+    : value(value),
+      expires(expires),
+      purpose(purpose),
+      scope(scope),
+      redirectUri(redirectUri),
+      user(user),
+      authClient(authClient)
 {
 }
 

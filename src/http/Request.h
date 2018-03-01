@@ -27,115 +27,130 @@
 #include "Wt/WDllDefs.h"
 
 #ifdef HTTP_WITH_SSL
-#include <openssl/ssl.h>
+    #include <openssl/ssl.h>
 #endif
 
-namespace Wt {
-  class WSslInfo;
+namespace Wt
+{
+    class WSslInfo;
 }
 
-namespace http {
-namespace server {
-
-/*
- * string that references data in our connection receive buffers,
- * taking into account that a string may span several buffer
- * boundaries
- */
-struct buffer_string 
+namespace http
 {
-  char *data;
-  unsigned int len;
-  buffer_string *next;
+    namespace server
+    {
 
-  buffer_string() : data(nullptr), len(0), next(nullptr) { }
+        /*
+         * string that references data in our connection receive buffers,
+         * taking into account that a string may span several buffer
+         * boundaries
+         */
+        struct buffer_string
+        {
+            char * data;
+            unsigned int len;
+            buffer_string * next;
 
-  bool empty() const { return len == 0 && (!next || next->empty()); }
-  void clear() { data = nullptr; len = 0; next = nullptr; }
-  std::string str() const;
-  unsigned length() const;
-  bool contains(const char *s) const;
-  bool icontains(const char *s) const;
-  bool iequals(const char *s) const;
-  void write(std::ostream &os) const;
+            buffer_string() : data(nullptr), len(0), next(nullptr) { }
 
-  bool operator==(const buffer_string& other) const;
-  bool operator==(const std::string& other) const;
-  bool operator==(const char *other) const;
-  bool operator!=(const char *other) const;
-};
+            bool empty() const
+            {
+                return len == 0 && (!next || next->empty());
+            }
+            void clear()
+            {
+                data = nullptr;
+                len = 0;
+                next = nullptr;
+            }
+            std::string str() const;
+            unsigned length() const;
+            bool contains(const char * s) const;
+            bool icontains(const char * s) const;
+            bool iequals(const char * s) const;
+            void write(std::ostream & os) const;
 
-std::ostream& operator<< (std::ostream &os, const buffer_string &str);
+            bool operator==(const buffer_string & other) const;
+            bool operator==(const std::string & other) const;
+            bool operator==(const char * other) const;
+            bool operator!=(const char * other) const;
+        };
 
-/// A request received from a client.
-/// A request with a body will have a content-length.
-class Request
-{
-public:
-  struct Header {
-    buffer_string name;
-    buffer_string value;
-  };
-  
+        std::ostream & operator<< (std::ostream & os, const buffer_string & str);
+
+        /// A request received from a client.
+        /// A request with a body will have a content-length.
+        class Request
+        {
+            public:
+                struct Header
+                {
+                    buffer_string name;
+                    buffer_string value;
+                };
+
 #ifdef WTHTTP_WITH_ZLIB
-  struct PerMessageDeflateState {
-	bool enabled;
-	int client_max_window_bits; // -1 means no context takeover
-	int server_max_window_bits; // -1 means no context takeover
-  };
+                struct PerMessageDeflateState
+                {
+                    bool enabled;
+                    int client_max_window_bits; // -1 means no context takeover
+                    int server_max_window_bits; // -1 means no context takeover
+                };
 #endif
 
-  Request() {
+                Request()
+                {
 #ifdef HTTP_WITH_SSL
-    ssl = nullptr;
+                    ssl = nullptr;
 #endif
-    http_version_major = -1;
-    http_version_minor = -1;
-  }
-  enum State { Partial, Complete, Error };
+                    http_version_major = -1;
+                    http_version_minor = -1;
+                }
+                enum State { Partial, Complete, Error };
 
-  buffer_string method;
-  buffer_string uri;
-  char urlScheme[10];
-  std::string remoteIP;
-  short port;
-  int http_version_major;
-  int http_version_minor;
+                buffer_string method;
+                buffer_string uri;
+                char urlScheme[10];
+                std::string remoteIP;
+                short port;
+                int http_version_major;
+                int http_version_minor;
 
-  typedef std::list<Header> HeaderList;
-  HeaderList headers;
-  ::int64_t contentLength;
-  int webSocketVersion;
+                typedef std::list<Header> HeaderList;
+                HeaderList headers;
+                ::int64_t contentLength;
+                int webSocketVersion;
 #ifdef WTHTTP_WITH_ZLIB
-  mutable PerMessageDeflateState pmdState_;
+                mutable PerMessageDeflateState pmdState_;
 #endif
 
-  enum Type {
-    HTTP, // HTTP request
-    WebSocket, // WebSocket request
-    TCP // Raw TCP request (not interpreted by parser, e.g. for proxying)
-  } type;
+                enum Type
+                {
+                    HTTP, // HTTP request
+                    WebSocket, // WebSocket request
+                    TCP // Raw TCP request (not interpreted by parser, e.g. for proxying)
+                } type;
 
-  std::string request_path;
-  std::string request_query;
-  std::string request_extra_path;
+                std::string request_path;
+                std::string request_query;
+                std::string request_extra_path;
 
 #ifdef HTTP_WITH_SSL
-  SSL *ssl;
+                SSL * ssl;
 #endif
-  Wt::WSslInfo *sslInfo() const;
+                Wt::WSslInfo * sslInfo() const;
 
-  void reset();
-  void process();
+                void reset();
+                void process();
 
-  bool closeConnection() const;
-  bool acceptGzipEncoding() const;
-  void enableWebSocket();
-  const Header *getHeader(const std::string& name) const;
-  const Header *getHeader(const char *name) const;
-};
+                bool closeConnection() const;
+                bool acceptGzipEncoding() const;
+                void enableWebSocket();
+                const Header * getHeader(const std::string & name) const;
+                const Header * getHeader(const char * name) const;
+        };
 
-} // namespace server
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_REQUEST_HPP

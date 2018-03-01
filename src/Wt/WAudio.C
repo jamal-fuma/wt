@@ -12,17 +12,17 @@ using namespace Wt;
 WAudio::WAudio()
 { }
 
-DomElement *WAudio::createMediaDomElement()
+DomElement * WAudio::createMediaDomElement()
 {
-  return DomElement::createNew(DomElementType::AUDIO);
+    return DomElement::createNew(DomElementType::AUDIO);
 }
 
 std::string WAudio::jsAudioRef() const
 {
-  return jsMediaRef();
+    return jsMediaRef();
 }
 
 DomElementType WAudio::domElementType() const
 {
-  return DomElementType::AUDIO;
+    return DomElementType::AUDIO;
 }

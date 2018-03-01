@@ -7,11 +7,12 @@
 #ifndef XSS_FILTER_H_
 #define XSS_FILTER_H_
 
-namespace Wt {
+namespace Wt
+{
 
-class WString;
+    class WString;
 
-extern bool XSSFilterRemoveScript(WString& text);
+    extern bool XSSFilterRemoveScript(WString & text);
 
 }
 

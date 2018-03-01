@@ -6,15 +6,16 @@
 
 #include <Wt/WJavaScriptPreamble.h>
 
-namespace Wt {
+namespace Wt
+{
 
-WJavaScriptPreamble::WJavaScriptPreamble(JavaScriptScope scope,
-					 JavaScriptObjectType type,
-					 const char *name, const char *src)
-  : scope(scope),
-    type(type),
-    name(name),
-    src(src)
-{ }
+    WJavaScriptPreamble::WJavaScriptPreamble(JavaScriptScope scope,
+            JavaScriptObjectType type,
+            const char * name, const char * src)
+        : scope(scope),
+          type(type),
+          name(name),
+          src(src)
+    { }
 
 }

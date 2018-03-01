@@ -1,5 +1,5 @@
 // This may look like C code, but it's really -*- C++ -*-
-/* 
+/*
  * Copyright (C) 2011 Emweb bvba, Heverlee, Belgium
  *
  * See the LICENSE file for terms of use.
@@ -12,29 +12,35 @@
 
 using namespace Wt;
 
-namespace Wt {
-  class WContainerWidget;
-  class WPushButton;
-  class WTable;
+namespace Wt
+{
+    class WContainerWidget;
+    class WPushButton;
+    class WTable;
 }
 
 class LettersWidget : public WCompositeWidget
 {
-public:
-  LettersWidget();
+    public:
+        LettersWidget();
+        virtual ~LettersWidget();
 
-  void reset();
+        void reset();
 
-  Signal<char>& letterPushed() { return letterPushed_; }
+        Signal<char> & letterPushed()
+        {
+            return letterPushed_;
+        }
 
-private:
-  WTable                     *impl_;
-  std::vector<WPushButton *>  letterButtons_;
+    private:
+        WTable           *          impl_;
+        std::vector<WPushButton *>  letterButtons_;
+        std::vector<Wt::Signals::connection> connections_;
 
-  Signal<char>                letterPushed_;
+        Signal<char>                letterPushed_;
 
-  void processButton(WPushButton *b);
-  void processButtonPushed(const WKeyEvent &e, WPushButton *b);
+        void processButton(WPushButton * b);
+        void processButtonPushed(const WKeyEvent & e, WPushButton * b);
 };
 
 #endif //LETTERS_WIDGET_H_

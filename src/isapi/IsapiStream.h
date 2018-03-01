@@ -12,24 +12,26 @@
 
 class FCGX_Request;
 
-namespace Wt {
-  namespace isapi {
-
-class IsapiServer;
-
-class IsapiStream : public WebStream
+namespace Wt
 {
-public:
-  IsapiStream(IsapiServer *server);
-  ~IsapiStream();
+    namespace isapi
+    {
 
-  virtual WebRequest *getNextRequest(int timeoutsec);
+        class IsapiServer;
 
-private:
-  IsapiServer *server_;
-};
+        class IsapiStream : public WebStream
+        {
+            public:
+                IsapiStream(IsapiServer * server);
+                ~IsapiStream();
 
-}
+                virtual WebRequest * getNextRequest(int timeoutsec);
+
+            private:
+                IsapiServer * server_;
+        };
+
+    }
 }
 
 #endif // ISAPI_STREAM_H_

@@ -5,11 +5,12 @@
  */
 #include "SessionInfo.h"
 
-namespace Wt {
+namespace Wt
+{
 
-SessionInfo::SessionInfo(const std::string sessionId, pid_t childPId)
-  : sessionId_(sessionId),
-    childPId_(childPId)
-{ }
+    SessionInfo::SessionInfo(const std::string sessionId, pid_t childPId)
+        : sessionId_(sessionId),
+          childPId_(childPId)
+    { }
 
 }

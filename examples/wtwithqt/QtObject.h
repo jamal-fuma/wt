@@ -10,10 +10,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -38,21 +38,21 @@ class Dictionary;
  */
 class QtObject : public QObject
 {
-  Q_OBJECT
+        Q_OBJECT
 
-public:
-  QtObject(Dictionary *wt);
+    public:
+        QtObject(Dictionary * wt);
 
-  void passGreet(const QString&);
+        void passGreet(const QString &);
 
-signals:
-  void greet(const QString&);
+    signals:
+        void greet(const QString &);
 
-public slots:
-  void doGreet(const QString&);
+    public slots:
+        void doGreet(const QString &);
 
-private:
-  Dictionary *wt_;
+    private:
+        Dictionary * wt_;
 };
 
 #endif // QTOBJECT_H_

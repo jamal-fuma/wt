@@ -7,22 +7,24 @@
 
 class MyResource : public Wt::WResource
 {
-public:
-    MyResource()
-        : WResource()
-    {
-	suggestFileName("data.txt");
-    }
+    public:
+        MyResource()
+            : WResource()
+        {
+            suggestFileName("data.txt");
+        }
 
-    ~MyResource() {
-	beingDeleted();
-    }
+        ~MyResource()
+        {
+            beingDeleted();
+        }
 
-    void handleRequest(const Wt::Http::Request &request,
-                       Wt::Http::Response &response) {
-	response.setMimeType("plain/text");
-	response.out() << "I am a text file." << std::endl;
-    }
+        void handleRequest(const Wt::Http::Request & request,
+                           Wt::Http::Response & response)
+        {
+            response.setMimeType("plain/text");
+            response.out() << "I am a text file." << std::endl;
+        }
 };
 
 SAMPLE_BEGIN(ResourceCustom)
@@ -32,7 +34,7 @@ auto textResource = std::make_shared<MyResource>();
 
 Wt::WLink link = Wt::WLink(textResource);
 link.setTarget(Wt::LinkTarget::NewWindow);
-Wt::WAnchor *anchor =
+Wt::WAnchor * anchor =
     container->addWidget(Wt::cpp14::make_unique<Wt::WAnchor>(link,"Download file"));
 
 SAMPLE_END(return std::move(container))

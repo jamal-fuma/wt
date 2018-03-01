@@ -12,7 +12,7 @@ auto vbox = container->setLayout(Wt::cpp14::make_unique<Wt::WVBoxLayout>());
 auto item = Wt::cpp14::make_unique<Wt::WText>("Item 1");
 item->setStyleClass("green-box");
 vbox->addWidget(std::move(item), 1);
-  
+
 item = Wt::cpp14::make_unique<Wt::WText>("Item 2");
 item->setStyleClass("blue-box");
 vbox->addWidget(std::move(item));

@@ -14,8 +14,9 @@
 
 #include "CornerImage.h"
 
-namespace Wt {
-  class WContainerWidget;
+namespace Wt
+{
+    class WContainerWidget;
 }
 
 /**
@@ -42,90 +43,102 @@ namespace Wt {
  */
 class RoundedWidget : public WCompositeWidget
 {
-public:
-  /*! \brief Construct a widget with any combination of its corners
-   *         rounded.
-   */
-  RoundedWidget(WFlags<Corner> corners = WFlags<Corner>(Corner::TopLeft) |
-							Corner::TopRight |
-							Corner::BottomLeft |
-							Corner::BottomRight);
+    public:
+        /*! \brief Construct a widget with any combination of its corners
+         *         rounded.
+         */
+        RoundedWidget(WFlags<Corner> corners = WFlags<Corner>(Corner::TopLeft) |
+                                               Corner::TopRight |
+                                               Corner::BottomLeft |
+                                               Corner::BottomRight);
 
-  /*! \brief Set the widget background color.
-   *
-   * Because the background color also affects the color of the
-   * corner images, the background color cannot be set using the
-   * WCssDecorationStyle() of the widget.
-   */
-  void setBackgroundColor(WColor color);
+        /*! \brief Set the widget background color.
+         *
+         * Because the background color also affects the color of the
+         * corner images, the background color cannot be set using the
+         * WCssDecorationStyle() of the widget.
+         */
+        void setBackgroundColor(WColor color);
 
-  /*! \brief Get the widget background color.
-   */
-  WColor backgroundColor() const { return backgroundColor_; }
+        /*! \brief Get the widget background color.
+         */
+        WColor backgroundColor() const
+        {
+            return backgroundColor_;
+        }
 
-  /*! \brief Show or hide rounded corners.
-   */
-  void enableRoundedCorners(bool how);
+        /*! \brief Show or hide rounded corners.
+         */
+        void enableRoundedCorners(bool how);
 
-  /*! \brief Set the corner radius of the widget.
-   */
-  void setCornerRadius(int radius);
+        /*! \brief Set the corner radius of the widget.
+         */
+        void setCornerRadius(int radius);
 
-  /*! \brief Get the corner radius of the widget.
-   */
-  int cornerRadius() const { return radius_; }
+        /*! \brief Get the corner radius of the widget.
+         */
+        int cornerRadius() const
+        {
+            return radius_;
+        }
 
-  /*! \brief Set the surrounding color of the widget.
-   *
-   * This color will be used "outside" the corner, in each of the
-   * corner images.
-   */
-  void setSurroundingColor(WColor color);
+        /*! \brief Set the surrounding color of the widget.
+         *
+         * This color will be used "outside" the corner, in each of the
+         * corner images.
+         */
+        void setSurroundingColor(WColor color);
 
-  /*! \brief Get the surrounding color of the widget.
-   */
-  WColor surroundingColor() const { return surroundingColor_; }
+        /*! \brief Get the surrounding color of the widget.
+         */
+        WColor surroundingColor() const
+        {
+            return surroundingColor_;
+        }
 
-  /*! \brief Access the contents container.
-   *
-   * The contents WContainerWidget represents the contents inside
-   * the rounded widget.
-   */
-  WContainerWidget *contents() const { return contents_; }
+        /*! \brief Access the contents container.
+         *
+         * The contents WContainerWidget represents the contents inside
+         * the rounded widget.
+         */
+        WContainerWidget * contents() const
+        {
+            return contents_;
+        }
 
-private:
-  //! Background color
-  WColor backgroundColor_;
+    private:
+        //! Background color
+        WColor backgroundColor_;
 
-  //! "Surrounding" color -- maybe we can use a transparent color ?
-  WColor surroundingColor_;
+        //! "Surrounding" color -- maybe we can use a transparent color ?
+        WColor surroundingColor_;
 
-  //! Radius
-  int radius_;
+        //! Radius
+        int radius_;
 
-  //! OR'ed specification of the corners which are to be rounded.
-  WFlags<Corner> corners_;
+        //! OR'ed specification of the corners which are to be rounded.
+        WFlags<Corner> corners_;
 
-  //! The container widget in which to store the contents.
-  WContainerWidget *contents_;
+        //! The container widget in which to store the contents.
+        WContainerWidget * contents_;
 
-  //! This composite widget is implemented as a WContainerWidget
-  WContainerWidget *impl_;
+        //! This composite widget is implemented as a WContainerWidget
+        WContainerWidget * impl_;
 
-  //! A container at the top which renders the top rounding
-  WContainerWidget *top_;
+        //! A container at the top which renders the top rounding
+        WContainerWidget * top_;
 
-  //! A container at the bottom renders the bottom rounding
-  WContainerWidget *bottom_;
+        //! A container at the bottom renders the bottom rounding
+        WContainerWidget * bottom_;
 
-  //! Up to four CornerImages for each corner.
-  std::array<Wt::Core::observing_ptr<CornerImage>, 4> images_;
+        //! Up to four CornerImages for each corner.
+        std::array<Wt::Core::observing_ptr<CornerImage>, 4> images_;
 
-  //! Create the implementation.
-  void create();
+        //! Create the implementation.
+        void create();
 
-  //! Adjust the image (colors and radius).
-  void adjust();
+        //! Adjust the image (colors and radius).
+        void adjust();
 };
 
 /*@}*/

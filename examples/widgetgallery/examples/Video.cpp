@@ -22,22 +22,26 @@ video->setPoster(poster);
 video->setAlternativeContent(Wt::cpp14::make_unique<Wt::WImage>(poster));
 video->resize(640, 360);
 
-Wt::WText *out = container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
+Wt::WText * out = container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
 
-video->playbackStarted().connect([=] {
-        out->setText("<p>Video playing</p>");
+video->playbackStarted().connect([=]
+{
+    out->setText("<p>Video playing</p>");
 });
 
-video->playbackPaused().connect([=] {
-        out->setText("<p>Video paused</p>");
+video->playbackPaused().connect([=]
+{
+    out->setText("<p>Video paused</p>");
 });
 
-video->ended().connect([=] {
-        out->setText("<p>Video ended</p>");
+video->ended().connect([=]
+{
+    out->setText("<p>Video ended</p>");
 });
 
-video->volumeChanged().connect([=] {
-        out->setText("<p>Volume changed</p>");
+video->volumeChanged().connect([=]
+{
+    out->setText("<p>Volume changed</p>");
 });
 
 SAMPLE_END(return std::move(container))

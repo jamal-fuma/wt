@@ -20,22 +20,25 @@ auto container = cpp14::make_unique<WContainerWidget>();
 auto model
     = csvToModel(WApplication::appRoot() + "timeseries.csv");
 
-if (!model)
-  return std::move(container);
+if(!model)
+{
+    return std::move(container);
+}
 
 /*
  * Parses the first column as dates, to be able to use a date scale
  */
-for (int row = 0; row < model->rowCount(); ++row) {
-  WString s = asString(model->data(row, 0));
-  WDate date = WDate::fromString(s, "dd/MM/yy");
-  model->setData(row, 0, date);
+for(int row = 0; row < model->rowCount(); ++row)
+{
+    WString s = asString(model->data(row, 0));
+    WDate date = WDate::fromString(s, "dd/MM/yy");
+    model->setData(row, 0, date);
 }
 
 /*
  * Creates the scatter plot.
  */
-Chart::WCartesianChart *chart =
+Chart::WCartesianChart * chart =
     container->addWidget(cpp14::make_unique<Chart::WCartesianChart>());
 chart->setBackground(WColor(220, 220, 220));
 chart->setModel(model);
@@ -51,16 +54,16 @@ chart->axis(Chart::Axis::X).setMinimumZoomRange((max - min) / 16.0);
  * Add the second and the third column as line series.
  */
 {
-  auto s =
-      cpp14::make_unique<Chart::WDataSeries>(2, Chart::SeriesType::Line);
-  s->setShadow(WShadow(3, 3, WColor(0, 0, 0, 127), 3));
-  chart->addSeries(std::move(s));
+    auto s =
+        cpp14::make_unique<Chart::WDataSeries>(2, Chart::SeriesType::Line);
+    s->setShadow(WShadow(3, 3, WColor(0, 0, 0, 127), 3));
+    chart->addSeries(std::move(s));
 }
 {
-  auto s =
-      cpp14::make_unique<Chart::WDataSeries>(3, Chart::SeriesType::Line);
-  s->setShadow(WShadow(3, 3, WColor(0, 0, 0, 127), 3));
-  chart->addSeries(std::move(s));
+    auto s =
+        cpp14::make_unique<Chart::WDataSeries>(3, Chart::SeriesType::Line);
+    s->setShadow(WShadow(3, 3, WColor(0, 0, 0, 127), 3));
+    chart->addSeries(std::move(s));
 }
 
 chart->resize(800, 400);

@@ -6,45 +6,53 @@
 
 #include "Wt/Dbo/SqlStatement.h"
 
-namespace Wt {
-  namespace Dbo {
-
-SqlStatement::SqlStatement()
-  : inuse_(false)
-{ }
-
-SqlStatement::~SqlStatement()
-{ }
-
-bool SqlStatement::use()
+namespace Wt
 {
-  if (!inuse_) {
-    inuse_ = true;
-    return true;
-  } else
-    return false;
-}
+    namespace Dbo
+    {
 
-void SqlStatement::done()
-{
-  reset();
-  inuse_ = false;
-}
+        SqlStatement::SqlStatement()
+            : inuse_(false)
+        { }
 
-ScopedStatementUse::ScopedStatementUse(SqlStatement *statement)
-  : s_(statement)
-{ }
+        SqlStatement::~SqlStatement()
+        { }
 
-void ScopedStatementUse::operator()(SqlStatement *statement)
-{
-  s_ = statement;
-}
+        bool SqlStatement::use()
+        {
+            if(!inuse_)
+            {
+                inuse_ = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-ScopedStatementUse::~ScopedStatementUse()
-{
-  if (s_)
-    s_->done();
-}
+        void SqlStatement::done()
+        {
+            reset();
+            inuse_ = false;
+        }
 
-  }
+        ScopedStatementUse::ScopedStatementUse(SqlStatement * statement)
+            : s_(statement)
+        { }
+
+        void ScopedStatementUse::operator()(SqlStatement * statement)
+        {
+            s_ = statement;
+        }
+
+        ScopedStatementUse::~ScopedStatementUse()
+        {
+            if(s_)
+            {
+                s_->done();
+            }
+        }
+
+    }
 }

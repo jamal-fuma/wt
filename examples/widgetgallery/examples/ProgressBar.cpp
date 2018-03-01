@@ -7,15 +7,15 @@ SAMPLE_BEGIN(ProgressBar)
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 container->setStyleClass("inline-buttons");
 
-Wt::WProgressBar *bar =
+Wt::WProgressBar * bar =
     container->addWidget(Wt::cpp14::make_unique<Wt::WProgressBar>());
 bar->setRange(0, 10);
 
-Wt::WPushButton *startButton =
+Wt::WPushButton * startButton =
     container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Start"));
-Wt::WPushButton *stopButton =
+Wt::WPushButton * stopButton =
     container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Stop"));
-Wt::WPushButton *resetButton =
+Wt::WPushButton * resetButton =
     container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Reset"));
 
 // Initially, only the start button is enabled.
@@ -26,10 +26,12 @@ resetButton->disable();
 auto intervalTimer = container->addChild(Wt::cpp14::make_unique<Wt::WTimer>());
 intervalTimer->setInterval(std::chrono::milliseconds{1000});
 
-startButton->clicked().connect([=] {
-    if (bar->value() < 10) {
+startButton->clicked().connect([=]
+{
+    if(bar->value() < 10)
+    {
         intervalTimer->start();
-	startButton->setText("Resume");
+        startButton->setText("Resume");
     }
 
     startButton->disable();
@@ -37,7 +39,8 @@ startButton->clicked().connect([=] {
     resetButton->disable();
 });
 
-stopButton->clicked().connect([=] {
+stopButton->clicked().connect([=]
+{
     intervalTimer->stop();
 
     startButton->enable();
@@ -45,7 +48,8 @@ stopButton->clicked().connect([=] {
     resetButton->enable();
 });
 
-resetButton->clicked().connect([=] {
+resetButton->clicked().connect([=]
+{
     bar->setValue(0.0);
     startButton->setText("Start");
 
@@ -54,11 +58,13 @@ resetButton->clicked().connect([=] {
     resetButton->disable();
 });
 
-intervalTimer->timeout().connect([=] {
+intervalTimer->timeout().connect([=]
+{
     bar->setValue(bar->value() + 1);
-    if (bar->value() == 10) {
+    if(bar->value() == 10)
+    {
         stopButton->clicked().emit(Wt::WMouseEvent());
-	startButton->disable();
+        startButton->disable();
     }
 });
 

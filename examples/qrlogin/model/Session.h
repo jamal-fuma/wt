@@ -25,27 +25,30 @@ class QRTokenDatabase;
 
 class Session : public dbo::Session
 {
-public:
-  static void configureAuth();
+    public:
+        static void configureAuth();
 
-  Session(const std::string& sqliteDb);
-  ~Session();
+        Session(const std::string & sqliteDb);
+        ~Session();
 
-  dbo::ptr<User> user() const;
+        dbo::ptr<User> user() const;
 
-  Auth::AbstractUserDatabase& users();
-  QRTokenDatabase& qrTokenDatabase();
-  Auth::Login& login() { return login_; }
+        Auth::AbstractUserDatabase & users();
+        QRTokenDatabase & qrTokenDatabase();
+        Auth::Login & login()
+        {
+            return login_;
+        }
 
-  static const Auth::AuthService& auth();
-  static const Auth::PasswordService& passwordAuth();
-  static const QRAuthService& qrAuth();
-  static const std::vector<const Auth::OAuthService *>& oAuth();
+        static const Auth::AuthService & auth();
+        static const Auth::PasswordService & passwordAuth();
+        static const QRAuthService & qrAuth();
+        static const std::vector<const Auth::OAuthService *> & oAuth();
 
-private:
-  std::unique_ptr<UserDatabase> users_;
-  std::unique_ptr<QRTokenDatabase> qrTokens_;
-  Auth::Login login_;
+    private:
+        std::unique_ptr<UserDatabase> users_;
+        std::unique_ptr<QRTokenDatabase> qrTokens_;
+        Auth::Login login_;
 };
 
 #endif // SESSION_H_

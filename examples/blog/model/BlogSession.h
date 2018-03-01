@@ -13,11 +13,13 @@
 #include <Wt/Dbo/ptr.h>
 #include <Wt/Dbo/backend/Sqlite3.h>
 
-namespace Wt {
-  namespace Auth {
-    class OAuthService;
-    class PasswordService;
-  }
+namespace Wt
+{
+    namespace Auth
+    {
+        class OAuthService;
+        class PasswordService;
+    }
 }
 
 #include "BlogUserDatabase.h"
@@ -30,30 +32,38 @@ class User;
 
 class BlogSession : public dbo::Session
 {
-public:
-  static void configureAuth();
+    public:
+        static void configureAuth();
 
-  BlogSession(dbo::SqlConnectionPool& connectionPool);
+        BlogSession(dbo::SqlConnectionPool & connectionPool);
 
-  dbo::ptr<User> user() const;
+        dbo::ptr<User> user() const;
 
-  Wt::Signal< dbo::ptr<Comment> >& commentsChanged()
-    { return commentsChanged_; }
+        Wt::Signal< dbo::ptr<Comment> > & commentsChanged()
+        {
+            return commentsChanged_;
+        }
 
-  BlogUserDatabase& users() { return users_; }
-  Wt::Auth::Login& login() { return login_; }
+        BlogUserDatabase & users()
+        {
+            return users_;
+        }
+        Wt::Auth::Login & login()
+        {
+            return login_;
+        }
 
-  Wt::Auth::PasswordService *passwordAuth() const;
-  const std::vector<const Wt::Auth::OAuthService *>& oAuth() const;
+        Wt::Auth::PasswordService * passwordAuth() const;
+        const std::vector<const Wt::Auth::OAuthService *> & oAuth() const;
 
-  static std::unique_ptr<dbo::SqlConnectionPool> createConnectionPool(const std::string& sqlite3);
+        static std::unique_ptr<dbo::SqlConnectionPool> createConnectionPool(const std::string & sqlite3);
 
-private:
-  dbo::SqlConnectionPool&     connectionPool_;
-  BlogUserDatabase            users_;
-  Wt::Auth::Login                 login_;
+    private:
+        dbo::SqlConnectionPool   &  connectionPool_;
+        BlogUserDatabase            users_;
+        Wt::Auth::Login                 login_;
 
-  Wt::Signal< dbo::ptr<Comment> > commentsChanged_;
+        Wt::Signal< dbo::ptr<Comment> > commentsChanged_;
 };
 
 #endif // BLOG_SESSION_H_

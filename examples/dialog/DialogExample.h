@@ -21,24 +21,24 @@ using namespace Wt;
  */
 class DialogExample : public WApplication
 {
-public:
-  /*! \brief Create the example application.
-   */
-  DialogExample(const WEnvironment& env);
+    public:
+        /*! \brief Create the example application.
+         */
+        DialogExample(const WEnvironment & env);
 
-private:
-  void messageBox1();
-  void messageBox2();
-  void messageBox3();
-  void messageBox4();
-  void custom();
+    private:
+        void messageBox1();
+        void messageBox2();
+        void messageBox3();
+        void messageBox4();
+        void custom();
 
-  void messageBoxDone(StandardButton result);
+        void messageBoxDone(StandardButton result);
 
-  void setStatus(const WString& text);
+        void setStatus(const WString & text);
 
-  std::unique_ptr<WMessageBox> messageBox_;
-  WText *status_;
+        std::unique_ptr<WMessageBox> messageBox_;
+        WText * status_;
 };
 
 /*@}*/

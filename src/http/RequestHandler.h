@@ -26,60 +26,65 @@
 #include "WtReply.h"
 #include "../web/Configuration.h"
 
-namespace http {
-namespace server {
-
-class Configuration;
-class Request;
-
-/// The common handler for all incoming requests.
-class RequestHandler
+namespace http
 {
-public:
-  /// Construct with a directory containing files to be served.
-  explicit RequestHandler(const Configuration &config,
-			  const Wt::Configuration& wtConfig,
-			  Wt::WLogger& logger);
+    namespace server
+    {
 
-  /// Handle a request and produce a reply.
-  ReplyPtr handleRequest(Request& req, ReplyPtr& lastWtReply,
-			 ReplyPtr& lastProxyReply,
-			 ReplyPtr& lastStaticReply);
+        class Configuration;
+        class Request;
 
-  RequestHandler(const RequestHandler&) = delete;
-  RequestHandler& operator=(const RequestHandler&) = delete;
+        /// The common handler for all incoming requests.
+        class RequestHandler
+        {
+            public:
+                /// Construct with a directory containing files to be served.
+                explicit RequestHandler(const Configuration & config,
+                                        const Wt::Configuration & wtConfig,
+                                        Wt::WLogger & logger);
 
-  const std::string getErrorRoot() const
-  {
-    return config_.errRoot();
-  }
+                /// Handle a request and produce a reply.
+                ReplyPtr handleRequest(Request & req, ReplyPtr & lastWtReply,
+                                       ReplyPtr & lastProxyReply,
+                                       ReplyPtr & lastStaticReply);
 
-  Wt::WLogger& logger() const { return logger_; }
+                RequestHandler(const RequestHandler &) = delete;
+                RequestHandler & operator=(const RequestHandler &) = delete;
 
-  void setSessionManager(SessionProcessManager *sessionManager);
+                const std::string getErrorRoot() const
+                {
+                    return config_.errRoot();
+                }
 
-private:
-  /// The server configuration
-  const Configuration &config_;
-  /// The Wt configuration
-  const Wt::Configuration &wtConfig_;
-  /// The logger
-  Wt::WLogger& logger_;
-  /// The session manager for dedicated processes
-  SessionProcessManager *sessionManager_;
+                Wt::WLogger & logger() const
+                {
+                    return logger_;
+                }
 
-  /// Perform URL-decoding on a string and separates in path and
-  /// query. Returns false if the encoding was invalid.
-  static bool url_decode(const buffer_string& in, std::string& path,
-			 std::string& query);
+                void setSessionManager(SessionProcessManager * sessionManager);
 
-  static bool matchesPath(const std::string& path,
-			  const std::string& prefix,
-			  bool matchAfterSlash);
+            private:
+                /// The server configuration
+                const Configuration & config_;
+                /// The Wt configuration
+                const Wt::Configuration & wtConfig_;
+                /// The logger
+                Wt::WLogger & logger_;
+                /// The session manager for dedicated processes
+                SessionProcessManager * sessionManager_;
 
-};
+                /// Perform URL-decoding on a string and separates in path and
+                /// query. Returns false if the encoding was invalid.
+                static bool url_decode(const buffer_string & in, std::string & path,
+                                       std::string & query);
 
-} // namespace server
+                static bool matchesPath(const std::string & path,
+                                        const std::string & prefix,
+                                        bool matchAfterSlash);
+
+        };
+
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_REQUEST_HANDLER_HPP

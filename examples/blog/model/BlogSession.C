@@ -23,155 +23,155 @@
 #include <Wt/Dbo/FixedSqlConnectionPool.h>
 
 #ifndef WT_WIN32
-#include <unistd.h>
+    #include <unistd.h>
 #endif
 
 #if !defined(WT_WIN32) && !defined(__CYGWIN__) && !defined(ANDROID)
-#define HAVE_CRYPT
+    #define HAVE_CRYPT
 #endif
 
-namespace {
-  const std::string ADMIN_USERNAME = "admin";
-  const std::string ADMIN_PASSWORD = "admin";
+namespace
+{
+    const std::string ADMIN_USERNAME = "admin";
+    const std::string ADMIN_PASSWORD = "admin";
 
 #ifdef HAVE_CRYPT
-  class UnixCryptHashFunction : public Wt::Auth::HashFunction
-  {
-  public:
-    virtual std::string compute(const std::string& msg,
-				const std::string& salt) const
+    class UnixCryptHashFunction : public Wt::Auth::HashFunction
     {
-      std::string md5Salt = "$1$" + salt;
-      return crypt(msg.c_str(), md5Salt.c_str());
-    }
+        public:
+            virtual std::string compute(const std::string & msg,
+                                        const std::string & salt) const
+            {
+                std::string md5Salt = "$1$" + salt;
+                return crypt(msg.c_str(), md5Salt.c_str());
+            }
 
-    virtual bool verify(const std::string& msg,
-			const std::string& salt,
-			const std::string& hash) const
-    {
-      return crypt(msg.c_str(), hash.c_str()) == hash;
-    }
+            virtual bool verify(const std::string & msg,
+                                const std::string & salt,
+                                const std::string & hash) const
+            {
+                return crypt(msg.c_str(), hash.c_str()) == hash;
+            }
 
-    virtual std::string name () const {
-      return "crypt";
-    }
-  };
+            virtual std::string name() const
+            {
+                return "crypt";
+            }
+    };
 #endif // HAVE_CRYPT
 
-  class BlogOAuth : public std::vector<const Wt::Auth::OAuthService *>
-  {
-  public:
-    ~BlogOAuth()
+    class BlogOAuth : public std::vector<const Wt::Auth::OAuthService *>
     {
-      for (unsigned i = 0; i < size(); ++i)
-        delete (*this)[i];
-    }
-  };
+        public:
+            ~BlogOAuth()
+            {
+                for(unsigned i = 0; i < size(); ++i)
+                {
+                    delete(*this)[i];
+                }
+            }
+    };
 
-  Wt::Auth::AuthService blogAuth;
-  Wt::Auth::PasswordService blogPasswords(blogAuth);
-  BlogOAuth blogOAuth;
+    Wt::Auth::AuthService blogAuth;
+    Wt::Auth::PasswordService blogPasswords(blogAuth);
+    BlogOAuth blogOAuth;
 }
 
 namespace dbo = Wt::Dbo;
 
 void BlogSession::configureAuth()
 {
-  blogAuth.setAuthTokensEnabled(true, "bloglogin");
-
-  std::unique_ptr<Wt::Auth::PasswordVerifier> verifier
-      = Wt::cpp14::make_unique<Wt::Auth::PasswordVerifier>();
-  verifier->addHashFunction(Wt::cpp14::make_unique<Wt::Auth::BCryptHashFunction>(7));
+    blogAuth.setAuthTokensEnabled(true, "bloglogin");
+    std::unique_ptr<Wt::Auth::PasswordVerifier> verifier
+        = Wt::cpp14::make_unique<Wt::Auth::PasswordVerifier>();
+    verifier->addHashFunction(Wt::cpp14::make_unique<Wt::Auth::BCryptHashFunction>(7));
 #ifdef WT_WITH_SSL
-  verifier->addHashFunction(Wt::cpp14::make_unique<Wt::Auth::SHA1HashFunction>());
+    verifier->addHashFunction(Wt::cpp14::make_unique<Wt::Auth::SHA1HashFunction>());
 #endif
 #ifdef HAVE_CRYPT
-  verifier->addHashFunction(Wt::cpp14::make_unique<UnixCryptHashFunction>());
+    verifier->addHashFunction(Wt::cpp14::make_unique<UnixCryptHashFunction>());
 #endif
-  blogPasswords.setVerifier(std::move(verifier));
-  blogPasswords.setAttemptThrottlingEnabled(true);
-  blogPasswords.setStrengthValidator
+    blogPasswords.setVerifier(std::move(verifier));
+    blogPasswords.setAttemptThrottlingEnabled(true);
+    blogPasswords.setStrengthValidator
     (Wt::cpp14::make_unique<Wt::Auth::PasswordStrengthValidator>());
-
-  if (Wt::Auth::GoogleService::configured())
-    blogOAuth.push_back(new Wt::Auth::GoogleService(blogAuth));
+    if(Wt::Auth::GoogleService::configured())
+    {
+        blogOAuth.push_back(new Wt::Auth::GoogleService(blogAuth));
+    }
 }
 
-std::unique_ptr<dbo::SqlConnectionPool> BlogSession::createConnectionPool(const std::string& sqliteDb)
+std::unique_ptr<dbo::SqlConnectionPool> BlogSession::createConnectionPool(const std::string & sqliteDb)
 {
-  auto connection = Wt::cpp14::make_unique<dbo::backend::Sqlite3>(sqliteDb);
-
-  connection->setProperty("show-queries", "true");
-  connection->setDateTimeStorage(Wt::Dbo::SqlDateTimeType::DateTime, Wt::Dbo::backend::DateTimeStorage::PseudoISO8601AsText);
-
-  return Wt::cpp14::make_unique<dbo::FixedSqlConnectionPool>(std::move(connection), 10);
+    auto connection = Wt::cpp14::make_unique<dbo::backend::Sqlite3>(sqliteDb);
+    connection->setProperty("show-queries", "true");
+    connection->setDateTimeStorage(Wt::Dbo::SqlDateTimeType::DateTime, Wt::Dbo::backend::DateTimeStorage::PseudoISO8601AsText);
+    return Wt::cpp14::make_unique<dbo::FixedSqlConnectionPool>(std::move(connection), 10);
 }
 
-BlogSession::BlogSession(dbo::SqlConnectionPool& connectionPool)
-  : connectionPool_(connectionPool),
-    users_(*this)
+BlogSession::BlogSession(dbo::SqlConnectionPool & connectionPool)
+    : connectionPool_(connectionPool),
+      users_(*this)
 {
-  setConnectionPool(connectionPool_);
-
-  mapClass<Comment>("comment");
-  mapClass<Post>("post");
-  mapClass<Tag>("tag");
-  mapClass<Token>("token");
-  mapClass<User>("user");
-
-  try {
-    dbo::Transaction t(*this);
-    createTables();
-
-    dbo::ptr<User> admin = add(Wt::cpp14::make_unique<User>());
-    User *a = admin.modify();
-    a->name = ADMIN_USERNAME;
-    a->role = User::Admin;
-
-    Wt::Auth::User authAdmin
-      = users_.findWithIdentity(Wt::Auth::Identity::LoginName, a->name);
-    blogPasswords.updatePassword(authAdmin, ADMIN_PASSWORD);
-
-    dbo::ptr<Post> post = add(Wt::cpp14::make_unique<Post>());
-    Post *p = post.modify();
-
-    p->state = Post::Published;
-    p->author = admin;
-    p->title = "Welcome!";
-    p->briefSrc = "Welcome to your own blog.";
-    p->bodySrc = "We have created for you an " + ADMIN_USERNAME +
-      " user with password " + ADMIN_PASSWORD;
-    p->briefHtml = asciidoc(p->briefSrc);
-    p->bodyHtml = asciidoc(p->bodySrc);
-    p->date = Wt::WDateTime::currentDateTime();
-
-    dbo::ptr<Comment> rootComment = add(Wt::cpp14::make_unique<Comment>());
-    rootComment.modify()->post = post;
-
-    t.commit();
-
-    std::cerr << "Created database, and user " << ADMIN_USERNAME
-	      << " / " << ADMIN_PASSWORD << std::endl;
-  } catch (std::exception& e) {
-    std::cerr << e.what() << std::endl;
-    std::cerr << "Using existing database";
-  }
+    setConnectionPool(connectionPool_);
+    mapClass<Comment>("comment");
+    mapClass<Post>("post");
+    mapClass<Tag>("tag");
+    mapClass<Token>("token");
+    mapClass<User>("user");
+    try
+    {
+        dbo::Transaction t(*this);
+        createTables();
+        dbo::ptr<User> admin = add(Wt::cpp14::make_unique<User>());
+        User * a = admin.modify();
+        a->name = ADMIN_USERNAME;
+        a->role = User::Admin;
+        Wt::Auth::User authAdmin
+            = users_.findWithIdentity(Wt::Auth::Identity::LoginName, a->name);
+        blogPasswords.updatePassword(authAdmin, ADMIN_PASSWORD);
+        dbo::ptr<Post> post = add(Wt::cpp14::make_unique<Post>());
+        Post * p = post.modify();
+        p->state = Post::Published;
+        p->author = admin;
+        p->title = "Welcome!";
+        p->briefSrc = "Welcome to your own blog.";
+        p->bodySrc = "We have created for you an " + ADMIN_USERNAME +
+                     " user with password " + ADMIN_PASSWORD;
+        p->briefHtml = asciidoc(p->briefSrc);
+        p->bodyHtml = asciidoc(p->bodySrc);
+        p->date = Wt::WDateTime::currentDateTime();
+        dbo::ptr<Comment> rootComment = add(Wt::cpp14::make_unique<Comment>());
+        rootComment.modify()->post = post;
+        t.commit();
+        std::cerr << "Created database, and user " << ADMIN_USERNAME
+                  << " / " << ADMIN_PASSWORD << std::endl;
+    }
+    catch(std::exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+        std::cerr << "Using existing database";
+    }
 }
 
 dbo::ptr<User> BlogSession::user() const
 {
-  if (login_.loggedIn())
-    return users_.find(login_.user());
-  else
-    return dbo::ptr<User>();
+    if(login_.loggedIn())
+    {
+        return users_.find(login_.user());
+    }
+    else
+    {
+        return dbo::ptr<User>();
+    }
 }
 
-Wt::Auth::PasswordService *BlogSession::passwordAuth() const
+Wt::Auth::PasswordService * BlogSession::passwordAuth() const
 {
-  return &blogPasswords;
+    return &blogPasswords;
 }
 
-const std::vector<const Wt::Auth::OAuthService *>& BlogSession::oAuth() const
+const std::vector<const Wt::Auth::OAuthService *> & BlogSession::oAuth() const
 {
-  return blogOAuth;
+    return blogOAuth;
 }

@@ -12,38 +12,39 @@
 
 using namespace Wt;
 
-namespace Wt {
-  class WRasterImage;
+namespace Wt
+{
+    class WRasterImage;
 }
 
 class MandelbrotImage : public WVirtualImage
 {
-public:
-  MandelbrotImage(int width, int height,
-		  int64_t virtualWidth, int64_t virtualHeight,
-		  double bx1, double by1,
-		  double bx2, double by2);
+    public:
+        MandelbrotImage(int width, int height,
+                        int64_t virtualWidth, int64_t virtualHeight,
+                        double bx1, double by1,
+                        double bx2, double by2);
 
-  void zoomIn();
-  void zoomOut();
+        void zoomIn();
+        void zoomOut();
 
-  void generate(int64_t x, int64_t y, WRasterImage *img);
+        void generate(int64_t x, int64_t y, WRasterImage * img);
 
-  double currentX1() const;
-  double currentY1() const;
-  double currentX2() const;
-  double currentY2() const;
+        double currentX1() const;
+        double currentY1() const;
+        double currentX2() const;
+        double currentY2() const;
 
-private:
-  double bx1_, by1_, bwidth_, bheight_;
-  int maxDepth_;
-  double bailOut2_;
+    private:
+        double bx1_, by1_, bwidth_, bheight_;
+        int maxDepth_;
+        double bailOut2_;
 
-  virtual std::unique_ptr<WResource> render(int64_t x, int64_t y, int w, int h);
-  double calcPixel(double x, double y);
+        virtual std::unique_ptr<WResource> render(int64_t x, int64_t y, int w, int h);
+        double calcPixel(double x, double y);
 
-  double convertPixelX(int64_t x) const;
-  double convertPixelY(int64_t y) const;
+        double convertPixelX(int64_t x) const;
+        double convertPixelY(int64_t y) const;
 };
 
 #endif // MANDELBROT_IMAGE_H_

@@ -12,26 +12,28 @@
 
 #include <Wt/WContainerWidget.h>
 
-namespace {
-  WSuggestionPopup::Options contactOptions
-  = { "<b>",         // highlightBeginTag
-      "</b>",        // highlightEndTag
-      ',',           // listSeparator
-      " \\n",        // whitespace
-      "-., \"@\\n;", // wordSeparators
-      ", "           // appendReplacedText
-    };
+namespace
+{
+    WSuggestionPopup::Options contactOptions
+    = { "<b>",         // highlightBeginTag
+        "</b>",        // highlightEndTag
+        ',',           // listSeparator
+        " \\n",        // whitespace
+        "-., \"@\\n;", // wordSeparators
+        ", "           // appendReplacedText
+      };
 }
 
 ContactSuggestions::ContactSuggestions()
-  : WSuggestionPopup(WSuggestionPopup::generateMatcherJS(contactOptions),
-                     WSuggestionPopup::generateReplacerJS(contactOptions))
+    : WSuggestionPopup(WSuggestionPopup::generateMatcherJS(contactOptions),
+                       WSuggestionPopup::generateReplacerJS(contactOptions))
 { }
 
-void ContactSuggestions::setAddressBook(const std::vector<Contact>& contacts)
+void ContactSuggestions::setAddressBook(const std::vector<Contact> & contacts)
 {
-  clearSuggestions();
-
-  for(auto contact : contacts)
-    addSuggestion(contact.formatted(), contact.formatted());
+    clearSuggestions();
+    for(auto contact : contacts)
+    {
+        addSuggestion(contact.formatted(), contact.formatted());
+    }
 }

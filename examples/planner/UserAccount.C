@@ -17,34 +17,30 @@ using namespace Wt::Dbo;
 UserAccount::UserAccount()
 { }
 
-UserAccount::UserAccount(const WString& aName)
-  : name(aName)
+UserAccount::UserAccount(const WString & aName)
+    : name(aName)
 { }
 
-collection< ptr<Entry> > UserAccount::entriesInRange(const WDate& from,
-						     const WDate& until) const
+collection< ptr<Entry> > UserAccount::entriesInRange(const WDate & from,
+        const WDate & until) const
 {
-  return entries.find()
-    .where("start >= ?").bind(WDateTime(from))
-    .where("start < ?").bind(WDateTime(until));
+    return entries.find()
+           .where("start >= ?").bind(WDateTime(from))
+           .where("start < ?").bind(WDateTime(until));
 }
 
-ptr<UserAccount> UserAccount::login(Session& session,
-				    const WString& userName)
+ptr<UserAccount> UserAccount::login(Session & session,
+                                    const WString & userName)
 {
-  Transaction transaction(session);
-
-  ptr<UserAccount> ua =
-    session.find<UserAccount>("where name = ?").bind(userName);
-
-  if (!ua) {
-    WApplication::instance()
-      ->log("notice") << "Creating user: " << userName.toUTF8();
-
-    ua = session.add(Wt::cpp14::make_unique<UserAccount>(userName));
-  }
-
-  transaction.commit();
-
-  return ua;
+    Transaction transaction(session);
+    ptr<UserAccount> ua =
+        session.find<UserAccount>("where name = ?").bind(userName);
+    if(!ua)
+    {
+        WApplication::instance()
+        ->log("notice") << "Creating user: " << userName.toUTF8();
+        ua = session.add(Wt::cpp14::make_unique<UserAccount>(userName));
+    }
+    transaction.commit();
+    return ua;
 }

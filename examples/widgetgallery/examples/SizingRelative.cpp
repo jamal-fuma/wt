@@ -7,7 +7,7 @@
 SAMPLE_BEGIN(SizingRelative)
 auto container = cpp14::make_unique<WContainerWidget>();
 
-WLineEdit *edit =
+WLineEdit * edit =
     container->addWidget(cpp14::make_unique<WLineEdit>());
 edit->setEmptyText(".input-mini");
 edit->setStyleClass("input-mini");

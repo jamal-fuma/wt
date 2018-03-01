@@ -12,20 +12,25 @@
 
 #include <Wt/WPoint.h>
 
-namespace Wt {
-  class ImageUtils {
-  public:
-    static std::string identifyMimeType(const std::vector<unsigned char>&
-					header);
+namespace Wt
+{
+    class ImageUtils
+    {
+        public:
+            static std::string identifyMimeType(const std::vector<unsigned char> &
+                                                header);
 
-    static std::string identifyMimeType(const std::string& fileName);
+            static std::string identifyMimeType(const std::string & fileName);
 
-    static WPoint getSize(const std::string& fileName);
+            static WPoint getSize(const std::string & fileName);
 
-    static WPoint getSize(const std::vector<unsigned char>& header);
-    static WPoint getJpegSize(const std::string& fileName);
+            static WPoint getSize(const std::vector<unsigned char> & header);
 
-  };
+#ifndef WT_TARGET_JAVA
+            static WPoint getJpegSize(const std::string & fileName);
+#endif // WT_TARGET_JAVA
+
+    };
 }
 
 #endif // IMAGE_UTILS_H_

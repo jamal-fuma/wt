@@ -6,7 +6,7 @@
  */
 
 #ifndef PERSON_H
-#define	PERSON_H
+#define PERSON_H
 
 #include <Wt/Dbo/Dbo.h>
 #include <Wt/Dbo/backend/Sqlite3.h>
@@ -15,18 +15,18 @@ class Membership;
 
 class Person
 {
-public:
-  std::string name;
-  
-  Wt::Dbo::collection< Wt::Dbo::ptr<Membership> > memberships;
-  
-  template<class Action>
-  void persist(Action& a)
-  {
-    Wt::Dbo::field(a, name, "name");
-    Wt::Dbo::hasMany(a, memberships, Wt::Dbo::ManyToOne, "person");
-  }
+    public:
+        std::string name;
+
+        Wt::Dbo::collection< Wt::Dbo::ptr<Membership> > memberships;
+
+        template<class Action>
+        void persist(Action & a)
+        {
+            Wt::Dbo::field(a, name, "name");
+            Wt::Dbo::hasMany(a, memberships, Wt::Dbo::ManyToOne, "person");
+        }
 };
 
-#endif	/* PERSON_H */
+#endif  /* PERSON_H */
 

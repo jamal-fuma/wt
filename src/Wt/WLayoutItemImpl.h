@@ -10,23 +10,24 @@
 #include <Wt/WDllDefs.h>
 #include <string>
 
-namespace Wt {
-
-class WLayoutItem;
-class WWidget;
-
-/*! \class WLayoutItemImpl Wt/WLayoutItemImpl.h Wt/WLayoutItemImpl.h
- *  \brief An abstract base class for implementing layout managers.
- *
- * \sa WLayoutItem
- */
-class WT_API WLayoutItemImpl
+namespace Wt
 {
-public:
-  /*! \brief Destructor.
-   */
-  virtual ~WLayoutItemImpl();
-};
+
+    class WLayoutItem;
+    class WWidget;
+
+    /*! \class WLayoutItemImpl Wt/WLayoutItemImpl.h Wt/WLayoutItemImpl.h
+     *  \brief An abstract base class for implementing layout managers.
+     *
+     * \sa WLayoutItem
+     */
+    class WT_API WLayoutItemImpl
+    {
+        public:
+            /*! \brief Destructor.
+             */
+            virtual ~WLayoutItemImpl();
+    };
 
 }
 

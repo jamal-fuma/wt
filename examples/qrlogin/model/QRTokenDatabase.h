@@ -14,21 +14,21 @@ using namespace Wt;
 
 class QRTokenDatabase
 {
-public:
-  QRTokenDatabase(Dbo::Session& session);
+    public:
+        QRTokenDatabase(Dbo::Session & session);
 
-  void addToken(const std::string& sessionId, const std::string& hash,
-		const std::string& url);
-  void removeToken(const std::string& sessionId);
+        void addToken(const std::string & sessionId, const std::string & hash,
+                      const std::string & url);
+        void removeToken(const std::string & sessionId);
 
-  // returns the URL to the notification resource
-  std::string setUser(const std::string& hash, const Auth::User& user);
+        // returns the URL to the notification resource
+        std::string setUser(const std::string & hash, const Auth::User & user);
 
-  Auth::User findUser(const std::string& sessionId,
-                          Auth::AbstractUserDatabase& db);
+        Auth::User findUser(const std::string & sessionId,
+                            Auth::AbstractUserDatabase & db);
 
-private:
-  Dbo::Session& session_;
+    private:
+        Dbo::Session & session_;
 };
 
 #endif // QR_TOKEN_DATABASE_H_

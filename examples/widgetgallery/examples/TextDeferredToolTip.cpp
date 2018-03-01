@@ -4,18 +4,18 @@
 
 class Text : public Wt::WText
 {
-public:
-  Text() : WText(){}
+    public:
+        Text() : WText() {}
 
-  Wt::WString calculateToolTip() const
-  {
-    return "Deferred tooltip";
-  }
+        Wt::WString calculateToolTip() const
+        {
+            return "Deferred tooltip";
+        }
 
-  virtual Wt::WString toolTip() const
-  {
-    return calculateToolTip();
-  }
+        virtual Wt::WString toolTip() const
+        {
+            return calculateToolTip();
+        }
 };
 
 SAMPLE_BEGIN(TextDeferredToolTip)

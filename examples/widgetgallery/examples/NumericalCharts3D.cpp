@@ -16,7 +16,7 @@ SAMPLE_BEGIN(NumChart3d)
 auto container = cpp14::make_unique<WContainerWidget>();
 
 // create the chart and add a border to the widget
-Chart::WCartesian3DChart *chart
+Chart::WCartesian3DChart * chart
     = container->addWidget(cpp14::make_unique<Chart::WCartesian3DChart>());
 chart->setType(Chart::ChartType::Scatter);
 
@@ -25,7 +25,7 @@ chart->setRenderOptions(GLRenderOption::ClientSide | GLRenderOption::AntiAliasin
 
 WCssDecorationStyle style;
 style.setBorder(WBorder(BorderStyle::Solid, BorderWidth::Medium,
-                            WColor(StandardColor::Black)));
+                        WColor(StandardColor::Black)));
 chart->setDecorationStyle(style);
 
 chart->resize(900, 700);
@@ -50,23 +50,26 @@ dataset1->setType(Chart::Series3DType::Surface);
 dataset1->setSurfaceMeshEnabled(true);
 auto colormap =
     std::make_shared<Chart::WStandardColorMap>(dataset1->minimum(Chart::Axis::Z3D),
-                                     dataset1->maximum(Chart::Axis::Z3D),
-				     true);
+            dataset1->maximum(Chart::Axis::Z3D),
+            true);
 dataset1->setColorMap(colormap);
 
 // make second dataset (WEquidistantGridData)
 auto model2 = std::make_shared<PlaneData>(40, 40);
-for (int i=0; i < model2->rowCount(); i++) { // set a few size-roles
+for(int i=0; i < model2->rowCount(); i++)    // set a few size-roles
+{
     model2->setData(i, 0, 5, ItemDataRole::MarkerScaleFactor);
     model2->setData(i, model2->columnCount()-1, 5, ItemDataRole::MarkerScaleFactor);
 }
 
-for (int i=0; i < model2->columnCount(); i++) {
+for(int i=0; i < model2->columnCount(); i++)
+{
     model2->setData(0, i, 5, ItemDataRole::MarkerScaleFactor);
     model2->setData(model2->rowCount()-1, i, 5, ItemDataRole::MarkerScaleFactor);
 }
 
-for (int i=0; i < model2->rowCount(); i++) { // set a few color-roles
+for(int i=0; i < model2->rowCount(); i++)    // set a few color-roles
+{
     model2->setData(i, 5, WColor(0,255,0), ItemDataRole::MarkerBrushColor);
     model2->setData(i, 6, WColor(0,0,255), ItemDataRole::MarkerBrushColor);
     model2->setData(i, 7, WColor(0,255,0), ItemDataRole::MarkerBrushColor);
@@ -84,7 +87,7 @@ dataset3->setPointSize(5);
 // make fourth dataset (WEquidistantGridData, intersecting with dataset1)
 auto model4 = std::make_shared<HorizontalPlaneData>(20, 20);
 auto dataset4 =
-  cpp14::make_unique<Chart::WEquidistantGridData>(model4, -10, 1.0f, -10, 1.0f);
+    cpp14::make_unique<Chart::WEquidistantGridData>(model4, -10, 1.0f, -10, 1.0f);
 dataset4->setType(Chart::Series3DType::Surface);
 dataset4->setSurfaceMeshEnabled(true);
 
@@ -95,6 +98,6 @@ chart->addDataSeries(std::move(dataset3));
 chart->addDataSeries(std::move(dataset4));
 
 chart->setAlternativeContent
-    (cpp14::make_unique<WImage>(WLink("pics/numericalChartScreenshot.png")));
+(cpp14::make_unique<WImage>(WLink("pics/numericalChartScreenshot.png")));
 
 SAMPLE_END(return std::move(container))

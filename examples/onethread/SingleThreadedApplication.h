@@ -22,55 +22,55 @@ using namespace Wt;
  */
 class SingleThreadedApplication : public WApplication
 {
-public:
-  /*
-   * Creates the application. The application is constructed from within
-   * Wt's thread pool, and thus not yet in its private thread. You should
-   * thus actually create the application from within the create() function.
-   */
-  SingleThreadedApplication(const WEnvironment& env);
+    public:
+        /*
+         * Creates the application. The application is constructed from within
+         * Wt's thread pool, and thus not yet in its private thread. You should
+         * thus actually create the application from within the create() function.
+         */
+        SingleThreadedApplication(const WEnvironment & env);
 
-protected:
-  /*
-   * Function running within the private thread which allows for application
-   * construction.
-   */
-  virtual void create() = 0;
+    protected:
+        /*
+         * Function running within the private thread which allows for application
+         * construction.
+         */
+        virtual void create() = 0;
 
-  /*
-   * Function running within the private thread which allows for application
-   * destruction.
-   */
-  virtual void destroy() = 0;
+        /*
+         * Function running within the private thread which allows for application
+         * destruction.
+         */
+        virtual void destroy() = 0;
 
-  /*
-   * Actual notify within the private thread.
-   */
-  virtual void threadNotify(const WEvent& event);
+        /*
+         * Actual notify within the private thread.
+         */
+        virtual void threadNotify(const WEvent & event);
 
-  virtual void notify(const WEvent& event);
-  virtual void initialize();
-  virtual void finalize();
-  virtual void waitForEvent();
+        virtual void notify(const WEvent & event);
+        virtual void initialize();
+        virtual void finalize();
+        virtual void waitForEvent();
 
-private:
-  std::thread     appThread_;
-  bool finalized_, exception_;
+    private:
+        std::thread     appThread_;
+        bool finalized_, exception_;
 
-  const WEvent                 *event_;
+        const WEvent         *        event_;
 
-  std::mutex                    doneMutex_;
-  bool                          done_;
-  std::condition_variable       doneCondition_;
+        std::mutex                    doneMutex_;
+        bool                          done_;
+        std::condition_variable       doneCondition_;
 
-  std::mutex                    newEventMutex_;
-  bool                          newEvent_;
-  std::condition_variable       newEventCondition_;
-  std::unique_lock<std::mutex> *eventLock_;
+        std::mutex                    newEventMutex_;
+        bool                          newEvent_;
+        std::condition_variable       newEventCondition_;
+        std::unique_lock<std::mutex> * eventLock_;
 
-  void run();
-  void signalDone();
-  void waitDone();
+        void run();
+        void signalDone();
+        void waitDone();
 };
 
 #endif // SINGLE_THREADED_APPLICATION_H_

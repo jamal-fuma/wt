@@ -15,15 +15,15 @@ class Session;
 
 class UserDetailsModel : public WFormModel
 {
-public:
-  static const Field FavouritePetField;
+    public:
+        static const Field FavouritePetField;
 
-  UserDetailsModel(Session& session);
+        UserDetailsModel(Session & session);
 
-  void save(const Auth::User& user);
+        void save(const Auth::User & user);
 
-private:
-  Session& session_;
+    private:
+        Session & session_;
 };
 
 #endif // USER_DETAILS_MODEL_H_

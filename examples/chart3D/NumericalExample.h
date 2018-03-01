@@ -27,24 +27,24 @@ class Parabola;
 
 class NumericalExample: public Wt::WContainerWidget
 {
-public:
-  NumericalExample();
-  ~NumericalExample();
+    public:
+        NumericalExample();
+        ~NumericalExample();
 
-private:
-  Wt::Chart::WCartesian3DChart *chart_;
-  Wt::WTabWidget *configuration_;
+    private:
+        Wt::Chart::WCartesian3DChart * chart_;
+        Wt::WTabWidget * configuration_;
 
-  std::shared_ptr<SombreroData> sombrModel_;
-  std::shared_ptr<PlaneData>    xPlaneModel_;
-  std::shared_ptr<PlaneData>    yPlaneModel_;
-  std::shared_ptr<PlaneData>    xPlaneModelSize_;
-  std::shared_ptr<PlaneData>    yPlaneModelColor_;
-  std::shared_ptr<PointsData>   spiralModel_;
-  std::shared_ptr<Parabola>     para1Model_;
-  std::shared_ptr<Parabola>     para2Model_;
+        std::shared_ptr<SombreroData> sombrModel_;
+        std::shared_ptr<PlaneData>    xPlaneModel_;
+        std::shared_ptr<PlaneData>    yPlaneModel_;
+        std::shared_ptr<PlaneData>    xPlaneModelSize_;
+        std::shared_ptr<PlaneData>    yPlaneModelColor_;
+        std::shared_ptr<PointsData>   spiralModel_;
+        std::shared_ptr<Parabola>     para1Model_;
+        std::shared_ptr<Parabola>     para2Model_;
 
-  std::vector<Wt::Chart::WAbstractDataSeries3D *> series_;
+        std::vector<Wt::Chart::WAbstractDataSeries3D *> series_;
 };
 
 

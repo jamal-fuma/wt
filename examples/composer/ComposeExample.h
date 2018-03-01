@@ -13,8 +13,9 @@ using namespace Wt;
 
 class Composer;
 
-namespace Wt {
-  class WTreeNode;
+namespace Wt
+{
+    class WTreeNode;
 }
 
 /**
@@ -26,17 +27,17 @@ namespace Wt {
  */
 class ComposeExample : public WContainerWidget
 {
-public:
-  /*! \brief create a new Composer example.
-   */
-  ComposeExample();
+    public:
+        /*! \brief create a new Composer example.
+         */
+        ComposeExample();
 
-private:
-  Composer *composer_;
-  WContainerWidget *details_;
+    private:
+        Composer * composer_;
+        WContainerWidget * details_;
 
-  void send();
-  void discard();
+        void send();
+        void discard();
 };
 
 /*@}*/

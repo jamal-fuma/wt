@@ -39,31 +39,31 @@ class Option;
  */
 class OptionList : public WContainerWidget
 {
-public:
-  /*! \brief Create an OptionList.
-   */
-  OptionList();
+    public:
+        /*! \brief Create an OptionList.
+         */
+        OptionList();
 
-  /*! \brief Add an Option to the list.
-   */
-  void add(std::unique_ptr<Option> option);
+        /*! \brief Add an Option to the list.
+         */
+        void add(std::unique_ptr<Option> option);
 
-  /*! \brief Updates the stateless implementations after an Option has been
-   *         hidden or shown.
-   */
-  void update();
+        /*! \brief Updates the stateless implementations after an Option has been
+         *         hidden or shown.
+         */
+        void update();
 
-private:
-  //! The list of options.
-  std::vector<Option *> options_;
+    private:
+        //! The list of options.
+        std::vector<Option *> options_;
 
-  //! The option that needs its stateless code updated.
-  Option *optionNeedReset_;
+        //! The option that needs its stateless code updated.
+        Option * optionNeedReset_;
 
-  //! An option changed visibility: possibly update the separators inbetween
-  void optionVisibilityChanged(Option *opt, bool hidden);
+        //! An option changed visibility: possibly update the separators inbetween
+        void optionVisibilityChanged(Option * opt, bool hidden);
 
-  friend class Option;
+        friend class Option;
 };
 
 /*@}*/

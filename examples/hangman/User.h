@@ -1,5 +1,5 @@
 // This may look like C code, but it's really -*- C++ -*-
-/* 
+/*
  * Copyright (C) 2011 Emweb bvba, Heverlee, Belgium
  *
  * See the LICENSE file for terms of use.
@@ -25,24 +25,23 @@ typedef dbo::collection< dbo::ptr<User> > Users;
 
 class User
 {
-public:
-  User();
+    public:
+        User();
 
-  std::string name; /* a copy of auth info's user name */
-  int gamesPlayed;
-  long long score;
-  WDateTime lastGame;
-  dbo::collection<dbo::ptr<AuthInfo>> authInfos;
+        std::string name; /* a copy of auth info's user name */
+        int gamesPlayed;
+        long long score;
+        WDateTime lastGame;
+        dbo::collection<dbo::ptr<AuthInfo>> authInfos;
 
-  template<class Action>
-  void persist(Action& a)
-  {
-    dbo::field(a, gamesPlayed, "gamesPlayed");
-    dbo::field(a, score, "score");
-    dbo::field(a, lastGame, "lastGame");
-
-    dbo::hasMany(a, authInfos, dbo::ManyToOne, "user");
-  }
+        template<class Action>
+        void persist(Action & a)
+        {
+            dbo::field(a, gamesPlayed, "gamesPlayed");
+            dbo::field(a, score, "score");
+            dbo::field(a, lastGame, "lastGame");
+            dbo::hasMany(a, authInfos, dbo::ManyToOne, "user");
+        }
 };
 
 DBO_EXTERN_TEMPLATES(User);

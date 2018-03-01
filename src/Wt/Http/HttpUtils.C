@@ -6,22 +6,25 @@
 
 #include "HttpUtils.h"
 
-namespace Wt {
-  namespace Http {
-    namespace Utils {
-
-void parseFormUrlEncoded(const Http::Message& response,
-			 Http::ParameterMap &params)
+namespace Wt
 {
-  Http::Request::parseFormUrlEncoded(response.body(), params);
-}
+    namespace Http
+    {
+        namespace Utils
+        {
 
-const std::string *getParamValue(Http::ParameterMap &params,
-				 const std::string &name)
-{
-  return Http::get(params, name);
-}
+            void parseFormUrlEncoded(const Http::Message & response,
+                                     Http::ParameterMap & params)
+            {
+                Http::Request::parseFormUrlEncoded(response.body(), params);
+            }
 
+            const std::string * getParamValue(Http::ParameterMap & params,
+                                              const std::string & name)
+            {
+                return Http::get(params, name);
+            }
+
+        }
     }
-  }
 }

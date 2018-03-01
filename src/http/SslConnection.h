@@ -27,57 +27,62 @@
 
 #include "Connection.h"
 
-namespace http {
-namespace server {
-
-class RequestHandler;
-class Server;
-
-typedef asio::ssl::stream<asio::ip::tcp::socket> ssl_socket;
-
-/// Represents a single connection from a client.
-class SslConnection final : public Connection
+namespace http
 {
-public:
-  /// Construct a connection with the given io_service.
-  explicit SslConnection(asio::io_service& io_service, Server *server,
-      asio::ssl::context& context,
-      ConnectionManager& manager, RequestHandler& handler);
+    namespace server
+    {
 
-  /// Get the socket associated with the connection.
-  virtual asio::ip::tcp::socket& socket() override;
+        class RequestHandler;
+        class Server;
 
-  virtual void start() override;
-  virtual const char *urlScheme() override { return "https"; }
+        typedef asio::ssl::stream<asio::ip::tcp::socket> ssl_socket;
 
-protected:
+        /// Represents a single connection from a client.
+        class SslConnection final : public Connection
+        {
+            public:
+                /// Construct a connection with the given io_service.
+                explicit SslConnection(asio::io_service & io_service, Server * server,
+                                       asio::ssl::context & context,
+                                       ConnectionManager & manager, RequestHandler & handler);
 
-  virtual void stop() override;
+                /// Get the socket associated with the connection.
+                virtual asio::ip::tcp::socket & socket() override;
 
-  virtual void startAsyncReadRequest(Buffer& buffer, int timeout) override;
-  virtual void startAsyncReadBody(ReplyPtr reply, Buffer& buffer, int timeout) override;
-  virtual void startAsyncWriteResponse
-      (ReplyPtr reply, const std::vector<asio::const_buffer>& buffers,
-       int timeout) override;
+                virtual void start() override;
+                virtual const char * urlScheme() override
+                {
+                    return "https";
+                }
 
-private:
-  void handleReadRequestSsl(const Wt::AsioWrapper::error_code& e,
-                            std::size_t bytes_transferred);
-  void handleReadBodySsl(ReplyPtr reply, const Wt::AsioWrapper::error_code& e,
-                         std::size_t bytes_transferred);
-  void handleHandshake(const Wt::AsioWrapper::error_code& error);
-  void stopNextLayer(const Wt::AsioWrapper::error_code& ec);
+            protected:
 
-  /// Socket for the connection.
-  ssl_socket socket_;
+                virtual void stop() override;
 
-  // SSL shutdown takes many seconds sometimes. Put a limit on it.
-  asio::steady_timer sslShutdownTimer_;
-};
+                virtual void startAsyncReadRequest(Buffer & buffer, int timeout) override;
+                virtual void startAsyncReadBody(ReplyPtr reply, Buffer & buffer, int timeout) override;
+                virtual void startAsyncWriteResponse
+                (ReplyPtr reply, const std::vector<asio::const_buffer> & buffers,
+                 int timeout) override;
 
-typedef std::shared_ptr<SslConnection> SslConnectionPtr;
+            private:
+                void handleReadRequestSsl(const Wt::AsioWrapper::error_code & e,
+                                          std::size_t bytes_transferred);
+                void handleReadBodySsl(ReplyPtr reply, const Wt::AsioWrapper::error_code & e,
+                                       std::size_t bytes_transferred);
+                void handleHandshake(const Wt::AsioWrapper::error_code & error);
+                void stopNextLayer(const Wt::AsioWrapper::error_code & ec);
 
-} // namespace server
+                /// Socket for the connection.
+                ssl_socket socket_;
+
+                // SSL shutdown takes many seconds sometimes. Put a limit on it.
+                asio::steady_timer sslShutdownTimer_;
+        };
+
+        typedef std::shared_ptr<SslConnection> SslConnectionPtr;
+
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_WITH_SSL

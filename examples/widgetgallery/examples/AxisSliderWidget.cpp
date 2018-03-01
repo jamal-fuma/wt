@@ -21,22 +21,25 @@ auto container = cpp14::make_unique<WContainerWidget>();
 std::shared_ptr<WStandardItemModel> model
     = csvToModel(WApplication::appRoot() + "timeseries.csv");
 
-if (!model)
+if(!model)
+{
     return std::move(container);
+}
 
 /*
  * Parses the first column as dates, to be able to use a date scale
  */
-for (int row = 0; row < model->rowCount(); ++row) {
+for(int row = 0; row < model->rowCount(); ++row)
+{
     WString s = asString(model->data(row, 0));
     WDate date = WDate::fromString(s, "dd/MM/yy");
     model->setData(row, 0, date);
-  }
+}
 
 /*
  * Creates the scatter plot.
  */
-Chart::WCartesianChart *chart = container->addWidget(cpp14::make_unique<Chart::WCartesianChart>());
+Chart::WCartesianChart * chart = container->addWidget(cpp14::make_unique<Chart::WCartesianChart>());
 chart->setBackground(WColor(220, 220, 220));
 chart->setModel(model);
 chart->setXSeriesColumn(0);

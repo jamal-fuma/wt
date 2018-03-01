@@ -15,20 +15,20 @@ class BufferEditorWidget;
 
 class CoderWidget : public Wt::WContainerWidget
 {
-public:
-  CoderWidget();
-  virtual ~CoderWidget();
+    public:
+        CoderWidget();
+        virtual ~CoderWidget();
 
-private:
-  std::shared_ptr<CodeSession> session_;
+    private:
+        std::shared_ptr<CodeSession> session_;
 
-  Wt::WContainerWidget *buffers_;
-  Wt::WText *observerCount_;
+        Wt::WContainerWidget * buffers_;
+        Wt::WText * observerCount_;
 
-  void addBuffer();
-  void insertBuffer(int index);
-  void changed(BufferEditorWidget *editor);
-  void sessionChanged();
+        void addBuffer();
+        void insertBuffer(int index);
+        void changed(BufferEditorWidget * editor);
+        void sessionChanged();
 };
 
 #endif // CODER_WIDGET_H_

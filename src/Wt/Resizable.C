@@ -9,14 +9,15 @@
 #include "Resizable.h"
 
 #ifndef WT_DEBUG_JS
-#include "js/Resizable.min.js"
+    #include "js/Resizable.min.js"
 #endif
 
-namespace Wt {
-
-void Resizable::loadJavaScript(WApplication *app)
+namespace Wt
 {
-  LOAD_JAVASCRIPT(app, "js/Resizable.js", "Resizable", wtjs1);
-}
+
+    void Resizable::loadJavaScript(WApplication * app)
+    {
+        LOAD_JAVASCRIPT(app, "js/Resizable.js", "Resizable", wtjs1);
+    }
 
 }

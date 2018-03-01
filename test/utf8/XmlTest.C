@@ -8,20 +8,19 @@
 #include <iostream>
 #include <Wt/WMessageResourceBundle.h>
 
-BOOST_AUTO_TEST_CASE( Xml_test )
+BOOST_AUTO_TEST_CASE(Xml_test)
 {
-  Wt::WLocale locale;
-  Wt::WMessageResourceBundle bundle;
-  bundle.use("test");
-
-  if (!bundle.resolveKey(locale, "test1"))
-    return; // test.xml file not found
-
-  Wt::LocalizedString result = bundle.resolveKey(locale, "test1");
-  BOOST_REQUIRE(result);
-  BOOST_REQUIRE(result.value == "<br/>");
-
-  result = bundle.resolveKey(locale, "test2");
-  BOOST_REQUIRE(result);
-  BOOST_REQUIRE(result.value == "<div></div>");
+    Wt::WLocale locale;
+    Wt::WMessageResourceBundle bundle;
+    bundle.use("test");
+    if(!bundle.resolveKey(locale, "test1"))
+    {
+        return;    // test.xml file not found
+    }
+    Wt::LocalizedString result = bundle.resolveKey(locale, "test1");
+    BOOST_REQUIRE(result);
+    BOOST_REQUIRE(result.value == "<br/>");
+    result = bundle.resolveKey(locale, "test2");
+    BOOST_REQUIRE(result);
+    BOOST_REQUIRE(result.value == "<div></div>");
 }

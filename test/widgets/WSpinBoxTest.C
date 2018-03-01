@@ -11,16 +11,15 @@
 
 using namespace Wt;
 
-BOOST_AUTO_TEST_CASE( spinbox_validate )
+BOOST_AUTO_TEST_CASE(spinbox_validate)
 {
-  Wt::Test::WTestEnvironment environment;
-  Wt::WApplication testApp(environment);
-
-  {
-    auto sb = cpp14::make_unique<WSpinBox>();
-    sb->setRange(100, 200);
-    sb->setValue(150);
-    ValidationState result = sb->validate();
-    BOOST_REQUIRE(result == ValidationState::Valid);
-  }
+    Wt::Test::WTestEnvironment environment;
+    Wt::WApplication testApp(environment);
+    {
+        auto sb = cpp14::make_unique<WSpinBox>();
+        sb->setRange(100, 200);
+        sb->setValue(150);
+        ValidationState result = sb->validate();
+        BOOST_REQUIRE(result == ValidationState::Valid);
+    }
 }

@@ -9,26 +9,27 @@
 
 #include <Wt/WContainerWidget.h>
 
-namespace Wt {
-  class WPanel;
+namespace Wt
+{
+    class WPanel;
 }
 
 class PanelList : public Wt::WContainerWidget
 {
-public:
-  PanelList();
+    public:
+        PanelList();
 
-  Wt::WPanel *addWidget(const Wt::WString& text, std::unique_ptr<Wt::WWidget> w);
-  void addPanel(std::unique_ptr<Wt::WPanel> panel);
-  void removePanel(Wt::WPanel *panel);
+        Wt::WPanel * addWidget(const Wt::WString & text, std::unique_ptr<Wt::WWidget> w);
+        void addPanel(std::unique_ptr<Wt::WPanel> panel);
+        void removePanel(Wt::WPanel * panel);
 
-  using WContainerWidget::addWidget;
+        using WContainerWidget::addWidget;
 
-private:
-  void onExpand(bool notUndo, Wt::WPanel *panel);
-  //void onExpand(bool notUndo);
+    private:
+        void onExpand(bool notUndo, Wt::WPanel * panel);
+        //void onExpand(bool notUndo);
 
-  int wasExpanded_;
+        int wasExpanded_;
 };
 
 #endif // PANEL_LIST_H_

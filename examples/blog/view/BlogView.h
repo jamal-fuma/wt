@@ -9,29 +9,33 @@
 
 #include <Wt/WCompositeWidget.h>
 
-namespace Wt {
-  class WContainerWidget;
+namespace Wt
+{
+    class WContainerWidget;
 }
 
 class BlogImpl;
 
 class BlogView : public Wt::WCompositeWidget
 {
-public:
-  BlogView(const std::string& basePath, Wt::Dbo::SqlConnectionPool& db,
-           const std::string& rssFeedUrl);
+    public:
+        BlogView(const std::string & basePath, Wt::Dbo::SqlConnectionPool & db,
+                 const std::string & rssFeedUrl);
 
-  void setInternalBasePath(const std::string& basePath);
+        void setInternalBasePath(const std::string & basePath);
 
-  Wt::WString user();
-  void login(const std::string& user);
-  void logout();
+        Wt::WString user();
+        void login(const std::string & user);
+        void logout();
 
-  Wt::Signal<Wt::WString>& userChanged() { return userChanged_; }
+        Wt::Signal<Wt::WString> & userChanged()
+        {
+            return userChanged_;
+        }
 
-private:
-  BlogImpl *impl_;
-  Wt::Signal<Wt::WString> userChanged_;
+    private:
+        BlogImpl * impl_;
+        Wt::Signal<Wt::WString> userChanged_;
 };
 
 #endif // BLOG_VIEW_H_

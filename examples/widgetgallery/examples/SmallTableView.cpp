@@ -20,8 +20,10 @@ tableView->setEditTriggers(EditTrigger::None);
  * Configure column widths and matching table width
  */
 const int WIDTH = 120;
-for (int i = 0; i < tableView->model()->columnCount(); ++i)
+for(int i = 0; i < tableView->model()->columnCount(); ++i)
+{
     tableView->setColumnWidth(i, 120);
+}
 
 /*
  * 7 pixels are padding/border per column

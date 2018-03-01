@@ -13,26 +13,23 @@
 
 using namespace Wt;
 
-std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+std::unique_ptr<WApplication> createApplication(const WEnvironment & env)
 {
-  auto app = cpp14::make_unique<WApplication>(env);
-  app->setTitle("File explorer example");
-  app->useStyleSheet("filetree.css");
-
-  std::unique_ptr<FileTreeTable> treeTable
-      = cpp14::make_unique<FileTreeTable>(".");
-  treeTable->resize(500, 300);
-  treeTable->tree()->setSelectionMode(SelectionMode::Extended);
-  treeTable->treeRoot()->setNodeVisible(false);
-  treeTable->treeRoot()->setChildCountPolicy(ChildCountPolicy::Enabled);
-
-  app->root()->addWidget(std::move(treeTable));
-
-  return app;
+    auto app = cpp14::make_unique<WApplication>(env);
+    app->setTitle("File explorer example");
+    app->useStyleSheet("filetree.css");
+    std::unique_ptr<FileTreeTable> treeTable
+        = cpp14::make_unique<FileTreeTable>(".");
+    treeTable->resize(500, 300);
+    treeTable->tree()->setSelectionMode(SelectionMode::Extended);
+    treeTable->treeRoot()->setNodeVisible(false);
+    treeTable->treeRoot()->setChildCountPolicy(ChildCountPolicy::Enabled);
+    app->root()->addWidget(std::move(treeTable));
+    return app;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-   return WRun(argc, argv, &createApplication);
+    return WRun(argc, argv, &createApplication);
 }
 

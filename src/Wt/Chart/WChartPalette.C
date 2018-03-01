@@ -6,11 +6,13 @@
  */
 #include <Wt/Chart/WChartPalette.h>
 
-namespace Wt {
-  namespace Chart {
+namespace Wt
+{
+    namespace Chart
+    {
 
-WChartPalette::~WChartPalette()
-{ }
+        WChartPalette::~WChartPalette()
+        { }
 
-  }
+    }
 }

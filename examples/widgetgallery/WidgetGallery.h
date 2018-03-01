@@ -14,16 +14,16 @@ class TopicWidget;
 
 class WidgetGallery : public Wt::WContainerWidget
 {
-public:
-  WidgetGallery();
+    public:
+        WidgetGallery();
 
-private:
-  Wt::WNavigationBar *navigation_;
-  Wt::WStackedWidget *contentsStack_;
+    private:
+        Wt::WNavigationBar * navigation_;
+        Wt::WStackedWidget * contentsStack_;
 
-  Wt::WMenuItem *addToMenu(Wt::WMenu *menu,
-			   const Wt::WString& name,
-                           std::unique_ptr<TopicWidget> topic);
+        Wt::WMenuItem * addToMenu(Wt::WMenu * menu,
+                                  const Wt::WString & name,
+                                  std::unique_ptr<TopicWidget> topic);
 };
 
 #endif // WIDGET_GALLERY_H_

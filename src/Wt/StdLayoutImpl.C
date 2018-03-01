@@ -10,23 +10,24 @@
 #include "Wt/WLayout.h"
 #include "Wt/WLayoutItem.h"
 
-namespace Wt {
-
-StdLayoutImpl::StdLayoutImpl(WLayout *layout)
-  : layout_(layout)
-{ }
-
-StdLayoutImpl::~StdLayoutImpl()
-{ }
-
-WLayoutItem *StdLayoutImpl::layoutItem() const
+namespace Wt
 {
-  return layout_;
-}
 
-StdLayoutItemImpl *StdLayoutImpl::getImpl(WLayoutItem *item)
-{
-  return dynamic_cast<StdLayoutItemImpl *>(item->impl());
-}
+    StdLayoutImpl::StdLayoutImpl(WLayout * layout)
+        : layout_(layout)
+    { }
+
+    StdLayoutImpl::~StdLayoutImpl()
+    { }
+
+    WLayoutItem * StdLayoutImpl::layoutItem() const
+    {
+        return layout_;
+    }
+
+    StdLayoutItemImpl * StdLayoutImpl::getImpl(WLayoutItem * item)
+    {
+        return dynamic_cast<StdLayoutItemImpl *>(item->impl());
+    }
 
 }

@@ -17,29 +17,29 @@ using namespace Wt;
 
 class ShapesWidget : public WPaintedWidget
 {
-public:
-  ShapesWidget();
-  ~ShapesWidget();
+    public:
+        ShapesWidget();
+        ~ShapesWidget();
 
-  WString selectedColor();
-  WString selectedShape();
-  bool correctlyClicked(const WMouseEvent& me);
-  void initShapes();
-  
-protected:
-  virtual void paintEvent(WPaintDevice *paintDevice);
+        WString selectedColor();
+        WString selectedShape();
+        bool correctlyClicked(const WMouseEvent & me);
+        void initShapes();
 
-private:
-  int randomInt(const unsigned max);
-  double randomDouble();
-  bool sameShapeAndColor(const Shape* s1, const Shape* s2);
-  ShapeColor createRandomColor();
-  std::unique_ptr<Shape> createRandomShape();
-  void cleanupShapes();
+    protected:
+        virtual void paintEvent(WPaintDevice * paintDevice);
 
-private:
-  std::vector<std::unique_ptr<Shape>> shapes_;
-  Shape *toSelect_;
+    private:
+        int randomInt(const unsigned max);
+        double randomDouble();
+        bool sameShapeAndColor(const Shape * s1, const Shape * s2);
+        ShapeColor createRandomColor();
+        std::unique_ptr<Shape> createRandomShape();
+        void cleanupShapes();
+
+    private:
+        std::vector<std::unique_ptr<Shape>> shapes_;
+        Shape * toSelect_;
 };
 
 #endif //SHAPES_WIDGET_H_

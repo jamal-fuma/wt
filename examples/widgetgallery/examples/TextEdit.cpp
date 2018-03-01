@@ -7,33 +7,34 @@
 SAMPLE_BEGIN(TextEdit)
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-Wt::WTextEdit *edit =
+Wt::WTextEdit * edit =
     container->addWidget(Wt::cpp14::make_unique<Wt::WTextEdit>());
 edit->setHeight(300);
 edit->setText("<p>"
-    "<span style=\"font-family: 'courier new', courier; font-size: medium;\">"
-    "<strong>WTextEdit</strong></span></p>"
-    "<p>Hey, I'm a <strong>WTextEdit</strong> and you can make me"
-        " <span style=\"text-decoration: underline;\"><em>rich</em></span>"
-        " by adding your <span style=\"color: #ff0000;\"><em>style</em>"
-	"</span>!</p>"
-    "<p>Other widgets like...</p>"
-      "<ul style=\"padding: 0px; margin: 0px 0px 10px 25px;\">"
-        "<li>WLineEdit</li>"
-        "<li>WTextArea</li>"
-        "<li>WSpinBox</li>"
-      "</ul>"
-    "<p>don't have style.</p>");
+              "<span style=\"font-family: 'courier new', courier; font-size: medium;\">"
+              "<strong>WTextEdit</strong></span></p>"
+              "<p>Hey, I'm a <strong>WTextEdit</strong> and you can make me"
+              " <span style=\"text-decoration: underline;\"><em>rich</em></span>"
+              " by adding your <span style=\"color: #ff0000;\"><em>style</em>"
+              "</span>!</p>"
+              "<p>Other widgets like...</p>"
+              "<ul style=\"padding: 0px; margin: 0px 0px 10px 25px;\">"
+              "<li>WLineEdit</li>"
+              "<li>WTextArea</li>"
+              "<li>WSpinBox</li>"
+              "</ul>"
+              "<p>don't have style.</p>");
 
-Wt::WPushButton *button =
+Wt::WPushButton * button =
     container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Get text"));
 button->setMargin(10, Wt::Side::Top | Wt::Side::Bottom);
 
-Wt::WText *out =
+Wt::WText * out =
     container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
 out->setStyleClass("xhtml-output");
 
-button->clicked().connect([=] {
+button->clicked().connect([=]
+{
     out->setText("<pre>" + Wt::Utils::htmlEncode(edit->text()) + "</pre>");
 });
 

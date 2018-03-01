@@ -10,10 +10,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -33,33 +33,34 @@ class QString;
 
 using namespace Wt;
 
-namespace Wt {
-  class WLineEdit;
-  class WText;
+namespace Wt
+{
+    class WLineEdit;
+    class WText;
 }
 
 /*! \class HelloApplication
  *  \brief The 'hello' application modified to use QtCore
- * 
+ *
  * A sample application that uses objects from the QtCore library.
  */
 class Dictionary : public WQApplication
 {
-public:
-  Dictionary(const WEnvironment& env);
+    public:
+        Dictionary(const WEnvironment & env);
 
-  void doGreet(const QString&);
+        void doGreet(const QString &);
 
-  virtual void create();
-  virtual void destroy();
+        virtual void create();
+        virtual void destroy();
 
-private:
-  WLineEdit *nameEdit_;
-  WText     *greeting_;
+    private:
+        WLineEdit * nameEdit_;
+        WText   *  greeting_;
 
-  std::unique_ptr<QtObject>  qtSender_, qtReceiver_;
+        std::unique_ptr<QtObject>  qtSender_, qtReceiver_;
 
-  void propagateGreet();
+        void propagateGreet();
 };
 
 #endif // HELLO_APPLICATION_H_

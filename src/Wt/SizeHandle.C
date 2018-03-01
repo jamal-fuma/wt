@@ -9,14 +9,15 @@
 #include "SizeHandle.h"
 
 #ifndef WT_DEBUG_JS
-#include "js/SizeHandle.min.js"
+    #include "js/SizeHandle.min.js"
 #endif
 
-namespace Wt {
-
-void SizeHandle::loadJavaScript(WApplication *app)
+namespace Wt
 {
-  LOAD_JAVASCRIPT(app, "js/SizeHandle.js", "SizeHandle", wtjs1);
-}
+
+    void SizeHandle::loadJavaScript(WApplication * app)
+    {
+        LOAD_JAVASCRIPT(app, "js/SizeHandle.js", "SizeHandle", wtjs1);
+    }
 
 }

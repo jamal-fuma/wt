@@ -6,12 +6,13 @@
 
 #include "WebStream.h"
 
-namespace Wt {
+namespace Wt
+{
 
-WebStream::WebStream()
-{ }
+    WebStream::WebStream()
+    { }
 
-WebStream::~WebStream()
-{ }
+    WebStream::~WebStream()
+    { }
 
 }

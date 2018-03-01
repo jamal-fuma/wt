@@ -10,39 +10,40 @@
 #include <string>
 #include <Wt/WDllDefs.h>
 
-namespace Wt {
-
-extern WT_API std::string backtrace();
-
-/*! \class WException Wt/WException.h
- *  \brief Base class for exceptions thrown by %Wt.
- */
-class WT_API WException : public std::exception
+namespace Wt
 {
-public:
-  /*! \brief Creates an exception.
-   */
-  explicit WException(const std::string& what);
 
-  /*! \brief Creates an exception.
-   */
-  WException(const std::string& what, const std::exception& wrapped);
+    extern WT_API std::string backtrace();
 
-  /*! \brief Destructor
-   */
-  virtual ~WException() throw();
+    /*! \class WException Wt/WException.h
+     *  \brief Base class for exceptions thrown by %Wt.
+     */
+    class WT_API WException : public std::exception
+    {
+        public:
+            /*! \brief Creates an exception.
+             */
+            explicit WException(const std::string & what);
 
-  /*! \brief Returns the message.
-   */
-  virtual const char *what() const throw() override;
+            /*! \brief Creates an exception.
+             */
+            WException(const std::string & what, const std::exception & wrapped);
 
-  /*! \brief Sets the message.
-   */
-  void setMessage(const std::string& msg);
+            /*! \brief Destructor
+             */
+            virtual ~WException() throw();
 
-private:
-  std::string what_;
-};
+            /*! \brief Returns the message.
+             */
+            virtual const char * what() const throw() override;
+
+            /*! \brief Sets the message.
+             */
+            void setMessage(const std::string & msg);
+
+        private:
+            std::string what_;
+    };
 
 }
 

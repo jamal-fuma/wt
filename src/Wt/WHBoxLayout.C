@@ -6,10 +6,11 @@
 
 #include "Wt/WHBoxLayout.h"
 
-namespace Wt {
+namespace Wt
+{
 
-WHBoxLayout::WHBoxLayout()
-  : WBoxLayout(LayoutDirection::LeftToRight)
-{ }
+    WHBoxLayout::WHBoxLayout()
+        : WBoxLayout(LayoutDirection::LeftToRight)
+    { }
 
 }

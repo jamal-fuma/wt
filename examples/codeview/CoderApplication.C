@@ -12,38 +12,39 @@
 
 using namespace Wt;
 
-CoderApplication::CoderApplication(const WEnvironment& env)
-  : WApplication(env)
+CoderApplication::CoderApplication(const WEnvironment & env)
+    : WApplication(env)
 {
-  setTitle("Watch that coding.");
-  useStyleSheet("coder.css");
-
-  createUI(env.internalPath());
-
-  internalPathChanged().connect(this, &CoderApplication::handlePathChange);
+    setTitle("Watch that coding.");
+    useStyleSheet("coder.css");
+    createUI(env.internalPath());
+    internalPathChanged().connect(this, &CoderApplication::handlePathChange);
 }
 
-void CoderApplication::createUI(const std::string& path)
+void CoderApplication::createUI(const std::string & path)
 {
-  if (path.length() <= 1)
-    root()->addWidget(cpp14::make_unique<CoderWidget>());
-  else
-    root()->addWidget(cpp14::make_unique<ObserverWidget>(path.substr(1)));
+    if(path.length() <= 1)
+    {
+        root()->addWidget(cpp14::make_unique<CoderWidget>());
+    }
+    else
+    {
+        root()->addWidget(cpp14::make_unique<ObserverWidget>(path.substr(1)));
+    }
 }
 
 void CoderApplication::handlePathChange()
 {
-  root()->clear();
-
-  createUI(internalPath());
+    root()->clear();
+    createUI(internalPath());
 }
 
-std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+std::unique_ptr<WApplication> createApplication(const WEnvironment & env)
 {
-  return cpp14::make_unique<CoderApplication>(env);
+    return cpp14::make_unique<CoderApplication>(env);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-  return WRun(argc, argv, &createApplication);
+    return WRun(argc, argv, &createApplication);
 }

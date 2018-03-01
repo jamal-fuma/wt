@@ -9,41 +9,43 @@
 
 #include <Wt/WTemplate.h>
 
-namespace Wt {
-  namespace Auth {
-
-class AbstractUserDatabase;
-class AuthService;
-
-/*! \class LostPasswordWidget Auth/LostPasswordWidget
- *  \brief A widget which initiates a lost-password email.
- *
- * The widget renders the <tt>"Wt.Auth.template.lost-password"</tt>
- * template. It prompts for an email address and then invokes
- * AuthService::lostPassword() with the given email address.
- *
- * \sa AuthWidget::createLostPasswordView()
- *
- * \ingroup auth
- */ 
-class WT_API LostPasswordWidget : public WTemplate
+namespace Wt
 {
-public:
-  /*! \brief Constructor
-   */
-  LostPasswordWidget(AbstractUserDatabase& users,
-		     const AuthService& auth);
+    namespace Auth
+    {
 
-protected:
-  void send();
-  void cancel();
+        class AbstractUserDatabase;
+        class AuthService;
 
-private:
-  AbstractUserDatabase& users_;
-  const AuthService& baseAuth_;
-};
+        /*! \class LostPasswordWidget Auth/LostPasswordWidget
+         *  \brief A widget which initiates a lost-password email.
+         *
+         * The widget renders the <tt>"Wt.Auth.template.lost-password"</tt>
+         * template. It prompts for an email address and then invokes
+         * AuthService::lostPassword() with the given email address.
+         *
+         * \sa AuthWidget::createLostPasswordView()
+         *
+         * \ingroup auth
+         */
+        class WT_API LostPasswordWidget : public WTemplate
+        {
+            public:
+                /*! \brief Constructor
+                 */
+                LostPasswordWidget(AbstractUserDatabase & users,
+                                   const AuthService & auth);
 
-  }
+            protected:
+                void send();
+                void cancel();
+
+            private:
+                AbstractUserDatabase & users_;
+                const AuthService & baseAuth_;
+        };
+
+    }
 }
 
 #endif // WT_AUTH_LOST_PASSWORD_WIDGET_H_

@@ -19,67 +19,62 @@ using namespace Wt;
 
 class HelloApplication : public SingleThreadedApplication
 {
-public:
-  HelloApplication(const WEnvironment& env);
+    public:
+        HelloApplication(const WEnvironment & env);
 
-protected:
-  virtual void create();
-  virtual void destroy();
+    protected:
+        virtual void create();
+        virtual void destroy();
 
-private:
-  WLineEdit *nameEdit_;
-  WText     *greeting_;
+    private:
+        WLineEdit * nameEdit_;
+        WText   *  greeting_;
 
-  void greet();
+        void greet();
 };
 
-HelloApplication::HelloApplication(const WEnvironment& env)
-  : SingleThreadedApplication(env)
+HelloApplication::HelloApplication(const WEnvironment & env)
+    : SingleThreadedApplication(env)
 {
-  /* Intentionally left blank! Actual construction happens in create() */
+    /* Intentionally left blank! Actual construction happens in create() */
 }
 
 void HelloApplication::create()
 {
-  setTitle("Hello world");
-
-  root()->addWidget(cpp14::make_unique<WText>("Your name, please? "));
-  nameEdit_ = root()->addWidget(cpp14::make_unique<WLineEdit>());
-  nameEdit_->setFocus();
-
-  auto button = root()->addWidget(cpp14::make_unique<WPushButton>("Greet me"));
-  button->setMargin(5, Side::Left);
-
-  root()->addWidget(cpp14::make_unique<WBreak>());
-
-  greeting_ = root()->addWidget(cpp14::make_unique<WText>());
-
-  button->clicked().connect(this, &HelloApplication::greet);
-  nameEdit_->enterPressed().connect
+    setTitle("Hello world");
+    root()->addWidget(cpp14::make_unique<WText>("Your name, please? "));
+    nameEdit_ = root()->addWidget(cpp14::make_unique<WLineEdit>());
+    nameEdit_->setFocus();
+    auto button = root()->addWidget(cpp14::make_unique<WPushButton>("Greet me"));
+    button->setMargin(5, Side::Left);
+    root()->addWidget(cpp14::make_unique<WBreak>());
+    greeting_ = root()->addWidget(cpp14::make_unique<WText>());
+    button->clicked().connect(this, &HelloApplication::greet);
+    nameEdit_->enterPressed().connect
     (std::bind(&HelloApplication::greet, this));
 }
 
 void HelloApplication::destroy()
 {
-  root()->clear();
+    root()->clear();
 }
 
 void HelloApplication::greet()
 {
-  /*
-   * You can even use functions that block the event loop (and start a recursive
-   * event loop).
-   */
-  WMessageBox::show("Welcome", "Hello there, " + nameEdit_->text(), StandardButton::Ok);
+    /*
+     * You can even use functions that block the event loop (and start a recursive
+     * event loop).
+     */
+    WMessageBox::show("Welcome", "Hello there, " + nameEdit_->text(), StandardButton::Ok);
 }
 
-std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+std::unique_ptr<WApplication> createApplication(const WEnvironment & env)
 {
-  return cpp14::make_unique<HelloApplication>(env);
+    return cpp14::make_unique<HelloApplication>(env);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-  return WRun(argc, argv, &createApplication);
+    return WRun(argc, argv, &createApplication);
 }
 

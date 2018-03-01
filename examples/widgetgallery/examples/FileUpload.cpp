@@ -9,39 +9,43 @@ SAMPLE_BEGIN(FileUpload)
 
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-Wt::WFileUpload *fu =
+Wt::WFileUpload * fu =
     container->addWidget(Wt::cpp14::make_unique<Wt::WFileUpload>());
 fu->setFileTextSize(50); // Set the maximum file size to 50 kB.
 fu->setProgressBar(Wt::cpp14::make_unique<Wt::WProgressBar>());
 fu->setMargin(10, Wt::Side::Right);
 
 // Provide a button to start uploading.
-Wt::WPushButton *uploadButton =
+Wt::WPushButton * uploadButton =
     container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Send"));
 uploadButton->setMargin(10, Wt::Side::Left | Wt::Side::Right);
 
-Wt::WText *out = container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
+Wt::WText * out = container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
 
 // Upload when the button is clicked.
-uploadButton->clicked().connect([=] {
+uploadButton->clicked().connect([=]
+{
     fu->upload();
     uploadButton->disable();
 });
 
 // Upload automatically when the user entered a file.
-fu->changed().connect([=] {
+fu->changed().connect([=]
+{
     fu->upload();
     uploadButton->disable();
     out->setText("File upload is changed.");
 });
 
 // React to a succesfull upload.
-fu->uploaded().connect([=] {
+fu->uploaded().connect([=]
+{
     out->setText("File upload is finished.");
 });
 
 // React to a file upload problem.
-fu->fileTooLarge().connect([=] {
+fu->fileTooLarge().connect([=]
+{
     out->setText("File is too large.");
 });
 

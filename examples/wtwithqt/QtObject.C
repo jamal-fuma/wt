@@ -26,16 +26,16 @@
 #include "HelloApplication.h"
 #include "QtObject.h"
 
-QtObject::QtObject(Dictionary *wt)
-  : wt_(wt)
+QtObject::QtObject(Dictionary * wt)
+    : wt_(wt)
 { }
 
-void QtObject::passGreet(const QString& name)
+void QtObject::passGreet(const QString & name)
 {
-  emit greet(name);
+    emit greet(name);
 }
 
-void QtObject::doGreet(const QString& name)
+void QtObject::doGreet(const QString & name)
 {
-  wt_->doGreet(name);
+    wt_->doGreet(name);
 }

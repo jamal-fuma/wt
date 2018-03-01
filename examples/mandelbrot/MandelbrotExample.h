@@ -17,22 +17,22 @@ class MandelbrotImage;
 
 class MandelbrotExample : public WContainerWidget
 {
-public:
-  MandelbrotExample();
+    public:
+        MandelbrotExample();
 
-private:
-  MandelbrotImage *mandelbrot_;
+    private:
+        MandelbrotImage * mandelbrot_;
 
-  WText *viewPortText_;
+        WText * viewPortText_;
 
-  void moveLeft();
-  void moveRight();
-  void moveUp();
-  void moveDown();
-  void zoomIn();
-  void zoomOut();
+        void moveLeft();
+        void moveRight();
+        void moveUp();
+        void moveDown();
+        void zoomIn();
+        void zoomOut();
 
-  void updateViewPortText();
+        void updateViewPortText();
 };
 
 #endif // MANDELBROT_EXAMPLE_H_

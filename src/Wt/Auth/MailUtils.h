@@ -11,13 +11,16 @@
 #include "Wt/Mail/Message.h"
 #include <Wt/WDllDefs.h>
 
-namespace Wt {
-  namespace Auth {
-    namespace MailUtils {
+namespace Wt
+{
+    namespace Auth
+    {
+        namespace MailUtils
+        {
 
-      WT_API extern void sendMail(const Mail::Message &m);
+            WT_API extern void sendMail(const Mail::Message & m);
+        }
     }
-  }
 }
 
 #endif // WT_MAIL_UTILS_H_

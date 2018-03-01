@@ -9,34 +9,35 @@
 
 #include <Wt/WAbstractItemModel.h>
 
-namespace Wt {
-
-/*! \class WAbstractTableModel Wt/WAbstractTableModel.h Wt/WAbstractTableModel.h
- *  \brief An abstract table model for use with %Wt's view classes.
- *
- * An abstract table model specializes WAbstractItemModel for
- * two-dimensional tables (but no hierarchical models).
- *
- * It cannot be used directly but must be subclassed. Subclassed
- * models must at least reimplement columnCount(), rowCount() and data().
- *
- * \ingroup modelview
- */
-class WT_API WAbstractTableModel : public WAbstractItemModel
+namespace Wt
 {
-public:
-  /*! \brief Creates a new abstract list model.
-   */
-  WAbstractTableModel();
 
-  /*! \brief Destructor.
-   */
-  ~WAbstractTableModel();
+    /*! \class WAbstractTableModel Wt/WAbstractTableModel.h Wt/WAbstractTableModel.h
+     *  \brief An abstract table model for use with %Wt's view classes.
+     *
+     * An abstract table model specializes WAbstractItemModel for
+     * two-dimensional tables (but no hierarchical models).
+     *
+     * It cannot be used directly but must be subclassed. Subclassed
+     * models must at least reimplement columnCount(), rowCount() and data().
+     *
+     * \ingroup modelview
+     */
+    class WT_API WAbstractTableModel : public WAbstractItemModel
+    {
+        public:
+            /*! \brief Creates a new abstract list model.
+             */
+            WAbstractTableModel();
 
-  virtual WModelIndex parent(const WModelIndex& index) const override;
-  virtual WModelIndex index(int row, int column,
-                            const WModelIndex& parent = WModelIndex()) const override;
-};
+            /*! \brief Destructor.
+             */
+            ~WAbstractTableModel();
+
+            virtual WModelIndex parent(const WModelIndex & index) const override;
+            virtual WModelIndex index(int row, int column,
+                                      const WModelIndex & parent = WModelIndex()) const override;
+    };
 
 }
 

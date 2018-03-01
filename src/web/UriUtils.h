@@ -10,21 +10,22 @@
 #include <string>
 #include <vector>
 
-namespace Wt {
+namespace Wt
+{
 
-  class DataUri
-  {
-  public:
-    DataUri(const std::string& dataUri);
+    class DataUri
+    {
+        public:
+            DataUri(const std::string & dataUri);
 
-    std::string mimeType;
-    std::vector<unsigned char> data;
+            std::string mimeType;
+            std::vector<unsigned char> data;
 
-    static bool isDataUri(const std::string& uri);
+            static bool isDataUri(const std::string & uri);
 
-  private:
-    void parse(const std::string& dataUri);
-  };
+        private:
+            void parse(const std::string & dataUri);
+    };
 
 }
 

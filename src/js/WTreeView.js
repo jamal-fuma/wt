@@ -37,7 +37,7 @@ WT_DECLARE_WT_MEMBER
 	 nodeId = t.id;
 
 	 break;
-       } else if (t.className.indexOf('Wt-tv-c') == 0) {
+       } else if (t.className && t.className.indexOf('Wt-tv-c') == 0) {
 	 if (t.className.indexOf('Wt-tv-c') == 0)
 	   columnId = t.className.split(' ')[0].substring(7) * 1;
 	 else if (columnId == -1)
@@ -94,24 +94,26 @@ WT_DECLARE_WT_MEMBER
   
    var touchStartTimer;
 
-   this.touchStart = function(obj, event) {
-     if (event.touches.length > 1){
-       clearTimeout(touchStartTimer);
-       touchStartTimer = setTimeout(function(){emitTouchStart(obj, event);}, 1000);
-     }
-     else{
-       clearTimeout(touchStartTimer);
-       touchStartTimer = setTimeout(function(){emitTouchStart(obj, event);}, 50);
-     }
-
-   };
-
-   function emitTouchStart(obj, event) {
+   function emitTouchEvent(obj, event, evtType) {
      var item = getItem(event);
      if (item.columnId != -1) {
        APP.emit(el, { name: 'itemTouchEvent', eventObject: obj, event: event},
-		item.nodeId + ':' + item.columnId, 'touchstart', '', '');
+		item.nodeId + ':' + item.columnId, evtType);
      }
+   }
+
+   this.touchStart = function(obj, event) {
+     // FIXME: emit touch start event if connected to slot
+     // emitTouchEvent(obj, event, 'touchstart');
+     if (event.touches.length > 1){
+       clearTimeout(touchStartTimer);
+       touchStartTimer = setTimeout(function(){emitTouchEvent(obj, event, 'touchselect');}, 1000);
+     }
+     else{
+       clearTimeout(touchStartTimer);
+       touchStartTimer = setTimeout(function(){emitTouchEvent(obj, event, 'touchselect');}, 50);
+     }
+
    };
 
    this.touchMove = function(obj, event) {
@@ -120,6 +122,8 @@ WT_DECLARE_WT_MEMBER
    };
 
    this.touchEnd = function(obj, event) {
+     // FIXME: emit touch end event if connected to slot
+     // emitTouchEvent(obj, event, 'touchend');
      if (touchStartTimer)
        clearTimeout(touchStartTimer);
    };

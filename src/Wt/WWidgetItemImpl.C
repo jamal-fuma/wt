@@ -6,9 +6,10 @@
 
 #include "Wt/WWidgetItemImpl.h"
 
-namespace Wt {
+namespace Wt
+{
 
-WWidgetItemImpl::~WWidgetItemImpl()
-{ }
+    WWidgetItemImpl::~WWidgetItemImpl()
+    { }
 
 }

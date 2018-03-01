@@ -15,191 +15,191 @@
 #include "WebUtils.h"
 #include "StdWidgetItemImpl.h"
 
-namespace Wt {
-
-WTabWidget::WTabWidget()
+namespace Wt
 {
-  create();
-}
 
-void WTabWidget::create()
-{
-  layout_ = new WContainerWidget();
-  setImplementation(std::unique_ptr<WWidget>(layout_));
+    WTabWidget::WTabWidget()
+    {
+        create();
+    }
 
-  std::unique_ptr<WStackedWidget> stack(new WStackedWidget());
-  menu_ = new WMenu(stack.get());
-  layout_->addWidget(std::unique_ptr<WWidget>(menu_));
-  layout_->addWidget(std::move(stack));
+    void WTabWidget::create()
+    {
+        layout_ = new WContainerWidget();
+        setImplementation(std::unique_ptr<WWidget>(layout_));
+        std::unique_ptr<WStackedWidget> stack(new WStackedWidget());
+        menu_ = new WMenu(stack.get());
+        layout_->addWidget(std::unique_ptr<WWidget>(menu_));
+        layout_->addWidget(std::move(stack));
+        setJavaScriptMember(WT_RESIZE_JS, StdWidgetItemImpl::secondResizeJS());
+        setJavaScriptMember(WT_GETPS_JS, StdWidgetItemImpl::secondGetPSJS());
+        menu_->itemSelected().connect(this, &WTabWidget::onItemSelected);
+        menu_->itemClosed().connect(this, &WTabWidget::onItemClosed);
+    }
 
-  setJavaScriptMember(WT_RESIZE_JS, StdWidgetItemImpl::secondResizeJS());
-  setJavaScriptMember(WT_GETPS_JS, StdWidgetItemImpl::secondGetPSJS());
+    WMenuItem * WTabWidget::addTab(std::unique_ptr<WWidget> child,
+                                   const WString & label,
+                                   ContentLoading loadPolicy)
+    {
+        contentsWidgets_.push_back(child.get());
+        std::unique_ptr<WMenuItem> item
+        (new WMenuItem(label, std::move(child), loadPolicy));
+        WMenuItem * result = item.get();
+        menu_->addItem(std::move(item));
+        return result;
+    }
 
-  menu_->itemSelected().connect(this, &WTabWidget::onItemSelected);
-  menu_->itemClosed().connect(this, &WTabWidget::onItemClosed);
-}
+    std::unique_ptr<WWidget> WTabWidget::removeTab(WWidget * child)
+    {
+        int tabIndex = indexOf(child);
+        if(tabIndex != -1)
+        {
+            contentsWidgets_.erase(contentsWidgets_.begin() + tabIndex);
+            WMenuItem * item = menu_->itemAt(tabIndex);
+            std::unique_ptr<WWidget> result = item->removeContents();
+            menu_->removeItem(item);
+            return result;
+        }
+        else
+        {
+            return std::unique_ptr<WWidget>();
+        }
+    }
 
-WMenuItem *WTabWidget::addTab(std::unique_ptr<WWidget> child,
-			      const WString& label,
-			      ContentLoading loadPolicy)
-{
-  contentsWidgets_.push_back(child.get());
-  std::unique_ptr<WMenuItem> item
-    (new WMenuItem(label, std::move(child), loadPolicy));
-  WMenuItem *result = item.get();
-  menu_->addItem(std::move(item));
-  return result;
-}
+    int WTabWidget::count() const
+    {
+        return contentsWidgets_.size();
+    }
 
-std::unique_ptr<WWidget> WTabWidget::removeTab(WWidget *child)
-{
-  int tabIndex = indexOf(child);
+    WWidget * WTabWidget::widget(int index) const
+    {
+        return contentsWidgets_[index];
+    }
 
-  if (tabIndex != -1) {
-    contentsWidgets_.erase(contentsWidgets_.begin() + tabIndex);
+    int WTabWidget::indexOf(WWidget * widget) const
+    {
+        return Utils::indexOf(contentsWidgets_, widget);
+    }
 
-    WMenuItem *item = menu_->itemAt(tabIndex);
-    std::unique_ptr<WWidget> result = item->removeContents();
-    menu_->removeItem(item);
-    return result;
-  } else
-    return std::unique_ptr<WWidget>();
-}
+    void WTabWidget::setCurrentIndex(int index)
+    {
+        menu_->select(index);
+    }
 
-int WTabWidget::count() const
-{
-  return contentsWidgets_.size();
-}
+    int WTabWidget::currentIndex() const
+    {
+        return menu_->currentIndex();
+    }
 
-WWidget *WTabWidget::widget(int index) const
-{
-  return contentsWidgets_[index];
-}
+    void WTabWidget::setCurrentWidget(WWidget * widget)
+    {
+        setCurrentIndex(indexOf(widget));
+    }
 
-int WTabWidget::indexOf(WWidget *widget) const
-{
-  return Utils::indexOf(contentsWidgets_, widget);
-}
+    WWidget * WTabWidget::currentWidget() const
+    {
+        return menu_->currentItem()->contents();
+    }
 
-void WTabWidget::setCurrentIndex(int index)
-{
-  menu_->select(index);
-}
+    void WTabWidget::setTabEnabled(int index, bool enable)
+    {
+        menu_->setItemDisabled(index, !enable);
+    }
 
-int WTabWidget::currentIndex() const
-{
-  return menu_->currentIndex();
-}
+    bool WTabWidget::isTabEnabled(int index) const
+    {
+        return !menu_->isItemDisabled(index);
+    }
 
-void WTabWidget::setCurrentWidget(WWidget *widget)
-{
-  setCurrentIndex(indexOf(widget));
-}
+    void WTabWidget::setTabHidden(int index, bool hidden)
+    {
+        menu_->setItemHidden(index, hidden);
+    }
 
-WWidget *WTabWidget::currentWidget() const
-{
-  return menu_->currentItem()->contents();
-}
+    bool WTabWidget::isTabHidden(int index) const
+    {
+        return menu_->isItemHidden(index);
+    }
 
-void WTabWidget::setTabEnabled(int index, bool enable)
-{
-  menu_->setItemDisabled(index, !enable);
-}
+    void WTabWidget::setTabCloseable(int index, bool closeable)
+    {
+        menu_->itemAt(index)->setCloseable(closeable);
+    }
 
-bool WTabWidget::isTabEnabled(int index) const
-{
-  return !menu_->isItemDisabled(index);
-}
+    bool WTabWidget::isTabCloseable(int index)
+    {
+        return menu_->itemAt(index)->isCloseable();
+    }
 
-void WTabWidget::setTabHidden(int index, bool hidden)
-{
-  menu_->setItemHidden(index, hidden);
-}
+    void WTabWidget::closeTab(int index)
+    {
+        setTabHidden(index, true);
+        tabClosed_.emit(index);
+    }
 
-bool WTabWidget::isTabHidden(int index) const
-{
-  return menu_->isItemHidden(index);
-}
+    void WTabWidget::setTabText(int index, const WString & label)
+    {
+        WMenuItem * item = menu_->itemAt(index);
+        item->setText(label);
+    }
 
-void WTabWidget::setTabCloseable(int index, bool closeable)
-{
-  menu_->itemAt(index)->setCloseable(closeable);
-}
+    WString WTabWidget::tabText(int index) const
+    {
+        WMenuItem * item = menu_->itemAt(index);
+        return item->text();
+    }
 
-bool WTabWidget::isTabCloseable(int index)
-{
-  return menu_->itemAt(index)->isCloseable();
-}
+    void WTabWidget::setTabToolTip(int index, const WString & tip)
+    {
+        WMenuItem * item = menu_->itemAt(index);
+        item->setToolTip(tip);
+    }
 
-void WTabWidget::closeTab(int index)
-{
-  setTabHidden(index, true);
-  tabClosed_.emit(index);
-}
+    WString WTabWidget::tabToolTip(int index) const
+    {
+        WMenuItem * item = menu_->itemAt(index);
+        return item->toolTip();
+    }
 
-void WTabWidget::setTabText(int index, const WString& label)
-{
-  WMenuItem *item = menu_->itemAt(index);
-  item->setText(label);
-}
+    bool WTabWidget::internalPathEnabled() const
+    {
+        return menu_->internalPathEnabled();
+    }
 
-WString WTabWidget::tabText(int index) const
-{
-  WMenuItem *item = menu_->itemAt(index);
-  return item->text();
-}
+    void WTabWidget::setInternalPathEnabled(const std::string & basePath)
+    {
+        menu_->setInternalPathEnabled(basePath);
+    }
 
-void WTabWidget::setTabToolTip(int index, const WString& tip)
-{
-  WMenuItem *item = menu_->itemAt(index);
-  item->setToolTip(tip);
-}
+    const std::string & WTabWidget::internalBasePath() const
+    {
+        return menu_->internalBasePath();
+    }
 
-WString WTabWidget::tabToolTip(int index) const
-{
-  WMenuItem *item = menu_->itemAt(index);
-  return item->toolTip();
-}
+    void WTabWidget::setInternalBasePath(const std::string & path)
+    {
+        menu_->setInternalBasePath(path);
+    }
 
-bool WTabWidget::internalPathEnabled() const
-{
-  return menu_->internalPathEnabled();
-}
+    void WTabWidget::onItemSelected(WMenuItem * item)
+    {
+        currentChanged_.emit(menu_->currentIndex());
+    }
 
-void WTabWidget::setInternalPathEnabled(const std::string& basePath)
-{
-  menu_->setInternalPathEnabled(basePath);
-}
+    void WTabWidget::onItemClosed(WMenuItem * item)
+    {
+        closeTab(menu_->indexOf(item));
+    }
 
-const std::string& WTabWidget::internalBasePath() const
-{
-  return menu_->internalBasePath();
-}
+    WStackedWidget * WTabWidget::contentsStack() const
+    {
+        return menu_->contentsStack();
+    }
 
-void WTabWidget::setInternalBasePath(const std::string& path)
-{
-  menu_->setInternalBasePath(path);
-}
-
-void WTabWidget::onItemSelected(WMenuItem *item)
-{
-  currentChanged_.emit(menu_->currentIndex());
-}
-
-void WTabWidget::onItemClosed(WMenuItem *item)
-{
-  closeTab(menu_->indexOf(item));
-}
-
-WStackedWidget *WTabWidget::contentsStack() const
-{
-  return menu_->contentsStack();
-}
-
-void WTabWidget::setOverflow(Overflow value,
-	WFlags<Orientation> orientation)
-{
-  layout_->setOverflow(value, orientation);
-}
+    void WTabWidget::setOverflow(Overflow value,
+                                 WFlags<Orientation> orientation)
+    {
+        layout_->setOverflow(value, orientation);
+    }
 
 }

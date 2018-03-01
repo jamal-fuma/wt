@@ -11,80 +11,82 @@
 #include "Reply.h"
 #include "SessionProcessManager.h"
 
-namespace http {
-namespace server {
-
-class ProxyReply final : public Reply
+namespace http
 {
-public:
-  ProxyReply(Request& request,
-	     const Configuration& config,
-	     SessionProcessManager& sessionManager);
+    namespace server
+    {
 
-  virtual ~ProxyReply();
+        class ProxyReply final : public Reply
+        {
+            public:
+                ProxyReply(Request & request,
+                           const Configuration & config,
+                           SessionProcessManager & sessionManager);
 
-  virtual void reset(const Wt::EntryPoint *ep) override;
+                virtual ~ProxyReply();
 
-  virtual void writeDone(bool success) override;
+                virtual void reset(const Wt::EntryPoint * ep) override;
 
-  virtual bool consumeData(const char *begin,
-			   const char *end,
-			   Request::State state) override;
+                virtual void writeDone(bool success) override;
 
-  void closeClientSocket();
+                virtual bool consumeData(const char * begin,
+                                         const char * end,
+                                         Request::State state) override;
 
-protected:
-  virtual std::string contentType() override;
-  virtual ::int64_t contentLength() override;
+                void closeClientSocket();
 
-  virtual bool nextContentBuffers(std::vector<asio::const_buffer>& result) override;
+            protected:
+                virtual std::string contentType() override;
+                virtual ::int64_t contentLength() override;
 
-private:
-  void error(status_type status);
+                virtual bool nextContentBuffers(std::vector<asio::const_buffer> & result) override;
 
-  std::string getSessionId() const;
+            private:
+                void error(status_type status);
 
-  void connectToChild(bool success);
-  void handleChildConnected(const Wt::AsioWrapper::error_code& ec);
-  void assembleRequestHeaders();
-  void handleDataWritten(const Wt::AsioWrapper::error_code& ec,
-			 std::size_t transferred);
-  void handleStatusRead(const Wt::AsioWrapper::error_code& ec);
-  void handleHeadersRead(const Wt::AsioWrapper::error_code& ec);
-  void handleResponseRead(const Wt::AsioWrapper::error_code& ec);
+                std::string getSessionId() const;
 
-  void appendSSLInfo(const Wt::WSslInfo* sslInfo, std::ostream& os);
+                void connectToChild(bool success);
+                void handleChildConnected(const Wt::AsioWrapper::error_code & ec);
+                void assembleRequestHeaders();
+                void handleDataWritten(const Wt::AsioWrapper::error_code & ec,
+                                       std::size_t transferred);
+                void handleStatusRead(const Wt::AsioWrapper::error_code & ec);
+                void handleHeadersRead(const Wt::AsioWrapper::error_code & ec);
+                void handleResponseRead(const Wt::AsioWrapper::error_code & ec);
 
-  bool sendReload();
+                void appendSSLInfo(const Wt::WSslInfo * sslInfo, std::ostream & os);
 
-  SessionProcessManager &sessionManager_;
-  std::shared_ptr<SessionProcess> sessionProcess_;
-  std::shared_ptr<asio::ip::tcp::socket> socket_;
+                bool sendReload();
 
-  std::string contentType_;
+                SessionProcessManager & sessionManager_;
+                std::shared_ptr<SessionProcess> sessionProcess_;
+                std::shared_ptr<asio::ip::tcp::socket> socket_;
 
-  /// Request/response buffers for the child connection
-  asio::streambuf requestBuf_;
-  asio::streambuf responseBuf_;
+                std::string contentType_;
 
-  /// Response buffer
-  asio::streambuf out_buf_;
-  std::ostream out_;
+                /// Request/response buffers for the child connection
+                asio::streambuf requestBuf_;
+                asio::streambuf responseBuf_;
 
-  std::size_t sending_;
-  ::int64_t contentLength_;
-  bool more_;
-  bool receiving_;
-  bool fwCertificates_;
+                /// Response buffer
+                asio::streambuf out_buf_;
+                std::ostream out_;
 
-  const char *beginRequestBuf_;
-  const char *endRequestBuf_;
-  Request::State state_;
+                std::size_t sending_;
+                ::int64_t contentLength_;
+                bool more_;
+                bool receiving_;
+                bool fwCertificates_;
 
-  Wt::Http::ParameterMap queryParams_;
-};
+                const char * beginRequestBuf_;
+                const char * endRequestBuf_;
+                Request::State state_;
 
-} // namespace server
+                Wt::Http::ParameterMap queryParams_;
+        };
+
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_PROXY_REPLY_HPP

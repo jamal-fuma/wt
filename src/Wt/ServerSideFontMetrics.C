@@ -10,57 +10,58 @@
 #include "Wt/WPainter.h"
 
 #ifdef WT_HAS_WPDFIMAGE
-#include "Wt/WPdfImage.h"
+    #include "Wt/WPdfImage.h"
 #endif // WT_HAS_WPDFIMAGE
 
 #include "ServerSideFontMetrics.h"
 
-namespace Wt {
-
-ServerSideFontMetrics::ServerSideFontMetrics()
+namespace Wt
 {
+
+    ServerSideFontMetrics::ServerSideFontMetrics()
+    {
 #ifdef WT_HAS_WPDFIMAGE
-  img_.reset(new WPdfImage(100, 100));
-  painter_.reset(new WPainter(img_.get()));
+        img_.reset(new WPdfImage(100, 100));
+        painter_.reset(new WPainter(img_.get()));
 #endif // WT_HAS_WPDFIMAGE
-}
+    }
 
-ServerSideFontMetrics::~ServerSideFontMetrics()
-{ }
+    ServerSideFontMetrics::~ServerSideFontMetrics()
+    { }
 
-WFontMetrics ServerSideFontMetrics::fontMetrics(const WFont& font)
-{
+    WFontMetrics ServerSideFontMetrics::fontMetrics(const WFont & font)
+    {
 #ifdef WT_HAS_WPDFIMAGE
-  painter_->setFont(font);
-  return painter_->device()->fontMetrics();
+        painter_->setFont(font);
+        return painter_->device()->fontMetrics();
 #else
-  throw WException("ServerSideFontMetrics not available");
+        throw WException("ServerSideFontMetrics not available");
 #endif // WT_HAS_WPDFIMAGE
-}
+    }
 
-WTextItem
-ServerSideFontMetrics::measureText(const WFont& font,
-				   const WString& text, double maxWidth,
-				   bool wordWrap)
-{
+    WTextItem
+    ServerSideFontMetrics::measureText(const WFont & font,
+                                       const WString & text, double maxWidth,
+                                       bool wordWrap)
+    {
 #ifdef WT_HAS_WPDFIMAGE
-  painter_->setFont(font);
-  WTextItem t = painter_->device()->measureText(text, maxWidth, wordWrap);
-  const double REL_ERROR = 1.02;
-  return WTextItem(t.text(), t.width() * REL_ERROR,
-		   t.nextWidth() > 0 ? t.nextWidth() * REL_ERROR : t.nextWidth());
+        painter_->setFont(font);
+        WTextItem t = painter_->device()->measureText(text, maxWidth, wordWrap);
+        const double REL_ERROR = 1.02;
+        return WTextItem(t.text(), t.width() * REL_ERROR,
+                         t.nextWidth() > 0 ? t.nextWidth() * REL_ERROR : t.nextWidth());
 #else
-  throw WException("ServerSideFontMetrics not available");
+        throw WException("ServerSideFontMetrics not available");
 #endif // WT_HAS_WPDFIMAGE
-}
+    }
 
-bool ServerSideFontMetrics::available()
-{
+    bool ServerSideFontMetrics::available()
+    {
 #ifdef WT_HAS_WPDFIMAGE
-  return true;
+        return true;
 #else
-  return false;
+        return false;
 #endif // WT_HAS_WPDFIMAGE
-}
+    }
 
 }
