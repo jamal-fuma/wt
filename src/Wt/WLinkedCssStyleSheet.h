@@ -14,33 +14,40 @@
 #include <Wt/WGlobal.h>
 #include <Wt/WLink.h>
 
-namespace Wt {
-
-class WStringStream;
-
-/*! \class WLinkedCssStyleSheet Wt/WLinkedCssStyleSheet.h Wt/WLinkedCssStyleSheet.h
- *  \brief An external CSS style sheet.
- *
- * \sa WApplication::useStyleSheet()
- *
- * \ingroup style
- */
-class WT_API WLinkedCssStyleSheet
+namespace Wt
 {
-public:
-  /*! \brief Creates a new (external) style sheet reference.
-   */
-  WLinkedCssStyleSheet(const WLink& link, const std::string& media = "all");
 
-  const WLink& link() const { return link_; }
-  const std::string& media() const { return media_; }
+    class WStringStream;
 
-  void cssText(WStringStream& out) const;
+    /*! \class WLinkedCssStyleSheet Wt/WLinkedCssStyleSheet.h Wt/WLinkedCssStyleSheet.h
+     *  \brief An external CSS style sheet.
+     *
+     * \sa WApplication::useStyleSheet()
+     *
+     * \ingroup style
+     */
+    class WT_API WLinkedCssStyleSheet
+    {
+        public:
+            /*! \brief Creates a new (external) style sheet reference.
+             */
+            WLinkedCssStyleSheet(const WLink & link, const std::string & media = "all");
 
-private:
-  WLink link_;
-  std::string media_;
-};
+            const WLink & link() const
+            {
+                return link_;
+            }
+            const std::string & media() const
+            {
+                return media_;
+            }
+
+            void cssText(WStringStream & out) const;
+
+        private:
+            WLink link_;
+            std::string media_;
+    };
 
 }
 

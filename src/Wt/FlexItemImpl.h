@@ -10,25 +10,26 @@
 #include "Wt/WWidgetItemImpl.h"
 #include "StdLayoutItemImpl.h"
 
-namespace Wt {
-
-class FlexItemImpl : public StdLayoutItemImpl, public WWidgetItemImpl
+namespace Wt
 {
-public:
-  FlexItemImpl(WWidgetItem *item);
-  virtual ~FlexItemImpl();
 
-  virtual WLayoutItem *layoutItem() const override;
-  virtual int minimumHeight() const override;
-  virtual int minimumWidth() const override;
+    class FlexItemImpl : public StdLayoutItemImpl, public WWidgetItemImpl
+    {
+        public:
+            FlexItemImpl(WWidgetItem * item);
+            virtual ~FlexItemImpl();
 
-  DomElement *createDomElement(DomElement *parent,
-			       bool fitWidth, bool fitHeight,
-			       WApplication *app) override;
+            virtual WLayoutItem * layoutItem() const override;
+            virtual int minimumHeight() const override;
+            virtual int minimumWidth() const override;
 
-private:
-  WWidgetItem *item_;
-};
+            DomElement * createDomElement(DomElement * parent,
+                                          bool fitWidth, bool fitHeight,
+                                          WApplication * app) override;
+
+        private:
+            WWidgetItem * item_;
+    };
 
 }
 

@@ -7,14 +7,16 @@
 #ifndef WT_RESIZABLE_H_
 #define WT_RESIZABLE_H_
 
-namespace Wt {
+namespace Wt
+{
 
-  class WApplication;
+    class WApplication;
 
-  class Resizable {
-  public:
-    static void loadJavaScript(WApplication *app);
-  };
+    class Resizable
+    {
+        public:
+            static void loadJavaScript(WApplication * app);
+    };
 }
 
 #endif // WT_RESIZABLE_H_

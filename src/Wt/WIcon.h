@@ -9,31 +9,35 @@
 
 #include <Wt/WInteractWidget.h>
 
-namespace Wt {
-
-class WT_API WIcon : public WInteractWidget
+namespace Wt
 {
-public:
-  WIcon();
-  WIcon(const std::string& name);
 
-  void setName(const std::string& name);
-  std::string name() const { return name_; }
+    class WT_API WIcon : public WInteractWidget
+    {
+        public:
+            WIcon();
+            WIcon(const std::string & name);
 
-  void setSize(double factor);
-  double size() const;
+            void setName(const std::string & name);
+            std::string name() const
+            {
+                return name_;
+            }
 
-  static void loadIconFont();
+            void setSize(double factor);
+            double size() const;
 
-protected:
-  virtual void updateDom(DomElement& element, bool all) override;
-  virtual DomElementType domElementType() const override;
-  virtual void propagateRenderOk(bool deep) override;
+            static void loadIconFont();
 
-private:
-  std::string name_;
-  bool iconChanged_;
-};
+        protected:
+            virtual void updateDom(DomElement & element, bool all) override;
+            virtual DomElementType domElementType() const override;
+            virtual void propagateRenderOk(bool deep) override;
+
+        private:
+            std::string name_;
+            bool iconChanged_;
+    };
 
 }
 

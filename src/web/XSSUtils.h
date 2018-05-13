@@ -9,12 +9,14 @@
 
 #include <string>
 
-namespace Wt {
-  namespace XSS {
-    bool isBadTag(const std::string& name);
-    bool isBadAttribute(const std::string& name);
-    bool isBadAttributeValue(const std::string& name, const std::string& value);
-  }
+namespace Wt
+{
+    namespace XSS
+    {
+        bool isBadTag(const std::string & name);
+        bool isBadAttribute(const std::string & name);
+        bool isBadAttributeValue(const std::string & name, const std::string & value);
+    }
 }
 
 #endif // XSSUTILS_H_

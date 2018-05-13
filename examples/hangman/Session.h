@@ -24,34 +24,37 @@ typedef Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 class Session
 {
-public:
-  static void configureAuth();
+    public:
+        static void configureAuth();
 
-  Session();
-  ~Session();
+        Session();
+        ~Session();
 
-  Auth::AbstractUserDatabase& users();
-  Auth::Login& login() { return login_; }
+        Auth::AbstractUserDatabase & users();
+        Auth::Login & login()
+        {
+            return login_;
+        }
 
-  std::vector<User> topUsers(int limit);
+        std::vector<User> topUsers(int limit);
 
-  /*
-   * These methods deal with the currently logged in user
-   */
-  std::string userName() const;
-  int findRanking();
-  void addToScore(int s);
+        /*
+         * These methods deal with the currently logged in user
+         */
+        std::string userName() const;
+        int findRanking();
+        void addToScore(int s);
 
-  static const Auth::AuthService& auth();
-  static const Auth::AbstractPasswordService& passwordAuth();
-  static const std::vector<const Auth::OAuthService *>& oAuth();
+        static const Auth::AuthService & auth();
+        static const Auth::AbstractPasswordService & passwordAuth();
+        static const std::vector<const Auth::OAuthService *> & oAuth();
 
-private:
-  mutable Dbo::Session session_;
-  std::unique_ptr<UserDatabase> users_;
-  Auth::Login login_;
+    private:
+        mutable Dbo::Session session_;
+        std::unique_ptr<UserDatabase> users_;
+        Auth::Login login_;
 
-  Dbo::ptr<User> user() const;
+        Dbo::ptr<User> user() const;
 };
 
 #endif //SESSION_H_

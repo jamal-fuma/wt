@@ -25,29 +25,37 @@ auto button = form->bindWidget("save", Wt::cpp14::make_unique<Wt::WPushButton>("
 
 auto out = form->bindWidget("out", Wt::cpp14::make_unique<Wt::WText>());
 
-dp1->lineEdit()->changed().connect([=] {
+dp1->lineEdit()->changed().connect([=]
+{
     dp2->setBottom(dp1->date());
     out->setText("Date picker 1 is changed.");
 });
 
-dp2->lineEdit()->changed().connect([=] {
+dp2->lineEdit()->changed().connect([=]
+{
     dp1->setTop(dp2->date());
     out->setText("Date picker 2 is changed.");
 });
 
-button->clicked().connect([=] {
-    if (dp1->lineEdit()->text().empty() || dp2->lineEdit()->text().empty())
+button->clicked().connect([=]
+{
+    if(dp1->lineEdit()->text().empty() || dp2->lineEdit()->text().empty())
         out->setText("You should enter two dates!");
-    else {
+    else
+    {
         int days = dp1->date().daysTo(dp2->date()) + 1;
-	if (days == 0)
-	    out->setText("It's fine to take holiday just for one day!");
-	else if (days > 1)
-	    out->setText(Wt::WString("So, you want to take holiday for a period "
-				     "of {1} days?...").arg(days));
-	else
-	    out->setText("Invalid period!");
-   }
+        if(days == 0)
+        {
+            out->setText("It's fine to take holiday just for one day!");
+        }
+        else if(days > 1)
+            out->setText(Wt::WString("So, you want to take holiday for a period "
+                                     "of {1} days?...").arg(days));
+        else
+        {
+            out->setText("Invalid period!");
+        }
+    }
 });
 
 SAMPLE_END(return std::move(form))

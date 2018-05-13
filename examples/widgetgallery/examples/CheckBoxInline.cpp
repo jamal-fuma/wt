@@ -4,7 +4,7 @@
 SAMPLE_BEGIN(CheckBoxInline)
 
 auto result = Wt::cpp14::make_unique<Wt::WContainerWidget>();
-Wt::WCheckBox *cb;
+Wt::WCheckBox * cb;
 
 cb = result->addWidget(Wt::cpp14::make_unique<Wt::WCheckBox>("Check me!"));
 cb->setChecked(true);

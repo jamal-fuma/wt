@@ -13,15 +13,18 @@
 #include <Wt/WString.h>
 #include <Wt/WColor.h>
 
-namespace Wt {
-  namespace Color {
-#ifdef WT_TARGET_JAVA	
-    class ColorUtils {
-    };
+namespace Wt
+{
+    namespace Color
+    {
+#ifdef WT_TARGET_JAVA
+        class ColorUtils
+        {
+        };
 #endif //WT_TARGET_JAVA
 
-    extern WColor parseCssColor(const std::string &name);
-  }
+        extern WColor parseCssColor(const std::string & name);
+    }
 }
 
 #endif // COLOR_UTILS_H_

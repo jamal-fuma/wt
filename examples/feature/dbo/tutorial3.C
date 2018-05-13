@@ -18,17 +18,21 @@
 
 class Post;
 
-namespace Wt {
-  namespace Dbo {
+namespace Wt
+{
+    namespace Dbo
+    {
 
-    template<>
-    struct dbo_traits<Post> : public dbo_default_traits {
-      static const char *surrogateIdField() {
-        return "post_id";
-      }
-    };
+        template<>
+        struct dbo_traits<Post> : public dbo_default_traits
+        {
+            static const char * surrogateIdField()
+            {
+                return "post_id";
+            }
+        };
 
-  }
+    }
 }
 
 #include "tutorial2.C"

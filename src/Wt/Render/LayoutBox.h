@@ -7,37 +7,44 @@
 #ifndef RENDER_LAYOUT_BOX_H_
 #define RENDER_LAYOUT_BOX_H_
 
-namespace Wt {
-  namespace Render {
-
-struct LayoutBox {
-  LayoutBox();
-
-  bool isNull() const { return page == -1; }
-
-  int page;
-  double x, y;
-  double width;
-  double height;
-};
-
-struct InlineBox : public LayoutBox
+namespace Wt
 {
-  InlineBox();
+    namespace Render
+    {
 
-  int utf8Pos, utf8Count;
+        struct LayoutBox
+        {
+            LayoutBox();
 
-  // minimum width of StandardColor::White space contained in this linebox.
-  double whitespaceWidth;
-  int whitespaceCount;
+            bool isNull() const
+            {
+                return page == -1;
+            }
 
-  double baseline /*, lineTop, lineHeight */;
-};
+            int page;
+            double x, y;
+            double width;
+            double height;
+        };
 
-struct BlockBox : public LayoutBox {
-};
+        struct InlineBox : public LayoutBox
+        {
+            InlineBox();
 
-  }
+            int utf8Pos, utf8Count;
+
+            // minimum width of StandardColor::White space contained in this linebox.
+            double whitespaceWidth;
+            int whitespaceCount;
+
+            double baseline /*, lineTop, lineHeight */;
+        };
+
+        struct BlockBox : public LayoutBox
+        {
+        };
+
+    }
 }
 
 #endif // RENDER_LAYOUT_BOX_H_

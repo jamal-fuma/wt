@@ -9,35 +9,39 @@
 
 #include "Wt/WServer.h"
 
-namespace Wt {
-
-class WebStream;
-/*
- * This controls a main loop for connectors which are not
- * event-driven. It reads incoming requests from a webstream, and
- * schedules the handling of them into a thread pool.
- *
- * It also deal with event scheduling.
- */
-class WT_API WebMain
+namespace Wt
 {
-public:
-  WebMain(WServer *server, WebStream *stream,
-	  std::string singleSessionId = std::string());
-  ~WebMain();
 
-  WebController& controller() { return *server_->controller(); }
+    class WebStream;
+    /*
+     * This controls a main loop for connectors which are not
+     * event-driven. It reads incoming requests from a webstream, and
+     * schedules the handling of them into a thread pool.
+     *
+     * It also deal with event scheduling.
+     */
+    class WT_API WebMain
+    {
+        public:
+            WebMain(WServer * server, WebStream * stream,
+                    std::string singleSessionId = std::string());
+            ~WebMain();
 
-  void run();
-  void shutdown();
+            WebController & controller()
+            {
+                return *server_->controller();
+            }
 
-private:
-  WServer *server_;
-  WebStream *stream_;
-  std::string singleSessionId_;
+            void run();
+            void shutdown();
 
-  bool shutdown_;
-};
+        private:
+            WServer * server_;
+            WebStream * stream_;
+            std::string singleSessionId_;
+
+            bool shutdown_;
+    };
 
 }
 

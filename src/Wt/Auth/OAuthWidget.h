@@ -9,26 +9,31 @@
 
 #include <Wt/WImage.h>
 
-namespace Wt {
-  namespace Auth {
-
-class OAuthProcess;
-
-class WT_API OAuthWidget : public WImage
+namespace Wt
 {
-public:
-  OAuthWidget(const OAuthService& oAuthService);
+    namespace Auth
+    {
 
-  Signal<OAuthProcess *, Identity>& authenticated() { return authenticated_; }
+        class OAuthProcess;
 
-private:
-  std::unique_ptr<OAuthProcess> process_;
-  Signal<OAuthProcess *, Identity> authenticated_;
+        class WT_API OAuthWidget : public WImage
+        {
+            public:
+                OAuthWidget(const OAuthService & oAuthService);
 
-  void oAuthDone(const Identity& identity);
-};
+                Signal<OAuthProcess *, Identity> & authenticated()
+                {
+                    return authenticated_;
+                }
 
-  }
+            private:
+                std::unique_ptr<OAuthProcess> process_;
+                Signal<OAuthProcess *, Identity> authenticated_;
+
+                void oAuthDone(const Identity & identity);
+        };
+
+    }
 }
 
 #endif // WT_AUTH_OAUTH_WIDGET_H_

@@ -9,30 +9,31 @@
 
 #include <Wt/WGlobal.h>
 
-namespace Wt {
-
-/*
- * A private utility class that provides server-side font metrics.
- */
-class ServerSideFontMetrics
+namespace Wt
 {
-public:
-  ServerSideFontMetrics();
-  ~ServerSideFontMetrics();
 
-  WFontMetrics fontMetrics(const WFont& font);
+    /*
+     * A private utility class that provides server-side font metrics.
+     */
+    class ServerSideFontMetrics
+    {
+        public:
+            ServerSideFontMetrics();
+            ~ServerSideFontMetrics();
 
-  WTextItem measureText(const WFont& font,
-			const WString& text, double maxWidth, bool wordWrap);
+            WFontMetrics fontMetrics(const WFont & font);
 
-  static bool available();
+            WTextItem measureText(const WFont & font,
+                                  const WString & text, double maxWidth, bool wordWrap);
 
-private:
+            static bool available();
+
+        private:
 #ifdef WT_HAS_WPDFIMAGE
-  std::unique_ptr<WPdfImage> img_;
-  std::unique_ptr<WPainter> painter_;
+            std::unique_ptr<WPdfImage> img_;
+            std::unique_ptr<WPainter> painter_;
 #endif
-};
+    };
 
 }
 

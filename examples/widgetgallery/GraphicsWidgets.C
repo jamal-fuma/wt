@@ -17,41 +17,40 @@
 GraphicsWidgets::GraphicsWidgets()
     : TopicWidget()
 {
-  addText(tr("graphics-intro"),this);
+    addText(tr("graphics-intro"),this);
 }
 
-void GraphicsWidgets::populateSubMenu(Wt::WMenu *menu)
+void GraphicsWidgets::populateSubMenu(Wt::WMenu * menu)
 {
-  menu->setInternalBasePath("/graphics-charts");
-
-  menu->addItem("2D painting", painting2d())->setPathComponent("");
-  menu->addItem("Paintbrush", 
-                deferCreate(std::bind
-                            (&GraphicsWidgets::paintbrush, this)));
-  menu->addItem("Category chart", 
-                deferCreate(std::bind
-                            (&GraphicsWidgets::categoryChart, this)));
-  menu->addItem("Scatter plot", 
-                deferCreate(std::bind
-                            (&GraphicsWidgets::scatterPlot, this)));
-  menu->addItem("Axis slider widget",
-                deferCreate(std::bind
-                            (&GraphicsWidgets::axisSliderWidget, this)));
-  menu->addItem("Pie chart", 
-                deferCreate(std::bind
-                            (&GraphicsWidgets::pieChart, this)));
-  menu->addItem("Maps",
-                deferCreate(std::bind
-                            (&GraphicsWidgets::googleMap, this)));
-  menu->addItem("3D painting", 
-                deferCreate(std::bind
-                            (&GraphicsWidgets::painting3d, this)));
-  menu->addItem("3D numerical chart",
-                deferCreate(std::bind
-                            (&GraphicsWidgets::numCharts3d, this)));
-  menu->addItem("3D category chart",
-                deferCreate(std::bind
-                            (&GraphicsWidgets::catCharts3d, this)));
+    menu->setInternalBasePath("/graphics-charts");
+    menu->addItem("2D painting", painting2d())->setPathComponent("");
+    menu->addItem("Paintbrush",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::paintbrush, this)));
+    menu->addItem("Category chart",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::categoryChart, this)));
+    menu->addItem("Scatter plot",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::scatterPlot, this)));
+    menu->addItem("Axis slider widget",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::axisSliderWidget, this)));
+    menu->addItem("Pie chart",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::pieChart, this)));
+    menu->addItem("Maps",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::googleMap, this)));
+    menu->addItem("3D painting",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::painting3d, this)));
+    menu->addItem("3D numerical chart",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::numCharts3d, this)));
+    menu->addItem("3D category chart",
+                  deferCreate(std::bind
+                              (&GraphicsWidgets::catCharts3d, this)));
 }
 
 
@@ -65,17 +64,15 @@ void GraphicsWidgets::populateSubMenu(Wt::WMenu *menu)
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::painting2d()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-Painting2D");
-
-  result->bindWidget("PaintingEvent", PaintingEvent());
-  result->bindWidget("PaintingShapes", PaintingShapes());
-  result->bindWidget("PaintingTransformations", PaintingTransformations());
-  result->bindWidget("PaintingClipping", PaintingClipping());
-  result->bindWidget("PaintingStyle", PaintingStyle());
-  result->bindWidget("PaintingImages", PaintingImages());
-  result->bindWidget("PaintingInteractive", PaintingInteractive());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-Painting2D");
+    result->bindWidget("PaintingEvent", PaintingEvent());
+    result->bindWidget("PaintingShapes", PaintingShapes());
+    result->bindWidget("PaintingTransformations", PaintingTransformations());
+    result->bindWidget("PaintingClipping", PaintingClipping());
+    result->bindWidget("PaintingStyle", PaintingStyle());
+    result->bindWidget("PaintingImages", PaintingImages());
+    result->bindWidget("PaintingInteractive", PaintingInteractive());
+    return std::move(result);
 }
 
 
@@ -83,11 +80,9 @@ std::unique_ptr<Wt::WWidget> GraphicsWidgets::painting2d()
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::paintbrush()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-Paintbrush");
-
-  result->bindWidget("Paintbrush", Paintbrush());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-Paintbrush");
+    result->bindWidget("Paintbrush", Paintbrush());
+    return std::move(result);
 }
 
 
@@ -95,11 +90,9 @@ std::unique_ptr<Wt::WWidget> GraphicsWidgets::paintbrush()
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::categoryChart()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-CategoryChart");
-
-  result->bindWidget("CategoryChart", CategoryChart());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-CategoryChart");
+    result->bindWidget("CategoryChart", CategoryChart());
+    return std::move(result);
 }
 
 
@@ -109,13 +102,11 @@ std::unique_ptr<Wt::WWidget> GraphicsWidgets::categoryChart()
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::scatterPlot()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-ScatterPlot");
-
-  result->bindWidget("ScatterPlotData", ScatterPlotData());
-  result->bindWidget("ScatterPlotCurve", ScatterPlotCurve());
-  result->bindWidget("ScatterPlotInteractive", ScatterPlotInteractive());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-ScatterPlot");
+    result->bindWidget("ScatterPlotData", ScatterPlotData());
+    result->bindWidget("ScatterPlotCurve", ScatterPlotCurve());
+    result->bindWidget("ScatterPlotInteractive", ScatterPlotInteractive());
+    return std::move(result);
 }
 
 #include "examples/AxisSliderWidget.cpp"
@@ -123,12 +114,10 @@ std::unique_ptr<Wt::WWidget> GraphicsWidgets::scatterPlot()
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::axisSliderWidget()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-AxisSliderWidget");
-
-  result->bindWidget("AxisSliderWidget", AxisSliderWidget());
-  result->bindWidget("AxisSliderWidgetDifferentDataSeries", AxisSliderWidgetDifferentDataSeries());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-AxisSliderWidget");
+    result->bindWidget("AxisSliderWidget", AxisSliderWidget());
+    result->bindWidget("AxisSliderWidgetDifferentDataSeries", AxisSliderWidgetDifferentDataSeries());
+    return std::move(result);
 }
 
 
@@ -136,11 +125,9 @@ std::unique_ptr<Wt::WWidget> GraphicsWidgets::axisSliderWidget()
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::pieChart()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-PieChart");
-
-  result->bindWidget("PieChart", PieChart());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-PieChart");
+    result->bindWidget("PieChart", PieChart());
+    return std::move(result);
 }
 
 
@@ -148,15 +135,13 @@ std::unique_ptr<Wt::WWidget> GraphicsWidgets::pieChart()
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::googleMap()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-GoogleMap");
-
-  result->bindWidget("GoogleMap", GoogleMap());
-
-  // Show the XML-template as text
-  result->bindString("GoogleMap-controls",
-                     reindent(tr("graphics-GoogleMap-controls")),
-                     TextFormat::Plain);
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-GoogleMap");
+    result->bindWidget("GoogleMap", GoogleMap());
+    // Show the XML-template as text
+    result->bindString("GoogleMap-controls",
+                       reindent(tr("graphics-GoogleMap-controls")),
+                       TextFormat::Plain);
+    return std::move(result);
 }
 
 
@@ -164,31 +149,25 @@ std::unique_ptr<Wt::WWidget> GraphicsWidgets::googleMap()
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::painting3d()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-Painting3D");
-
-  result->bindWidget("Painting3D", Painting3D());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-Painting3D");
+    result->bindWidget("Painting3D", Painting3D());
+    return std::move(result);
 }
 
 #include "examples/NumericalCharts3D.cpp"
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::numCharts3d()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-NumCharts3D");
-
-  result->bindWidget("NumericalCharts3D", NumChart3d());
- 
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-NumCharts3D");
+    result->bindWidget("NumericalCharts3D", NumChart3d());
+    return std::move(result);
 }
 
 #include "examples/CategoryCharts3D.cpp"
 
 std::unique_ptr<Wt::WWidget> GraphicsWidgets::catCharts3d()
 {
-  auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-CatCharts3D");
-
-  result->bindWidget("CategoryCharts3D", CatChart3d());
-
-  return std::move(result);
+    auto result = Wt::cpp14::make_unique<TopicTemplate>("graphics-CatCharts3D");
+    result->bindWidget("CategoryCharts3D", CatChart3d());
+    return std::move(result);
 }

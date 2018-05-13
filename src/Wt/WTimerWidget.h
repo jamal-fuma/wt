@@ -9,38 +9,39 @@
 
 #include <Wt/WInteractWidget.h>
 
-namespace Wt {
-
-class WTimer;
-
-/*
- * Wt-private widget that is created in conjunction with
- * WTimer widget. It's clicked signal serves as the event signal
- * that will be activated when the event expires.
- */
-class WT_API WTimerWidget : public WInteractWidget
+namespace Wt
 {
-public:
-  WTimerWidget(WTimer *timer);
-  ~WTimerWidget();
 
-  void timerStart(bool jsRepeat);
-  bool timerExpired();
+    class WTimer;
 
-private:
-  WTimer *timer_;
-  bool timerStarted_;
-  bool jsRepeat_;
+    /*
+     * Wt-private widget that is created in conjunction with
+     * WTimer widget. It's clicked signal serves as the event signal
+     * that will be activated when the event expires.
+     */
+    class WT_API WTimerWidget : public WInteractWidget
+    {
+        public:
+            WTimerWidget(WTimer * timer);
+            ~WTimerWidget();
 
-protected:
-  virtual void updateDom(DomElement& element, bool all) override;
-  virtual DomElementType domElementType() const override;
-  virtual std::string renderRemoveJs(bool recursive) override;
+            void timerStart(bool jsRepeat);
+            bool timerExpired();
 
-  virtual void enableAjax() override;
+        private:
+            WTimer * timer_;
+            bool timerStarted_;
+            bool jsRepeat_;
 
-  friend class WebSession;
-};
+        protected:
+            virtual void updateDom(DomElement & element, bool all) override;
+            virtual DomElementType domElementType() const override;
+            virtual std::string renderRemoveJs(bool recursive) override;
+
+            virtual void enableAjax() override;
+
+            friend class WebSession;
+    };
 
 }
 

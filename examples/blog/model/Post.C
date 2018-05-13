@@ -19,37 +19,47 @@ DBO_INSTANTIATE_TEMPLATES(Post)
 
 std::string Post::permaLink() const
 {
-  return date.toString("yyyy/MM/dd/'" + titleToUrl() + '\'').toUTF8();
+    return date.toString("yyyy/MM/dd/'" + titleToUrl() + '\'').toUTF8();
 }
 
 std::string Post::commentCount() const
 {
-  int count = (int)comments.size() - 1;
-  if (count == 1)
-    return "1 comment";
-  else
-    return std::to_string(count) + " comments";
+    int count = (int)comments.size() - 1;
+    if(count == 1)
+    {
+        return "1 comment";
+    }
+    else
+    {
+        return std::to_string(count) + " comments";
+    }
 }
 
 dbo::ptr<Comment> Post::rootComment() const
 {
-  if (session())
-    return session()->find<Comment>()
-      .where("post_id = ?").bind(id())
-      .where("parent_id is null");
-  else
-    return dbo::ptr<Comment>();
+    if(session())
+        return session()->find<Comment>()
+               .where("post_id = ?").bind(id())
+               .where("parent_id is null");
+    else
+    {
+        return dbo::ptr<Comment>();
+    }
 }
 
 std::string Post::titleToUrl() const
 {
-  std::string result = title.narrow();
-  for (unsigned i = 0; i < result.length(); ++i) {
-    if (!isalnum(result[i]))
-      result[i] = '_';
-    else
-      result[i] = tolower(result[i]);
-  }
-  
-  return result;
+    std::string result = title.narrow();
+    for(unsigned i = 0; i < result.length(); ++i)
+    {
+        if(!isalnum(result[i]))
+        {
+            result[i] = '_';
+        }
+        else
+        {
+            result[i] = tolower(result[i]);
+        }
+    }
+    return result;
 }

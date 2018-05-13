@@ -9,18 +9,22 @@
 
 #if defined(WT_ASIO_IS_BOOST_ASIO)
 
-namespace Wt {
-  namespace AsioWrapper {
-    namespace asio = ::boost::asio;
-  }
+namespace Wt
+{
+    namespace AsioWrapper
+    {
+        namespace asio = ::boost::asio;
+    }
 }
 
 #elif defined(WT_ASIO_IS_STANDALONE_ASIO)
 
-namespace Wt {
-  namespace AsioWrapper {
-    namespace asio = ::asio;
-  }
+namespace Wt
+{
+    namespace AsioWrapper
+    {
+        namespace asio = ::asio;
+    }
 }
 
 #endif // WT_ASIO_IS_BOOST_ASIO

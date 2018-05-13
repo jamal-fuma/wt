@@ -13,22 +13,26 @@
 
 #include <boost/system/system_error.hpp>
 
-namespace Wt {
-  namespace AsioWrapper {
-    using error_code = boost::system::error_code;
-    using system_error = boost::system::system_error;
-  }
+namespace Wt
+{
+    namespace AsioWrapper
+    {
+        using error_code = boost::system::error_code;
+        using system_error = boost::system::system_error;
+    }
 }
 
 #else // WT_ASIO_IS_STANDALONE_ASIO
 
 #include <system_error>
 
-namespace Wt {
-  namespace AsioWrapper {
-    using error_code = std::error_code;
-    using system_error = std::system_error;
-  }
+namespace Wt
+{
+    namespace AsioWrapper
+    {
+        using error_code = std::error_code;
+        using system_error = std::system_error;
+    }
 }
 
 #endif // WT_ASIO_IS_BOOST_ASIO

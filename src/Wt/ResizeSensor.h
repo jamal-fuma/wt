@@ -7,15 +7,17 @@
 #ifndef WT_RESIZE_SENSOR_H_
 #define WT_RESIZE_SENSOR_H_
 
-namespace Wt {
+namespace Wt
+{
 
-  class WApplication;
+    class WApplication;
 
-  class ResizeSensor {
-  public:
-    static void applyIfNeeded(WWidget *w);
-    static void loadJavaScript(WApplication *app);
-  };
+    class ResizeSensor
+    {
+        public:
+            static void applyIfNeeded(WWidget * w);
+            static void loadJavaScript(WApplication * app);
+    };
 }
 
 #endif // WT_RESIZE_SENSOR_H_

@@ -15,13 +15,13 @@ typedef Wt::Auth::Dbo::UserDatabase<AuthInfo> UserDatabase;
 
 class OAuthAuthorizationEndpoint : public Wt::WApplication
 {
-public:
-  OAuthAuthorizationEndpoint(const Wt::WEnvironment& env,
-                             std::unique_ptr<Session> session);
+    public:
+        OAuthAuthorizationEndpoint(const Wt::WEnvironment & env,
+                                   std::unique_ptr<Session> session);
 
-  static Wt::WApplication *createAuthEndpoint(const Wt::WEnvironment& env,
-                                              std::string dbPath);
-private:
-  std::unique_ptr<Session> session_;
-  std::unique_ptr<Wt::Auth::OAuthAuthorizationEndpointProcess> process_;
+        static Wt::WApplication * createAuthEndpoint(const Wt::WEnvironment & env,
+                std::string dbPath);
+    private:
+        std::unique_ptr<Session> session_;
+        std::unique_ptr<Wt::Auth::OAuthAuthorizationEndpointProcess> process_;
 };

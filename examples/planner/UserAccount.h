@@ -21,24 +21,24 @@ namespace dbo = Wt::Dbo;
 
 class UserAccount
 {
-public:
-  WString name;
-  dbo::collection< dbo::ptr<Entry> > entries;
-  
-  UserAccount();
-  UserAccount(const WString& name);
+    public:
+        WString name;
+        dbo::collection< dbo::ptr<Entry> > entries;
 
-  dbo::collection< dbo::ptr<Entry> >
-    entriesInRange(const WDate& from, const WDate& until) const;
+        UserAccount();
+        UserAccount(const WString & name);
 
-  static dbo::ptr<UserAccount> login(dbo::Session& session, 
-                                     const WString& user);
-  template<class Action>
-  void persist(Action& a)
-  {
-    dbo::field(a, name, "name");
-    dbo::hasMany(a, entries, dbo::ManyToOne, "user");
-  }
+        dbo::collection< dbo::ptr<Entry> >
+        entriesInRange(const WDate & from, const WDate & until) const;
+
+        static dbo::ptr<UserAccount> login(dbo::Session & session,
+                                           const WString & user);
+        template<class Action>
+        void persist(Action & a)
+        {
+            dbo::field(a, name, "name");
+            dbo::hasMany(a, entries, dbo::ManyToOne, "user");
+        }
 };
 
 #endif // USER_ACCOUNT_H_

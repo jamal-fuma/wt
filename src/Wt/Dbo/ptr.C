@@ -9,89 +9,102 @@
 #include <Wt/Dbo/Exception.h>
 #include <Wt/Dbo/Session.h>
 
-namespace Wt {
-  namespace Dbo {
-
-MetaDboBase::~MetaDboBase()
-{ }
-
-void MetaDboBase::transactionDone(bool success)
+namespace Wt
 {
-  doTransactionDone(success);
-}
+    namespace Dbo
+    {
 
-void MetaDboBase::incRef()
-{
-  ++refCount_;
-}
+        MetaDboBase::~MetaDboBase()
+        { }
 
-void MetaDboBase::decRef()
-{
-  --refCount_;
+        void MetaDboBase::transactionDone(bool success)
+        {
+            doTransactionDone(success);
+        }
 
-  if (refCount_ == 0)
-    delete this;
-}
+        void MetaDboBase::incRef()
+        {
+            ++refCount_;
+        }
 
-void MetaDboBase::setState(State state)
-{
-  state_ &= ~0xF;
-  state_ |= state;
-}
+        void MetaDboBase::decRef()
+        {
+            --refCount_;
+            if(refCount_ == 0)
+            {
+                delete this;
+            }
+        }
 
-void MetaDboBase::setDirty()
-{
-  checkNotOrphaned();
-  if (isDeleted()) {
-    return;
-  }
+        void MetaDboBase::setState(State state)
+        {
+            state_ &= ~0xF;
+            state_ |= state;
+        }
 
-  if (!isDirty()) {
-    state_ |= NeedsSave;
-    if (session_)
-      session_->needsFlush(this);
-  }
-}
+        void MetaDboBase::setDirty()
+        {
+            checkNotOrphaned();
+            if(isDeleted())
+            {
+                return;
+            }
+            if(!isDirty())
+            {
+                state_ |= NeedsSave;
+                if(session_)
+                {
+                    session_->needsFlush(this);
+                }
+            }
+        }
 
-void MetaDboBase::remove()
-{
-  checkNotOrphaned();
+        void MetaDboBase::remove()
+        {
+            checkNotOrphaned();
+            if(isDeleted())
+            {
+                // is already removed or being removed in this transaction
+            }
+            else if(isPersisted())
+            {
+                state_ |= NeedsDelete;
+                session_->needsFlush(this);
+            }
+            else if(session_)      // was added to a Session but not yet flushed
+            {
+                Session * session = session_;
+                setSession(nullptr);
+                session->discardChanges(this);
+                state_ &= ~NeedsSave;
+            }
+            else
+            {
+                // is not yet added to the Session
+            }
+        }
 
-  if (isDeleted()) {
-    // is already removed or being removed in this transaction
-  } else if (isPersisted()) {
-    state_ |= NeedsDelete;
-    session_->needsFlush(this);
-  } else if (session_) { // was added to a Session but not yet flushed
-    Session *session = session_;
-    setSession(nullptr);
-    session->discardChanges(this);
-    state_ &= ~NeedsSave;
-  } else {
-    // is not yet added to the Session
-  }
-}
+        void MetaDboBase::setTransactionState(State state)
+        {
+            state_ &= ~Saving;
+            state_ |= state;
+        }
 
-void MetaDboBase::setTransactionState(State state)
-{
-  state_ &= ~Saving;
-  state_ |= state;
-}
+        void MetaDboBase::resetTransactionState()
+        {
+            state_ &= ~TransactionState;
+        }
 
-void MetaDboBase::resetTransactionState()
-{
-  state_ &= ~TransactionState;
-}
+        void MetaDboBase::checkNotOrphaned()
+        {
+            if(isOrphaned())
+            {
+                throw Exception("using orphaned dbo ptr");
+            }
+        }
 
-void MetaDboBase::checkNotOrphaned()
-{
-  if (isOrphaned()) {
-    throw Exception("using orphaned dbo ptr");
-  }
-}
+        ptr_base::~ptr_base()
+        { }
 
-ptr_base::~ptr_base()
-{ }
-
-  }
+    }
 }

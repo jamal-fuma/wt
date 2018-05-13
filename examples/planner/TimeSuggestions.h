@@ -13,11 +13,11 @@ using namespace Wt;
 
 class TimeSuggestions : public WSuggestionPopup
 {
- public:
-  TimeSuggestions();
-  
- private:
-  void addSuggestion(const WString& suggestion);
+    public:
+        TimeSuggestions();
+
+    private:
+        void addSuggestion(const WString & suggestion);
 };
 
 #endif //TIME_SUGGESTIONS_H_

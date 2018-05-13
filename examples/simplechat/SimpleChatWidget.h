@@ -24,80 +24,89 @@ class ChatEvent;
 /*! \brief A self-contained chat widget.
  */
 class SimpleChatWidget : public Wt::WContainerWidget,
-			 public SimpleChatServer::Client
+    public SimpleChatServer::Client
 {
-public:
-  /*! \brief Create a chat widget that will connect to the given server.
-   */
-  SimpleChatWidget(SimpleChatServer& server);
+    public:
+        /*! \brief Create a chat widget that will connect to the given server.
+         */
+        SimpleChatWidget(SimpleChatServer & server);
 
-  /*! \brief Delete a chat widget.
-   */
-  ~SimpleChatWidget();
+        /*! \brief Delete a chat widget.
+         */
+        ~SimpleChatWidget();
 
-  void connect();
-  void disconnect();
+        void connect();
+        void disconnect();
 
 
-  /*! \brief Show a simple login screen.
-   */
-  void letLogin();
+        /*! \brief Show a simple login screen.
+         */
+        void letLogin();
 
-  /*! \brief Start a chat for the given user.
-   *
-   * Returns false if the user could not login.
-   */
-  bool startChat(const Wt::WString& user);
+        /*! \brief Start a chat for the given user.
+         *
+         * Returns false if the user could not login.
+         */
+        bool startChat(const Wt::WString & user);
 
-  void logout();
+        void logout();
 
-  SimpleChatServer& server() { return server_; }
+        SimpleChatServer & server()
+        {
+            return server_;
+        }
 
-  int userCount() { return users_.size(); }
+        int userCount()
+        {
+            return users_.size();
+        }
 
-  const Wt::WString& userName() const { return user_; }
+        const Wt::WString & userName() const
+        {
+            return user_;
+        }
 
-protected:
-  virtual void createLayout(std::unique_ptr<Wt::WWidget> messages, std::unique_ptr<Wt::WWidget> userList,
-			    std::unique_ptr<Wt::WWidget> messageEdit,
-			    std::unique_ptr<Wt::WWidget> sendButton, std::unique_ptr<Wt::WWidget> logoutButton);
+    protected:
+        virtual void createLayout(std::unique_ptr<Wt::WWidget> messages, std::unique_ptr<Wt::WWidget> userList,
+                                  std::unique_ptr<Wt::WWidget> messageEdit,
+                                  std::unique_ptr<Wt::WWidget> sendButton, std::unique_ptr<Wt::WWidget> logoutButton);
 
-  virtual void updateUsers();
-  virtual void newMessage();
+        virtual void updateUsers();
+        virtual void newMessage();
 
-  virtual void render(Wt::WFlags<Wt::RenderFlag> flags);
+        virtual void render(Wt::WFlags<Wt::RenderFlag> flags);
 
-protected:
-  bool loggedIn() const;
+    protected:
+        bool loggedIn() const;
 
-private:
-  typedef std::map<Wt::WString, bool> UserMap;
-  UserMap users_;
+    private:
+        typedef std::map<Wt::WString, bool> UserMap;
+        UserMap users_;
 
-  SimpleChatServer&         server_;
-  bool                      loggedIn_;
+        SimpleChatServer     &    server_;
+        bool                      loggedIn_;
 
-  Wt::JSlot                     clearInput_;
+        Wt::JSlot                     clearInput_;
 
-  Wt::WString                   user_;
+        Wt::WString                   user_;
 
-  Wt::WLineEdit                *userNameEdit_;
-  Wt::WText                    *statusMsg_;
+        Wt::WLineEdit        *        userNameEdit_;
+        Wt::WText          *          statusMsg_;
 
-  Wt::WContainerWidget         *messages_;
-  Wt::WTextArea                *messageEdit_;
-  Wt::Core::observing_ptr<Wt::WPushButton> sendButton_;
-  Wt::Core::observing_ptr<Wt::WContainerWidget> userList_;
+        Wt::WContainerWidget     *    messages_;
+        Wt::WTextArea        *        messageEdit_;
+        Wt::Core::observing_ptr<Wt::WPushButton> sendButton_;
+        Wt::Core::observing_ptr<Wt::WContainerWidget> userList_;
 
-  std::unique_ptr<Wt::WSound>   messageReceived_;
+        std::unique_ptr<Wt::WSound>   messageReceived_;
 
-  void login();
-  void changeName(const Wt::WString& name);
-  void send();
-  void updateUser(Wt::WCheckBox *b);
+        void login();
+        void changeName(const Wt::WString & name);
+        void send();
+        void updateUser(Wt::WCheckBox * b);
 
-  /* called from another session */
-  void processChatEvent(const ChatEvent& event);
+        /* called from another session */
+        void processChatEvent(const ChatEvent & event);
 };
 
 /*@}*/

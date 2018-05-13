@@ -9,54 +9,67 @@
 
 #include <Wt/WDllDefs.h>
 
-namespace Wt {
-
-/*! \class WPoint Wt/WPoint.h Wt/WPoint.h
- *  \brief A value class that defines a 2D point with integer coordinates.
- *
- * \sa WPolygonArea
- */
-class WT_API WPoint
+namespace Wt
 {
-public:
-  /*! \brief Creates a point (0, 0).
-   */
-  WPoint();
 
-  /*! \brief Creates a point (x, y).
-   */
-  WPoint(int x, int y)
-    : x_(x), y_(y) { }
+    /*! \class WPoint Wt/WPoint.h Wt/WPoint.h
+     *  \brief A value class that defines a 2D point with integer coordinates.
+     *
+     * \sa WPolygonArea
+     */
+    class WT_API WPoint
+    {
+        public:
+            /*! \brief Creates a point (0, 0).
+             */
+            WPoint();
 
-  /*! \brief Sets the X coordinate.
-   */
-  void setX(int x) { x_ = x; }
+            /*! \brief Creates a point (x, y).
+             */
+            WPoint(int x, int y)
+                : x_(x), y_(y) { }
 
-  /*! \brief Sets the Y coordinate.
-   */
-  void setY(int y) { y_ = y; }
+            /*! \brief Sets the X coordinate.
+             */
+            void setX(int x)
+            {
+                x_ = x;
+            }
 
-  /*! \brief Returns the X coordinate.
-   */
-  int x() const { return x_; }
+            /*! \brief Sets the Y coordinate.
+             */
+            void setY(int y)
+            {
+                y_ = y;
+            }
 
-  /*! \brief Returns the Y coordinate.
-   */
-  int y() const { return y_; }
+            /*! \brief Returns the X coordinate.
+             */
+            int x() const
+            {
+                return x_;
+            }
 
-  /*! \brief Comparison operator.
-   */
-  bool operator== (const WPoint& other) const;
+            /*! \brief Returns the Y coordinate.
+             */
+            int y() const
+            {
+                return y_;
+            }
 
-  /*! \brief Comparison operator.
-   */
-  bool operator!= (const WPoint& other) const;
+            /*! \brief Comparison operator.
+             */
+            bool operator== (const WPoint & other) const;
 
-  WPoint& operator+= (const WPoint& other);
+            /*! \brief Comparison operator.
+             */
+            bool operator!= (const WPoint & other) const;
 
-private:
-  int x_, y_;
-};
+            WPoint & operator+= (const WPoint & other);
+
+        private:
+            int x_, y_;
+    };
 
 }
 

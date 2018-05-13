@@ -12,8 +12,9 @@
 
 #include "../model/Post.h"
 
-namespace Wt {
-  class WText;
+namespace Wt
+{
+    class WText;
 }
 
 class BlogSession;
@@ -22,42 +23,42 @@ class Comment;
 
 class PostView : public Wt::WTemplate
 {
-public:
-  enum RenderType { Brief, Detail, Edit };
+    public:
+        enum RenderType { Brief, Detail, Edit };
 
-  PostView(BlogSession& session, const std::string& basePath,
-	   dbo::ptr<Post> post, RenderType type);
+        PostView(BlogSession & session, const std::string & basePath,
+                 dbo::ptr<Post> post, RenderType type);
 
-  virtual void resolveString(const std::string& varName,
-                             const std::vector<Wt::WString>& args,
-			     std::ostream& result);
+        virtual void resolveString(const std::string & varName,
+                                   const std::vector<Wt::WString> & args,
+                                   std::ostream & result);
 
-protected:
-  virtual void renderTemplate(std::ostream& result);
+    protected:
+        virtual void renderTemplate(std::ostream & result);
 
-private:
-  BlogSession& session_;
-  std::string basePath_;
-  dbo::ptr<Post> post_;
+    private:
+        BlogSession & session_;
+        std::string basePath_;
+        dbo::ptr<Post> post_;
 
-  RenderType viewType_;
-  Wt::WText *commentCount_;
-  Wt::WLineEdit *titleEdit_;
-  Wt::WTextArea *briefEdit_, *bodyEdit_;
+        RenderType viewType_;
+        Wt::WText * commentCount_;
+        Wt::WLineEdit * titleEdit_;
+        Wt::WTextArea * briefEdit_, *bodyEdit_;
 
-  void render(RenderType type);
-  void updateCommentCount(dbo::ptr<Comment> comment);
-  void saveEdit();
-  void showView();
+        void render(RenderType type);
+        void updateCommentCount(dbo::ptr<Comment> comment);
+        void saveEdit();
+        void showView();
 
-  void publish();
-  void retract();
-  void showEdit();
-  void rm();
+        void publish();
+        void retract();
+        void showEdit();
+        void rm();
 
-  void setState(Post::State state);
+        void setState(Post::State state);
 
-  using WWebWidget::render;
+        using WWebWidget::render;
 };
 
 #endif // POST_VIEW_H_

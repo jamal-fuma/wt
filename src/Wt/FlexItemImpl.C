@@ -15,47 +15,55 @@
 #include "Wt/WLogger.h"
 #include "Wt/WWidgetItem.h"
 
-namespace Wt {
-
-LOGGER("WWidgetItem");
-
-FlexItemImpl::FlexItemImpl(WWidgetItem *item)
-  : item_(item)
-{ }
-
-FlexItemImpl::~FlexItemImpl()
-{ }
-
-int FlexItemImpl::minimumWidth() const
+namespace Wt
 {
-  if (item_->widget()->isHidden())
-    return 0;
-  else
-    return static_cast<int>(item_->widget()->minimumWidth().toPixels());
-}
 
-int FlexItemImpl::minimumHeight() const
-{
-  if (item_->widget()->isHidden())
-    return 0;
-  else
-    return static_cast<int>(item_->widget()->minimumHeight().toPixels());
-}
+    LOGGER("WWidgetItem");
 
-DomElement *FlexItemImpl::createDomElement(DomElement *parent,
-					   bool fitWidth, bool fitHeight,
-					   WApplication *app)
-{
-  WWidget *w = item_->widget();
+    FlexItemImpl::FlexItemImpl(WWidgetItem * item)
+        : item_(item)
+    { }
 
-  DomElement *result = w->createSDomElement(app);
-  ResizeSensor::applyIfNeeded(w);
-  return result;
-}
+    FlexItemImpl::~FlexItemImpl()
+    { }
 
-WLayoutItem *FlexItemImpl::layoutItem() const
-{
-  return item_;
-}
+    int FlexItemImpl::minimumWidth() const
+    {
+        if(item_->widget()->isHidden())
+        {
+            return 0;
+        }
+        else
+        {
+            return static_cast<int>(item_->widget()->minimumWidth().toPixels());
+        }
+    }
+
+    int FlexItemImpl::minimumHeight() const
+    {
+        if(item_->widget()->isHidden())
+        {
+            return 0;
+        }
+        else
+        {
+            return static_cast<int>(item_->widget()->minimumHeight().toPixels());
+        }
+    }
+
+    DomElement * FlexItemImpl::createDomElement(DomElement * parent,
+            bool fitWidth, bool fitHeight,
+            WApplication * app)
+    {
+        WWidget * w = item_->widget();
+        DomElement * result = w->createSDomElement(app);
+        ResizeSensor::applyIfNeeded(w);
+        return result;
+    }
+
+    WLayoutItem * FlexItemImpl::layoutItem() const
+    {
+        return item_;
+    }
 
 }

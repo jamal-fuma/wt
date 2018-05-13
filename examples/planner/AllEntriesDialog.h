@@ -16,11 +16,11 @@ using namespace Wt;
 
 class AllEntriesDialog : public WDialog
 {
-public:
-  AllEntriesDialog(const WString& title, CalendarCell* cell);
+    public:
+        AllEntriesDialog(const WString & title, CalendarCell * cell);
 
-private:
-  void closeDialog();
+    private:
+        void closeDialog();
 };
 
 #endif // ALL_ENTRIES_DIALOG_H_

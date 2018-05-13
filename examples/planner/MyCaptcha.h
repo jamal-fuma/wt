@@ -18,18 +18,21 @@ using namespace Wt;
 
 class MyCaptcha : public WContainerWidget
 {
-public:
-  MyCaptcha(const int width, const int height);
+    public:
+        MyCaptcha(const int width, const int height);
 
-  Signal<>& completed() { return completed_; }
-  
-private:
-  Signal<>        completed_;
-  ShapesWidget   *shapesWidget_;
-  WText          *captchaMessage_;
+        Signal<> & completed()
+        {
+            return completed_;
+        }
 
-  void regenerate();
-  void handleClick(const WMouseEvent& me);
+    private:
+        Signal<>        completed_;
+        ShapesWidget  * shapesWidget_;
+        WText     *     captchaMessage_;
+
+        void regenerate();
+        void handleClick(const WMouseEvent & me);
 };
 
 #endif //MY_CAPTCHA_H_

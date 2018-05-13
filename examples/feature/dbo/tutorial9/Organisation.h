@@ -6,7 +6,7 @@
  */
 
 #ifndef ORGANISATION_H
-#define	ORGANISATION_H
+#define ORGANISATION_H
 
 #include <Wt/Dbo/Dbo.h>
 #include <Wt/Dbo/backend/Sqlite3.h>
@@ -15,18 +15,18 @@ class Membership;
 
 class Organisation
 {
-public:
-  std::string name;
+    public:
+        std::string name;
 
-  Wt::Dbo::collection< Wt::Dbo::ptr<Membership> > memberships;
-  
-  template<class Action>
-  void persist(Action& a)
-  {
-    Wt::Dbo::field(a, name, "name");
-    Wt::Dbo::hasMany(a, memberships, Wt::Dbo::ManyToOne, "organisation");
-  }
+        Wt::Dbo::collection< Wt::Dbo::ptr<Membership> > memberships;
+
+        template<class Action>
+        void persist(Action & a)
+        {
+            Wt::Dbo::field(a, name, "name");
+            Wt::Dbo::hasMany(a, memberships, Wt::Dbo::ManyToOne, "organisation");
+        }
 };
 
-#endif	/* ORGANISATION_H */
+#endif  /* ORGANISATION_H */
 

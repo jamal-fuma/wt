@@ -21,17 +21,18 @@ using namespace Wt;
  */
 class PlannerApplication : public WApplication
 {
-public:
-  Dbo::Session session;
+    public:
+        Dbo::Session session;
 
-  PlannerApplication(const WEnvironment& env);
+        PlannerApplication(const WEnvironment & env);
 
-  static PlannerApplication* plannerApplication() {
-    return (PlannerApplication*)WApplication::instance();
-  }
+        static PlannerApplication * plannerApplication()
+        {
+            return (PlannerApplication *)WApplication::instance();
+        }
 
-private:
-  void login(const Wt::WString& user);
+    private:
+        void login(const Wt::WString & user);
 };
 
 #endif //PLANNER_APPLICATION_H_

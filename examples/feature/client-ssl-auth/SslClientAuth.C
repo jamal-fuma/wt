@@ -21,96 +21,103 @@
 
 using namespace Wt;
 
-namespace {
-  Auth::Identity createIdentity(const WSslInfo* sslInfo)
-  {
-    std::string name;
-    auto clientSubjectDn = sslInfo->clientCertificate().subjectDn();
-    for (auto &dn : clientSubjectDn) {
-      if (dn.name() == WSslCertificate::CommonName) {
-	name = dn.value();
-	break;
-      }
+namespace
+{
+    Auth::Identity createIdentity(const WSslInfo * sslInfo)
+    {
+        std::string name;
+        auto clientSubjectDn = sslInfo->clientCertificate().subjectDn();
+        for(auto & dn : clientSubjectDn)
+        {
+            if(dn.name() == WSslCertificate::CommonName)
+            {
+                name = dn.value();
+                break;
+            }
+        }
+        std::string der = sslInfo->clientCertificate().toDer();
+        return Auth::Identity("CLIENT_SSL", Utils::hexEncode(Utils::sha1(der)),
+                              name,
+                              "",
+                              false);
     }
-    
-    std::string der = sslInfo->clientCertificate().toDer();
-    return Auth::Identity("CLIENT_SSL", Utils::hexEncode(Utils::sha1(der)),
-			      name,
-			      "",
-			      false);
-  }
 }
 
 class AuthApplication : public WApplication
 {
-public:
-  AuthApplication(const WEnvironment& env)
-    : WApplication(env),
-      session_(appRoot() + "auth.db")
-  {
-    session_.login().changed().connect(this, &AuthApplication::authEvent);
+    public:
+        AuthApplication(const WEnvironment & env)
+            : WApplication(env),
+              session_(appRoot() + "auth.db")
+        {
+            session_.login().changed().connect(this, &AuthApplication::authEvent);
+            useStyleSheet("css/style.css");
+            std::unique_ptr<Auth::AuthWidget> authWidget(new Auth::AuthWidget(
+                        Session::auth(), session_.users(), session_.login()));
+            authWidget->setRegistrationEnabled(true);
+            WSslInfo * sslInfo = env.sslInfo();
+            if(sslInfo)
+            {
+                Auth::Identity id = createIdentity(sslInfo);
+                Auth::User u = session_.users().findWithIdentity(id.provider(),
+                               id.id());
+                if(!u.isValid())
+                {
+                    authWidget->registerNewUser(id);
+                }
+                else
+                {
+                    session_.login().login(u, Auth::LoginState::Weak);
+                }
+                root()->addWidget(std::move(authWidget));
+            }
+            else
+            {
+                root()->addWidget(cpp14::make_unique<WText>("Not an SSL session, or no "
+                                  "client certificate available. Please read the readme file in "
+                                  "examples/feature/client-ssl-auth for more info."));
+                quit();
+            }
+        }
 
-    useStyleSheet("css/style.css");
+        void authEvent()
+        {
+            if(session_.login().loggedIn())
+                log("notice") << "User " << session_.login().user().id()
+                              << " logged in.";
+            else
+            {
+                log("notice") << "User logged out.";
+                root()->clear();
+                root()->addWidget(cpp14::make_unique<WText>("You are logged out"));
+                quit();
+            }
+        }
 
-    std::unique_ptr<Auth::AuthWidget> authWidget(new Auth::AuthWidget(
-                          Session::auth(), session_.users(), session_.login()));
-
-    authWidget->setRegistrationEnabled(true);
-
-    WSslInfo *sslInfo = env.sslInfo();
-    if (sslInfo) {
-      Auth::Identity id = createIdentity(sslInfo);
-      Auth::User u = session_.users().findWithIdentity(id.provider(),
-							   id.id());
-      if (!u.isValid()) 
-	authWidget->registerNewUser(id);
-      else
-        session_.login().login(u, Auth::LoginState::Weak);
-
-      root()->addWidget(std::move(authWidget));
-    } else {
-      root()->addWidget(cpp14::make_unique<WText>("Not an SSL session, or no "
-          "client certificate available. Please read the readme file in "
-          "examples/feature/client-ssl-auth for more info."));
-      quit();
-    }
-
-  }
-
-  void authEvent() {
-    if (session_.login().loggedIn())
-      log("notice") << "User " << session_.login().user().id()
-			<< " logged in.";
-    else {
-      log("notice") << "User logged out.";
-      root()->clear();
-      root()->addWidget(cpp14::make_unique<WText>("You are logged out"));
-      quit();
-    }
-  }
-
-private:
-  Session session_;
+    private:
+        Session session_;
 };
 
-std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+std::unique_ptr<WApplication> createApplication(const WEnvironment & env)
 {
-  return cpp14::make_unique<AuthApplication>(env);
+    return cpp14::make_unique<AuthApplication>(env);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-  try {
-    WServer server(argc, argv, WTHTTP_CONFIGURATION);
-
-    server.addEntryPoint(EntryPointType::Application, createApplication);
-
-    Session::configureAuth();
-
-    server.run();
-  } catch (WServer::Exception& e) {
-    std::cerr << e.what() << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "exception: " << e.what() << std::endl;
-  }
+    try
+    {
+        WServer server(argc, argv, WTHTTP_CONFIGURATION);
+        server.addEntryPoint(EntryPointType::Application, createApplication);
+        Session::configureAuth();
+        server.run();
+    }
+    catch(WServer::Exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    catch(std::exception & e)
+    {
+        std::cerr << "exception: " << e.what() << std::endl;
+    }
 }

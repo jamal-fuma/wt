@@ -20,20 +20,23 @@ auto container = cpp14::make_unique<WContainerWidget>();
 auto model
     = csvToModel(WApplication::appRoot() + "timeseries.csv");
 
-if (!model)
+if(!model)
+{
     return std::move(container);
+}
 
 /*
  * Parses the first column as dates, to be able to use a date scale
  */
-for (int row = 0; row < model->rowCount(); ++row) {
+for(int row = 0; row < model->rowCount(); ++row)
+{
     WString s = asString(model->data(row, 0));
     WDate date = WDate::fromString(s, "dd/MM/yy");
     model->setData(row, 0, date);
-  }
+}
 
 // Renders the data in a table.
-WTableView *table =
+WTableView * table =
     container->addWidget(cpp14::make_unique<WTableView>());
 table->setModel(model);
 table->setSortingEnabled(false);
@@ -44,8 +47,10 @@ table->setHeaderAlignment(0, AlignmentFlag::Center);
 table->setRowHeight(28);
 table->setHeaderHeight(28);
 table->setColumnWidth(0, 80);
-for (int column = 1; column < model->columnCount(); ++column)
+for(int column = 1; column < model->columnCount(); ++column)
+{
     table->setColumnWidth(column, 90);
+}
 table->resize(783, 200);
 
 /*
@@ -59,7 +64,7 @@ table->setItemDelegateForColumn(0, std::make_shared<WItemDelegate>());
 /*
  * Creates the scatter plot.
  */
-Chart::WCartesianChart *chart =
+Chart::WCartesianChart * chart =
     container->addWidget(cpp14::make_unique<Chart::WCartesianChart>());
 chart->setBackground(WColor(220, 220, 220));
 chart->setModel(model);
@@ -77,7 +82,8 @@ chart->setPlotAreaPadding(120, Side::Right);
 /*
  * Add the second and the third column as line series.
  */
-for (int i = 2; i < 4; ++i) {
+for(int i = 2; i < 4; ++i)
+{
     auto s = cpp14::make_unique<Chart::WDataSeries>(i, Chart::SeriesType::Line);
     s->setShadow(WShadow(3, 3, WColor(0, 0, 0, 127), 3));
     chart->addSeries(std::move(s));

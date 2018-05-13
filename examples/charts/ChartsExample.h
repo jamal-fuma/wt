@@ -11,12 +11,14 @@
 
 #include <iostream>
 
-namespace Wt {
-  class WAbstractItemModel;
+namespace Wt
+{
+    class WAbstractItemModel;
 
-  namespace Ext {
-    class TableView;
-  }
+    namespace Ext
+    {
+        class TableView;
+    }
 }
 
 /**
@@ -28,50 +30,50 @@ namespace Wt {
  */
 class TimeSeriesExample: public Wt::WContainerWidget
 {
-public:
-  /*! \brief Creates the time series scatter plot example
-   */
-  TimeSeriesExample();
+    public:
+        /*! \brief Creates the time series scatter plot example
+         */
+        TimeSeriesExample();
 };
 
 /*! \brief A Widget that demonstrates a category chart
  */
 class CategoryExample: public Wt::WContainerWidget
 {
-public:
-  /*! \brief Creates the category chart example
-   */
-  CategoryExample();
+    public:
+        /*! \brief Creates the category chart example
+         */
+        CategoryExample();
 };
 
 /*! \brief A Widget that demonstrates a scatter plot
  */
 class ScatterPlotExample: public Wt::WContainerWidget
 {
-public:
-  /*! \brief Creates the scatter plot example
-   */
-  ScatterPlotExample();
+    public:
+        /*! \brief Creates the scatter plot example
+         */
+        ScatterPlotExample();
 };
 
 /*! \brief A Widget that demonstrates a Pie chart
  */
 class PieExample: public Wt::WContainerWidget
 {
-public:
-  /*! \brief Creates the pie chart example
-   */
-  PieExample();
+    public:
+        /*! \brief Creates the pie chart example
+         */
+        PieExample();
 };
 
 /*! \brief A widget that demonstrates various aspects of the charting lib.
  */
 class ChartsExample : public Wt::WContainerWidget
 {
-public:
-  /*! \brief Constructor.
-   */
-  ChartsExample();
+    public:
+        /*! \brief Constructor.
+         */
+        ChartsExample();
 };
 
 /*@}*/

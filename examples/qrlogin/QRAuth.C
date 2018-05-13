@@ -19,68 +19,66 @@ using namespace Wt;
 
 class AuthApplication : public WApplication
 {
-public:
-  AuthApplication(const WEnvironment& env)
-    : WApplication(env),
-      session_(appRoot() + "auth.db")
-  {
-    /*
-     * For better support for a mobile device. Note this requires
-     * progressive bootstrap being enabled (see wt_config.xml).
-     */
-    addMetaHeader(MetaHeaderType::Meta,
-                  "width=device-width", "initial-scale=1", "maximum-scale=1");
+    public:
+        AuthApplication(const WEnvironment & env)
+            : WApplication(env),
+              session_(appRoot() + "auth.db")
+        {
+            /*
+             * For better support for a mobile device. Note this requires
+             * progressive bootstrap being enabled (see wt_config.xml).
+             */
+            addMetaHeader(MetaHeaderType::Meta,
+                          "width=device-width", "initial-scale=1", "maximum-scale=1");
+            session_.login().changed().connect(this, &AuthApplication::authEvent);
+            useStyleSheet("css/style.css");
+            messageResourceBundle().use(appRoot() + "templates");
+            auto authWidget = cpp14::make_unique<QRAuthWidget>(session_.login());
+            auto model = cpp14::make_unique<Auth::AuthModel>(Session::auth(), session_.users());
+            model->addPasswordAuth(&Session::passwordAuth());
+            model->addOAuth(Session::oAuth());
+            authWidget->setModel(std::move(model));
+            authWidget->setRegistrationEnabled(true);
+            authWidget->configureQRAuth(Session::qrAuth(), session_.qrTokenDatabase());
+            authWidget->processEnvironment();
+            root()->addWidget(std::move(authWidget));
+        }
 
-    session_.login().changed().connect(this, &AuthApplication::authEvent);
+        void authEvent()
+        {
+            if(session_.login().loggedIn())
+                log("notice") << "User " << session_.login().user().id()
+                              << " logged in.";
+            else
+            {
+                log("notice") << "User logged out.";
+            }
+        }
 
-    useStyleSheet("css/style.css");
-    messageResourceBundle().use(appRoot() + "templates");
-
-    auto authWidget = cpp14::make_unique<QRAuthWidget>(session_.login());
-
-    auto model = cpp14::make_unique<Auth::AuthModel>(Session::auth(), session_.users());
-
-    model->addPasswordAuth(&Session::passwordAuth());
-    model->addOAuth(Session::oAuth());
-    authWidget->setModel(std::move(model));
-    authWidget->setRegistrationEnabled(true);
-    authWidget->configureQRAuth(Session::qrAuth(), session_.qrTokenDatabase());
-
-    authWidget->processEnvironment();
-
-    root()->addWidget(std::move(authWidget));
-  }
-
-  void authEvent() {
-    if (session_.login().loggedIn())
-      log("notice") << "User " << session_.login().user().id()
-			<< " logged in.";
-    else
-      log("notice") << "User logged out.";
-  }
-
-private:
-  Session session_;
+    private:
+        Session session_;
 };
 
-std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+std::unique_ptr<WApplication> createApplication(const WEnvironment & env)
 {
-  return cpp14::make_unique<AuthApplication>(env);
+    return cpp14::make_unique<AuthApplication>(env);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-  try {
-    WServer server(argc, argv, WTHTTP_CONFIGURATION);
-
-    server.addEntryPoint(EntryPointType::Application, &createApplication);
-
-    Session::configureAuth();
-
-    server.run();
-  } catch (WServer::Exception& e) {
-    std::cerr << e.what() << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "exception: " << e.what() << std::endl;
-  }
+    try
+    {
+        WServer server(argc, argv, WTHTTP_CONFIGURATION);
+        server.addEntryPoint(EntryPointType::Application, &createApplication);
+        Session::configureAuth();
+        server.run();
+    }
+    catch(WServer::Exception & e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    catch(std::exception & e)
+    {
+        std::cerr << "exception: " << e.what() << std::endl;
+    }
 }

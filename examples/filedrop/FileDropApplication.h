@@ -11,30 +11,31 @@
 #include <Wt/WApplication.h>
 #include <Wt/WFileDropWidget.h>
 
-namespace Wt {
-  class WContainerWidget;
+namespace Wt
+{
+    class WContainerWidget;
 }
 
 class FileDropApplication : public Wt::WApplication
 {
-public:
-  FileDropApplication(const Wt::WEnvironment& env);
+    public:
+        FileDropApplication(const Wt::WEnvironment & env);
 
-private:
-  Wt::WText *log_;
-  Wt::WFileDropWidget *drop_;
-  int nbUploads_;
+    private:
+        Wt::WText * log_;
+        Wt::WFileDropWidget * drop_;
+        int nbUploads_;
 
-  std::map<Wt::WFileDropWidget::File*, Wt::WContainerWidget*> icons_;
+        std::map<Wt::WFileDropWidget::File *, Wt::WContainerWidget *> icons_;
 
-  void handleDrop(std::vector<Wt::WFileDropWidget::File *> files);
-  void tooLarge(Wt::WFileDropWidget::File *file, ::uint64_t);
-  void failed(Wt::WFileDropWidget::File *file);
-  void saveFile(Wt::WFileDropWidget::File *file);
-  void cancelUpload();
-  void updateProgressListener();
-  
-  void showProgress(::uint64_t current, ::uint64_t total);
+        void handleDrop(std::vector<Wt::WFileDropWidget::File *> files);
+        void tooLarge(Wt::WFileDropWidget::File * file, ::uint64_t);
+        void failed(Wt::WFileDropWidget::File * file);
+        void saveFile(Wt::WFileDropWidget::File * file);
+        void cancelUpload();
+        void updateProgressListener();
+
+        void showProgress(::uint64_t current, ::uint64_t total);
 };
 
 

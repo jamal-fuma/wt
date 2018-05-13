@@ -6,40 +6,42 @@
 
 #include "Wt/Json/Array.h"
 
-namespace Wt {
-  namespace Json {
-
-typedef std::vector<Value> Impl;
-
-Array::Array()
-  : Impl()
-{ }
-
-Array::Array(const Array& other)
-  : Impl(other)
-{ }
-
-Array& Array::operator= (const Array& other)
+namespace Wt
 {
-  Impl::operator=(other);
-  return *this;
-}
+    namespace Json
+    {
 
-Array::Array(Array&& other)
-  : Impl(std::move(other))
-{ }
+        typedef std::vector<Value> Impl;
 
-Array::Array(std::initializer_list<Value> list)
-  : Impl(list)
-{ }
+        Array::Array()
+            : Impl()
+        { }
 
-Array& Array::operator= (Array&& other)
-{
-  Impl::operator=(std::move(other));
-  return *this;
-}
+        Array::Array(const Array & other)
+            : Impl(other)
+        { }
 
-Array Array::Empty;
+        Array & Array::operator= (const Array & other)
+        {
+            Impl::operator=(other);
+            return *this;
+        }
 
-  }
+        Array::Array(Array && other)
+            : Impl(std::move(other))
+        { }
+
+        Array::Array(std::initializer_list<Value> list)
+            : Impl(list)
+        { }
+
+        Array & Array::operator= (Array && other)
+        {
+            Impl::operator=(std::move(other));
+            return *this;
+        }
+
+        Array Array::Empty;
+
+    }
 }

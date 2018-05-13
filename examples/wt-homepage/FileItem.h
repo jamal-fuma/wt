@@ -29,18 +29,18 @@ using namespace Wt;
  */
 class FileItem : public Wt::WStandardItem
 {
-public:
-  static const Wt::ItemDataRole ContentsRole;
-  static const Wt::ItemDataRole FilePathRole;
-  static const Wt::ItemDataRole FileNameRole;
-  
-  FileItem(const std::string& iconUri, const Wt::WString& text,
-	   const std::string& fileName)
-    : WStandardItem(iconUri, text)
-  { 
-    setData(fileName, FileNameRole);
-    setData(fileName, FilePathRole);
-  }
+    public:
+        static const Wt::ItemDataRole ContentsRole;
+        static const Wt::ItemDataRole FilePathRole;
+        static const Wt::ItemDataRole FileNameRole;
+
+        FileItem(const std::string & iconUri, const Wt::WString & text,
+                 const std::string & fileName)
+            : WStandardItem(iconUri, text)
+        {
+            setData(fileName, FileNameRole);
+            setData(fileName, FilePathRole);
+        }
 };
- 
+
 #endif // FILE_ITEM_H

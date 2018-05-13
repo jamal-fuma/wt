@@ -11,15 +11,14 @@
 using namespace Wt;
 using namespace Wt::Dbo;
 
-std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+std::unique_ptr<WApplication> createApplication(const WEnvironment & env)
 {
-  return cpp14::make_unique<PlannerApplication>(env);
+    return cpp14::make_unique<PlannerApplication>(env);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-  std::srand(std::time(0));
-
-  return WRun(argc, argv, &createApplication);
+    std::srand(std::time(0));
+    return WRun(argc, argv, &createApplication);
 }
 

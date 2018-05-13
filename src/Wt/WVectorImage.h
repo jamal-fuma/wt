@@ -9,22 +9,23 @@
 
 #include <Wt/WPaintDevice.h>
 
-namespace Wt {
-
-/*! \class WVectorImage Wt/WVectorImage.h Wt/WVectorImage.h
- *  \brief An abstract paint device for rendering using native vector graphics.
- *
- * \ingroup painting
- */
-class WT_API WVectorImage : public WPaintDevice
+namespace Wt
 {
-public:
-  ~WVectorImage();
 
-  /*! \brief Internal method.
-   */
-  virtual std::string rendered() = 0;
-};
+    /*! \class WVectorImage Wt/WVectorImage.h Wt/WVectorImage.h
+     *  \brief An abstract paint device for rendering using native vector graphics.
+     *
+     * \ingroup painting
+     */
+    class WT_API WVectorImage : public WPaintDevice
+    {
+        public:
+            ~WVectorImage();
+
+            /*! \brief Internal method.
+             */
+            virtual std::string rendered() = 0;
+    };
 
 }
 

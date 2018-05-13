@@ -12,18 +12,21 @@
 #include <Wt/WLoadingIndicator.h>
 
 class EmwebLoadingIndicator : public WContainerWidget,
-                              public WLoadingIndicator
+    public WLoadingIndicator
 {
-public:
-  EmwebLoadingIndicator();
+    public:
+        EmwebLoadingIndicator();
 
-  virtual WWidget *widget() { return this; }
-  virtual void setMessage(const WString& text);
+        virtual WWidget * widget()
+        {
+            return this;
+        }
+        virtual void setMessage(const WString & text);
 
-private:
-  WContainerWidget *cover_;
-  WContainerWidget *center_;
-  WText            *text_;
+    private:
+        WContainerWidget * cover_;
+        WContainerWidget * center_;
+        WText      *      text_;
 };
 
 #endif // EMWEB_LOADING_INDICATOR_H_

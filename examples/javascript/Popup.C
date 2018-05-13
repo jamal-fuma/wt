@@ -11,77 +11,78 @@
 
 using namespace Wt;
 
-Popup::Popup(Type t, const WString& message, std::string defaultValue)
-  : WObject(),
-    okPressed_(this, "ok"),
-    cancelPressed_(this, "cancel"),
-    t_(t),
-    message_(message),
-    defaultValue_(defaultValue)
+Popup::Popup(Type t, const WString & message, std::string defaultValue)
+    : WObject(),
+      okPressed_(this, "ok"),
+      cancelPressed_(this, "cancel"),
+      t_(t),
+      message_(message),
+      defaultValue_(defaultValue)
 {
-  setJavaScript();
+    setJavaScript();
 }
 
 void Popup::setJavaScript()
 {
-  /*
-   * Sets the JavaScript code.
-   *
-   * Notice how Wt.emit() is used to emit the okPressed or cancelPressed
-   * signal, and how arguments may be passed to it, matching the number and
-   * type of arguments in the JSignal definition.
-   */
-  switch (t_) {
-  case Confirm:
-    show.setJavaScript
-      ("function(){ if (confirm('" + message_.narrow() + "')) {"
-       + okPressed_.createCall({"''"}) +
-       "} else {"
-       + cancelPressed_.createCall({}) +
-       "}}");
-    break;
-  case Alert:
-    show.setJavaScript
-      ("function(){ alert('" + message_.narrow() + "');"
-       + okPressed_.createCall({"''"}) +
-       "}");
-    break;
-  case Prompt:
-    show.setJavaScript
-      ("function(){var n = prompt('" + message_.narrow() + "', '"
-       + defaultValue_ + "');"
-       "if (n != null) {"
-       + okPressed_.createCall({"n"}) +
-       "} else {"
-       + cancelPressed_.createCall({}) +
-       "}}");
-  }
+    /*
+     * Sets the JavaScript code.
+     *
+     * Notice how Wt.emit() is used to emit the okPressed or cancelPressed
+     * signal, and how arguments may be passed to it, matching the number and
+     * type of arguments in the JSignal definition.
+     */
+    switch(t_)
+    {
+    case Confirm:
+        show.setJavaScript
+        ("function(){ if (confirm('" + message_.narrow() + "')) {"
+         + okPressed_.createCall({"''"}) +
+         "} else {"
+         + cancelPressed_.createCall({}) +
+         "}}");
+        break;
+    case Alert:
+        show.setJavaScript
+        ("function(){ alert('" + message_.narrow() + "');"
+         + okPressed_.createCall({"''"}) +
+         "}");
+        break;
+    case Prompt:
+        show.setJavaScript
+        ("function(){var n = prompt('" + message_.narrow() + "', '"
+         + defaultValue_ + "');"
+         "if (n != null) {"
+         + okPressed_.createCall({"n"}) +
+         "} else {"
+         + cancelPressed_.createCall({}) +
+         "}}");
+    }
 }
 
-void Popup::setMessage(const WString& message)
+void Popup::setMessage(const WString & message)
 {
-  message_ = message;
-  setJavaScript();
+    message_ = message;
+    setJavaScript();
 }
 
 void Popup::setDefaultValue(const std::string defaultValue)
 {
-  defaultValue_ = defaultValue;
-  setJavaScript();
+    defaultValue_ = defaultValue;
+    setJavaScript();
 }
 
-std::unique_ptr<Popup> Popup::createConfirm(const WString& message)
+std::unique_ptr<Popup> Popup::createConfirm(const WString & message)
 {
-  return cpp14::make_unique<Popup>(Type::Confirm, message, std::string());
+    return cpp14::make_unique<Popup>(Type::Confirm, message, std::string());
 }
 
-std::unique_ptr<Popup> Popup::createAlert(const WString& message)
+std::unique_ptr<Popup> Popup::createAlert(const WString & message)
 {
-  return cpp14::make_unique<Popup>(Type::Alert, message, std::string());
+    return cpp14::make_unique<Popup>(Type::Alert, message, std::string());
 }
 
-std::unique_ptr<Popup> Popup::createPrompt(const WString& message,
-                           const std::string defaultValue)
+std::unique_ptr<Popup> Popup::createPrompt(const WString & message,
+        const std::string defaultValue)
 {
-  return cpp14::make_unique<Popup>(Type::Prompt, message, defaultValue);
+    return cpp14::make_unique<Popup>(Type::Prompt, message, defaultValue);
 }

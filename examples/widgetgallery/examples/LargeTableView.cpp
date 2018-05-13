@@ -1,7 +1,7 @@
 #include <Wt/WTableView.h>
 
 #ifdef WT_EXAMPLE
-#include "VirtualModel.cpp"
+    #include "VirtualModel.cpp"
 #endif // WT_EXAMPLE
 
 SAMPLE_BEGIN(LargeTableView)

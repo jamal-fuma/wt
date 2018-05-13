@@ -15,14 +15,15 @@ namespace dbo = Wt::Dbo;
 class User;
 typedef Wt::Auth::Dbo::AuthInfo<User> AuthInfo;
 
-class User {
-public:
-  /* You probably want to add other user information here */
+class User
+{
+    public:
+        /* You probably want to add other user information here */
 
-  template<class Action>
-  void persist(Action& a)
-  {
-  }
+        template<class Action>
+        void persist(Action & a)
+        {
+        }
 };
 
 

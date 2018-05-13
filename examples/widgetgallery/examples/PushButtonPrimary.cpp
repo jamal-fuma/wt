@@ -5,7 +5,7 @@
 SAMPLE_BEGIN(PushButtonPrimary)
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-Wt::WPushButton *button =
+Wt::WPushButton * button =
     container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Save"));
 button->setStyleClass("btn-primary");
 

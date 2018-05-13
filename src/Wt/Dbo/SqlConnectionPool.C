@@ -6,11 +6,13 @@
 
 #include "Wt/Dbo/SqlConnectionPool.h"
 
-namespace Wt {
-  namespace Dbo {
+namespace Wt
+{
+    namespace Dbo
+    {
 
-SqlConnectionPool::~SqlConnectionPool()
-{ }
+        SqlConnectionPool::~SqlConnectionPool()
+        { }
 
-  }
+    }
 }

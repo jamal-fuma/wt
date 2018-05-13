@@ -7,73 +7,82 @@
 #include "WApplication.h"
 #include "SoundManager.h"
 
-namespace Wt {
-
-WSound::WSound()
-  : manager_(WApplication::instance()->getSoundManager()),
-    loops_(1)
-{ }
-
-WSound::WSound(const std::string &url)
-  : manager_(WApplication::instance()->getSoundManager()),
-    loops_(1)
+namespace Wt
 {
-  addSource(MediaEncoding::MP3, WLink(url));
-}
 
-WSound::WSound(MediaEncoding encoding, const WLink& link)
-  : manager_(WApplication::instance()->getSoundManager()),
-    loops_(1)
-{
-  addSource(encoding, link);
-}
+    WSound::WSound()
+        : manager_(WApplication::instance()->getSoundManager()),
+          loops_(1)
+    { }
 
-WSound::~WSound()
-{
-  stop();
-}
+    WSound::WSound(const std::string & url)
+        : manager_(WApplication::instance()->getSoundManager()),
+          loops_(1)
+    {
+        addSource(MediaEncoding::MP3, WLink(url));
+    }
 
-void WSound::addSource(MediaEncoding encoding, const WLink& link)
-{
-  media_.push_back(Source(encoding, link));
-  if (manager_)
-    manager_->add(this);
-}
+    WSound::WSound(MediaEncoding encoding, const WLink & link)
+        : manager_(WApplication::instance()->getSoundManager()),
+          loops_(1)
+    {
+        addSource(encoding, link);
+    }
 
-WLink WSound::getSource(MediaEncoding encoding) const
-{
-  for (unsigned i = 0; i < media_.size(); ++i) {
-    if (media_[i].encoding == encoding)
-      return media_[i].link;
-  }
+    WSound::~WSound()
+    {
+        stop();
+    }
 
-  return WLink();
-}
+    void WSound::addSource(MediaEncoding encoding, const WLink & link)
+    {
+        media_.push_back(Source(encoding, link));
+        if(manager_)
+        {
+            manager_->add(this);
+        }
+    }
 
-//bool isFinished() const;
+    WLink WSound::getSource(MediaEncoding encoding) const
+    {
+        for(unsigned i = 0; i < media_.size(); ++i)
+        {
+            if(media_[i].encoding == encoding)
+            {
+                return media_[i].link;
+            }
+        }
+        return WLink();
+    }
 
-int WSound::loops() const
-{
-  return loops_;
-}
+    //bool isFinished() const;
 
-//int loopsRemaining() const;
+    int WSound::loops() const
+    {
+        return loops_;
+    }
 
-void WSound::setLoops(int number)
-{
-  loops_ = number;
-}
+    //int loopsRemaining() const;
 
-void WSound::play()
-{  
-  if (manager_)
-    manager_->play(this, loops_);
-}
+    void WSound::setLoops(int number)
+    {
+        loops_ = number;
+    }
 
-void WSound::stop()
-{
-  if (manager_)
-    manager_->stop(this);
-}
+    void WSound::play()
+    {
+        if(manager_)
+        {
+            manager_->play(this, loops_);
+        }
+    }
+
+    void WSound::stop()
+    {
+        if(manager_)
+        {
+            manager_->stop(this);
+        }
+    }
 
 }

@@ -4,23 +4,24 @@
 #include <Wt/WText.h>
 #include <Wt/WToolBar.h>
 
-namespace {
-    extern 
-    std::unique_ptr<Wt::WPushButton> createColorButton(const char *className,
-                                       const Wt::WString& text)
+namespace
+{
+    extern
+    std::unique_ptr<Wt::WPushButton> createColorButton(const char * className,
+            const Wt::WString & text)
     {
         auto button = Wt::cpp14::make_unique<Wt::WPushButton>();
         button->setTextFormat(Wt::TextFormat::XHTML);
-	button->setText(text);
-	button->addStyleClass(className);
-	return button;
+        button->setText(text);
+        button->addStyleClass(className);
+        return button;
     }
 }
 
 SAMPLE_BEGIN(ToolBar)
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-Wt::WToolBar *toolBar =
+Wt::WToolBar * toolBar =
     container->addWidget(Wt::cpp14::make_unique<Wt::WToolBar>());
 
 toolBar->addButton(createColorButton("btn-primary", "Primary"));

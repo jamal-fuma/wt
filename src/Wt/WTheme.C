@@ -8,25 +8,27 @@
 #include "Wt/WCssTheme.h"
 #include "Wt/WLinkedCssStyleSheet.h"
 
-namespace Wt {
-
-WTheme::WTheme()
-{ }
-
-std::string WTheme::resourcesUrl() const
+namespace Wt
 {
-  return WApplication::relativeResourcesUrl() + "themes/" + name() + "/";
-}
 
-WTheme::~WTheme()
-{ }
+    WTheme::WTheme()
+    { }
 
-void WTheme::serveCss(WStringStream& out) const
-{
-  std::vector<WLinkedCssStyleSheet> sheets = styleSheets();
+    std::string WTheme::resourcesUrl() const
+    {
+        return WApplication::relativeResourcesUrl() + "themes/" + name() + "/";
+    }
 
-  for (unsigned i = 0; i < sheets.size(); ++i)
-    sheets[i].cssText(out);
-}
+    WTheme::~WTheme()
+    { }
+
+    void WTheme::serveCss(WStringStream & out) const
+    {
+        std::vector<WLinkedCssStyleSheet> sheets = styleSheets();
+        for(unsigned i = 0; i < sheets.size(); ++i)
+        {
+            sheets[i].cssText(out);
+        }
+    }
 
 }

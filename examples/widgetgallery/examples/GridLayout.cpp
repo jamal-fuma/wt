@@ -10,16 +10,20 @@ container->setStyleClass("yellow-box");
 
 auto grid = container->setLayout(Wt::cpp14::make_unique<Wt::WGridLayout>());
 
-for (int row = 0; row < 3; ++row) {
-    for (int column = 0; column < 4; ++column) {
+for(int row = 0; row < 3; ++row)
+{
+    for(int column = 0; column < 4; ++column)
+    {
         Wt::WString cell = Wt::WString("Item ({1}, {2})").arg(row).arg(column);
-
-	auto text = Wt::cpp14::make_unique<Wt::WText>(cell);
-	if (row == 1 || column == 1 || column == 2)
-	    text->setStyleClass("blue-box");
-	else
-	    text->setStyleClass("green-box");
-
+        auto text = Wt::cpp14::make_unique<Wt::WText>(cell);
+        if(row == 1 || column == 1 || column == 2)
+        {
+            text->setStyleClass("blue-box");
+        }
+        else
+        {
+            text->setStyleClass("green-box");
+        }
         grid->addWidget(std::move(text), row, column);
     }
 }

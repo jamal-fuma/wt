@@ -11,109 +11,137 @@
 
 #include <cassert>
 
-namespace Wt {
+namespace Wt
+{
 
-WJavaScriptExposableObject::WJavaScriptExposableObject()
-  : clientBinding_(nullptr)
-{ }
+    WJavaScriptExposableObject::WJavaScriptExposableObject()
+        : clientBinding_(nullptr)
+    { }
 
-WJavaScriptExposableObject::WJavaScriptExposableObject(const WJavaScriptExposableObject &other)
+    WJavaScriptExposableObject::WJavaScriptExposableObject(const WJavaScriptExposableObject & other)
 #ifndef WT_TARGET_JAVA
-  : clientBinding_(other.clientBinding_ ? 
-		   new JSInfo(*other.clientBinding_) : nullptr)
+        : clientBinding_(other.clientBinding_ ?
+                         new JSInfo(*other.clientBinding_) : nullptr)
 #else
-  : clientBinding_(other.clientBinding_)
+        : clientBinding_(other.clientBinding_)
 #endif
-{ }
+    { }
 
 #ifndef WT_TARGET_JAVA
-WJavaScriptExposableObject &WJavaScriptExposableObject::operator=(const WJavaScriptExposableObject &rhs)
-{
-  if (clientBinding_ != nullptr && rhs.clientBinding_ != clientBinding_) {
-    delete clientBinding_;
-  }
-  if (rhs.clientBinding_ != nullptr) {
-    clientBinding_ = new JSInfo(*rhs.clientBinding_);
-  } else {
-    clientBinding_ = nullptr;
-  }
-
-  return *this;
-}
+    WJavaScriptExposableObject & WJavaScriptExposableObject::operator=(const WJavaScriptExposableObject & rhs)
+    {
+        if(clientBinding_ != nullptr && rhs.clientBinding_ != clientBinding_)
+        {
+            delete clientBinding_;
+        }
+        if(rhs.clientBinding_ != nullptr)
+        {
+            clientBinding_ = new JSInfo(*rhs.clientBinding_);
+        }
+        else
+        {
+            clientBinding_ = nullptr;
+        }
+        return *this;
+    }
 #endif
 
-bool WJavaScriptExposableObject::isJavaScriptBound() const
-{
-  return clientBinding_;
-}
+    bool WJavaScriptExposableObject::isJavaScriptBound() const
+    {
+        return clientBinding_;
+    }
 
-WJavaScriptExposableObject::~WJavaScriptExposableObject()
-{
-  delete clientBinding_;
-}
+    WJavaScriptExposableObject::~WJavaScriptExposableObject()
+    {
+        delete clientBinding_;
+    }
 
-std::string WJavaScriptExposableObject::jsRef() const
-{
-  if (clientBinding_) return clientBinding_->jsRef_;
-  else return jsValue();
-}
+    std::string WJavaScriptExposableObject::jsRef() const
+    {
+        if(clientBinding_)
+        {
+            return clientBinding_->jsRef_;
+        }
+        else
+        {
+            return jsValue();
+        }
+    }
 
-bool WJavaScriptExposableObject::sameBindingAs(const WJavaScriptExposableObject &rhs) const
-{
-  if (!clientBinding_ && !rhs.clientBinding_) return true; // No binding
-  else if (clientBinding_ && rhs.clientBinding_) return (*clientBinding_) == (*rhs.clientBinding_);
-  else return false; // One is bound, the other is not
-}
+    bool WJavaScriptExposableObject::sameBindingAs(const WJavaScriptExposableObject & rhs) const
+    {
+        if(!clientBinding_ && !rhs.clientBinding_)
+        {
+            return true;    // No binding
+        }
+        else if(clientBinding_ && rhs.clientBinding_)
+        {
+            return (*clientBinding_) == (*rhs.clientBinding_);
+        }
+        else
+        {
+            return false;    // One is bound, the other is not
+        }
+    }
 
-void WJavaScriptExposableObject::assignBinding(const WJavaScriptExposableObject &rhs)
-{
-  assert(rhs.clientBinding_ != nullptr);
-  if (&rhs != this) {
-    if (clientBinding_) delete clientBinding_;
+    void WJavaScriptExposableObject::assignBinding(const WJavaScriptExposableObject & rhs)
+    {
+        assert(rhs.clientBinding_ != nullptr);
+        if(&rhs != this)
+        {
+            if(clientBinding_)
+            {
+                delete clientBinding_;
+            }
 #ifndef WT_TARGET_JAVA
-    clientBinding_ = new WJavaScriptExposableObject::JSInfo(*rhs.clientBinding_);
+            clientBinding_ = new WJavaScriptExposableObject::JSInfo(*rhs.clientBinding_);
 #else
-    clientBinding_ = rhs.clientBinding_;
+            clientBinding_ = rhs.clientBinding_;
 #endif
-  }
-}
+        }
+    }
 
-void WJavaScriptExposableObject::assignBinding(const WJavaScriptExposableObject &rhs,
-					       const std::string &jsRef)
-{
-  assert(rhs.clientBinding_ != nullptr);
-  if (&rhs != this) {
-    if (clientBinding_) delete clientBinding_;
-    clientBinding_ = new WJavaScriptExposableObject::JSInfo(*rhs.clientBinding_);
-  }
-  clientBinding_->jsRef_ = jsRef;
-}
+    void WJavaScriptExposableObject::assignBinding(const WJavaScriptExposableObject & rhs,
+            const std::string & jsRef)
+    {
+        assert(rhs.clientBinding_ != nullptr);
+        if(&rhs != this)
+        {
+            if(clientBinding_)
+            {
+                delete clientBinding_;
+            }
+            clientBinding_ = new WJavaScriptExposableObject::JSInfo(*rhs.clientBinding_);
+        }
+        clientBinding_->jsRef_ = jsRef;
+    }
 
-void WJavaScriptExposableObject::checkModifiable()
-{
-  if (isJavaScriptBound()) {
-    throw WException("Trying to modify a JavaScript bound object!");
-  }
-}
+    void WJavaScriptExposableObject::checkModifiable()
+    {
+        if(isJavaScriptBound())
+        {
+            throw WException("Trying to modify a JavaScript bound object!");
+        }
+    }
 
-WJavaScriptExposableObject::JSInfo::JSInfo(WJavaScriptObjectStorage *context, const std::string &jsRef)
-  : context_(context), jsRef_(jsRef)
-{ }
+    WJavaScriptExposableObject::JSInfo::JSInfo(WJavaScriptObjectStorage * context, const std::string & jsRef)
+        : context_(context), jsRef_(jsRef)
+    { }
 
-WJavaScriptExposableObject::JSInfo::JSInfo(const WJavaScriptExposableObject::JSInfo &other)
-  : context_(other.context_), jsRef_(other.jsRef_)
-{ }
+    WJavaScriptExposableObject::JSInfo::JSInfo(const WJavaScriptExposableObject::JSInfo & other)
+        : context_(other.context_), jsRef_(other.jsRef_)
+    { }
 
-WJavaScriptExposableObject::JSInfo &WJavaScriptExposableObject::JSInfo::operator= (const WJavaScriptExposableObject::JSInfo &rhs)
-{
-  context_ = rhs.context_;
-  jsRef_ = rhs.jsRef_;
-  return *this;
-}
+    WJavaScriptExposableObject::JSInfo & WJavaScriptExposableObject::JSInfo::operator= (const WJavaScriptExposableObject::JSInfo & rhs)
+    {
+        context_ = rhs.context_;
+        jsRef_ = rhs.jsRef_;
+        return *this;
+    }
 
-bool WJavaScriptExposableObject::JSInfo::operator== (const WJavaScriptExposableObject::JSInfo &rhs) const
-{
-  return context_ == rhs.context_ && jsRef_ == rhs.jsRef_;
-}
+    bool WJavaScriptExposableObject::JSInfo::operator== (const WJavaScriptExposableObject::JSInfo & rhs) const
+    {
+        return context_ == rhs.context_ && jsRef_ == rhs.jsRef_;
+    }
 
 }

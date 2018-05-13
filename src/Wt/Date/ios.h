@@ -32,15 +32,15 @@
 # if TARGET_OS_IPHONE
 #   include <string>
 
-    namespace date
-    {
+namespace date
+{
     namespace iOSUtils
     {
-    
-    std::string get_tzdata_path();
-    
+
+        std::string get_tzdata_path();
+
     }  // namespace iOSUtils
-    }  // namespace date
+}  // namespace date
 
 # endif  // TARGET_OS_IPHONE
 #else   // !__APPLE__

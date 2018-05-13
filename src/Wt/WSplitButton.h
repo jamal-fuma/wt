@@ -12,54 +12,55 @@
 #include <Wt/WCompositeWidget.h>
 #include <Wt/WMenuItem.h>
 
-namespace Wt {
-
-class WStackedWidget;
-class WTable;
-
-/*! \class WSplitButton Wt/WSplitButton.h Wt/WSplitButton.h
- *  \brief A split button
- *
- * A split button combines a button and a drop down menu. Typically,
- * the button represents an action, with related alternative actions
- * accessible from the drop down menu.
- */
-class WT_API WSplitButton : public WCompositeWidget
+namespace Wt
 {
-public:
-  /*! \brief Constructor.
-   */
-  WSplitButton();
 
-  /*! \brief Constructor passing the label.
-   */
-  WSplitButton(const WString& label);
+    class WStackedWidget;
+    class WTable;
 
-  /*! \brief Returns the action button.
-   *
-   * This is the button that represents the main action.
-   */
-  WPushButton *actionButton() const;
+    /*! \class WSplitButton Wt/WSplitButton.h Wt/WSplitButton.h
+     *  \brief A split button
+     *
+     * A split button combines a button and a drop down menu. Typically,
+     * the button represents an action, with related alternative actions
+     * accessible from the drop down menu.
+     */
+    class WT_API WSplitButton : public WCompositeWidget
+    {
+        public:
+            /*! \brief Constructor.
+             */
+            WSplitButton();
 
-  /*! \brief Returns the drop down button.
-   *
-   * This represents the button that represents the drop-down action.
-   */
-  WPushButton *dropDownButton() const;
+            /*! \brief Constructor passing the label.
+             */
+            WSplitButton(const WString & label);
 
-  /*! \brief Sets the menu for the drop-down button.
-   */
-  void setMenu(std::unique_ptr<WPopupMenu> menu);
+            /*! \brief Returns the action button.
+             *
+             * This is the button that represents the main action.
+             */
+            WPushButton * actionButton() const;
 
-  /*! \brief Returns the menu for the drop-down button.
-   */
-  WPopupMenu *menu() const;
+            /*! \brief Returns the drop down button.
+             *
+             * This represents the button that represents the drop-down action.
+             */
+            WPushButton * dropDownButton() const;
 
-private:
-  WToolBar *impl_;
+            /*! \brief Sets the menu for the drop-down button.
+             */
+            void setMenu(std::unique_ptr<WPopupMenu> menu);
 
-  void init(const WString& label);
-};
+            /*! \brief Returns the menu for the drop-down button.
+             */
+            WPopupMenu * menu() const;
+
+        private:
+            WToolBar * impl_;
+
+            void init(const WString & label);
+    };
 
 }
 

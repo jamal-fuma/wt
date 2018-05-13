@@ -9,61 +9,72 @@
 
 #include <Wt/WDateTime.h>
 
-namespace Wt {
-  namespace Auth {
-
-/*! \class Token Wt/Auth/Token.h
- *  \brief An authentication token hash.
- *
- * An authentication token is a surrogate for identification or
- * authentication. When a random authentication token is generated,
- * \if cpp
- * e.g. using WRandom::generateId()
- * \endif
- * it is a good practice to hash it
- * using a cryptographic hash function, and only save this hash in the
- * session or database for later verification. This avoids that a
- * compromised database would leak all the authentication tokens.
- *
- * \sa User::addAuthToken()
- * \sa User::setEmailToken()
- *
- * \ingroup auth
- */
-class WT_API Token
+namespace Wt
 {
-public:
-  /*! \brief Default constructor.
-   *
-   * Creates an empty token.
-   */
-  Token();
+    namespace Auth
+    {
 
-  Token(const std::string& hash, const WDateTime& expirationTime);
-  /*! \brief Constructor.
-   */
-  Token(const std::string& hash, const WDateTime& expirationTime, const std::string &purpose, const std::string &scope, const std::string &redirectUri);
+        /*! \class Token Wt/Auth/Token.h
+         *  \brief An authentication token hash.
+         *
+         * An authentication token is a surrogate for identification or
+         * authentication. When a random authentication token is generated,
+         * \if cpp
+         * e.g. using WRandom::generateId()
+         * \endif
+         * it is a good practice to hash it
+         * using a cryptographic hash function, and only save this hash in the
+         * session or database for later verification. This avoids that a
+         * compromised database would leak all the authentication tokens.
+         *
+         * \sa User::addAuthToken()
+         * \sa User::setEmailToken()
+         *
+         * \ingroup auth
+         */
+        class WT_API Token
+        {
+            public:
+                /*! \brief Default constructor.
+                 *
+                 * Creates an empty token.
+                 */
+                Token();
 
-  /*! \brief Returns whether the token is empty.
-   *
-   * An empty token is default constructed.
-   */
-  bool empty() const { return hash_.empty(); }
+                Token(const std::string & hash, const WDateTime & expirationTime);
+                /*! \brief Constructor.
+                 */
+                Token(const std::string & hash, const WDateTime & expirationTime, const std::string & purpose, const std::string & scope, const std::string & redirectUri);
 
-  /*! \brief Returns the hash.
-   */
-  const std::string& hash() const { return hash_; }
+                /*! \brief Returns whether the token is empty.
+                 *
+                 * An empty token is default constructed.
+                 */
+                bool empty() const
+                {
+                    return hash_.empty();
+                }
 
-  /*! \brief Returns the expiration time.
-   */
-  const WDateTime& expirationTime() const { return expirationTime_; }
+                /*! \brief Returns the hash.
+                 */
+                const std::string & hash() const
+                {
+                    return hash_;
+                }
 
-private:
-  std::string hash_;
-  WDateTime expirationTime_;
-};
+                /*! \brief Returns the expiration time.
+                 */
+                const WDateTime & expirationTime() const
+                {
+                    return expirationTime_;
+                }
 
-  }
+            private:
+                std::string hash_;
+                WDateTime expirationTime_;
+        };
+
+    }
 }
 
 #endif // WT_AUTH_TOKEN_H_

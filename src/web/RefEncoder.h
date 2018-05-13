@@ -9,19 +9,21 @@
 
 #include <Wt/WFlags.h>
 
-namespace Wt {
+namespace Wt
+{
 
-class WString;
+    class WString;
 
-enum RefEncoderOption {
-  EncodeInternalPaths = 0x1,
-  EncodeRedirectTrampoline = 0x2
-};
+    enum RefEncoderOption
+    {
+        EncodeInternalPaths = 0x1,
+        EncodeRedirectTrampoline = 0x2
+    };
 
-W_DECLARE_OPERATORS_FOR_FLAGS(RefEncoderOption)
+    W_DECLARE_OPERATORS_FOR_FLAGS(RefEncoderOption)
 
-extern WString EncodeRefs(const WString& text,
-			  WFlags<RefEncoderOption> options);
+    extern WString EncodeRefs(const WString & text,
+                              WFlags<RefEncoderOption> options);
 
 }
 

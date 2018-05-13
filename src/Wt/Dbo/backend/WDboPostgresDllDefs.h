@@ -12,36 +12,36 @@
 // Source: http://www.nedprod.com/programs/gccvisibility.html
 
 #ifdef WT_WIN32
-  #define WTDBOPOSTGRES_IMPORT __declspec(dllimport)
-  #define WTDBOPOSTGRES_EXPORT __declspec(dllexport)
-  #define WTDBOPOSTGRES_DLLLOCAL
-  #define WTDBOPOSTGRES_DLLPUBLIC
-#else
-  #ifdef GCC_HASCLASSVISIBILITY
-    #define WTDBOPOSTGRES_IMPORT __attribute__ ((visibility("default")))
-    #define WTDBOPOSTGRES_EXPORT __attribute__ ((visibility("default")))
-    #define WTDBOPOSTGRES_DLLLOCAL __attribute__ ((visibility("hidden")))
-    #define WTDBOPOSTGRES_DLLPUBLIC __attribute__ ((visibility("default")))
-  #else
-    #define WTDBOPOSTGRES_IMPORT
-    #define WTDBOPOSTGRES_EXPORT
+    #define WTDBOPOSTGRES_IMPORT __declspec(dllimport)
+    #define WTDBOPOSTGRES_EXPORT __declspec(dllexport)
     #define WTDBOPOSTGRES_DLLLOCAL
     #define WTDBOPOSTGRES_DLLPUBLIC
-  #endif
+#else
+    #ifdef GCC_HASCLASSVISIBILITY
+        #define WTDBOPOSTGRES_IMPORT __attribute__ ((visibility("default")))
+        #define WTDBOPOSTGRES_EXPORT __attribute__ ((visibility("default")))
+        #define WTDBOPOSTGRES_DLLLOCAL __attribute__ ((visibility("hidden")))
+        #define WTDBOPOSTGRES_DLLPUBLIC __attribute__ ((visibility("default")))
+    #else
+        #define WTDBOPOSTGRES_IMPORT
+        #define WTDBOPOSTGRES_EXPORT
+        #define WTDBOPOSTGRES_DLLLOCAL
+        #define WTDBOPOSTGRES_DLLPUBLIC
+    #endif
 #endif
 
 #ifdef WT_WIN32
-  #ifdef wtdbopostgres_EXPORTS
-    #define WTDBOPOSTGRES_API WTDBOPOSTGRES_EXPORT
-  #else
-    #ifdef WTDBOPOSTGRES_STATIC
-      #define WTDBOPOSTGRES_API
+    #ifdef wtdbopostgres_EXPORTS
+        #define WTDBOPOSTGRES_API WTDBOPOSTGRES_EXPORT
     #else
-      #define WTDBOPOSTGRES_API WTDBOPOSTGRES_IMPORT
+        #ifdef WTDBOPOSTGRES_STATIC
+            #define WTDBOPOSTGRES_API
+        #else
+            #define WTDBOPOSTGRES_API WTDBOPOSTGRES_IMPORT
+        #endif
     #endif
-  #endif
 #else
-  #define WTDBOPOSTGRES_API
+    #define WTDBOPOSTGRES_API
 #endif
 
 #endif // DLLDEFS_H_

@@ -6,28 +6,28 @@
 
 #include "Wt/WPoint.h"
 
-namespace Wt {
-
-WPoint::WPoint()
-  : x_(0), y_(0)
-{ }
-
-bool WPoint::operator== (const WPoint& other) const
+namespace Wt
 {
-  return (x_ == other.x_) && (y_ == other.y_);
-}
 
-bool WPoint::operator!= (const WPoint& other) const
-{
-  return !(*this == other);
-}
+    WPoint::WPoint()
+        : x_(0), y_(0)
+    { }
 
-WPoint& WPoint::operator+= (const WPoint& other)
-{
-  x_ += other.x_;
-  y_ += other.y_;
+    bool WPoint::operator== (const WPoint & other) const
+    {
+        return (x_ == other.x_) && (y_ == other.y_);
+    }
 
-  return *this;
-}
+    bool WPoint::operator!= (const WPoint & other) const
+    {
+        return !(*this == other);
+    }
+
+    WPoint & WPoint::operator+= (const WPoint & other)
+    {
+        x_ += other.x_;
+        y_ += other.y_;
+        return *this;
+    }
 
 }

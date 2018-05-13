@@ -21,18 +21,23 @@ auto out = t->bindWidget("age-info", Wt::cpp14::make_unique<Wt::WText>());
 out->setInline(false);
 out->hide();
 
-button->clicked().connect([=] {
+button->clicked().connect([=]
+{
     out->show();
-    if (ageEdit->validate() == Wt::ValidationState::Valid) {
+    if(ageEdit->validate() == Wt::ValidationState::Valid)
+    {
         out->setText("Age of " + ageEdit->text() + " is saved!");
         out->setStyleClass("alert alert-success");
-    } else {
+    }
+    else
+    {
         out->setText("The number must be in the range 0 to 150");
         out->setStyleClass("alert alert-danger");
     }
 });
 
-ageEdit->enterPressed().connect([=] {
+ageEdit->enterPressed().connect([=]
+{
     button->clicked().emit(Wt::WMouseEvent());
 });
 

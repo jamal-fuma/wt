@@ -17,22 +17,25 @@ using namespace Wt;
 
 class Login : public WContainerWidget
 {
-public:
-  Login();
+    public:
+        Login();
 
-  Signal<WString>& loggedIn() { return loggedIn_; }
+        Signal<WString> & loggedIn()
+        {
+            return loggedIn_;
+        }
 
-private:
-  void captchaCompleted();
-  void userNameEnterPressed();
-  void loginClicked(const WMouseEvent& me);
-  void login();
+    private:
+        void captchaCompleted();
+        void userNameEnterPressed();
+        void loginClicked(const WMouseEvent & me);
+        void login();
 
-private:
-  Signal<WString>   loggedIn_;
-  WLineEdit        *userNameEdit_;
-  MyCaptcha        *captcha_;
-  WPushButton      *loginButton_;
+    private:
+        Signal<WString>   loggedIn_;
+        WLineEdit    *    userNameEdit_;
+        MyCaptcha    *    captcha_;
+        WPushButton   *   loginButton_;
 };
 
 #endif // LOGIN_H_

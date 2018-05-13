@@ -21,33 +21,39 @@ class QRTokenDatabase;
 
 class QRAuthService
 {
-public:
-  QRAuthService(const Auth::AuthService& baseAuth);
+    public:
+        QRAuthService(const Auth::AuthService & baseAuth);
 
-  const Auth::AuthService& baseAuth() const { return baseAuth_; }
+        const Auth::AuthService & baseAuth() const
+        {
+            return baseAuth_;
+        }
 
-  void setRedirectParameter(const std::string& parameter);
-  std::string redirectParameter() const { return redirectParameter_; }
+        void setRedirectParameter(const std::string & parameter);
+        std::string redirectParameter() const
+        {
+            return redirectParameter_;
+        }
 
-  std::string parseQRToken(const WEnvironment& env) const;
+        std::string parseQRToken(const WEnvironment & env) const;
 
-  std::unique_ptr<WResource> createLoginResource(QRTokenDatabase& database,
-                                     Auth::AbstractUserDatabase& users,
-                                     Auth::Login& login) const;
+        std::unique_ptr<WResource> createLoginResource(QRTokenDatabase & database,
+                Auth::AbstractUserDatabase & users,
+                Auth::Login & login) const;
 
-  std::string createQRToken(QRTokenDatabase& database,
-                            WResource *resource) const;
+        std::string createQRToken(QRTokenDatabase & database,
+                                  WResource * resource) const;
 
-  void remoteLogin(QRTokenDatabase& database, const Auth::User& user,
-		   const std::string& token) const;
+        void remoteLogin(QRTokenDatabase & database, const Auth::User & user,
+                         const std::string & token) const;
 
-private:
-  const Auth::AuthService& baseAuth_;
-  std::string redirectParameter_;
+    private:
+        const Auth::AuthService & baseAuth_;
+        std::string redirectParameter_;
 
-  void handleHttpResponse(Wt::AsioWrapper::error_code err,
-                          const Http::Message& response,
-                          Http::Client *client) const;
+        void handleHttpResponse(Wt::AsioWrapper::error_code err,
+                                const Http::Message & response,
+                                Http::Client * client) const;
 };
 
 #endif // QR_AUTH_SERVICE_H_

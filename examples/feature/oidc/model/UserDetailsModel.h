@@ -7,15 +7,15 @@ class Session;
 
 class UserDetailsModel : public Wt::WFormModel
 {
-public:
-  static const Field NameField;
+    public:
+        static const Field NameField;
 
-  UserDetailsModel(Session& session);
+        UserDetailsModel(Session & session);
 
-  void save(const Wt::Auth::User& user);
+        void save(const Wt::Auth::User & user);
 
-private:
-  Session& session_;
+    private:
+        Session & session_;
 };
 
 #endif // USERDETAILSMODEL_H

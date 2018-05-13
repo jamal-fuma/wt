@@ -17,26 +17,27 @@
 
 using namespace Wt;
 
-class EntryDialog : public WDialog {
- public:
-  EntryDialog(const WString& title, CalendarCell* cell);
+class EntryDialog : public WDialog
+{
+    public:
+        EntryDialog(const WString & title, CalendarCell * cell);
 
- private:
-  WDateTime timeStamp(const WString& time, const WDate& day);
-  WString description();
-  void ok();
-  void cancel();
+    private:
+        WDateTime timeStamp(const WString & time, const WDate & day);
+        WString description();
+        void ok();
+        void cancel();
 
- public:
-  static WString timeFormat;
+    public:
+        static WString timeFormat;
 
- private:
-  CalendarCell* cell_;
+    private:
+        CalendarCell * cell_;
 
-  WLineEdit* summary_;
-  WLineEdit* start_;
-  WLineEdit* stop_;
-  WTextArea* description_;
+        WLineEdit * summary_;
+        WLineEdit * start_;
+        WLineEdit * stop_;
+        WTextArea * description_;
 };
 
 #endif //ENTRY_DIALOG_H_

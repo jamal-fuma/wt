@@ -10,27 +10,30 @@
 #include <Wt/WApplication.h>
 #include <Wt/WContainerWidget.h>
 
-namespace Wt {
-  class WMenu;
-  class WStackedWidget;
-  class WTabWidget;
-  class WTreeNode;
-  class WTable;
+namespace Wt
+{
+    class WMenu;
+    class WStackedWidget;
+    class WTabWidget;
+    class WTreeNode;
+    class WTable;
 }
 
 using namespace Wt;
 
-struct Lang {
-  Lang(const std::string& code, const std::string& path,
-       const std::string& shortDescription,
-       const std::string& longDescription) :
-    code_(code),
-    path_(path),
-    shortDescription_(shortDescription),
-    longDescription_(longDescription) {
-  }
+struct Lang
+{
+    Lang(const std::string & code, const std::string & path,
+         const std::string & shortDescription,
+         const std::string & longDescription) :
+        code_(code),
+        path_(path),
+        shortDescription_(shortDescription),
+        longDescription_(longDescription)
+    {
+    }
 
-  std::string code_, path_, shortDescription_, longDescription_;
+    std::string code_, path_, shortDescription_, longDescription_;
 };
 
 /*
@@ -44,93 +47,99 @@ struct Lang {
 template <typename Function>
 class DeferredWidget : public WContainerWidget
 {
-public:
-  DeferredWidget(Function f)
-    : f_(f) { }
+    public:
+        DeferredWidget(Function f)
+            : f_(f) { }
 
-private:
-  void load() {
-    WContainerWidget::load();
-    if (count() == 0)
-      addWidget(f_());
-  }
+    private:
+        void load()
+        {
+            WContainerWidget::load();
+            if(count() == 0)
+            {
+                addWidget(f_());
+            }
+        }
 
-  Function f_;
+        Function f_;
 };
 
 template <typename Function>
 std::unique_ptr<DeferredWidget<Function>> deferCreate(Function f)
 {
-  return cpp14::make_unique<DeferredWidget<Function>>(f);
+    return cpp14::make_unique<DeferredWidget<Function>>(f);
 }
 
 class Home : public WApplication
 {
-public:
-  Home(const WEnvironment& env, Dbo::SqlConnectionPool& blogDb,
-       const std::string& title,
-       const std::string& resourceBundle, const std::string& cssPath);
-  
-  virtual ~Home();
+    public:
+        Home(const WEnvironment & env, Dbo::SqlConnectionPool & blogDb,
+             const std::string & title,
+             const std::string & resourceBundle, const std::string & cssPath);
 
-  void googleAnalyticsLogger();
+        virtual ~Home();
 
-protected:
-  virtual std::unique_ptr<WWidget> examples() = 0;
-  virtual std::unique_ptr<WWidget> createQuoteForm() = 0;
-  virtual std::unique_ptr<WWidget> sourceViewer(const std::string &deployPath) = 0;
-  virtual std::string filePrefix() const = 0;
+        void googleAnalyticsLogger();
 
-  void init();
-  
-  void addLanguage(const Lang& l) { languages.push_back(l); }
-  std::unique_ptr<WWidget> linkSourceBrowser(const std::string& examplePath);
+    protected:
+        virtual std::unique_ptr<WWidget> examples() = 0;
+        virtual std::unique_ptr<WWidget> createQuoteForm() = 0;
+        virtual std::unique_ptr<WWidget> sourceViewer(const std::string & deployPath) = 0;
+        virtual std::string filePrefix() const = 0;
 
-  WTabWidget *examplesMenu_;
-  
-  WString tr(const char *key);
-  std::string href(const std::string& url, const std::string& description);
+        void init();
 
-  WTable *releases_;
-  void readReleases(WTable *releaseTable);
+        void addLanguage(const Lang & l)
+        {
+            languages.push_back(l);
+        }
+        std::unique_ptr<WWidget> linkSourceBrowser(const std::string & examplePath);
 
-private:
-  Dbo::SqlConnectionPool& blogDb_;
-  WWidget *homePage_;
-  WWidget *sourceViewer_;
+        WTabWidget * examplesMenu_;
 
-  WStackedWidget *contents_;
+        WString tr(const char * key);
+        std::string href(const std::string & url, const std::string & description);
 
-  void createHome();
+        WTable * releases_;
+        void readReleases(WTable * releaseTable);
 
-  std::unique_ptr<WWidget> introduction();
-  std::unique_ptr<WWidget> blog();
-  std::unique_ptr<WWidget> status();
-  std::unique_ptr<WWidget> features();
-  std::unique_ptr<WWidget> documentation();
-  std::unique_ptr<WWidget> community();
-  std::unique_ptr<WWidget> otherLanguage();
-  std::unique_ptr<WWidget> download();
-  std::unique_ptr<WWidget> quoteForm();
+    private:
+        Dbo::SqlConnectionPool & blogDb_;
+        WWidget * homePage_;
+        WWidget * sourceViewer_;
 
-  WMenu *mainMenu_;
+        WStackedWidget * contents_;
 
-  int language_;
+        void createHome();
 
-  void readNews(WTable *newsTable, const std::string& newsfile);
-  
-  std::unique_ptr<WWidget> wrapView(std::unique_ptr<WWidget> (Home::*createFunction)());
+        std::unique_ptr<WWidget> introduction();
+        std::unique_ptr<WWidget> blog();
+        std::unique_ptr<WWidget> status();
+        std::unique_ptr<WWidget> features();
+        std::unique_ptr<WWidget> documentation();
+        std::unique_ptr<WWidget> community();
+        std::unique_ptr<WWidget> otherLanguage();
+        std::unique_ptr<WWidget> download();
+        std::unique_ptr<WWidget> quoteForm();
 
-  void updateTitle();
-  void setLanguage(int language);
-  void setLanguageFromPath();
-  void setup();
-  void logInternalPath(const std::string& path);
-  void chatSetUser(const WString& name);
+        WMenu * mainMenu_;
 
-  std::unique_ptr<WContainerWidget> sideBarContent_;
-  
-  std::vector<Lang> languages;
+        int language_;
+
+        void readNews(WTable * newsTable, const std::string & newsfile);
+
+        std::unique_ptr<WWidget> wrapView(std::unique_ptr<WWidget> (Home::*createFunction)());
+
+        void updateTitle();
+        void setLanguage(int language);
+        void setLanguageFromPath();
+        void setup();
+        void logInternalPath(const std::string & path);
+        void chatSetUser(const WString & name);
+
+        std::unique_ptr<WContainerWidget> sideBarContent_;
+
+        std::vector<Lang> languages;
 };
 
 #endif // HOME_H_

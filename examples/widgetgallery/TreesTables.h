@@ -12,27 +12,27 @@
 
 class TreesTables : public TopicWidget
 {
-public:
-  TreesTables();
+    public:
+        TreesTables();
 
-  void populateSubMenu(Wt::WMenu *menu);
+        void populateSubMenu(Wt::WMenu * menu);
 
-private:
-  Wt::WLineEdit *regexpFilter;
-  std::shared_ptr<Wt::WSortFilterProxyModel> filteredCocktails;
-  std::shared_ptr<Wt::WSortFilterProxyModel> filteredSortedCocktails;
+    private:
+        Wt::WLineEdit * regexpFilter;
+        std::shared_ptr<Wt::WSortFilterProxyModel> filteredCocktails;
+        std::shared_ptr<Wt::WSortFilterProxyModel> filteredSortedCocktails;
 
-  std::unique_ptr<WWidget> tables();
-  std::unique_ptr<WWidget> trees();
-  std::unique_ptr<WWidget> treeTables();
-  std::unique_ptr<WWidget> tableViews();
-  std::unique_ptr<WWidget> treeViews();
-  std::unique_ptr<WWidget> itemModels();
-  std::unique_ptr<WWidget> proxyModels();
+        std::unique_ptr<WWidget> tables();
+        std::unique_ptr<WWidget> trees();
+        std::unique_ptr<WWidget> treeTables();
+        std::unique_ptr<WWidget> tableViews();
+        std::unique_ptr<WWidget> treeViews();
+        std::unique_ptr<WWidget> itemModels();
+        std::unique_ptr<WWidget> proxyModels();
 
-  Wt::WStringListModel *stringList_;
+        Wt::WStringListModel * stringList_;
 
-  void changeRegexp();
+        void changeRegexp();
 };
 
 #endif

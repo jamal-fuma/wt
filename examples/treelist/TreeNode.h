@@ -14,9 +14,10 @@ class IconPair;
 
 using namespace Wt;
 
-namespace Wt {
-  class WTable;
-  class WImage;
+namespace Wt
+{
+    class WTable;
+    class WImage;
 }
 
 /**
@@ -56,93 +57,96 @@ namespace Wt {
  */
 class TreeNode : public WCompositeWidget
 {
-public:
-  /*! \brief Construct a tree node with the given label.
-   *
-   * The label is formatted in a WText with the given formatting.
-   * The labelIcon (if not 0) will appear next to the label and its state
-   * will reflect the expand/collapse state of the node.
-   *
-   * Optionally, a userContent widget may be associated with the node.
-   * When expanded, this widget will be shown below the widget, but above
-   * any of the children nodes.
-   */
-  TreeNode(const std::string labelText,
-           TextFormat labelFormat,
-           std::unique_ptr<IconPair> labelIcon);
+    public:
+        /*! \brief Construct a tree node with the given label.
+         *
+         * The label is formatted in a WText with the given formatting.
+         * The labelIcon (if not 0) will appear next to the label and its state
+         * will reflect the expand/collapse state of the node.
+         *
+         * Optionally, a userContent widget may be associated with the node.
+         * When expanded, this widget will be shown below the widget, but above
+         * any of the children nodes.
+         */
+        TreeNode(const std::string labelText,
+                 TextFormat labelFormat,
+                 std::unique_ptr<IconPair> labelIcon);
 
-  /*! \brief Adds a child node.
-   */
-  void addChildNode(std::unique_ptr<TreeNode> node);
+        /*! \brief Adds a child node.
+         */
+        void addChildNode(std::unique_ptr<TreeNode> node);
 
-  /*! \brief Removes a child node.
-   */
-  void removeChildNode(TreeNode *node, int index);
+        /*! \brief Removes a child node.
+         */
+        void removeChildNode(TreeNode * node, int index);
 
-  /*! \brief Returns the list of children.
-   */
-  const std::vector<TreeNode *>& childNodes() const { return childNodes_; }
+        /*! \brief Returns the list of children.
+         */
+        const std::vector<TreeNode *> & childNodes() const
+        {
+            return childNodes_;
+        }
 
-  /*! \brief Collapses this node.
-   */
-  void collapse();
+        /*! \brief Collapses this node.
+         */
+        void collapse();
 
-  /*! \brief Expands this node.
-   */
-  void expand();
+        /*! \brief Expands this node.
+         */
+        void expand();
 
-private:
-  //! List of child nodes.
-  std::vector<TreeNode *>   childNodes_;
+    private:
+        //! List of child nodes.
+        std::vector<TreeNode *>   childNodes_;
 
-  //! The parent node.
-  TreeNode                 *parentNode_;
+        //! The parent node.
+        TreeNode         *        parentNode_;
 
-  //! Layout (2x2 table).
-  WTable                   *layout_;
+        //! Layout (2x2 table).
+        WTable          *         layout_;
 
-  //! The icon for expanding or collapsing.
-  IconPair                 *expandIcon_;
+        //! The icon for expanding or collapsing.
+        IconPair         *        expandIcon_;
 
-  //! The single image shown instead of the expand/collapse icon when no children.
-  WImage		   *noExpandIcon_;
+        //! The single image shown instead of the expand/collapse icon when no children.
+        WImage      *     noExpandIcon_;
 
-  //! The icon next to the label.
-  IconPair                 *labelIcon_;
+        //! The icon next to the label.
+        IconPair         *        labelIcon_;
 
-  //! The label.
-  std::unique_ptr<WText>    labelText_;
+        //! The label.
+        std::unique_ptr<WText>    labelText_;
 
-  //! The children count '(x)' for x children.
-  WText                    *childCountLabel_;
+        //! The children count '(x)' for x children.
+        WText          *          childCountLabel_;
 
-  //! The container in which the children are managed.
-  WContainerWidget         *expandedContent_;
+        //! The container in which the children are managed.
+        WContainerWidget     *    expandedContent_;
 
-  //! Adjust the expand icon
-  void adjustExpandIcon();
+        //! Adjust the expand icon
+        void adjustExpandIcon();
 
-  //! Returns if is the last child within its parent (is rendered differently)
-  bool isLastChildNode() const;
+        //! Returns if is the last child within its parent (is rendered differently)
+        bool isLastChildNode() const;
 
-  //! Rerender when children have changed.
-  void childNodesChanged();
+        //! Rerender when children have changed.
+        void childNodesChanged();
 
-  //! Was collapsed (for undo of prelearned collapse() and expand() slots.
-  bool wasCollapsed_;
+        //! Was collapsed (for undo of prelearned collapse() and expand() slots.
+        bool wasCollapsed_;
 
-  //! Undo function for prelearning collapse()
-  void undoCollapse();
+        //! Undo function for prelearning collapse()
+        void undoCollapse();
 
-  //! Undo function for prelearning expand()
-  void undoExpand();
+        //! Undo function for prelearning expand()
+        void undoExpand();
 
-  //! Two sets of images, for a normal node, and for the last node.
-  enum ImageIndex { Middle = 0, Last = 1 };
+        //! Two sets of images, for a normal node, and for the last node.
+        enum ImageIndex { Middle = 0, Last = 1 };
 
-  static std::string imageLine_[];
-  static std::string imagePlus_[];
-  static std::string imageMin_[];
+        static std::string imageLine_[];
+        static std::string imagePlus_[];
+        static std::string imageMin_[];
 }; //
 
 /*@}*/

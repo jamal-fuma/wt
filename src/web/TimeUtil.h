@@ -12,25 +12,26 @@
 
 struct timeval;
 
-namespace Wt {
-
-  class TimeImpl;
-
-class WT_API Time
+namespace Wt
 {
-public:
-  Time(); // now
-  Time(const Time &other);
 
-  Time operator+ (int msec) const;
-  Time& operator+= (int msec);
-  Time& operator= (const Time &other);
+    class TimeImpl;
 
-  int operator- (const Time& other) const; // milliseconds
+    class WT_API Time
+    {
+        public:
+            Time(); // now
+            Time(const Time & other);
 
-private:
-  std::chrono::steady_clock::time_point tp_;
-};
+            Time operator+ (int msec) const;
+            Time & operator+= (int msec);
+            Time & operator= (const Time & other);
+
+            int operator- (const Time & other) const; // milliseconds
+
+        private:
+            std::chrono::steady_clock::time_point tp_;
+    };
 
 }
 

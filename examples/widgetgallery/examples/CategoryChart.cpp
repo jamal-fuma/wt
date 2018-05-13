@@ -18,15 +18,19 @@ auto container = cpp14::make_unique<WContainerWidget>();
 auto model
     = csvToModel(WApplication::appRoot() + "category.csv");
 
-if (!model)
+if(!model)
+{
     return std::move(container);
+}
 
 /*
  * Configure all model items as selectable and editable.
  */
-for (int row = 0; row < model->rowCount(); ++row)
-    for (int col = 0; col < model->columnCount(); ++col)
+for(int row = 0; row < model->rowCount(); ++row)
+    for(int col = 0; col < model->columnCount(); ++col)
+    {
         model->item(row, col)->setFlags(ItemFlag::Editable);
+    }
 
 /*
  * Shows a table, allowing editing of the model
@@ -49,11 +53,14 @@ table->setWidth(4*120 + 80 + 5*7 + 2);
  * additional button somewhere to confirm the edited value.
  */
 
-if (WApplication::instance()->environment().ajax()) {
+if(WApplication::instance()->environment().ajax())
+{
     table->setEditTriggers(EditTrigger::SingleClicked);
-    table->setEditOptions(table->editOptions() | 
+    table->setEditOptions(table->editOptions() |
                           EditOption::SaveWhenClosed);
-} else {
+}
+else
+{
     table->setEditTriggers(EditTrigger::None);
 }
 
@@ -65,8 +72,10 @@ delegate->setTextFormat("%.f");
 table->setItemDelegate(delegate);
 
 table->setColumnWidth(0, 80);
-for (int i = 1; i < model->columnCount(); ++i)
+for(int i = 1; i < model->columnCount(); ++i)
+{
     table->setColumnWidth(i, 120);
+}
 
 /*
  * Create the category chart.
@@ -85,7 +94,8 @@ chart->setPlotAreaPadding(120, Side::Right);
 /*
  * Add all (but first) column as bar series.
  */
-for (int column = 1; column < model->columnCount(); ++column) {
+for(int column = 1; column < model->columnCount(); ++column)
+{
     auto series = cpp14::make_unique<Chart::WDataSeries>(column, Chart::SeriesType::Bar);
     series->setShadow(WShadow(3, 3, WColor(0, 0, 0, 127), 3));
     chart->addSeries(std::move(series));

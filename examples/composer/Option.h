@@ -30,44 +30,47 @@ class OptionList;
  */
 class Option : public WContainerWidget
 {
-public:
-  /*! \brief Create an Option with the given text.
-   */
-  Option(const WString& text);
+    public:
+        /*! \brief Create an Option with the given text.
+         */
+        Option(const WString & text);
 
-  /*! \brief Change the text.
-   */
-  void setText(const WString& text);
+        /*! \brief Change the text.
+         */
+        void setText(const WString & text);
 
-  /*! \brief Returns the clickable part
-   */
-  WInteractWidget *item() { return option_; }
+        /*! \brief Returns the clickable part
+         */
+        WInteractWidget * item()
+        {
+            return option_;
+        }
 
-  virtual void setHidden(bool hidden,
-			 const WAnimation& animation = WAnimation());
+        virtual void setHidden(bool hidden,
+                               const WAnimation & animation = WAnimation());
 
-private:
-  //! The option command text.
-  WText       *option_;
+    private:
+        //! The option command text.
+        WText    *   option_;
 
-  //! The separator '|'
-  WText       *sep_;
+        //! The separator '|'
+        WText    *   sep_;
 
-  //! The list in which this option is managed, if managed.
-  OptionList  *list_;
+        //! The list in which this option is managed, if managed.
+        OptionList * list_;
 
-  friend class OptionList;
+        friend class OptionList;
 
-  void setOptionList(OptionList *l);
+        void setOptionList(OptionList * l);
 
-  //! Create and show the separator.
-  void addSeparator();
+        //! Create and show the separator.
+        void addSeparator();
 
-  //! Show the separator
-  void showSeparator();
+        //! Show the separator
+        void showSeparator();
 
-  //! Hide the separator
-  void hideSeparator();
+        //! Hide the separator
+        void hideSeparator();
 };
 
 /*@}*/

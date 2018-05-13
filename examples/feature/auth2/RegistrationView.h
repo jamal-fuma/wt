@@ -16,23 +16,23 @@ class UserDetailsModel;
 
 class RegistrationView : public Auth::RegistrationWidget
 {
-public:
-  RegistrationView(Session& session, Auth::AuthWidget *authWidget = 0);
+    public:
+        RegistrationView(Session & session, Auth::AuthWidget * authWidget = 0);
 
-  /* specialize to create user details fields */
-  virtual std::unique_ptr<WWidget> createFormWidget(WFormModel::Field field);
+        /* specialize to create user details fields */
+        virtual std::unique_ptr<WWidget> createFormWidget(WFormModel::Field field);
 
-protected:
-  /* specialize to also validate the user details */
-  virtual bool validate();
+    protected:
+        /* specialize to also validate the user details */
+        virtual bool validate();
 
-  /* specialize to register user details */
-  virtual void registerUserDetails(Auth::User& user);
+        /* specialize to register user details */
+        virtual void registerUserDetails(Auth::User & user);
 
-private:
-  Session& session_;
+    private:
+        Session & session_;
 
-  std::unique_ptr<UserDetailsModel> detailsModel_;
+        std::unique_ptr<UserDetailsModel> detailsModel_;
 };
 
 #endif // REGISTRATION_VIEW_H_

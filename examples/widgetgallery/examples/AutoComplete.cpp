@@ -15,12 +15,12 @@ contactOptions.whitespace = " \\n";
 contactOptions.wordSeparators = "-., \"@\\n;";
 contactOptions.appendReplacedText = ", ";
 
-Wt::WSuggestionPopup *sp =
+Wt::WSuggestionPopup * sp =
     container->addWidget(Wt::cpp14::make_unique<Wt::WSuggestionPopup>(
-            Wt::WSuggestionPopup::generateMatcherJS(contactOptions),
-            Wt::WSuggestionPopup::generateReplacerJS(contactOptions)));
+                             Wt::WSuggestionPopup::generateMatcherJS(contactOptions),
+                             Wt::WSuggestionPopup::generateReplacerJS(contactOptions)));
 
-Wt::WLineEdit *le = container->addWidget(Wt::cpp14::make_unique<Wt::WLineEdit>());
+Wt::WLineEdit * le = container->addWidget(Wt::cpp14::make_unique<Wt::WLineEdit>());
 le->setPlaceholderText("Enter a name starting with 'J'");
 sp->forEdit(le);
 

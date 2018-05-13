@@ -5,16 +5,17 @@
  */
 #include "Wt/WBreak.h"
 
-namespace Wt {
-
-WBreak::WBreak()
-{ 
-  setInline(false);
-}
-
-DomElementType WBreak::domElementType() const
+namespace Wt
 {
-  return DomElementType::BR;
-}
+
+    WBreak::WBreak()
+    {
+        setInline(false);
+    }
+
+    DomElementType WBreak::domElementType() const
+    {
+        return DomElementType::BR;
+    }
 
 }

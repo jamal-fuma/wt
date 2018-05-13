@@ -7,18 +7,20 @@
 #ifndef WT_POPUP_WINDOW_H_
 #define WT_POPUP_WINDOW_H_
 
-namespace Wt {
+namespace Wt
+{
 
-  class WApplication;
+    class WApplication;
 
-  /*! \brief Internal class that provides a JavaScript popup window managing function.
-   */
-  class PopupWindow {
-  public:
-    /*! \brief Loads the PopupWindow JavaScript support function.
+    /*! \brief Internal class that provides a JavaScript popup window managing function.
      */
-    static void loadJavaScript(WApplication *app);
-  };
+    class PopupWindow
+    {
+        public:
+            /*! \brief Loads the PopupWindow JavaScript support function.
+             */
+            static void loadJavaScript(WApplication * app);
+    };
 }
 
 #endif // WT_POPUP_WINDOW_H_

@@ -18,26 +18,27 @@
  */
 struct Contact
 {
-  /*! \brief The contact name.
-   */
-  std::u32string name;
+    /*! \brief The contact name.
+     */
+    std::u32string name;
 
-  /*! \brief The contact email address.
-   */
-  std::u32string email;
+    /*! \brief The contact email address.
+     */
+    std::u32string email;
 
-  /*! \brief Create a new contact.
-   */
-  Contact(const std::u32string name_, const std::u32string email_)
-    : name(name_),
-      email(email_)
-  { }
+    /*! \brief Create a new contact.
+     */
+    Contact(const std::u32string name_, const std::u32string email_)
+        : name(name_),
+          email(email_)
+    { }
 
-  /*! \brief Get the typical single string form: "name" <email>
-   */
-  std::u32string formatted() const {
-    return U"\"" + name + U"\" <" + email + U">";
-  }
+    /*! \brief Get the typical single string form: "name" <email>
+     */
+    std::u32string formatted() const
+    {
+        return U"\"" + name + U"\" <" + email + U">";
+    }
 };
 
 /*@}*/

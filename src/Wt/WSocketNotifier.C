@@ -10,58 +10,61 @@
 #include "WebController.h"
 #include "WebSession.h"
 
-namespace Wt {
-
-WSocketNotifier::WSocketNotifier(int socket, Type type)
-  : socket_(socket),
-    type_(type),
-    enabled_(false),
-    beingNotified_(false),
-    sessionId_(WApplication::instance()->sessionId())
+namespace Wt
 {
-  setEnabled(true);
-}
 
-WSocketNotifier::~WSocketNotifier()
-{
-  setEnabled(false);
-}
-
-void WSocketNotifier::setEnabled(bool enabled)
-{
-  if (enabled != enabled_) {
-    enabled_ = enabled;
-
-    if (!beingNotified_) {
-      WebController *controller
-	= WApplication::instance()->session()->controller();
-      if (enabled_)
-        controller->addSocketNotifier(this);
-      else
-	controller->removeSocketNotifier(this);
+    WSocketNotifier::WSocketNotifier(int socket, Type type)
+        : socket_(socket),
+          type_(type),
+          enabled_(false),
+          beingNotified_(false),
+          sessionId_(WApplication::instance()->sessionId())
+    {
+        setEnabled(true);
     }
-  }
-}
 
-void WSocketNotifier::dummy()
-{
-}
+    WSocketNotifier::~WSocketNotifier()
+    {
+        setEnabled(false);
+    }
 
-void WSocketNotifier::notify()
-{
-  beingNotified_ = true;
+    void WSocketNotifier::setEnabled(bool enabled)
+    {
+        if(enabled != enabled_)
+        {
+            enabled_ = enabled;
+            if(!beingNotified_)
+            {
+                WebController * controller
+                    = WApplication::instance()->session()->controller();
+                if(enabled_)
+                {
+                    controller->addSocketNotifier(this);
+                }
+                else
+                {
+                    controller->removeSocketNotifier(this);
+                }
+            }
+        }
+    }
 
-  observing_ptr<WSocketNotifier> self(this);
+    void WSocketNotifier::dummy()
+    {
+    }
 
-  activated_.emit(socket_);
-
-  if (self) {
-    beingNotified_ = false;
-
-    if (enabled_)
-      WApplication::instance()->session()->controller()
-        ->addSocketNotifier(this);
-  }
-}
+    void WSocketNotifier::notify()
+    {
+        beingNotified_ = true;
+        observing_ptr<WSocketNotifier> self(this);
+        activated_.emit(socket_);
+        if(self)
+        {
+            beingNotified_ = false;
+            if(enabled_)
+                WApplication::instance()->session()->controller()
+                ->addSocketNotifier(this);
+        }
+    }
 
 }

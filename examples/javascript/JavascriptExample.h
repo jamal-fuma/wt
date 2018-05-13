@@ -23,31 +23,31 @@ class Popup;
  */
 class JavascriptExample : public WApplication
 {
-public:
-  /*! \brief Create the example application.
-   */
-  JavascriptExample(const WEnvironment& env);
+    public:
+        /*! \brief Create the example application.
+         */
+        JavascriptExample(const WEnvironment & env);
 
-private:
-  /*! \brief The user has confirmed the payment.
-   */
-  void confirmed();
+    private:
+        /*! \brief The user has confirmed the payment.
+         */
+        void confirmed();
 
-  /*! \brief Set the amount to be payed.
-   */
-  void setAmount(std::string amount);
+        /*! \brief Set the amount to be payed.
+         */
+        void setAmount(std::string amount);
 
-  /*! \brief Popup for changing the amount.
-   */
-  std::unique_ptr<Popup> promptAmount_;
+        /*! \brief Popup for changing the amount.
+         */
+        std::unique_ptr<Popup> promptAmount_;
 
-  /*! \brief Popup for paying.
-   */
-  std::unique_ptr<Popup> confirmPay_;
+        /*! \brief Popup for paying.
+         */
+        std::unique_ptr<Popup> confirmPay_;
 
-  /*! \brief WText for showing the current amount.
-   */
-  WText *currentAmount_;
+        /*! \brief WText for showing the current amount.
+         */
+        WText * currentAmount_;
 };
 
 /*@}*/

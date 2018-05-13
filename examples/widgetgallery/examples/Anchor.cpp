@@ -9,7 +9,7 @@ Wt::WLink link = Wt::WLink("http://www.webtoolkit.eu/");
 link.setTarget(Wt::LinkTarget::NewWindow);
 
 std::unique_ptr<Wt::WAnchor> anchor =
-        Wt::cpp14::make_unique<Wt::WAnchor>(link,
-                        "Wt homepage (in a new window)");
+    Wt::cpp14::make_unique<Wt::WAnchor>(link,
+                                        "Wt homepage (in a new window)");
 
 SAMPLE_END(return std::move(anchor))

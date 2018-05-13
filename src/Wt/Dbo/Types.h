@@ -20,29 +20,29 @@
 #include <Wt/Dbo/ptr_tuple.h>
 
 #if !defined(_MSC_VER) && !defined(__SUNPRO_C)
-#define DBO_EXTERN_TEMPLATES(C)						\
-  extern template class Wt::Dbo::ptr<C>;				\
-  extern template class Wt::Dbo::Dbo<C>;				\
-  extern template class Wt::Dbo::MetaDbo<C>;				\
-  extern template class Wt::Dbo::collection< Wt::Dbo::ptr<C> >;		\
-  extern template class Wt::Dbo::Query< Wt::Dbo::ptr<C>,		\
-					Wt::Dbo::DynamicBinding >;	\
-  extern template class Wt::Dbo::Query< Wt::Dbo::ptr<C>,		\
-					Wt::Dbo::DirectBinding >;	\
-  extern template Wt::Dbo::ptr<C> Wt::Dbo::Session::add<C>(ptr<C>&);	\
-  extern template Wt::Dbo::ptr<C> Wt::Dbo::Session::add<C>(std::unique_ptr<C>);	\
-  extern template Wt::Dbo::ptr<C> Wt::Dbo::Session::load<C>		\
-	(const dbo_traits<C>::IdType&, bool forceReread);		\
-  extern template void Wt::Dbo::Session::mapClass<C>(const char *);	\
-  extern template struct Wt::Dbo::Session::Mapping<C>;			\
-  extern template Wt::Dbo::Query< Wt::Dbo::ptr<C>,			\
-				  Wt::Dbo::DynamicBinding>		\
-	Wt::Dbo::Session::find<C, Wt::Dbo::DynamicBinding>		\
-	(const std::string&);						\
-  extern template Wt::Dbo::Query< Wt::Dbo::ptr<C>,			\
-				  Wt::Dbo::DirectBinding>		\
-	Wt::Dbo::Session::find<C, Wt::Dbo::DirectBinding>		\
-	(const std::string&);
+#define DBO_EXTERN_TEMPLATES(C)                     \
+    extern template class Wt::Dbo::ptr<C>;                \
+    extern template class Wt::Dbo::Dbo<C>;                \
+    extern template class Wt::Dbo::MetaDbo<C>;                \
+    extern template class Wt::Dbo::collection< Wt::Dbo::ptr<C> >;     \
+    extern template class Wt::Dbo::Query< Wt::Dbo::ptr<C>,        \
+                                          Wt::Dbo::DynamicBinding >;  \
+    extern template class Wt::Dbo::Query< Wt::Dbo::ptr<C>,        \
+                                          Wt::Dbo::DirectBinding >;   \
+    extern template Wt::Dbo::ptr<C> Wt::Dbo::Session::add<C>(ptr<C>&);    \
+    extern template Wt::Dbo::ptr<C> Wt::Dbo::Session::add<C>(std::unique_ptr<C>); \
+    extern template Wt::Dbo::ptr<C> Wt::Dbo::Session::load<C>     \
+    (const dbo_traits<C>::IdType&, bool forceReread);       \
+    extern template void Wt::Dbo::Session::mapClass<C>(const char *); \
+    extern template struct Wt::Dbo::Session::Mapping<C>;          \
+    extern template Wt::Dbo::Query< Wt::Dbo::ptr<C>,          \
+                                    Wt::Dbo::DynamicBinding>      \
+    Wt::Dbo::Session::find<C, Wt::Dbo::DynamicBinding>      \
+    (const std::string&);                       \
+    extern template Wt::Dbo::Query< Wt::Dbo::ptr<C>,          \
+                                    Wt::Dbo::DirectBinding>       \
+    Wt::Dbo::Session::find<C, Wt::Dbo::DirectBinding>       \
+    (const std::string&);
 
 #else
 // Broken on MSVC 2005 and 2008 (cannot redeclare extern declared template

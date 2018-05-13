@@ -23,24 +23,24 @@ using namespace Wt;
  */
 class Character : public WText
 {
-public:
-  /*! \brief Create a new character with the given name.
-   */
-  Character(const std::string& name);
+    public:
+        /*! \brief Create a new character with the given name.
+         */
+        Character(const std::string & name);
 
-  /*! \brief React to a drop event.
-   */
-  void dropEvent(WDropEvent event);
+        /*! \brief React to a drop event.
+         */
+        void dropEvent(WDropEvent event);
 
-private:
-  //! The name
-  std::string name_;
+    private:
+        //! The name
+        std::string name_;
 
-  //! The current number of red pills.
-  int redDrops_;
+        //! The current number of red pills.
+        int redDrops_;
 
-  //! The current number of blue pills.
-  int blueDrops_;
+        //! The current number of blue pills.
+        int blueDrops_;
 };
 
 /*@}*/

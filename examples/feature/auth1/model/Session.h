@@ -21,23 +21,26 @@ using UserDatabase = Wt::Auth::Dbo::UserDatabase<AuthInfo>;
 
 class Session : public dbo::Session
 {
-public:
-  static void configureAuth();
+    public:
+        static void configureAuth();
 
-  Session(const std::string& sqliteDb);
+        Session(const std::string & sqliteDb);
 
-  dbo::ptr<User> user() const;
+        dbo::ptr<User> user() const;
 
-  Wt::Auth::AbstractUserDatabase& users();
-  Wt::Auth::Login& login() { return login_; }
+        Wt::Auth::AbstractUserDatabase & users();
+        Wt::Auth::Login & login()
+        {
+            return login_;
+        }
 
-  static const Wt::Auth::AuthService& auth();
-  static const Wt::Auth::PasswordService& passwordAuth();
-  static const std::vector<const Wt::Auth::OAuthService *> oAuth();
+        static const Wt::Auth::AuthService & auth();
+        static const Wt::Auth::PasswordService & passwordAuth();
+        static const std::vector<const Wt::Auth::OAuthService *> oAuth();
 
-private:
-  std::unique_ptr<UserDatabase> users_;
-  Wt::Auth::Login login_;
+    private:
+        std::unique_ptr<UserDatabase> users_;
+        Wt::Auth::Login login_;
 };
 
 #endif // SESSION_H_

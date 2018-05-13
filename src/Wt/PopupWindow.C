@@ -8,14 +8,15 @@
 #include "Wt/PopupWindow.h"
 
 #ifndef WT_DEBUG_JS
-#include "js/PopupWindow.min.js"
+    #include "js/PopupWindow.min.js"
 #endif
 
-namespace Wt {
-
-void PopupWindow::loadJavaScript(WApplication *app)
+namespace Wt
 {
-  LOAD_JAVASCRIPT(app, "js/PopupWindow.js", "PopupWindow", wtjs1);
-}
+
+    void PopupWindow::loadJavaScript(WApplication * app)
+    {
+        LOAD_JAVASCRIPT(app, "js/PopupWindow.js", "PopupWindow", wtjs1);
+    }
 
 }

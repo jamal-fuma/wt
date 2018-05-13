@@ -11,10 +11,12 @@
 
 #include "Wt/WFont.h"
 
-namespace Wt {
-  namespace Pdf {
-    std::string toBase14Font(const WFont& font);
-  }
+namespace Wt
+{
+    namespace Pdf
+    {
+        std::string toBase14Font(const WFont & font);
+    }
 }
 
 #endif // PDF_UTILS_H_

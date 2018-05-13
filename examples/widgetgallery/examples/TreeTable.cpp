@@ -4,17 +4,19 @@
 #include <Wt/WTreeTable.h>
 #include <Wt/WTreeTableNode.h>
 
-namespace {
-    WTreeTableNode *addNode(WTreeTableNode *parent, const char *name,
-				const char *yuppie, const char *holidays,
-				const char *favorite) {
-	auto node = cpp14::make_unique<WTreeTableNode>(name);
-	auto node_ = node.get();
-	parent->addChildNode(std::move(node));
-	node_->setColumnWidget(1, cpp14::make_unique<WText>(yuppie));
-	node_->setColumnWidget(2, cpp14::make_unique<WText>(holidays));
-	node_->setColumnWidget(3, cpp14::make_unique<WText>(favorite));
-	return node_;
+namespace
+{
+    WTreeTableNode * addNode(WTreeTableNode * parent, const char * name,
+                             const char * yuppie, const char * holidays,
+                             const char * favorite)
+    {
+        auto node = cpp14::make_unique<WTreeTableNode>(name);
+        auto node_ = node.get();
+        parent->addChildNode(std::move(node));
+        node_->setColumnWidget(1, cpp14::make_unique<WText>(yuppie));
+        node_->setColumnWidget(2, cpp14::make_unique<WText>(holidays));
+        node_->setColumnWidget(3, cpp14::make_unique<WText>(favorite));
+        return node_;
     }
 }
 
@@ -32,7 +34,7 @@ auto root = cpp14::make_unique<WTreeTableNode>("All Personnel");
 treeTable->setTreeRoot(std::move(root), "Emweb Organigram");
 
 auto group = cpp14::make_unique<WTreeTableNode>("Upper Management");
-WTreeTableNode *group_ = group.get();
+WTreeTableNode * group_ = group.get();
 
 treeTable->treeRoot()->addChildNode(std::move(group));
 addNode(group_, "Chief Anything Officer", "-2.8", "20", "Scepter");

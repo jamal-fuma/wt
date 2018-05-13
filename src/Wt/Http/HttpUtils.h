@@ -14,15 +14,18 @@
 #include "Wt/Http/Request.h"
 #include <Wt/WDllDefs.h>
 
-namespace Wt {
-  namespace Http {
-    namespace Utils {
-      WT_API extern void parseFormUrlEncoded(const Http::Message& response,
-					     Http::ParameterMap &params);
-      WT_API extern const std::string *getParamValue(Http::ParameterMap &params,
-						     const std::string &name);
+namespace Wt
+{
+    namespace Http
+    {
+        namespace Utils
+        {
+            WT_API extern void parseFormUrlEncoded(const Http::Message & response,
+                                                   Http::ParameterMap & params);
+            WT_API extern const std::string * getParamValue(Http::ParameterMap & params,
+                    const std::string & name);
+        }
     }
-  }
 }
 
 #endif // WT_HTTP_UTILS_H_

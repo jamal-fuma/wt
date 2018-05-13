@@ -8,21 +8,23 @@
 #include "IsapiRequest.h"
 #include "Server.h"
 
-namespace Wt {
-  namespace isapi {
-
-IsapiStream::IsapiStream(IsapiServer *server)
-  : server_(server)
+namespace Wt
 {
-}
+    namespace isapi
+    {
 
-IsapiStream::~IsapiStream()
-{ }
+        IsapiStream::IsapiStream(IsapiServer * server)
+            : server_(server)
+        {
+        }
 
-WebRequest *IsapiStream::getNextRequest(int timeoutsec)
-{
-  return server_->popRequest(timeoutsec);
-}
+        IsapiStream::~IsapiStream()
+        { }
 
-}
+        WebRequest * IsapiStream::getNextRequest(int timeoutsec)
+        {
+            return server_->popRequest(timeoutsec);
+        }
+
+    }
 }

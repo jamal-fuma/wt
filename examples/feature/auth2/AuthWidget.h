@@ -15,14 +15,14 @@ class Session;
 
 class AuthWidget : public Auth::AuthWidget
 {
-public:
-  AuthWidget(Session& session);
+    public:
+        AuthWidget(Session & session);
 
-  /* We will use a custom registration view */
-  virtual std::unique_ptr<WWidget> createRegistrationView(const Auth::Identity& id) override;
+        /* We will use a custom registration view */
+        virtual std::unique_ptr<WWidget> createRegistrationView(const Auth::Identity & id) override;
 
-private:
-  Session& session_;
+    private:
+        Session & session_;
 };
 
 #endif // AUTH_WIDGET_H_

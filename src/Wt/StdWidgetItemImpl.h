@@ -10,32 +10,33 @@
 #include "StdLayoutItemImpl.h"
 #include "Wt/WWidgetItemImpl.h"
 
-namespace Wt {
-
-class StdWidgetItemImpl : public StdLayoutItemImpl, public WWidgetItemImpl
+namespace Wt
 {
-public:
-  StdWidgetItemImpl(WWidgetItem *item);
-  virtual ~StdWidgetItemImpl();
 
-  static const char *childrenResizeJS();
-  static const char *childrenGetPSJS();
-  static const char *secondResizeJS();
-  static const char *secondGetPSJS();
+    class StdWidgetItemImpl : public StdLayoutItemImpl, public WWidgetItemImpl
+    {
+        public:
+            StdWidgetItemImpl(WWidgetItem * item);
+            virtual ~StdWidgetItemImpl();
 
-  virtual const std::string id() const override;
-  virtual int minimumHeight() const override;
-  virtual int minimumWidth() const override;
+            static const char * childrenResizeJS();
+            static const char * childrenGetPSJS();
+            static const char * secondResizeJS();
+            static const char * secondGetPSJS();
 
-  virtual WLayoutItem *layoutItem() const override;
+            virtual const std::string id() const override;
+            virtual int minimumHeight() const override;
+            virtual int minimumWidth() const override;
 
-  virtual DomElement *createDomElement(DomElement *parent,
-				       bool fitWidth, bool fitHeight,
-				       WApplication *app) override;
+            virtual WLayoutItem * layoutItem() const override;
 
-private:
-  WWidgetItem *item_;
-};
+            virtual DomElement * createDomElement(DomElement * parent,
+                                                  bool fitWidth, bool fitHeight,
+                                                  WApplication * app) override;
+
+        private:
+            WWidgetItem * item_;
+    };
 
 }
 

@@ -6,9 +6,10 @@
 
 #include "Wt/WVectorImage.h"
 
-namespace Wt {
+namespace Wt
+{
 
-WVectorImage::~WVectorImage()
-{ }
+    WVectorImage::~WVectorImage()
+    { }
 
 }

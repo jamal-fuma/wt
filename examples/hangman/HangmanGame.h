@@ -1,5 +1,5 @@
 // This may look like C code, but it's really -*- C++ -*-
-/* 
+/*
  * Copyright (C) 2011 Emweb bvba, Heverlee, Belgium
  *
  * See the LICENSE file for terms of use.
@@ -14,9 +14,10 @@
 
 using namespace Wt;
 
-namespace Wt {
-  class WStackedWidget;
-  class WAnchor;
+namespace Wt
+{
+    class WStackedWidget;
+    class WAnchor;
 }
 
 class HangmanWidget;
@@ -25,24 +26,24 @@ class Session;
 
 class HangmanGame : public WContainerWidget
 {
-public:
-  HangmanGame();
+    public:
+        HangmanGame();
 
-  void handleInternalPath(const std::string &internalPath);
+        void handleInternalPath(const std::string & internalPath);
 
-private:
-  WStackedWidget    *mainStack_;
-  HangmanWidget     *game_;
-  HighScoresWidget  *scores_;
-  WContainerWidget  *links_;
-  WAnchor           *backToGameAnchor_;
-  WAnchor           *scoresAnchor_;
+    private:
+        WStackedWidget  *  mainStack_;
+        HangmanWidget   *  game_;
+        HighScoresWidget * scores_;
+        WContainerWidget * links_;
+        WAnchor      *     backToGameAnchor_;
+        WAnchor      *     scoresAnchor_;
 
-  Session session_;
+        Session session_;
 
-  void onAuthEvent();
-  void showGame();
-  void showHighScores();
+        void onAuthEvent();
+        void showGame();
+        void showHighScores();
 };
 
 #endif //HANGMANGAME_H_

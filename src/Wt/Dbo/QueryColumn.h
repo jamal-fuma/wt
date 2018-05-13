@@ -11,51 +11,53 @@
 #include <Wt/WString.h>
 #include <Wt/Dbo/Dbo.h>
 
-namespace Wt {
-class WAbstractTableModel;
-
-  namespace Dbo {
-
-// TODO figure out a nice syntax for qualified fields ?
-class QueryColumn 
+namespace Wt
 {
-  QueryColumn(const std::string& field,
-	      const WString& header,
-	      WFlags<ItemFlag> flags);
+    class WAbstractTableModel;
 
-  /*
-  QueryColumn(const std::string& field,
-	      WAbstractTableModel *editValuesModel);
-  */
+    namespace Dbo
+    {
 
-private:
-  typedef std::map<ItemDataRole, cpp17::any> HeaderData;
+        // TODO figure out a nice syntax for qualified fields ?
+        class QueryColumn
+        {
+                QueryColumn(const std::string & field,
+                            const WString & header,
+                            WFlags<ItemFlag> flags);
 
-  std::string field_;
-  WFlags<ItemFlag> flags_;
-  int fieldIdx_;
-  HeaderData headerData_;
+                /*
+                QueryColumn(const std::string& field,
+                      WAbstractTableModel *editValuesModel);
+                */
 
-  WAbstractTableModel *editValuesModel_;
+            private:
+                typedef std::map<ItemDataRole, cpp17::any> HeaderData;
 
-  template <class Result> friend class QueryModel;
-};
+                std::string field_;
+                WFlags<ItemFlag> flags_;
+                int fieldIdx_;
+                HeaderData headerData_;
 
-/*
- * Defined in the header file to avoid a link-time dependency on
- * libwt.so
- */
-inline QueryColumn::QueryColumn(const std::string& field,
-				const WString& header,
-				WFlags<ItemFlag> flags)
-  : field_(field),
-    flags_(flags),
-    fieldIdx_(-1)
-{ 
-  headerData_[ItemDataRole::Display] = header;
-}
+                WAbstractTableModel * editValuesModel_;
 
-  }
+                template <class Result> friend class QueryModel;
+        };
+
+        /*
+         * Defined in the header file to avoid a link-time dependency on
+         * libwt.so
+         */
+        inline QueryColumn::QueryColumn(const std::string & field,
+                                        const WString & header,
+                                        WFlags<ItemFlag> flags)
+            : field_(field),
+              flags_(flags),
+              fieldIdx_(-1)
+        {
+            headerData_[ItemDataRole::Display] = header;
+        }
+
+    }
 }
 
 #endif // WT_DBO_QUERY_COLUMN_H_

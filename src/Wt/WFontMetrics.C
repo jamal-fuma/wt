@@ -6,19 +6,20 @@
 
 #include "Wt/WFontMetrics.h"
 
-namespace Wt {
-
-WFontMetrics::WFontMetrics(const WFont& font, double leading, double ascent,
-			   double descent)
-  : font_(font),
-    leading_(leading),
-    ascent_(ascent),
-    descent_(descent)
-{ }
-
-double WFontMetrics::size() const
+namespace Wt
 {
-  return ascent_ + descent_; // ont_.sizeLength(12).toPixels();
-}
+
+    WFontMetrics::WFontMetrics(const WFont & font, double leading, double ascent,
+                               double descent)
+        : font_(font),
+          leading_(leading),
+          ascent_(ascent),
+          descent_(descent)
+    { }
+
+    double WFontMetrics::size() const
+    {
+        return ascent_ + descent_; // ont_.sizeLength(12).toPixels();
+    }
 
 }

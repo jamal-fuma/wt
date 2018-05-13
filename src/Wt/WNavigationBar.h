@@ -12,91 +12,92 @@
 #include <Wt/WLink.h>
 #include <Wt/WTemplate.h>
 
-namespace Wt {
-
-class WStackedWidget;
-class WTable;
-
-/*! \class WNavigationBar Wt/WNavigationBar.h Wt/WNavigationBar.h
- *  \brief A navigation bar
- *
- * \note WNavigationBar is currently only styled in the Bootstrap themes.
- */
-class WT_API WNavigationBar : public WTemplate
+namespace Wt
 {
-public:
-  /*! \brief Constructor.
-   */
-  WNavigationBar();
 
-  /*! \brief Sets a title.
-   *
-   * The title may optionally link to a 'homepage'.
-   */
-  void setTitle(const WString& title, const WLink& link = WLink());
+    class WStackedWidget;
+    class WTable;
 
-  /*! \brief Sets whether the navigation bar will respond to screen size.
-   *
-   * For screens that are less wide, the navigation bar can be
-   * rendered different (more compact and allowing for vertical menu
-   * layouts).
-   */
-  void setResponsive(bool responsive);
+    /*! \class WNavigationBar Wt/WNavigationBar.h Wt/WNavigationBar.h
+     *  \brief A navigation bar
+     *
+     * \note WNavigationBar is currently only styled in the Bootstrap themes.
+     */
+    class WT_API WNavigationBar : public WTemplate
+    {
+        public:
+            /*! \brief Constructor.
+             */
+            WNavigationBar();
 
-  /*! \brief Adds a menu to the navigation bar.
-   *
-   * Typically, a navigation bar will contain at least one menu which
-   * implements the top-level navigation options allowed by the
-   * navigation bar.
-   *
-   * The menu may be aligned to the left or to the right of the
-   * navigation bar.
-   */
-  WMenu *addMenu(std::unique_ptr<WMenu> menu,
-               AlignmentFlag alignment = AlignmentFlag::Left);
+            /*! \brief Sets a title.
+             *
+             * The title may optionally link to a 'homepage'.
+             */
+            void setTitle(const WString & title, const WLink & link = WLink());
 
-  /*! \brief Adds a form field to the navigation bar.
-   *
-   * In some cases, one may want to add a few form fields to the navigation
-   * bar (e.g. for a compact login option).
-   */
-  void addFormField(std::unique_ptr<WWidget> widget,
-		    AlignmentFlag alignment = AlignmentFlag::Left);
+            /*! \brief Sets whether the navigation bar will respond to screen size.
+             *
+             * For screens that are less wide, the navigation bar can be
+             * rendered different (more compact and allowing for vertical menu
+             * layouts).
+             */
+            void setResponsive(bool responsive);
 
-  /*! \brief Adds a search widget to the navigation bar.
-   *
-   * This is not so different from addFormField(), except that the
-   * form field may be styled differently to indicate a search
-   * function.
-   */
-  void addSearch(std::unique_ptr<WLineEdit> field,
-		 AlignmentFlag alignment = AlignmentFlag::Left);
+            /*! \brief Adds a menu to the navigation bar.
+             *
+             * Typically, a navigation bar will contain at least one menu which
+             * implements the top-level navigation options allowed by the
+             * navigation bar.
+             *
+             * The menu may be aligned to the left or to the right of the
+             * navigation bar.
+             */
+            WMenu * addMenu(std::unique_ptr<WMenu> menu,
+                            AlignmentFlag alignment = AlignmentFlag::Left);
 
-  /*! \brief Adds a widget to the navigation bar.
-   *
-   * Any other widget may be added to the navigation bar, although they may
-   * require special CSS style to blend well with the navigation bar style.
-   */
-  void addWidget(std::unique_ptr<WWidget> widget,
-		 AlignmentFlag alignment = AlignmentFlag::Left);
+            /*! \brief Adds a form field to the navigation bar.
+             *
+             * In some cases, one may want to add a few form fields to the navigation
+             * bar (e.g. for a compact login option).
+             */
+            void addFormField(std::unique_ptr<WWidget> widget,
+                              AlignmentFlag alignment = AlignmentFlag::Left);
 
-protected:
-  std::unique_ptr<WInteractWidget> createCollapseButton();
-  std::unique_ptr<WInteractWidget> createExpandButton();
+            /*! \brief Adds a search widget to the navigation bar.
+             *
+             * This is not so different from addFormField(), except that the
+             * form field may be styled differently to indicate a search
+             * function.
+             */
+            void addSearch(std::unique_ptr<WLineEdit> field,
+                           AlignmentFlag alignment = AlignmentFlag::Left);
 
-private:
-  void expandContents();
-  void collapseContents();
-  void undoExpandContents();
+            /*! \brief Adds a widget to the navigation bar.
+             *
+             * Any other widget may be added to the navigation bar, although they may
+             * require special CSS style to blend well with the navigation bar style.
+             */
+            void addWidget(std::unique_ptr<WWidget> widget,
+                           AlignmentFlag alignment = AlignmentFlag::Left);
 
-  void addWrapped(std::unique_ptr<WWidget> widget, AlignmentFlag alignment,
-		  const char *wrapClass);
-  void addWrapped(std::unique_ptr<WWidget> widget, WWidget* parent, int role,
-                  AlignmentFlag alignment);
-  void align(WWidget *widget, AlignmentFlag alignment);
+        protected:
+            std::unique_ptr<WInteractWidget> createCollapseButton();
+            std::unique_ptr<WInteractWidget> createExpandButton();
 
-  bool animatedResponsive() const;
-};
+        private:
+            void expandContents();
+            void collapseContents();
+            void undoExpandContents();
+
+            void addWrapped(std::unique_ptr<WWidget> widget, AlignmentFlag alignment,
+                            const char * wrapClass);
+            void addWrapped(std::unique_ptr<WWidget> widget, WWidget * parent, int role,
+                            AlignmentFlag alignment);
+            void align(WWidget * widget, AlignmentFlag alignment);
+
+            bool animatedResponsive() const;
+    };
 
 }
 

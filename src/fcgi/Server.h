@@ -11,74 +11,75 @@
 #include <map>
 
 #ifdef WT_THREADED
-#include <thread>
+    #include <thread>
 #endif // WT_THREADED
 
-namespace Wt {
-
-class SessionInfo;
-class WServer;
-
-/*
- * A FastCGI relay server
- */
-class Server
+namespace Wt
 {
-public:
-  static bool bindUDStoStdin(const std::string& socketPath,
-			     Wt::WServer& server);
 
-  Server(WServer& wt, int argc, char *argv[]);
-  int run();
+    class SessionInfo;
+    class WServer;
 
-  static Server *instance;
+    /*
+     * A FastCGI relay server
+     */
+    class Server
+    {
+        public:
+            static bool bindUDStoStdin(const std::string & socketPath,
+                                       Wt::WServer & server);
 
-  void handleSigChld();
-  void handleSignal(const char *signal);
+            Server(WServer & wt, int argc, char * argv[]);
+            int run();
 
-private:
-  WServer& wt_;
-  int argc_;
-  char **argv_;
+            static Server * instance;
 
-  int childrenDied_;
-  volatile sig_atomic_t handleSigChld_;
+            void handleSigChld();
+            void handleSignal(const char * signal);
+
+        private:
+            WServer & wt_;
+            int argc_;
+            char ** argv_;
+
+            int childrenDied_;
+            volatile sig_atomic_t handleSigChld_;
 
 #ifdef WT_THREADED
-  // mutex to protect access to the sessions map
-  std::recursive_mutex mutex_;
+            // mutex to protect access to the sessions map
+            std::recursive_mutex mutex_;
 #endif
 
-  void checkAndQueueSigChld();
-  void doHandleSigChld();
+            void checkAndQueueSigChld();
+            void doHandleSigChld();
 
-  void spawnSharedProcess();
-  void execChild(bool debug, const std::string& extraArg);
+            void spawnSharedProcess();
+            void execChild(bool debug, const std::string & extraArg);
 
-  int  connectToSession(const std::string& sessionId,
-			const std::string& socketPath,
-			int maxTries);
-  bool getSessionFromQueryString(const std::string& uri,
-				 std::string& sessionId);
-  void checkConfig();
-  bool writeToSocket(int socket, const unsigned char *buf, int bufsize);
+            int  connectToSession(const std::string & sessionId,
+                                  const std::string & socketPath,
+                                  int maxTries);
+            bool getSessionFromQueryString(const std::string & uri,
+                                           std::string & sessionId);
+            void checkConfig();
+            bool writeToSocket(int socket, const unsigned char * buf, int bufsize);
 
-  /*
-   * For DedicatedProcess session policy
-   */
-  typedef std::map<std::string, SessionInfo *> SessionMap;
-  SessionMap sessions_;
+            /*
+             * For DedicatedProcess session policy
+             */
+            typedef std::map<std::string, SessionInfo *> SessionMap;
+            SessionMap sessions_;
 
-  void handleRequestThreaded(int serverSocket);
-  void handleRequest(int serverSocket);
+            void handleRequestThreaded(int serverSocket);
+            void handleRequest(int serverSocket);
 
-  /*
-   * For SharedProcess session policy
-   */
-  std::vector<int> sessionProcessPids_;
+            /*
+             * For SharedProcess session policy
+             */
+            std::vector<int> sessionProcessPids_;
 
-  const std::string socketPath(const std::string& sessionId);
-};
+            const std::string socketPath(const std::string & sessionId);
+    };
 
 }
 

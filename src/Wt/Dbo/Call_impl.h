@@ -7,17 +7,18 @@
 #ifndef WT_DBO_CALL_IMPL_H_
 #define WT_DBO_CALL_IMPL_H_
 
-namespace Wt {
-  namespace Dbo {
-
-template<typename T> Call& Call::bind(const T& value)
+namespace Wt
 {
-  sql_value_traits<T>::bind(value, statement_, column_++, -1);
+    namespace Dbo
+    {
 
-  return *this;
-}
+        template<typename T> Call & Call::bind(const T & value)
+        {
+            sql_value_traits<T>::bind(value, statement_, column_++, -1);
+            return *this;
+        }
 
-  }
+    }
 }
 
 

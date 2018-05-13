@@ -6,83 +6,92 @@
 
 #include "Wt/Json/Object.h"
 
-namespace Wt {
-  namespace Json {
-
-Object Object::Empty;
-
-typedef std::map<std::string, Value> Impl;
-
-Object::Object()
-{ }
-
-Object::Object(const Object& other)
-  : Impl(other)
-{ }
-
-void Object::swap(Object& other)
+namespace Wt
 {
-  Impl::swap(other);
-}
+    namespace Json
+    {
 
-Object& Object::operator= (const Object& other)
-{
-  Impl::operator=(other);
-  return *this;
-}
+        Object Object::Empty;
 
-Object::Object(Object&& other)
-  : Impl(std::move(other))
-{ }
+        typedef std::map<std::string, Value> Impl;
 
-Object::Object(std::initializer_list<std::pair<const std::string,Value>> list)
-  : Impl(list)
-{ }
+        Object::Object()
+        { }
 
-Object& Object::operator= (Object&& other)
-{
-  Impl::operator=(std::move(other));
-  return *this;
-}
+        Object::Object(const Object & other)
+            : Impl(other)
+        { }
 
-std::set<std::string> Object::names() const
-{
-  std::set<std::string> result;
+        void Object::swap(Object & other)
+        {
+            Impl::swap(other);
+        }
 
-  for (const_iterator i = begin(); i != end(); ++i)
-    result.insert(i->first);
+        Object & Object::operator= (const Object & other)
+        {
+            Impl::operator=(other);
+            return *this;
+        }
 
-  return result;
-}
+        Object::Object(Object && other)
+            : Impl(std::move(other))
+        { }
 
-bool Object::contains(const std::string& name) const
-{
-  return find(name) != end();
-}
+        Object::Object(std::initializer_list<std::pair<const std::string,Value>> list)
+            : Impl(list)
+        { }
 
-Type Object::type(const std::string& name) const
-{
-  const_iterator i = find(name);
-  if (i == end())
-    return Type::Null;
-  else
-    return i->second.type();
-}
+        Object & Object::operator= (Object && other)
+        {
+            Impl::operator=(std::move(other));
+            return *this;
+        }
 
-bool Object::isNull(const std::string& name) const
-{
-  return type(name) == Type::Null;
-}
+        std::set<std::string> Object::names() const
+        {
+            std::set<std::string> result;
+            for(const_iterator i = begin(); i != end(); ++i)
+            {
+                result.insert(i->first);
+            }
+            return result;
+        }
 
-const Value& Object::get(const std::string& name) const
-{
-  const_iterator i = find(name);
+        bool Object::contains(const std::string & name) const
+        {
+            return find(name) != end();
+        }
 
-  if (i == end())
-    return Value::Null;
-  else
-    return i->second;
-}
+        Type Object::type(const std::string & name) const
+        {
+            const_iterator i = find(name);
+            if(i == end())
+            {
+                return Type::Null;
+            }
+            else
+            {
+                return i->second.type();
+            }
+        }
 
-  }
+        bool Object::isNull(const std::string & name) const
+        {
+            return type(name) == Type::Null;
+        }
+
+        const Value & Object::get(const std::string & name) const
+        {
+            const_iterator i = find(name);
+            if(i == end())
+            {
+                return Value::Null;
+            }
+            else
+            {
+                return i->second;
+            }
+        }
+
+    }
 }

@@ -22,7 +22,7 @@
 #include "TcpConnection.h"
 
 #ifdef HTTP_WITH_SSL
-#include "SslConnection.h"
+    #include "SslConnection.h"
 #endif // HTTP_WITH_SSL
 
 #include "Configuration.h"
@@ -31,157 +31,167 @@
 
 #include "Wt/WLogger.h"
 
-namespace http {
-namespace server {
-
-class Configuration;
-
-/// The top-level class of the HTTP server.
-class Server
+namespace http
 {
-public:
-  /// Construct the server to listen on the specified TCP address and port, and
-  /// serve up files from the given directory.
-  explicit Server(const Configuration& config, Wt::WServer& wtServer);
+    namespace server
+    {
 
-  Server(const Server& other) = delete;
+        class Configuration;
 
-  ~Server();
+        /// The top-level class of the HTTP server.
+        class Server
+        {
+            public:
+                /// Construct the server to listen on the specified TCP address and port, and
+                /// serve up files from the given directory.
+                explicit Server(const Configuration & config, Wt::WServer & wtServer);
 
-  /// Start the server (called from constructor)
-  void start();
+                Server(const Server & other) = delete;
 
-  /// Stop the server.
-  void stop();
+                ~Server();
 
-  /// Assumes accept sockets have been closed and reopens them.
-  void resume();
+                /// Start the server (called from constructor)
+                void start();
 
-  /// Returns the http port number.
-  /// If the server listens on multiple port, only the first port is returned
-  int httpPort() const;
+                /// Stop the server.
+                void stop();
 
-  Wt::WebController *controller();
+                /// Assumes accept sockets have been closed and reopens them.
+                void resume();
 
-  const Configuration &configuration() { return config_; }
+                /// Returns the http port number.
+                /// If the server listens on multiple port, only the first port is returned
+                int httpPort() const;
 
-  asio::io_service &service();
+                Wt::WebController * controller();
 
-  SessionProcessManager *sessionManager() { return sessionManager_; }
+                const Configuration & configuration()
+                {
+                    return config_;
+                }
 
-private:
-  std::vector<asio::ip::address> resolveAddress(asio::ip::tcp::resolver &resolver,
-                                                const std::string &address);
+                asio::io_service & service();
 
-  struct TcpListener {
-    TcpListener(asio::ip::tcp::acceptor &&acceptor,
-                TcpConnectionPtr new_connection);
+                SessionProcessManager * sessionManager()
+                {
+                    return sessionManager_;
+                }
 
-    asio::ip::tcp::acceptor acceptor;
-    TcpConnectionPtr new_connection;
-  };
+            private:
+                std::vector<asio::ip::address> resolveAddress(asio::ip::tcp::resolver & resolver,
+                        const std::string & address);
 
-  /// Add new TCP listener, called from start()
-  void addTcpListener(asio::ip::tcp::resolver &resolver,
-                      const std::string &address,
-                      const std::string &port);
+                struct TcpListener
+                {
+                    TcpListener(asio::ip::tcp::acceptor && acceptor,
+                                TcpConnectionPtr new_connection);
 
-  /// Add new TCP endpoint, called from addTcpListener
-  void addTcpEndpoint(const asio::ip::tcp::endpoint &endpoint,
-                      const std::string &address,
-                      Wt::AsioWrapper::error_code &errc);
+                    asio::ip::tcp::acceptor acceptor;
+                    TcpConnectionPtr new_connection;
+                };
 
-  /// Starts accepting http/https connections
-  void startAccept();
+                /// Add new TCP listener, called from start()
+                void addTcpListener(asio::ip::tcp::resolver & resolver,
+                                    const std::string & address,
+                                    const std::string & port);
 
-  /// Start to connect to a listening TCP socket of the parent
-  /// Used for dedicated processes.
-  void startConnect(const std::shared_ptr<asio::ip::tcp::socket>& socket);
+                /// Add new TCP endpoint, called from addTcpListener
+                void addTcpEndpoint(const asio::ip::tcp::endpoint & endpoint,
+                                    const std::string & address,
+                                    Wt::AsioWrapper::error_code & errc);
 
-  /// Connected to the parent, sends the listening port back
-  void handleConnected(const std::shared_ptr<asio::ip::tcp::socket>& socket,
-                       const Wt::AsioWrapper::error_code& e);
+                /// Starts accepting http/https connections
+                void startAccept();
 
-  /// The port has been sent to the parent, close the socket.
-  void handlePortSent(const std::shared_ptr<asio::ip::tcp::socket>& socket,
-                      const Wt::AsioWrapper::error_code& e,
-		      const std::shared_ptr<std::string>& /* buf */);
+                /// Start to connect to a listening TCP socket of the parent
+                /// Used for dedicated processes.
+                void startConnect(const std::shared_ptr<asio::ip::tcp::socket> & socket);
 
-  /// Handle completion of an asynchronous accept operation.
-  void handleTcpAccept(TcpListener *listener, const Wt::AsioWrapper::error_code& e);
+                /// Connected to the parent, sends the listening port back
+                void handleConnected(const std::shared_ptr<asio::ip::tcp::socket> & socket,
+                                     const Wt::AsioWrapper::error_code & e);
 
-  /// Handle a request to stop the server.
-  void handleStop();
+                /// The port has been sent to the parent, close the socket.
+                void handlePortSent(const std::shared_ptr<asio::ip::tcp::socket> & socket,
+                                    const Wt::AsioWrapper::error_code & e,
+                                    const std::shared_ptr<std::string> & /* buf */);
 
-  /// Handle a request to resume the server.
-  void handleResume();
+                /// Handle completion of an asynchronous accept operation.
+                void handleTcpAccept(TcpListener * listener, const Wt::AsioWrapper::error_code & e);
 
-  /// Expire sessions periodically for dedicated processes
-  void expireSessions(Wt::AsioWrapper::error_code ec);
+                /// Handle a request to stop the server.
+                void handleStop();
 
-  /// The server's configuration
-  Configuration config_;
+                /// Handle a request to resume the server.
+                void handleResume();
 
-  /// The Wt app server
-  Wt::WServer& wt_;
+                /// Expire sessions periodically for dedicated processes
+                void expireSessions(Wt::AsioWrapper::error_code ec);
 
-  /// The logger
-  Wt::WLogger accessLogger_;
+                /// The server's configuration
+                Configuration config_;
 
-  /// The strand for handleTcpAccept(), handleSslAccept() and handleStop()
-  Wt::AsioWrapper::strand accept_strand_;
+                /// The Wt app server
+                Wt::WServer & wt_;
 
-  /// Acceptors used to listen for incoming http connections.
-  std::vector<TcpListener> tcp_listeners_;
+                /// The logger
+                Wt::WLogger accessLogger_;
+
+                /// The strand for handleTcpAccept(), handleSslAccept() and handleStop()
+                Wt::AsioWrapper::strand accept_strand_;
+
+                /// Acceptors used to listen for incoming http connections.
+                std::vector<TcpListener> tcp_listeners_;
 
 #ifdef HTTP_WITH_SSL
-  struct SslListener {
-    SslListener(asio::ip::tcp::acceptor &&acceptor,
-                SslConnectionPtr new_connection);
+                struct SslListener
+                {
+                    SslListener(asio::ip::tcp::acceptor && acceptor,
+                                SslConnectionPtr new_connection);
 
-    asio::ip::tcp::acceptor acceptor;
-    SslConnectionPtr new_connection;
-  };
+                    asio::ip::tcp::acceptor acceptor;
+                    SslConnectionPtr new_connection;
+                };
 
-  /// Ssl context information
-  asio::ssl::context ssl_context_;
+                /// Ssl context information
+                asio::ssl::context ssl_context_;
 
-  /// Acceptors used to listen for incoming https connections
-  std::vector<SslListener> ssl_listeners_;
+                /// Acceptors used to listen for incoming https connections
+                std::vector<SslListener> ssl_listeners_;
 
-  /// Add new SSL listener, called from start()
-  void addSslListener(asio::ip::tcp::resolver &resolver,
-                      const std::string &address,
-                      const std::string &port);
+                /// Add new SSL listener, called from start()
+                void addSslListener(asio::ip::tcp::resolver & resolver,
+                                    const std::string & address,
+                                    const std::string & port);
 
-  /// Add new SSL endpoint, called from addSslListener
-  void addSslEndpoint(const asio::ip::tcp::endpoint &endpoint,
-                      const std::string &address,
-                      Wt::AsioWrapper::error_code &errc);
+                /// Add new SSL endpoint, called from addSslListener
+                void addSslEndpoint(const asio::ip::tcp::endpoint & endpoint,
+                                    const std::string & address,
+                                    Wt::AsioWrapper::error_code & errc);
 
-  /// Handle completion of an asynchronous SSL accept operation.
-  void handleSslAccept(SslListener *listener, const Wt::AsioWrapper::error_code& e);
+                /// Handle completion of an asynchronous SSL accept operation.
+                void handleSslAccept(SslListener * listener, const Wt::AsioWrapper::error_code & e);
 #endif // HTTP_WITH_SSL
 
-  void handleTimeout(asio::steady_timer *timer,
-                     const std::function<void ()>& function,
-                     const Wt::AsioWrapper::error_code& err);
+                void handleTimeout(asio::steady_timer * timer,
+                                   const std::function<void ()> & function,
+                                   const Wt::AsioWrapper::error_code & err);
 
-  /// The connection manager which owns all live connections.
-  ConnectionManager connection_manager_;
+                /// The connection manager which owns all live connections.
+                ConnectionManager connection_manager_;
 
-  /// Session process manager for DedicatedProcess option
-  SessionProcessManager *sessionManager_;
+                /// Session process manager for DedicatedProcess option
+                SessionProcessManager * sessionManager_;
 
-  /// The handler for all incoming requests.
-  RequestHandler request_handler_;
+                /// The handler for all incoming requests.
+                RequestHandler request_handler_;
 
-  /// For dedicated process deployment: timer to periodically
-  /// call WebController::expireSessions()
-  asio::steady_timer expireSessionsTimer_;
-};
+                /// For dedicated process deployment: timer to periodically
+                /// call WebController::expireSessions()
+                asio::steady_timer expireSessionsTimer_;
+        };
 
-} // namespace server
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_SERVER_HPP

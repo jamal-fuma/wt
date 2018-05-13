@@ -10,31 +10,32 @@
 #include "Wt/WObject.h"
 #include "Wt/WLayoutItemImpl.h"
 
-namespace Wt {
-
-  class DomElement;
-  class StdLayoutImpl;
-  class WApplication;
-  class WContainerWidget;
-
-class StdLayoutItemImpl : public WObject, public WLayoutItemImpl
+namespace Wt
 {
-public:
-  StdLayoutItemImpl();
-  virtual ~StdLayoutItemImpl();
 
-  WContainerWidget *container() const;
-  virtual WLayoutItem *layoutItem() const = 0;
+    class DomElement;
+    class StdLayoutImpl;
+    class WApplication;
+    class WContainerWidget;
 
-  virtual int minimumWidth() const = 0;
-  virtual int minimumHeight() const = 0;
+    class StdLayoutItemImpl : public WObject, public WLayoutItemImpl
+    {
+        public:
+            StdLayoutItemImpl();
+            virtual ~StdLayoutItemImpl();
 
-  StdLayoutImpl *parentLayoutImpl() const;
+            WContainerWidget * container() const;
+            virtual WLayoutItem * layoutItem() const = 0;
 
-  virtual DomElement *createDomElement(DomElement *parent,
-				       bool fitWidth, bool fitHeight,
-				       WApplication *app) = 0;
-};
+            virtual int minimumWidth() const = 0;
+            virtual int minimumHeight() const = 0;
+
+            StdLayoutImpl * parentLayoutImpl() const;
+
+            virtual DomElement * createDomElement(DomElement * parent,
+                                                  bool fitWidth, bool fitHeight,
+                                                  WApplication * app) = 0;
+    };
 
 }
 

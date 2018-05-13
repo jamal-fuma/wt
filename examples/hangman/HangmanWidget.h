@@ -1,5 +1,5 @@
 // This may look like C code, but it's really -*- C++ -*-
-/* 
+/*
  * Copyright (C) 2011 Emweb bvba, Heverlee, Belgium
  *
  * See the LICENSE file for terms of use.
@@ -19,31 +19,34 @@ class LettersWidget;
 
 class HangmanWidget: public Wt::WContainerWidget
 {
-public:
-  HangmanWidget(const std::string &name);
+    public:
+        HangmanWidget(const std::string & name);
 
-  Wt::Signal<int>& scoreUpdated() { return scoreUpdated_; }
-  
-private:
-  Wt::WText                 *title_;
+        Wt::Signal<int> & scoreUpdated()
+        {
+            return scoreUpdated_;
+        }
 
-  WordWidget                *word_;
-  ImagesWidget              *images_;
-  LettersWidget             *letters_;
+    private:
+        Wt::WText         *        title_;
 
-  Wt::WText                 *statusText_;
-  Wt::WComboBox             *language_;
-  Wt::WPushButton           *newGameButton_;
+        WordWidget        *        word_;
+        ImagesWidget       *       images_;
+        LettersWidget       *      letters_;
 
-  Wt::Signal<int>            scoreUpdated_;
+        Wt::WText         *        statusText_;
+        Wt::WComboBox       *      language_;
+        Wt::WPushButton      *     newGameButton_;
 
-  std::string                name_;
+        Wt::Signal<int>            scoreUpdated_;
 
-  int                        badGuesses_;
-  
-  void registerGuess(char c);
+        std::string                name_;
 
-  void newGame();
+        int                        badGuesses_;
+
+        void registerGuess(char c);
+
+        void newGame();
 };
 
 #endif //HANGMAN_WIDGET_H_

@@ -1,8 +1,8 @@
 #include <Wt/WTreeView.h>
 
 #ifdef WT_EXAMPLE
-#include "GitModel.cpp"
-#define GIT_REPOSITORY "/path/to/repository/.git"
+    #include "GitModel.cpp"
+    #define GIT_REPOSITORY "/path/to/repository/.git"
 #endif // WT_EXAMPLE
 
 SAMPLE_BEGIN(TreeView)

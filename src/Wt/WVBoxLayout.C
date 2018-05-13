@@ -6,10 +6,11 @@
 
 #include "Wt/WVBoxLayout.h"
 
-namespace Wt {
+namespace Wt
+{
 
-WVBoxLayout::WVBoxLayout()
-  : WBoxLayout(LayoutDirection::TopToBottom)
-{ }
+    WVBoxLayout::WVBoxLayout()
+        : WBoxLayout(LayoutDirection::TopToBottom)
+    { }
 
 }

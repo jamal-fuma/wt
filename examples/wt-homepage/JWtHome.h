@@ -13,34 +13,37 @@
 
 using namespace Wt;
 
-class JWtHome : public Home 
+class JWtHome : public Home
 {
-public:
-  JWtHome(const WEnvironment& env, Dbo::SqlConnectionPool& blogDb);
+    public:
+        JWtHome(const WEnvironment & env, Dbo::SqlConnectionPool & blogDb);
 
-protected:
-  virtual std::unique_ptr<WWidget> examples();
-  virtual std::unique_ptr<WWidget> createQuoteForm();
-  virtual std::unique_ptr<WWidget> sourceViewer(const std::string& deployPath);
-  virtual std::string filePrefix() const { return "jwt-"; }
+    protected:
+        virtual std::unique_ptr<WWidget> examples();
+        virtual std::unique_ptr<WWidget> createQuoteForm();
+        virtual std::unique_ptr<WWidget> sourceViewer(const std::string & deployPath);
+        virtual std::string filePrefix() const
+        {
+            return "jwt-";
+        }
 
-  std::unique_ptr<WWidget> wrapView(std::unique_ptr<WWidget> (JWtHome::*createFunction)());
+        std::unique_ptr<WWidget> wrapView(std::unique_ptr<WWidget> (JWtHome::*createFunction)());
 
-private:
-  std::unique_ptr<WWidget> example(const char *textKey, const std::string& sourceDir);
+    private:
+        std::unique_ptr<WWidget> example(const char * textKey, const std::string & sourceDir);
 
-  std::unique_ptr<WWidget> helloWorldExample();
-  std::unique_ptr<WWidget> chartExample();
-  std::unique_ptr<WWidget> composerExample();
-  std::unique_ptr<WWidget> treeviewExample();
-  std::unique_ptr<WWidget> chatExample();
-  std::unique_ptr<WWidget> figtreeExample();
-  std::unique_ptr<WWidget> widgetGalleryExample();
+        std::unique_ptr<WWidget> helloWorldExample();
+        std::unique_ptr<WWidget> chartExample();
+        std::unique_ptr<WWidget> composerExample();
+        std::unique_ptr<WWidget> treeviewExample();
+        std::unique_ptr<WWidget> chatExample();
+        std::unique_ptr<WWidget> figtreeExample();
+        std::unique_ptr<WWidget> widgetGalleryExample();
 
-  std::string jwtExamplePath_;
+        std::string jwtExamplePath_;
 };
 
-std::unique_ptr<WApplication> createJWtHomeApplication(const WEnvironment& env,
-                                       Dbo::SqlConnectionPool *blogDb);
+std::unique_ptr<WApplication> createJWtHomeApplication(const WEnvironment & env,
+        Dbo::SqlConnectionPool * blogDb);
 
 #endif // JWT_HOME_H_

@@ -29,23 +29,23 @@ using namespace Wt;
  */
 class FileTreeTableNode : public WTreeTableNode
 {
-public:
-  /*! \brief Construct a new node for the given file.
-   */
-  FileTreeTableNode(const boost::filesystem::path& path);
+    public:
+        /*! \brief Construct a new node for the given file.
+         */
+        FileTreeTableNode(const boost::filesystem::path & path);
 
-private:
-  //! The path.
-  boost::filesystem::path path_;
+    private:
+        //! The path.
+        boost::filesystem::path path_;
 
-  //! Reimplements WTreeNode::populate to read files within a directory.
-  virtual void populate() override;
+        //! Reimplements WTreeNode::populate to read files within a directory.
+        virtual void populate() override;
 
-  //! Reimplements WTreeNode::expandable
-  virtual bool expandable() override;
+        //! Reimplements WTreeNode::expandable
+        virtual bool expandable() override;
 
-  //! Create the iconpair for representing the path.
-  static std::unique_ptr<WIconPair> createIcon(const boost::filesystem::path& path);
+        //! Create the iconpair for representing the path.
+        static std::unique_ptr<WIconPair> createIcon(const boost::filesystem::path & path);
 };
 
 /*@}*/

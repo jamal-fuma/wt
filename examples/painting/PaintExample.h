@@ -16,14 +16,14 @@ class ShapesWidget;
 
 class PaintExample : public WContainerWidget
 {
-public:
-  PaintExample(bool showTitle=true);
+    public:
+        PaintExample(bool showTitle=true);
 
-private:
-  ShapesWidget *shapes_;
+    private:
+        ShapesWidget * shapes_;
 
-  void rotateShape(int v);
-  void scaleShape(int v);
+        void rotateShape(int v);
+        void scaleShape(int v);
 };
 
 #endif // PAINT_EXAMPLE_H_

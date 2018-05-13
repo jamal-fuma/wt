@@ -7,10 +7,10 @@
 SAMPLE_BEGIN(SplitButton)
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-Wt::WSplitButton *sb =
+Wt::WSplitButton * sb =
     container->addWidget(Wt::cpp14::make_unique<Wt::WSplitButton>("Save"));
 
-Wt::WText *out =
+Wt::WText * out =
     container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
 out->setMargin(10, Wt::Side::Left);
 
@@ -21,11 +21,13 @@ popup_->addItem("Save Template");
 
 sb->dropDownButton()->setMenu(std::move(popup));
 
-sb->actionButton()->clicked().connect([=] {
+sb->actionButton()->clicked().connect([=]
+{
     out->setText("Saved!");
 });
 
-popup_->itemSelected().connect([=] (Wt::WMenuItem *item) {
+popup_->itemSelected().connect([=](Wt::WMenuItem * item)
+{
     out->setText(item->text());
 });
 

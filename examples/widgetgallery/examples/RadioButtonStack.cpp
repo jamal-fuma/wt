@@ -6,7 +6,7 @@ SAMPLE_BEGIN(RadioButtonStack)
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
 auto group = std::make_shared<Wt::WButtonGroup>();
-Wt::WRadioButton *button;
+Wt::WRadioButton * button;
 
 button =
     container->addWidget(Wt::cpp14::make_unique<Wt::WRadioButton>("Radio me!"));

@@ -11,20 +11,27 @@
 #include <sys/types.h>
 #include <string>
 
-namespace Wt {
-
-class SessionInfo
+namespace Wt
 {
-public:
-  SessionInfo(const std::string sessionId, pid_t childPId);
 
-  const std::string sessionId() const { return sessionId_; }
-  pid_t childPId() const { return childPId_; }
+    class SessionInfo
+    {
+        public:
+            SessionInfo(const std::string sessionId, pid_t childPId);
 
-private:
-  std::string sessionId_;
-  pid_t       childPId_;
-};
+            const std::string sessionId() const
+            {
+                return sessionId_;
+            }
+            pid_t childPId() const
+            {
+                return childPId_;
+            }
+
+        private:
+            std::string sessionId_;
+            pid_t       childPId_;
+    };
 
 }
 

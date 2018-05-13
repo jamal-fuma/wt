@@ -7,14 +7,18 @@
 #include "Wt/WLogger.h"
 #include "Wt/Mail/Client.h"
 
-namespace Wt {
-  namespace Auth {
-    namespace MailUtils {
-      void sendMail(const Mail::Message &m) {
-	Mail::Client client;
-	client.connect();
-	client.send(m);
-      }
+namespace Wt
+{
+    namespace Auth
+    {
+        namespace MailUtils
+        {
+            void sendMail(const Mail::Message & m)
+            {
+                Mail::Client client;
+                client.connect();
+                client.send(m);
+            }
+        }
     }
-  }
 }

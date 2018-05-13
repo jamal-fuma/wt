@@ -14,46 +14,46 @@ using namespace Wt;
 // You must inherit Wt::WGLWidget to draw a 3D scene
 class PaintWidget: public WGLWidget
 {
-public:
-  PaintWidget(const bool & useBinaryBuffers);
-  
-  // Specialization of WGLWidgeT::intializeGL()
-  void initializeGL();
+    public:
+        PaintWidget(const bool & useBinaryBuffers);
 
-  // Specialization of WGLWidgeT::paintGL()
-  void paintGL();
+        // Specialization of WGLWidgeT::intializeGL()
+        void initializeGL();
 
-  // Specialization of WGLWidgeT::resizeGL()
-  void resizeGL(int width, int height);
+        // Specialization of WGLWidgeT::paintGL()
+        void paintGL();
 
-  // Sets the shader source. Must be set before the widget is first rendered.
-  void setShaders(const std::string &vertexShader,
-      const std::string &fragmentShader);
+        // Specialization of WGLWidgeT::resizeGL()
+        void resizeGL(int width, int height);
 
-private:
-  bool initialized_;
+        // Sets the shader source. Must be set before the widget is first rendered.
+        void setShaders(const std::string & vertexShader,
+                        const std::string & fragmentShader);
 
-  // The shaders, in plain text format
-  std::string vertexShader_;
-  std::string fragmentShader_;
+    private:
+        bool initialized_;
 
-  // Program and related variables
-  Program         shaderProgram_;
-  AttribLocation  vertexPositionAttribute_;
-  AttribLocation  vertexNormalAttribute_;
-  UniformLocation pMatrixUniform_;
-  UniformLocation cMatrixUniform_;
-  UniformLocation mvMatrixUniform_;
-  UniformLocation nMatrixUniform_;
+        // The shaders, in plain text format
+        std::string vertexShader_;
+        std::string fragmentShader_;
 
-  // A client-side JavaScript matrix variable
-  JavaScriptMatrix4x4 jsMatrix_;
+        // Program and related variables
+        Program         shaderProgram_;
+        AttribLocation  vertexPositionAttribute_;
+        AttribLocation  vertexNormalAttribute_;
+        UniformLocation pMatrixUniform_;
+        UniformLocation cMatrixUniform_;
+        UniformLocation mvMatrixUniform_;
+        UniformLocation nMatrixUniform_;
 
-  // The so-called VBOs, Vertex Buffer Objects
-  // This one contains both vertex (xyz) and normal (xyz) data
-  Buffer objBuffer_;
+        // A client-side JavaScript matrix variable
+        JavaScriptMatrix4x4 jsMatrix_;
 
-  bool useBinaryBuffers_;
+        // The so-called VBOs, Vertex Buffer Objects
+        // This one contains both vertex (xyz) and normal (xyz) data
+        Buffer objBuffer_;
+
+        bool useBinaryBuffers_;
 };
 
 #endif

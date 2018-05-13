@@ -12,47 +12,71 @@
 
 class FCGIRecord
 {
-public:
-  FCGIRecord();
-  FCGIRecord(short requestId, char version);
-  ~FCGIRecord();
+    public:
+        FCGIRecord();
+        FCGIRecord(short requestId, char version);
+        ~FCGIRecord();
 
-  void clear();
-  bool good() { return good_; }
+        void clear();
+        bool good()
+        {
+            return good_;
+        }
 
-  unsigned char type() const { return type_; }
-  unsigned char version() const { return version_; }
-  unsigned short requestId() const { return requestId_; }
-  unsigned int contentLength() const { return contentLength_; }
-  const unsigned char *contentData() const { return contentData_; }
+        unsigned char type() const
+        {
+            return type_;
+        }
+        unsigned char version() const
+        {
+            return version_;
+        }
+        unsigned short requestId() const
+        {
+            return requestId_;
+        }
+        unsigned int contentLength() const
+        {
+            return contentLength_;
+        }
+        const unsigned char * contentData() const
+        {
+            return contentData_;
+        }
 
-  unsigned int plainTextLength() const { return plainTextLength_; }
-  const unsigned char *plainText() const { return plainTextBuf_; }
+        unsigned int plainTextLength() const
+        {
+            return plainTextLength_;
+        }
+        const unsigned char * plainText() const
+        {
+            return plainTextBuf_;
+        }
 
-  void read(int fd);
+        void read(int fd);
 
-  bool getParam(const std::string name, std::string& value) const;
+        bool getParam(const std::string name, std::string & value) const;
 
-private:
-  bool good_;
+    private:
+        bool good_;
 
-  unsigned char version_;
-  unsigned char type_;
-  unsigned short requestId_;
-  unsigned int contentLength_;
-  unsigned char paddingLength_;
-  unsigned char reserved_;
-  unsigned char *contentData_;
+        unsigned char version_;
+        unsigned char type_;
+        unsigned short requestId_;
+        unsigned int contentLength_;
+        unsigned char paddingLength_;
+        unsigned char reserved_;
+        unsigned char * contentData_;
 
-  unsigned int plainTextLength_;
-  unsigned char *plainTextBuf_;
-  unsigned int plainTextBufLength_;
+        unsigned int plainTextLength_;
+        unsigned char * plainTextBuf_;
+        unsigned int plainTextBufLength_;
 
-  int getChar(int fd, bool waitForIt);
-  bool getBuffer(int fd, unsigned char *buf, int length);
-  bool getAndAssign(int fd, unsigned char& r, bool waitForIt);
+        int getChar(int fd, bool waitForIt);
+        bool getBuffer(int fd, unsigned char * buf, int length);
+        bool getAndAssign(int fd, unsigned char & r, bool waitForIt);
 };
 
-extern std::ostream& operator<< (std::ostream&, const FCGIRecord& r);
+extern std::ostream & operator<< (std::ostream &, const FCGIRecord & r);
 
 #endif // FCGIRECORD_H_

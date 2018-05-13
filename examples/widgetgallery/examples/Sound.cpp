@@ -7,7 +7,7 @@ SAMPLE_BEGIN(Sound)
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
 auto sound = container->addChild(
-	Wt::cpp14::make_unique<Wt::WSound>("sounds/beep.mp3"));
+                 Wt::cpp14::make_unique<Wt::WSound>("sounds/beep.mp3"));
 sound->setLoops(3);
 
 auto playButton =
@@ -18,15 +18,17 @@ auto stopButton =
     container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Stop it!"));
 stopButton->setMargin(5);
 
-Wt::WText *out =
+Wt::WText * out =
     container->addWidget(Wt::cpp14::make_unique<Wt::WText>());
 
-playButton->clicked().connect([=] {
+playButton->clicked().connect([=]
+{
     sound->play();
     out->setText("<p>Beeping started!</p>");
 });
 
-stopButton->clicked().connect([=] {
+stopButton->clicked().connect([=]
+{
     sound->stop();
     out->setText("<p>Beeping stopped!</p>");
 });

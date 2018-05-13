@@ -1,6 +1,6 @@
 // This may look like C code, but it's really -*- C++ -*-
 /*
- * Copyright (C) 2009 Emweb bvba 
+ * Copyright (C) 2009 Emweb bvba
  *
  * See the LICENSE file for terms of use.
  */
@@ -17,42 +17,42 @@
 
 using namespace Wt;
 
-/*! \class ExampleSourceViewer 
+/*! \class ExampleSourceViewer
  *  \brief A simple widget to visualise a set of example source files.
  */
 class ExampleSourceViewer: public WContainerWidget
 {
-public:
-  /*! \brief Constructor.
-   */
-  ExampleSourceViewer(const std::string& deployPath,
-		      const std::string& examplesRoot,
-		      const std::string& examplesType); 
+    public:
+        /*! \brief Constructor.
+         */
+        ExampleSourceViewer(const std::string & deployPath,
+                            const std::string & examplesRoot,
+                            const std::string & examplesType);
 
-private:
-  WTreeView  *exampleView_;
-  SourceView *sourceView_;
+    private:
+        WTreeView * exampleView_;
+        SourceView * sourceView_;
 
-  std::string deployPath_;
-  std::string examplesRoot_;
-  std::string examplesType_;
+        std::string deployPath_;
+        std::string examplesRoot_;
+        std::string examplesType_;
 
-  std::shared_ptr<WStandardItemModel> model_;
+        std::shared_ptr<WStandardItemModel> model_;
 
-  void cppTraverseDir(WStandardItem* parent,
-		      const boost::filesystem::path& path);
-  void javaTraverseDir(WStandardItem* parent,
-		       const boost::filesystem::path& path);
-  void javaTraversePackages(WStandardItem *parent,
-			    const boost::filesystem::path& srcPath,
-			    const std::string packageName);
+        void cppTraverseDir(WStandardItem * parent,
+                            const boost::filesystem::path & path);
+        void javaTraverseDir(WStandardItem * parent,
+                             const boost::filesystem::path & path);
+        void javaTraversePackages(WStandardItem * parent,
+                                  const boost::filesystem::path & srcPath,
+                                  const std::string packageName);
 
-  /*! \brief Displayed the currently selected file.
-   */
-  void showFile(); 
+        /*! \brief Displayed the currently selected file.
+         */
+        void showFile();
 
-  void handlePathChange();
+        void handlePathChange();
 
-  void setExample(const std::string& exampleDir,
-		  const std::string& example);
+        void setExample(const std::string & exampleDir,
+                        const std::string & example);
 };

@@ -12,44 +12,46 @@
 
 #include <string>
 
-namespace Wt {
+namespace Wt
+{
 
-class WStringStream;
-class WWidget;
+    class WStringStream;
+    class WWidget;
 
-class WJavaScriptObjectStorage {
-public:
-  WJavaScriptObjectStorage(WWidget *widget);
+    class WJavaScriptObjectStorage
+    {
+        public:
+            WJavaScriptObjectStorage(WWidget * widget);
 
-  ~WJavaScriptObjectStorage();
+            ~WJavaScriptObjectStorage();
 
-  // NOTE: transfers ownership
-  // T extends WJavaScriptExposableObject
-  template<typename T>
-  WJavaScriptHandle<T> addObject(T *o)
-  {
-    int index = doAddObject(o);
-    return WJavaScriptHandle<T>(index, o);
-  }
+            // NOTE: transfers ownership
+            // T extends WJavaScriptExposableObject
+            template<typename T>
+            WJavaScriptHandle<T> addObject(T * o)
+            {
+                int index = doAddObject(o);
+                return WJavaScriptHandle<T>(index, o);
+            }
 
-  void updateJs(WStringStream &js);
+            void updateJs(WStringStream & js);
 
-  std::size_t size() const;
+            std::size_t size() const;
 
-  void assignFromJSON(const std::string &json);
+            void assignFromJSON(const std::string & json);
 
-  std::string jsRef() const;
+            std::string jsRef() const;
 
-private:
-  template<typename T>
-  friend class WJavaScriptHandle;
+        private:
+            template<typename T>
+            friend class WJavaScriptHandle;
 
-  int doAddObject(WJavaScriptExposableObject *o);
+            int doAddObject(WJavaScriptExposableObject * o);
 
-  std::vector<WJavaScriptExposableObject *> jsValues_;
-  std::vector<bool> dirty_;
-  WWidget *widget_;
-};
+            std::vector<WJavaScriptExposableObject *> jsValues_;
+            std::vector<bool> dirty_;
+            WWidget * widget_;
+    };
 
 }
 

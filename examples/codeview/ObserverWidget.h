@@ -14,15 +14,15 @@
 
 class ObserverWidget : public Wt::WContainerWidget
 {
-public:
-  ObserverWidget(const std::string& id);
-  virtual ~ObserverWidget();
+    public:
+        ObserverWidget(const std::string & id);
+        virtual ~ObserverWidget();
 
-private:
-  std::shared_ptr<CodeSession> session_;
+    private:
+        std::shared_ptr<CodeSession> session_;
 
-  void updateBuffer(int buffer, CodeSession::BufferUpdate update);
-  void insertBuffer(const CodeSession::Buffer& buffer, int index);
+        void updateBuffer(int buffer, CodeSession::BufferUpdate update);
+        void insertBuffer(const CodeSession::Buffer & buffer, int index);
 };
 
 #endif // OBSERVER_WIDGET_H_

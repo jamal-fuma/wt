@@ -22,78 +22,80 @@ using namespace Wt;
 /*
  * Simple interface to uniquely identify a client
  */
-class Client {
+class Client
+{
 };
 
 /*
  * A (singleton) server class which would protect and manage a shared
  * resource. In our example we take a simple counter as data.
  */
-class Server {
-public:
-  Server()
-    : counter_(0),
-      stop_(false)
-  {
-    thread_ = std::thread(std::bind(&Server::run, this));
-  }
+class Server
+{
+    public:
+        Server()
+            : counter_(0),
+              stop_(false)
+        {
+            thread_ = std::thread(std::bind(&Server::run, this));
+        }
 
-  ~Server()
-  {
-    stop_ = true;
-    thread_.join();
-  }
+        ~Server()
+        {
+            stop_ = true;
+            thread_.join();
+        }
 
-  void connect(Client *client, const std::function<void()>& function)
-  {
-    std::unique_lock<std::mutex> lock(mutex_);
+        void connect(Client * client, const std::function<void()> & function)
+        {
+            std::unique_lock<std::mutex> lock(mutex_);
+            connections_.push_back
+            (Connection(WApplication::instance()->sessionId(), client, function));
+        }
 
-    connections_.push_back
-      (Connection(WApplication::instance()->sessionId(), client, function));
-  }
+        void disconnect(Client * client)
+        {
+            std::unique_lock<std::mutex> lock(mutex_);
+            for(unsigned i = 0; i < connections_.size(); ++i)
+            {
+                if(connections_[i].client == client)
+                {
+                    connections_.erase(connections_.begin() + i);
+                    return;
+                }
+            }
+            assert(false);
+        }
 
-  void disconnect(Client *client)
-  {
-    std::unique_lock<std::mutex> lock(mutex_);
+        int getCount() const
+        {
+            std::unique_lock<std::mutex> lock(mutex_);
+            return counter_;
+        }
 
-    for (unsigned i = 0; i < connections_.size(); ++i) {
-      if (connections_[i].client == client) {
-	connections_.erase(connections_.begin() + i);
-	return;
-      }
-    }
+    private:
+        struct Connection
+        {
+            Connection(const std::string & id, Client * c,
+                       const std::function<void()> & f)
+                : sessionId(id),
+                  client(c),
+                  function(f)
+            { }
 
-    assert(false);
-  }
+            std::string sessionId;
+            Client * client;
+            std::function<void()> function;
+        };
 
-  int getCount() const {
-    std::unique_lock<std::mutex> lock(mutex_);
+        mutable std::mutex mutex_;
+        std::thread thread_;
+        int counter_;
+        bool stop_;
 
-    return counter_;
-  }
+        std::vector<Connection> connections_;
 
-private:
-  struct Connection {
-    Connection(const std::string& id, Client *c,
-               const std::function<void()>& f)
-      : sessionId(id),
-	client(c),
-	function(f)
-    { }
-
-    std::string sessionId;
-    Client *client;
-    std::function<void()> function;
-  };
-
-  mutable std::mutex mutex_;
-  std::thread thread_;
-  int counter_;
-  bool stop_;
-
-  std::vector<Connection> connections_;
-
-  void run();
+        void run();
 };
 
 Server server;
@@ -104,77 +106,74 @@ Server server;
  */
 class ClientWidget : public WText, public Client
 {
-public:
-  ClientWidget()
-    : WText()
-  {
-    WApplication *app = WApplication::instance();
+    public:
+        ClientWidget()
+            : WText()
+        {
+            WApplication * app = WApplication::instance();
+            /*
+             * WObject::bindSafe() is a functor that protects calling the passed
+             * method or function against calling it when the object has already
+             * been deleted.
+             */
+            server.connect(this, bindSafe(&ClientWidget::updateData));
+            /*
+             * You can also bindSafe() a lambda, for example:
+             */
+            // server.connect(this, bindSafe([this]() { updateData(); }));
+            app->enableUpdates(true);
+            updateData();
+        }
 
-    /*
-     * WObject::bindSafe() is a functor that protects calling the passed
-     * method or function against calling it when the object has already
-     * been deleted.
-     */
-    server.connect(this, bindSafe(&ClientWidget::updateData));
+        virtual ~ClientWidget()
+        {
+            server.disconnect(this);
+            WApplication::instance()->enableUpdates(false);
+        }
 
-    /*
-     * You can also bindSafe() a lambda, for example:
-     */
-    // server.connect(this, bindSafe([this]() { updateData(); }));
-
-    app->enableUpdates(true);
-
-    updateData();
-  }
-
-  virtual ~ClientWidget() {
-    server.disconnect(this);
-
-    WApplication::instance()->enableUpdates(false);
-  }
-
-private:
-  void updateData() {
-    setText(WString("count: {1}").arg(server.getCount()));
-
-    WApplication::instance()->triggerUpdate();
-  }
+    private:
+        void updateData()
+        {
+            setText(WString("count: {1}").arg(server.getCount()));
+            WApplication::instance()->triggerUpdate();
+        }
 };
 
 void Server::run()
 {
-  /*
-   * This method simulates changes to the data that happen in a background
-   * thread.
-   */
-  for (;;) {
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-
-    if (stop_)
-      return;
-
+    /*
+     * This method simulates changes to the data that happen in a background
+     * thread.
+     */
+    for(;;)
     {
-      std::unique_lock<std::mutex> lock(mutex_);
-      ++counter_;
-
-      /* This is where we notify all connected clients. */
-      for (unsigned i = 0; i < connections_.size(); ++i) {
-	Connection& c = connections_[i];
-	WServer::instance()->post(c.sessionId, c.function);
-      }
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        if(stop_)
+        {
+            return;
+        }
+        {
+            std::unique_lock<std::mutex> lock(mutex_);
+            ++counter_;
+            /* This is where we notify all connected clients. */
+            for(unsigned i = 0; i < connections_.size(); ++i)
+            {
+                Connection & c = connections_[i];
+                WServer::instance()->post(c.sessionId, c.function);
+            }
+        }
     }
-  }
 }
 
-std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
+std::unique_ptr<WApplication> createApplication(const WEnvironment & env)
 {
-  std::unique_ptr<WApplication> app = cpp14::make_unique<WApplication>(env);
-  app->setCssTheme("");
-  app->root()->addWidget(cpp14::make_unique<ClientWidget>());
-  return app;
+    std::unique_ptr<WApplication> app = cpp14::make_unique<WApplication>(env);
+    app->setCssTheme("");
+    app->root()->addWidget(cpp14::make_unique<ClientWidget>());
+    return app;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char ** argv)
 {
-  return WRun(argc, argv, &createApplication);
+    return WRun(argc, argv, &createApplication);
 }

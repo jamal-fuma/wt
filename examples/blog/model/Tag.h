@@ -15,23 +15,23 @@ namespace dbo = Wt::Dbo;
 
 typedef dbo::collection< dbo::ptr<Post> > Posts;
 
-class Tag {
-public:
-  Tag() { }
-  Tag(const std::string& aName)
-    : name(aName) { }
+class Tag
+{
+    public:
+        Tag() { }
+        Tag(const std::string & aName)
+            : name(aName) { }
 
-  std::string name;
+        std::string name;
 
-  Posts       posts;
+        Posts       posts;
 
-  template<class Action>
-  void persist(Action& a)
-  {
-    dbo::field(a, name, "name");
-
-    dbo::hasMany(a, posts, dbo::ManyToMany, "post_tag");
-  }
+        template<class Action>
+        void persist(Action & a)
+        {
+            dbo::field(a, name, "name");
+            dbo::hasMany(a, posts, dbo::ManyToMany, "post_tag");
+        }
 };
 
 DBO_EXTERN_TEMPLATES(Tag)

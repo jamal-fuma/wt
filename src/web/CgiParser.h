@@ -14,56 +14,57 @@
 
 #include <Wt/WDllDefs.h>
 
-namespace Wt {
-
-class CgiParser;
-class WebRequest;
-
-/*
- * Parses CGI in all its forms (get/post/file uploads).
- *
- * (WT_API added for tests)
- */
-class WT_API CgiParser
+namespace Wt
 {
-public:
-  enum ReadOption { ReadDefault, ReadHeadersOnly, ReadBodyAnyway };
 
-  static void init();
+    class CgiParser;
+    class WebRequest;
 
-  CgiParser(::int64_t maxRequestSize, ::int64_t maxFormData);
+    /*
+     * Parses CGI in all its forms (get/post/file uploads).
+     *
+     * (WT_API added for tests)
+     */
+    class WT_API CgiParser
+    {
+        public:
+            enum ReadOption { ReadDefault, ReadHeadersOnly, ReadBodyAnyway };
 
-  /*
-   * Reads in GET or POST data, converts it to unescaped text, and
-   * creates Entry for each parameter entry. The request is annotated
-   * with the parse results.
-   */
-  void parse(WebRequest& request, ReadOption option);
+            static void init();
 
-private:
-  void readMultipartData(WebRequest& request, const std::string type,
-			 ::int64_t len);
-  bool parseBody(WebRequest& request, const std::string boundary);
-  bool parseHead(WebRequest& request);
-  ::int64_t maxFormData_, maxRequestSize_, left_;
-  std::ostream *spoolStream_;
-  WebRequest *request_;
+            CgiParser(::int64_t maxRequestSize, ::int64_t maxFormData);
 
-  std::string currentKey_;
+            /*
+             * Reads in GET or POST data, converts it to unescaped text, and
+             * creates Entry for each parameter entry. The request is annotated
+             * with the parse results.
+             */
+            void parse(WebRequest & request, ReadOption option);
 
-  void readUntilBoundary(WebRequest& request, const std::string boundary,
-			 int tossAtBoundary,
-			 std::string *resultString,
-			 std::ostream *resultFile);
-  void windBuffer(int offset);
-  int index(const std::string search);
+        private:
+            void readMultipartData(WebRequest & request, const std::string type,
+                                   ::int64_t len);
+            bool parseBody(WebRequest & request, const std::string boundary);
+            bool parseHead(WebRequest & request);
+            ::int64_t maxFormData_, maxRequestSize_, left_;
+            std::ostream * spoolStream_;
+            WebRequest * request_;
 
-  enum {BUFSIZE = 8192};
-  enum {MAXBOUND = 100};
+            std::string currentKey_;
 
-  int buflen_;
-  char buf_[BUFSIZE + MAXBOUND];
-};
+            void readUntilBoundary(WebRequest & request, const std::string boundary,
+                                   int tossAtBoundary,
+                                   std::string * resultString,
+                                   std::ostream * resultFile);
+            void windBuffer(int offset);
+            int index(const std::string search);
+
+            enum {BUFSIZE = 8192};
+            enum {MAXBOUND = 100};
+
+            int buflen_;
+            char buf_[BUFSIZE + MAXBOUND];
+    };
 
 }
 

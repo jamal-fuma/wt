@@ -23,41 +23,46 @@
 
 #include "Connection.h"
 
-namespace http {
-namespace server {
-
-class RequestHandler;
-class Server;
-
-/// Represents a single connection from a client.
-class TcpConnection final : public Connection
+namespace http
 {
-public:
-  /// Construct a connection with the given io_service.
-  explicit TcpConnection(asio::io_service& io_service, Server *server,
-      ConnectionManager& manager, RequestHandler& handler);
+    namespace server
+    {
 
-  /// Get the socket associated with the connection.
-  virtual asio::ip::tcp::socket& socket() override;
+        class RequestHandler;
+        class Server;
 
-  virtual const char *urlScheme() override { return "http"; }
+        /// Represents a single connection from a client.
+        class TcpConnection final : public Connection
+        {
+            public:
+                /// Construct a connection with the given io_service.
+                explicit TcpConnection(asio::io_service & io_service, Server * server,
+                                       ConnectionManager & manager, RequestHandler & handler);
 
-protected:
-  virtual void startAsyncReadRequest(Buffer& buffer, int timeout) override;
-  virtual void startAsyncReadBody(ReplyPtr reply, Buffer& buffer, int timeout) override;
-  virtual void startAsyncWriteResponse
-      (ReplyPtr reply, const std::vector<asio::const_buffer>& buffers,
-       int timeout) override;
+                /// Get the socket associated with the connection.
+                virtual asio::ip::tcp::socket & socket() override;
 
-  virtual void stop() override;
+                virtual const char * urlScheme() override
+                {
+                    return "http";
+                }
 
-  /// Socket for the connection.
-  asio::ip::tcp::socket socket_;
-};
+            protected:
+                virtual void startAsyncReadRequest(Buffer & buffer, int timeout) override;
+                virtual void startAsyncReadBody(ReplyPtr reply, Buffer & buffer, int timeout) override;
+                virtual void startAsyncWriteResponse
+                (ReplyPtr reply, const std::vector<asio::const_buffer> & buffers,
+                 int timeout) override;
 
-typedef std::shared_ptr<TcpConnection> TcpConnectionPtr;
+                virtual void stop() override;
 
-} // namespace server
+                /// Socket for the connection.
+                asio::ip::tcp::socket socket_;
+        };
+
+        typedef std::shared_ptr<TcpConnection> TcpConnectionPtr;
+
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_CONNECTION_HPP

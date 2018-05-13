@@ -27,41 +27,45 @@
 
 class ChartSettings : public Wt::WContainerWidget
 {
-public:
-  ChartSettings(Wt::Chart::WCartesian3DChart *chart);
+    public:
+        ChartSettings(Wt::Chart::WCartesian3DChart * chart);
 };
 
 
 class DataSelection : public Wt::WContainerWidget
 {
-public:
-  DataSelection(Wt::Chart::WCartesian3DChart *chart);
-  
-  void addDataToCollection(Wt::WString name, Wt::Chart::WAbstractDataSeries3D *data);
-  Wt::Signal<Wt::Chart::WAbstractDataSeries3D*>& selectionChanged() { return selectionChange_; }
+    public:
+        DataSelection(Wt::Chart::WCartesian3DChart * chart);
 
-private:
-  typedef std::pair<Wt::WString, Wt::Chart::WAbstractDataSeries3D *> DataSelectionItem;
-  std::vector<DataSelectionItem> dataCollection_;
-  Wt::Signal<Wt::Chart::WAbstractDataSeries3D*> selectionChange_;
+        void addDataToCollection(Wt::WString name, Wt::Chart::WAbstractDataSeries3D * data);
+        Wt::Signal<Wt::Chart::WAbstractDataSeries3D *> & selectionChanged()
+        {
+            return selectionChange_;
+        }
 
-  Wt::WSelectionBox *notShown;
-  Wt::WSelectionBox *shown;
+    private:
+        typedef std::pair<Wt::WString, Wt::Chart::WAbstractDataSeries3D *> DataSelectionItem;
+        std::vector<DataSelectionItem> dataCollection_;
+        Wt::Signal<Wt::Chart::WAbstractDataSeries3D *> selectionChange_;
+
+        Wt::WSelectionBox * notShown;
+        Wt::WSelectionBox * shown;
 };
 
 // This class provides all kinds of data-configuration and always shows only one
-class DataConfig : public Wt::WContainerWidget {
-public:
-  DataConfig(Wt::Chart::WCartesian3DChart* chart);
+class DataConfig : public Wt::WContainerWidget
+{
+    public:
+        DataConfig(Wt::Chart::WCartesian3DChart * chart);
 
-  void addDataToCollection(Wt::WString name, Wt::Chart::WAbstractDataSeries3D *data);
+        void addDataToCollection(Wt::WString name, Wt::Chart::WAbstractDataSeries3D * data);
 
-private:
-  DataSelection* dataselection_;
+    private:
+        DataSelection * dataselection_;
 
-  NumGridDataSettings *numgriddatasettings_;
-  CatGridDataSettings *catgriddatasettings_;
-  ScatterDataSettings *scatterdatasettings_;
+        NumGridDataSettings * numgriddatasettings_;
+        CatGridDataSettings * catgriddatasettings_;
+        ScatterDataSettings * scatterdatasettings_;
 };
 
 #endif

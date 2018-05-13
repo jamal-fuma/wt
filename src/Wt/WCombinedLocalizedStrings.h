@@ -10,71 +10,72 @@
 #include <vector>
 #include <Wt/WLocalizedStrings.h>
 
-namespace Wt {
-
-class WMessageResources;
-
-/*! \class WCombinedLocalizedStrings Wt/WCombinedLocalizedStrings.h Wt/WCombinedLocalizedStrings.h
- *  \brief A localized string resolver that bundles multiple string resolvers.
- *
- * This class implements the localized strings interface and delegates
- * WString::tr() string resolution to one or more string
- * resolvers. You will typically use this class if you want to combine
- * different methods of string resolution (e.g. some from files, and
- * other strings using a database).
- *
- * \sa WApplication::setLocalizedStrings()
- */
-class WT_API WCombinedLocalizedStrings : public WLocalizedStrings
+namespace Wt
 {
-public:
-  /*! \brief Constructor.
-   */
-  WCombinedLocalizedStrings();
 
-  virtual ~WCombinedLocalizedStrings();
+    class WMessageResources;
 
-  /*! \brief Adds a string resolver.
-   *
-   * The order in which string resolvers are added is significant:
-   * resolveKey() will consult each string resolver in the order they
-   * have been added, until a match is found.
-   *
-   * \if cpp
-   * Ownership of the resolver is transferred.
-   * \endif
-   */
-  void add(const std::shared_ptr<WLocalizedStrings>& resolver);
+    /*! \class WCombinedLocalizedStrings Wt/WCombinedLocalizedStrings.h Wt/WCombinedLocalizedStrings.h
+     *  \brief A localized string resolver that bundles multiple string resolvers.
+     *
+     * This class implements the localized strings interface and delegates
+     * WString::tr() string resolution to one or more string
+     * resolvers. You will typically use this class if you want to combine
+     * different methods of string resolution (e.g. some from files, and
+     * other strings using a database).
+     *
+     * \sa WApplication::setLocalizedStrings()
+     */
+    class WT_API WCombinedLocalizedStrings : public WLocalizedStrings
+    {
+        public:
+            /*! \brief Constructor.
+             */
+            WCombinedLocalizedStrings();
 
-  /*! \brief Inserts a string resolver.
-   *
-   * \sa add()
-   */
-  void insert(int index, const std::shared_ptr<WLocalizedStrings>& resolver);
+            virtual ~WCombinedLocalizedStrings();
 
-  /*! \brief Removes a string resolver.
-   *
-   * \sa add()
-   */
-  void remove(const std::shared_ptr<WLocalizedStrings>& resolver);
+            /*! \brief Adds a string resolver.
+             *
+             * The order in which string resolvers are added is significant:
+             * resolveKey() will consult each string resolver in the order they
+             * have been added, until a match is found.
+             *
+             * \if cpp
+             * Ownership of the resolver is transferred.
+             * \endif
+             */
+            void add(const std::shared_ptr<WLocalizedStrings> & resolver);
 
-  const std::vector<std::shared_ptr<WLocalizedStrings>>& items() const;
+            /*! \brief Inserts a string resolver.
+             *
+             * \sa add()
+             */
+            void insert(int index, const std::shared_ptr<WLocalizedStrings> & resolver);
 
-  virtual void hibernate() override;
+            /*! \brief Removes a string resolver.
+             *
+             * \sa add()
+             */
+            void remove(const std::shared_ptr<WLocalizedStrings> & resolver);
 
-  virtual LocalizedString resolveKey(const WLocale& locale, const std::string& key) override;
+            const std::vector<std::shared_ptr<WLocalizedStrings>> & items() const;
+
+            virtual void hibernate() override;
+
+            virtual LocalizedString resolveKey(const WLocale & locale, const std::string & key) override;
 
 #ifndef WT_TARGET_JAVA
-  virtual LocalizedString resolvePluralKey(const WLocale& locale,
-				const std::string& key, 
-				::uint64_t amount) override;
+            virtual LocalizedString resolvePluralKey(const WLocale & locale,
+                    const std::string & key,
+                    ::uint64_t amount) override;
 #else // WT_TARGET_JAVA
-  //TODO make this work for java
-  //virtual std::string *resolveKey(const std::string& key) = 0;
+            //TODO make this work for java
+            //virtual std::string *resolveKey(const std::string& key) = 0;
 #endif // WT_TARGET_JAVA
-private:
-  std::vector<std::shared_ptr<WLocalizedStrings>> localizedStrings_;
-};
+        private:
+            std::vector<std::shared_ptr<WLocalizedStrings>> localizedStrings_;
+    };
 
 }
 

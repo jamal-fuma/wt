@@ -18,144 +18,250 @@
 
 namespace po = boost::program_options;
 
-namespace boost {
-  namespace program_options {
-    class variables_map;
-  }
-}
-
-namespace Wt {
-  class WLogger;
-  class WLogEntry;
-}
-
-namespace http {
-namespace server {
-
-class Configuration
+namespace boost
 {
-public:
-  Configuration(Wt::WLogger& logger, bool silent = false);
-  ~Configuration();
+    namespace program_options
+    {
+        class variables_map;
+    }
+}
 
-  void setOptions(int argc, char **argv, const std::string& configurationFile);
+namespace Wt
+{
+    class WLogger;
+    class WLogEntry;
+}
 
-  std::vector<std::string> options() const;
+namespace http
+{
+    namespace server
+    {
 
-  int threads() const { return threads_; }
-  const std::string& docRoot() const { return docRoot_; }
-  const std::string& resourcesDir() const { return resourcesDir_; }
-  const std::string& appRoot() const { return appRoot_; }
-  bool defaultStatic() const { return defaultStatic_; }
-  const std::vector<std::string>& staticPaths() const
-  { return staticPaths_; }
-  const std::string& errRoot() const { return errRoot_; }
-  const std::string& deployPath() const { return deployPath_; }
-  const std::string& pidPath() const { return pidPath_; }
-  const std::string& serverName() const { return serverName_; }
-  bool compression() const { return compression_; }
-  bool gdb() const { return gdb_; }
-  const std::string& configPath() const { return configPath_; }
+        class Configuration
+        {
+            public:
+                Configuration(Wt::WLogger & logger, bool silent = false);
+                ~Configuration();
 
-  const std::vector<std::string>& httpListen() const { return httpListen_; }
-  const std::string& httpAddress() const { return httpAddress_; }
-  const std::string& httpPort() const { return httpPort_; }
+                void setOptions(int argc, char ** argv, const std::string & configurationFile);
 
-  const std::vector<std::string>& httpsListen() const { return httpsListen_; }
-  const std::string& httpsAddress() const { return httpsAddress_; }
-  const std::string& httpsPort() const { return httpsPort_; }
-  const std::string& sslCertificateChainFile() const 
-    { return sslCertificateChainFile_; }
-  const std::string& sslPrivateKeyFile() const { return sslPrivateKeyFile_; }
-  const std::string& sslTmpDHFile() const { return sslTmpDHFile_; }
-  bool  sslEnableV3() const { return sslEnableV3_; }
-  const std::string& sslClientVerification() const
-  { return sslClientVerification_; }
-  int sslVerifyDepth() const { return sslVerifyDepth_; }
-  const std::string& sslCaCertificates() const { return sslCaCertificates_; }
-  const std::string& sslCipherList() const { return sslCipherList_; }
-  bool sslPreferServerCiphers() const { return sslPreferServerCiphers_; }
+                std::vector<std::string> options() const;
 
-  const std::string& sessionIdPrefix() const { return sessionIdPrefix_; }
-  const std::string& accessLog() const { return accessLog_; }
+                int threads() const
+                {
+                    return threads_;
+                }
+                const std::string & docRoot() const
+                {
+                    return docRoot_;
+                }
+                const std::string & resourcesDir() const
+                {
+                    return resourcesDir_;
+                }
+                const std::string & appRoot() const
+                {
+                    return appRoot_;
+                }
+                bool defaultStatic() const
+                {
+                    return defaultStatic_;
+                }
+                const std::vector<std::string> & staticPaths() const
+                {
+                    return staticPaths_;
+                }
+                const std::string & errRoot() const
+                {
+                    return errRoot_;
+                }
+                const std::string & deployPath() const
+                {
+                    return deployPath_;
+                }
+                const std::string & pidPath() const
+                {
+                    return pidPath_;
+                }
+                const std::string & serverName() const
+                {
+                    return serverName_;
+                }
+                bool compression() const
+                {
+                    return compression_;
+                }
+                bool gdb() const
+                {
+                    return gdb_;
+                }
+                const std::string & configPath() const
+                {
+                    return configPath_;
+                }
 
-  int parentPort() const { return parentPort_; }
+                const std::vector<std::string> & httpListen() const
+                {
+                    return httpListen_;
+                }
+                const std::string & httpAddress() const
+                {
+                    return httpAddress_;
+                }
+                const std::string & httpPort() const
+                {
+                    return httpPort_;
+                }
 
-  ::int64_t maxMemoryRequestSize() const { return maxMemoryRequestSize_; }
+                const std::vector<std::string> & httpsListen() const
+                {
+                    return httpsListen_;
+                }
+                const std::string & httpsAddress() const
+                {
+                    return httpsAddress_;
+                }
+                const std::string & httpsPort() const
+                {
+                    return httpsPort_;
+                }
+                const std::string & sslCertificateChainFile() const
+                {
+                    return sslCertificateChainFile_;
+                }
+                const std::string & sslPrivateKeyFile() const
+                {
+                    return sslPrivateKeyFile_;
+                }
+                const std::string & sslTmpDHFile() const
+                {
+                    return sslTmpDHFile_;
+                }
+                bool  sslEnableV3() const
+                {
+                    return sslEnableV3_;
+                }
+                const std::string & sslClientVerification() const
+                {
+                    return sslClientVerification_;
+                }
+                int sslVerifyDepth() const
+                {
+                    return sslVerifyDepth_;
+                }
+                const std::string & sslCaCertificates() const
+                {
+                    return sslCaCertificates_;
+                }
+                const std::string & sslCipherList() const
+                {
+                    return sslCipherList_;
+                }
+                bool sslPreferServerCiphers() const
+                {
+                    return sslPreferServerCiphers_;
+                }
 
-  typedef std::function<std::string (std::size_t max_length, int purpose)>
-    SslPasswordCallback;
+                const std::string & sessionIdPrefix() const
+                {
+                    return sessionIdPrefix_;
+                }
+                const std::string & accessLog() const
+                {
+                    return accessLog_;
+                }
 
-  // ssl Password callback is not configurable from a file but we store it
-  // here because it's used in the Server constructor (inside start())
-  void setSslPasswordCallback(const SslPasswordCallback& cb) {
-    sslPasswordCallback_ = cb;
-  }
-  SslPasswordCallback sslPasswordCallback() { return sslPasswordCallback_; }
-  bool hasSslPasswordCallback() { return (bool)sslPasswordCallback_; }
+                int parentPort() const
+                {
+                    return parentPort_;
+                }
 
-private:
-  std::vector<std::string> options_;
+                ::int64_t maxMemoryRequestSize() const
+                {
+                    return maxMemoryRequestSize_;
+                }
 
-  Wt::WLogger& logger_;
-  bool silent_;
+                typedef std::function<std::string(std::size_t max_length, int purpose)>
+                SslPasswordCallback;
 
-  int threads_;
-  std::string docRoot_, appRoot_, resourcesDir_;
-  bool defaultStatic_;
-  std::vector<std::string> staticPaths_;
-  std::string errRoot_;
-  std::string deployPath_;
-  std::string pidPath_;
-  std::string serverName_;
-  bool compression_;
-  bool gdb_;
-  std::string configPath_;
+                // ssl Password callback is not configurable from a file but we store it
+                // here because it's used in the Server constructor (inside start())
+                void setSslPasswordCallback(const SslPasswordCallback & cb)
+                {
+                    sslPasswordCallback_ = cb;
+                }
+                SslPasswordCallback sslPasswordCallback()
+                {
+                    return sslPasswordCallback_;
+                }
+                bool hasSslPasswordCallback()
+                {
+                    return (bool)sslPasswordCallback_;
+                }
 
-  std::vector<std::string> httpListen_;
-  std::string httpAddress_;
-  std::string httpPort_;
+            private:
+                std::vector<std::string> options_;
 
-  std::vector<std::string> httpsListen_;
-  std::string httpsAddress_;
-  std::string httpsPort_;
-  std::string sslCertificateChainFile_;
-  std::string sslPrivateKeyFile_;
-  std::string sslTmpDHFile_;
-  bool sslEnableV3_;
-  std::string sslClientVerification_;
-  int sslVerifyDepth_;
-  std::string sslCaCertificates_;
-  std::string sslCipherList_;
-  bool sslPreferServerCiphers_;
+                Wt::WLogger & logger_;
+                bool silent_;
 
-  std::string sessionIdPrefix_;
-  std::string accessLog_;
+                int threads_;
+                std::string docRoot_, appRoot_, resourcesDir_;
+                bool defaultStatic_;
+                std::vector<std::string> staticPaths_;
+                std::string errRoot_;
+                std::string deployPath_;
+                std::string pidPath_;
+                std::string serverName_;
+                bool compression_;
+                bool gdb_;
+                std::string configPath_;
 
-  int parentPort_;
+                std::vector<std::string> httpListen_;
+                std::string httpAddress_;
+                std::string httpPort_;
 
-  ::int64_t maxMemoryRequestSize_;
+                std::vector<std::string> httpsListen_;
+                std::string httpsAddress_;
+                std::string httpsPort_;
+                std::string sslCertificateChainFile_;
+                std::string sslPrivateKeyFile_;
+                std::string sslTmpDHFile_;
+                bool sslEnableV3_;
+                std::string sslClientVerification_;
+                int sslVerifyDepth_;
+                std::string sslCaCertificates_;
+                std::string sslCipherList_;
+                bool sslPreferServerCiphers_;
 
-  SslPasswordCallback sslPasswordCallback_;
+                std::string sessionIdPrefix_;
+                std::string accessLog_;
 
-  void createOptions(po::options_description& options,
-		     po::options_description& visible_options);
-  void readOptions(const po::variables_map& vm);
+                int parentPort_;
 
-  void checkPath(const boost::program_options::variables_map& vm,
-		 std::string varName, std::string varDescription,
-		 std::string& result, int options);
-  void checkPath(std::string& result, std::string varDescription,
-		 int options);
+                ::int64_t maxMemoryRequestSize_;
 
-  enum PathOptions { RegularFile = 0x1,
-		     Directory = 0x2,
-		     Private = 0x4 };
+                SslPasswordCallback sslPasswordCallback_;
 
-  Wt::WLogEntry log(const std::string& type) const;
-};
+                void createOptions(po::options_description & options,
+                                   po::options_description & visible_options);
+                void readOptions(const po::variables_map & vm);
 
-} // namespace server
+                void checkPath(const boost::program_options::variables_map & vm,
+                               std::string varName, std::string varDescription,
+                               std::string & result, int options);
+                void checkPath(std::string & result, std::string varDescription,
+                               int options);
+
+                enum PathOptions { RegularFile = 0x1,
+                                   Directory = 0x2,
+                                   Private = 0x4
+                                 };
+
+                Wt::WLogEntry log(const std::string & type) const;
+        };
+
+    } // namespace server
 } // namespace http
 
 #endif // HTTP_CONFIGURATION_HPP

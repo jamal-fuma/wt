@@ -12,46 +12,59 @@
 
 #include <memory>
 
-namespace Wt {
-
-class WWidgetItemImpl;
-
-/*! \class WWidgetItem Wt/WWidgetItem.h Wt/WWidgetItem.h
- *  \brief A layout item that holds a single widget.
- *
- * \sa WLayout::addWidget(WWidget *)
- */
-class WT_API WWidgetItem : public WLayoutItem
+namespace Wt
 {
-public:
-  /*! \brief Creates a new item for the given <i>widget</i>.
-   */
-  WWidgetItem(std::unique_ptr<WWidget> widget);
 
-  virtual ~WWidgetItem();
+    class WWidgetItemImpl;
 
-  virtual WWidget *widget() override { return widget_.get(); }
-  virtual WLayout *layout() override { return nullptr; }
-  virtual WLayout *parentLayout() const override { return parentLayout_; }
-  virtual WWidget *parentWidget() const override;
+    /*! \class WWidgetItem Wt/WWidgetItem.h Wt/WWidgetItem.h
+     *  \brief A layout item that holds a single widget.
+     *
+     * \sa WLayout::addWidget(WWidget *)
+     */
+    class WT_API WWidgetItem : public WLayoutItem
+    {
+        public:
+            /*! \brief Creates a new item for the given <i>widget</i>.
+             */
+            WWidgetItem(std::unique_ptr<WWidget> widget);
 
-  virtual WWidgetItem *findWidgetItem(WWidget *widget) override;
+            virtual ~WWidgetItem();
 
-  virtual WWidgetItemImpl *impl() const override { return impl_.get(); }
+            virtual WWidget * widget() override
+            {
+                return widget_.get();
+            }
+            virtual WLayout * layout() override
+            {
+                return nullptr;
+            }
+            virtual WLayout * parentLayout() const override
+            {
+                return parentLayout_;
+            }
+            virtual WWidget * parentWidget() const override;
 
-  std::unique_ptr<WWidget> takeWidget();
+            virtual WWidgetItem * findWidgetItem(WWidget * widget) override;
 
-protected:
-  virtual void iterateWidgets(const HandleWidgetMethod& method) const override;
+            virtual WWidgetItemImpl * impl() const override
+            {
+                return impl_.get();
+            }
 
-private:
-  std::unique_ptr<WWidget> widget_;
-  WLayout *parentLayout_;
-  std::unique_ptr<WWidgetItemImpl> impl_;
+            std::unique_ptr<WWidget> takeWidget();
 
-  virtual void setParentWidget(WWidget *parent) override;
-  virtual void setParentLayout(WLayout *layout) override;
-};
+        protected:
+            virtual void iterateWidgets(const HandleWidgetMethod & method) const override;
+
+        private:
+            std::unique_ptr<WWidget> widget_;
+            WLayout * parentLayout_;
+            std::unique_ptr<WWidgetItemImpl> impl_;
+
+            virtual void setParentWidget(WWidget * parent) override;
+            virtual void setParentLayout(WLayout * layout) override;
+    };
 
 }
 

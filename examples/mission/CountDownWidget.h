@@ -10,8 +10,9 @@
 #include <Wt/WText.h>
 #include <Wt/WTimer.h>
 
-namespace Wt {
-  class WTimer;
+namespace Wt
+{
+    class WTimer;
 }
 
 using namespace Wt;
@@ -25,34 +26,37 @@ using namespace Wt;
  */
 class CountDownWidget : public WText
 {
-public:
-  /*! \brief Create a new CountDownWidget.
-   *
-   * The widget will count down from start to stop, decrementing
-   * the number every msec milliseconds.
-   */
-  CountDownWidget(int start, int stop, std::chrono::milliseconds msec);
+    public:
+        /*! \brief Create a new CountDownWidget.
+         *
+         * The widget will count down from start to stop, decrementing
+         * the number every msec milliseconds.
+         */
+        CountDownWidget(int start, int stop, std::chrono::milliseconds msec);
 
-  /*! \brief Signal emitted when the countdown reached stop.
-   */
-  Signal<>& done() { return done_; }
+        /*! \brief Signal emitted when the countdown reached stop.
+         */
+        Signal<> & done()
+        {
+            return done_;
+        }
 
-  /*! \brief Cancel the count down.
-   */
-  void cancel();
+        /*! \brief Cancel the count down.
+         */
+        void cancel();
 
-private:
-  Signal<> done_;
-  int start_;
-  int stop_;
+    private:
+        Signal<> done_;
+        int start_;
+        int stop_;
 
-  int current_;
+        int current_;
 
-  std::unique_ptr<WTimer> timer_;
+        std::unique_ptr<WTimer> timer_;
 
-  /*! \brief Process one timer tick.
-   */
-  void timerTick();
+        /*! \brief Process one timer tick.
+         */
+        void timerTick();
 };
 
 /*@}*/

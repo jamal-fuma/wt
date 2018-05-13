@@ -12,25 +12,25 @@
 
 class GraphicsWidgets : public TopicWidget
 {
-public:
-  GraphicsWidgets();
+    public:
+        GraphicsWidgets();
 
-  virtual void populateSubMenu(Wt::WMenu *menu);
+        virtual void populateSubMenu(Wt::WMenu * menu);
 
-private:
-  std::unique_ptr<WWidget> painting2d();
-  std::unique_ptr<WWidget> paintbrush();
-  std::unique_ptr<WWidget> categoryChart();
-  std::unique_ptr<WWidget> scatterPlot();
-  std::unique_ptr<WWidget> axisSliderWidget();
-  std::unique_ptr<WWidget> pieChart();
-  std::unique_ptr<WWidget> googleMap();
-  std::unique_ptr<WWidget> painting3d();
-  std::unique_ptr<WWidget> numCharts3d();
-  std::unique_ptr<WWidget> catCharts3d();
+    private:
+        std::unique_ptr<WWidget> painting2d();
+        std::unique_ptr<WWidget> paintbrush();
+        std::unique_ptr<WWidget> categoryChart();
+        std::unique_ptr<WWidget> scatterPlot();
+        std::unique_ptr<WWidget> axisSliderWidget();
+        std::unique_ptr<WWidget> pieChart();
+        std::unique_ptr<WWidget> googleMap();
+        std::unique_ptr<WWidget> painting3d();
+        std::unique_ptr<WWidget> numCharts3d();
+        std::unique_ptr<WWidget> catCharts3d();
 
-  Wt::WAbstractItemModel *readCsvFile(const std::string &fname,
-		  WContainerWidget *parent);
+        Wt::WAbstractItemModel * readCsvFile(const std::string & fname,
+                                             WContainerWidget * parent);
 };
 
 #endif // GRAPHICS_WIDGETS_H_

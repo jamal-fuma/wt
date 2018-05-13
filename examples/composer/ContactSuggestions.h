@@ -31,16 +31,16 @@ using namespace Wt;
  */
 class ContactSuggestions : public WSuggestionPopup
 {
-public:
-  /*! \brief Create a new ContactSuggestions popup.
-   */
-  ContactSuggestions();
+    public:
+        /*! \brief Create a new ContactSuggestions popup.
+         */
+        ContactSuggestions();
 
-  /*! \brief Set the address book.
-   */
-  void setAddressBook(const std::vector<Contact>& contacts);
+        /*! \brief Set the address book.
+         */
+        void setAddressBook(const std::vector<Contact> & contacts);
 
-private:
+    private:
 };
 
 /*@}*/

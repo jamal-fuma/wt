@@ -11,16 +11,17 @@
 
 using namespace Wt;
 
-namespace Wt {
-  class WObject;
-  class WAbstractItemModel;
-  class WStandardItemModel;
+namespace Wt
+{
+    class WObject;
+    class WAbstractItemModel;
+    class WStandardItemModel;
 }
 
-extern void readFromCsv(std::istream& f, std::shared_ptr<WAbstractItemModel> model,
-			int numRows = -1, bool firstLineIsHeaders = true);
+extern void readFromCsv(std::istream & f, std::shared_ptr<WAbstractItemModel> model,
+                        int numRows = -1, bool firstLineIsHeaders = true);
 
-extern std::shared_ptr<WStandardItemModel> csvToModel(const std::string& csvFile,
-					  bool firstLineIsHeader = true);
+extern std::shared_ptr<WStandardItemModel> csvToModel(const std::string & csvFile,
+        bool firstLineIsHeader = true);
 
 #endif // CSV_UTIL_H_

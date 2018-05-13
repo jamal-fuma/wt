@@ -6,12 +6,13 @@
 
 #include "Wt/WLoadingIndicator.h"
 
-namespace Wt {
+namespace Wt
+{
 #ifndef WT_TARGET_JAVA
-  WLoadingIndicator::WLoadingIndicator()
-  { }
+    WLoadingIndicator::WLoadingIndicator()
+    { }
 #endif //WT_TARGET_JAVA
 
-  WLoadingIndicator::~WLoadingIndicator()
-  { }
+    WLoadingIndicator::~WLoadingIndicator()
+    { }
 }

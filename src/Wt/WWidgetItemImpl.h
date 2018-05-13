@@ -9,23 +9,24 @@
 
 #include <Wt/WLayoutItemImpl.h>
 
-namespace Wt {
-
-class WLayoutItem;
-class WWidget;
-
-/*! \class WWidgetItemImpl Wt/WWidgetItemImpl.h Wt/WWidgetItemImpl.h
- *  \brief An abstract base class for implementing layout managers.
- *
- * \sa WLayoutItem, WLayout
- */
-class WT_API WWidgetItemImpl : public WLayoutItemImpl
+namespace Wt
 {
-public:
-  /*! \brief Destructor.
-   */
-  virtual ~WWidgetItemImpl();
-};
+
+    class WLayoutItem;
+    class WWidget;
+
+    /*! \class WWidgetItemImpl Wt/WWidgetItemImpl.h Wt/WWidgetItemImpl.h
+     *  \brief An abstract base class for implementing layout managers.
+     *
+     * \sa WLayoutItem, WLayout
+     */
+    class WT_API WWidgetItemImpl : public WLayoutItemImpl
+    {
+        public:
+            /*! \brief Destructor.
+             */
+            virtual ~WWidgetItemImpl();
+    };
 
 }
 

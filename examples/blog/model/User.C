@@ -16,29 +16,33 @@
 DBO_INSTANTIATE_TEMPLATES(User)
 
 User::User()
-  : role(Visitor),
-    failedLoginAttempts(0)
+    : role(Visitor),
+      failedLoginAttempts(0)
 { }
 
 Posts User::latestPosts(int count) const
 {
-  return posts.find().where("state = ?").bind(Post::Published)
-    .orderBy("date desc")
-    .limit(count);
+    return posts.find().where("state = ?").bind(Post::Published)
+           .orderBy("date desc")
+           .limit(count);
 }
 
 Posts User::allPosts(Post::State state) const
 {
-  return posts.find().where("state = ?").bind(state)
-    .orderBy("date desc");
+    return posts.find().where("state = ?").bind(state)
+           .orderBy("date desc");
 }
 
-dbo::dbo_traits<User>::IdType User::stringToId(const std::string &s)
+dbo::dbo_traits<User>::IdType User::stringToId(const std::string & s)
 {
-  std::size_t pos = std::string::npos;
-  auto result = std::stoll(s, &pos);
-  if (pos != s.size())
-    return dbo::dbo_traits<User>::invalidId();
-  else
-    return result;
+    std::size_t pos = std::string::npos;
+    auto result = std::stoll(s, &pos);
+    if(pos != s.size())
+    {
+        return dbo::dbo_traits<User>::invalidId();
+    }
+    else
+    {
+        return result;
+    }
 }

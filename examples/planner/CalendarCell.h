@@ -15,21 +15,27 @@ using namespace Wt;
 
 class CalendarCell : public WContainerWidget
 {
-public:
-  CalendarCell();
+    public:
+        CalendarCell();
 
-  void update(const dbo::ptr<UserAccount>& user, const WDate& date);
-  
-  WDate date() {return date_; }
-  dbo::ptr<UserAccount> user() { return user_; }  
+        void update(const dbo::ptr<UserAccount> & user, const WDate & date);
 
-private:
-  WDate date_;
-  dbo::ptr<UserAccount> user_;
-  std::unique_ptr<WDialog> dialog_;
+        WDate date()
+        {
+            return date_;
+        }
+        dbo::ptr<UserAccount> user()
+        {
+            return user_;
+        }
 
-  void showEntryDialog();
-  void showAllEntriesDialog();
+    private:
+        WDate date_;
+        dbo::ptr<UserAccount> user_;
+        std::unique_ptr<WDialog> dialog_;
+
+        void showEntryDialog();
+        void showAllEntriesDialog();
 };
 
 #endif //CALENDAR_CELL_H_

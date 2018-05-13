@@ -6,9 +6,10 @@
 
 #include "Wt/WLayoutItem.h"
 
-namespace Wt {
+namespace Wt
+{
 
-WLayoutItem::~WLayoutItem()
-{ }
+    WLayoutItem::~WLayoutItem()
+    { }
 
 }
