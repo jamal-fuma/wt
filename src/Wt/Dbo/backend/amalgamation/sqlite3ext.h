@@ -103,7 +103,7 @@ struct sqlite3_api_routines
     void (*free_table)(char ** result);
     int (*get_autocommit)(sqlite3 *);
     void * (*get_auxdata)(sqlite3_context *,int);
-    int (*get_table)(sqlite3 *,const char *,char ** *,int *,int *,char **);
+    int (*get_table)(sqlite3 *,const char *,char ***,int *,int *,char **);
     int (*global_recover)(void);
     void (*interruptx)(sqlite3 *);
     sqlite_int64(*last_insert_rowid)(sqlite3 *);

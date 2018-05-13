@@ -190,6 +190,12 @@ namespace Wt
             updateChart(ChartUpdates::GLContext | ChartUpdates::GLTextures);
         }
 
+        void WCartesian3DChart::setCubeLinesPen(const WPen & pen)
+        {
+            cubeLinesPen_ = pen;
+            updateChart(ChartUpdates::GLContext);
+        }
+
         void WCartesian3DChart::setIntersectionLinesEnabled(bool enabled)
         {
             intersectionLinesEnabled_ = enabled;
@@ -382,10 +388,10 @@ namespace Wt
             const float vertexPos[12] =
             {
                 -1, 1, 0,
-                1, 1, 0,
-                -1, -1, 0,
-                1, -1, 0
-            };
+                    1, 1, 0,
+                    -1, -1, 0,
+                    1, -1, 0
+                };
             const float texCo[] =
             {
                 0, 1,

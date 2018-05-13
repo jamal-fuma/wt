@@ -129,6 +129,8 @@ namespace Wt
           hoverStyleClass_("Wt-filedropzone-hover"),
           acceptDrops_(true),
           acceptAttributes_(""),
+          dropIndicationEnabled_(false),
+          globalDropEnabled_(false),
           dropSignal_(this, "dropsignal"),
           requestSend_(this, "requestsend"),
           fileTooLarge_(this, "filetoolarge"),
@@ -412,18 +414,30 @@ namespace Wt
         WApplication * app = WApplication::instance();
         if(app->environment().ajax())
         {
-            if(updateFlags_.test(BIT_HOVERSTYLE_CHANGED))
+            if(updateFlags_.test(BIT_HOVERSTYLE_CHANGED) || all)
                 doJavaScript(jsRef() + ".configureHoverClass('" + hoverStyleClass_
                              + "');");
-            if(updateFlags_.test(BIT_ACCEPTDROPS_CHANGED))
+            if(updateFlags_.test(BIT_ACCEPTDROPS_CHANGED) || all)
                 doJavaScript(jsRef() + ".setAcceptDrops("
                              + (acceptDrops_ ? "true" : "false") + ");");
-            if(updateFlags_.test(BIT_FILTERS_CHANGED))
+            if(updateFlags_.test(BIT_FILTERS_CHANGED) || all)
                 doJavaScript(jsRef() + ".setFilters("
                              + jsStringLiteral(acceptAttributes_) + ");");
+            if(updateFlags_.test(BIT_DRAGOPTIONS_CHANGED) || all)
+            {
+                doJavaScript(jsRef() + ".setBodyAware("
+                             + (dropIndicationEnabled_ ? "true" : "false") + ");");
+                doJavaScript(jsRef() + ".setDropForward("
+                             + (globalDropEnabled_ ? "true" : "false") + ");");
+            }
             updateFlags_.reset();
         }
         WContainerWidget::updateDom(element, all);
+    }
+
+    std::string WFileDropWidget::renderRemoveJs(bool recursive)
+    {
+        return jsRef() + ".destructor();";
     }
 
     void WFileDropWidget::setHoverStyleClass(const std::string & className)
@@ -458,5 +472,46 @@ namespace Wt
         updateFlags_.set(BIT_FILTERS_CHANGED);
         repaint();
     }
+
+    void WFileDropWidget::setDropIndicationEnabled(bool enable)
+    {
+        if(enable == dropIndicationEnabled_)
+        {
+            return;
+        }
+        dropIndicationEnabled_ = enable;
+        if(!dropIndicationEnabled_ && globalDropEnabled_)
+        {
+            globalDropEnabled_ = false;
+        }
+        updateFlags_.set(BIT_DRAGOPTIONS_CHANGED);
+        repaint();
+    }
+
+    bool WFileDropWidget::dropIndicationEnabled() const
+    {
+        return dropIndicationEnabled_;
+    }
+
+    void WFileDropWidget::setGlobalDropEnabled(bool enable)
+    {
+        if(enable == globalDropEnabled_)
+        {
+            return;
+        }
+        if(!dropIndicationEnabled_ && enable)
+        {
+            throw std::exception();
+        }
+        globalDropEnabled_ = enable;
+        updateFlags_.set(BIT_DRAGOPTIONS_CHANGED);
+        repaint();
+    }
+
+    bool WFileDropWidget::globalDropEnabled() const
+    {
+        return globalDropEnabled_;
+    }
+
 
 }

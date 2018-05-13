@@ -126,7 +126,9 @@
     #endif  // HAS_REMOTE_API
 #else   // !_WIN32
     #include <unistd.h>
-    #include <wordexp.h>
+    #if !USE_OS_TZDB
+        #include <wordexp.h>
+    #endif // !USE_OS_TZDB
     #include <limits.h>
     #include <string.h>
     #if !USE_SHELL_API
@@ -1970,8 +1972,7 @@ namespace date
         {
             ttinfos_.push_back({seconds{info.tt_gmtoff},
                                 abbrev.c_str() + info.tt_abbrind,
-                                info.tt_isdst != 0
-                               });
+                                info.tt_isdst != 0});
         }
         auto i = 0u;
         if(transitions_.empty() || transitions_.front().timepoint != min_seconds)

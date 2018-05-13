@@ -188,6 +188,40 @@ namespace Wt
              */
             void setFilters(const std::string & acceptAttributes);
 
+            /*! \brief Highlight widget if a file is dragged anywhere on the page
+             *
+             * As soon as a drag enters anywhere on the page the hover-styleclass is
+             * applied, which can be useful to point the user to the correct place to
+             * drop the file. If not enabled, the style will only be applied when the
+             * file is dragged over the widget.
+             * This can be enabled for multiple dropwidgets if only one of them is
+             * visible at the same time.
+             *
+             * \sa setGlobalDropEnabled()
+             */
+            void setDropIndicationEnabled(bool enable);
+
+            /*! \brief Returns if the widget is highlighted for drags anywhere on the page
+             *
+             * \sa setDropIndicationEnabled()
+             */
+            bool dropIndicationEnabled() const;
+
+            /*! \brief Allow dropping the files anywhere on the page
+             *
+             * This only works if setDropIndicationEnabled() is enabled. If enabled,
+             * a drop anywhere on the page will be forwarded to this widget.
+             *
+             * \sa setDropIndicationEnabled()
+             */
+            void setGlobalDropEnabled(bool enable);
+
+            /*! \brief Returns if all drops are forwarded to this widget.
+             *
+             * \sa setGlobalDropEnabled
+             */
+            bool globalDropEnabled() const;
+
             /*! \brief The signal triggers if one or more files are dropped.
              */
             Signal<std::vector<File *> > & drop()
@@ -233,6 +267,7 @@ namespace Wt
             }
 
         protected:
+            virtual std::string renderRemoveJs(bool recursive) override;
             virtual void enableAjax() override;
             virtual void updateDom(DomElement & element, bool all) override;
 
@@ -257,6 +292,8 @@ namespace Wt
             std::string hoverStyleClass_;
             bool acceptDrops_;
             std::string acceptAttributes_;
+            bool dropIndicationEnabled_;
+            bool globalDropEnabled_;
 
             JSignal<std::string> dropSignal_;
             JSignal<int> requestSend_;
@@ -275,7 +312,8 @@ namespace Wt
             static const int BIT_HOVERSTYLE_CHANGED  = 0;
             static const int BIT_ACCEPTDROPS_CHANGED = 1;
             static const int BIT_FILTERS_CHANGED     = 2;
-            std::bitset<3> updateFlags_;
+            static const int BIT_DRAGOPTIONS_CHANGED   = 3;
+            std::bitset<4> updateFlags_;
 
             friend class WFileDropUploadResource;
     };

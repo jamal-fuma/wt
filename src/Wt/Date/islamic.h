@@ -842,7 +842,7 @@ CONSTCD11 inline day::day(unsigned d) NOEXCEPT :
     {
         return days{
             static_cast<days::rep>(static_cast<unsigned>(x)
-            - static_cast<unsigned>(y))};
+                                   - static_cast<unsigned>(y))};
     }
 
     CONSTCD11
@@ -888,17 +888,17 @@ CONSTCD11 inline month::month(unsigned m) NOEXCEPT :
     m_(static_cast<decltype(m_)>(m)) {}
     CONSTCD14 inline month & month::operator++() NOEXCEPT {if(++m_ == 13) m_ = 1; return *this;}
     CONSTCD14 inline month month::operator++(int) NOEXCEPT {auto tmp(*this); ++(*this); return tmp;}
-        CONSTCD14 inline month & month::operator--() NOEXCEPT {if(--m_ == 0) m_ = 12; return *this;}
-        CONSTCD14 inline month month::operator--(int) NOEXCEPT {auto tmp(*this); --(*this); return tmp;}
+    CONSTCD14 inline month & month::operator--() NOEXCEPT {if(--m_ == 0) m_ = 12; return *this;}
+    CONSTCD14 inline month month::operator--(int) NOEXCEPT {auto tmp(*this); --(*this); return tmp;}
 
-            CONSTCD14
-            inline
-            month &
-            month::operator+=(const months & m) NOEXCEPT
-        {
-            *this = *this + m;
-            return *this;
-        }
+    CONSTCD14
+    inline
+    month &
+    month::operator+=(const months & m) NOEXCEPT
+    {
+        *this = *this + m;
+        return *this;
+    }
 
     CONSTCD14
     inline
@@ -1215,7 +1215,7 @@ CONSTCD11 inline year::year(int y) NOEXCEPT :
     weekday::weekday_from_days(int z) NOEXCEPT
     {
         return static_cast<unsigned char>(static_cast<unsigned>(
-            z >= -4 ? (z+4) % 7 : (z+5) % 7 + 6));
+                                              z >= -4 ? (z+4) % 7 : (z+5) % 7 + 6));
     }
 
     CONSTCD11
@@ -1241,17 +1241,17 @@ CONSTCD11 inline year::year(int y) NOEXCEPT :
 
     CONSTCD14 inline weekday & weekday::operator++() NOEXCEPT {if(++wd_ == 7) wd_ = 0; return *this;}
     CONSTCD14 inline weekday weekday::operator++(int) NOEXCEPT {auto tmp(*this); ++(*this); return tmp;}
-        CONSTCD14 inline weekday & weekday::operator--() NOEXCEPT {if(wd_-- == 0) wd_ = 6; return *this;}
-        CONSTCD14 inline weekday weekday::operator--(int) NOEXCEPT {auto tmp(*this); --(*this); return tmp;}
+    CONSTCD14 inline weekday & weekday::operator--() NOEXCEPT {if(wd_-- == 0) wd_ = 6; return *this;}
+    CONSTCD14 inline weekday weekday::operator--(int) NOEXCEPT {auto tmp(*this); --(*this); return tmp;}
 
-            CONSTCD14
-            inline
-            weekday &
-            weekday::operator+=(const days & d) NOEXCEPT
-        {
-            *this = *this + d;
-            return *this;
-        }
+    CONSTCD14
+    inline
+    weekday &
+    weekday::operator+=(const days & d) NOEXCEPT
+    {
+        *this = *this + d;
+        return *this;
+    }
 
     CONSTCD14
     inline
@@ -1577,7 +1577,7 @@ CONSTCD11 inline weekday_last::weekday_last(const islamic::weekday & wd) NOEXCEP
     {
         return x.year() < y.year() ? true
         : (x.year() > y.year() ? false
-        : (x.month() < y.month()));
+           : (x.month() < y.month()));
     }
 
     CONSTCD11
@@ -1724,7 +1724,7 @@ CONSTCD11 inline weekday_last::weekday_last(const islamic::weekday & wd) NOEXCEP
     {
         return x.month() < y.month() ? true
         : (x.month() > y.month() ? false
-        : (x.day() < y.day()));
+           : (x.day() < y.day()));
     }
 
     CONSTCD11
@@ -2060,7 +2060,7 @@ CONSTCD11 inline month_day_last::month_day_last(const islamic::month & m) NOEXCE
     {
         return x.year() < y.year() ? true
         : (x.year() > y.year() ? false
-        : (x.month_day_last() < y.month_day_last()));
+           : (x.month_day_last() < y.month_day_last()));
     }
 
     CONSTCD11
@@ -2295,9 +2295,9 @@ CONSTCD11 inline month_day_last::month_day_last(const islamic::month & m) NOEXCE
     {
         return x.year() < y.year() ? true
         : (x.year() > y.year() ? false
-        : (x.month() < y.month() ? true
-        : (x.month() > y.month() ? false
-        : (x.day() < y.day()))));
+           : (x.month() < y.month() ? true
+              : (x.month() > y.month() ? false
+                 : (x.day() < y.day()))));
     }
 
     CONSTCD11
@@ -2345,9 +2345,9 @@ CONSTCD11 inline month_day_last::month_day_last(const islamic::month & m) NOEXCE
     year_month_day::from_days(days dp) NOEXCEPT
     {
         static_assert(std::numeric_limits<unsigned>::digits >= 18,
-        "This algorithm has not been ported to a 16 bit unsigned integer");
+                      "This algorithm has not been ported to a 16 bit unsigned integer");
         static_assert(std::numeric_limits<int>::digits >= 20,
-        "This algorithm has not been ported to a 16 bit signed integer");
+                      "This algorithm has not been ported to a 16 bit signed integer");
         auto const z = dp.count() + 492148;
         auto const era = (z >= 0 ? z : z - 10630) / 10631;
         auto const doe = static_cast<unsigned>(z - era * 10631);         // [0, 10630]

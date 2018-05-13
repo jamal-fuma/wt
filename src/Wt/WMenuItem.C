@@ -95,6 +95,7 @@ namespace Wt
     {
         assert(!oContents_ && !uContents_);
         uContents_ = std::move(contents);
+        oContents_ = uContents_.get();
         loadPolicy_ = policy;
         if(uContents_ && loadPolicy_ != ContentLoading::NextLevel)
         {
@@ -527,30 +528,24 @@ namespace Wt
 
     WWidget * WMenuItem::contents() const
     {
-        if(oContents_)
-        {
-            return oContents_.get();
-        }
-        else
-        {
-            return uContents_.get();
-        }
+        return oContents_.get();
     }
 
     WWidget * WMenuItem::contentsInStack() const
     {
-        if(oContents_)
+        if(oContentsContainer_)
         {
-            return oContents_.get();
+            return oContentsContainer_.get();
         }
         else
         {
-            return oContentsContainer_.get();
+            return oContents_.get();
         }
     }
 
     std::unique_ptr<WWidget> WMenuItem::removeContents()
     {
+        auto contents = oContents_.get();
         oContents_.reset();
         WWidget * c = contentsInStack();
         if(c)
@@ -559,7 +554,7 @@ namespace Wt
             std::unique_ptr<WWidget> w = c->parent()->removeWidget(c);
             if(oContentsContainer_)
             {
-                return oContentsContainer_->removeWidget(oContents_.get());
+                return oContentsContainer_->removeWidget(contents);
             }
             else
             {
@@ -593,7 +588,6 @@ namespace Wt
             }
             else
             {
-                oContents_ = uContents_.get();
                 return std::move(uContents_);
             }
         }

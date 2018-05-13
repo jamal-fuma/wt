@@ -701,7 +701,7 @@ namespace Wt
                     }
                 }
 
-                void haveBodyData(const std::string & text)
+                void haveBodyData(std::string text)
                 {
                     if(bodyDataReceived_.isConnected())
                     {
@@ -726,7 +726,7 @@ namespace Wt
                     headersReceived_.emit(response_);
                 }
 
-                void emitBodyReceived(const std::string & text)
+                void emitBodyReceived(std::string text)
                 {
                     bodyDataReceived_.emit(text);
                 }
@@ -958,7 +958,7 @@ namespace Wt
         }
 
         bool Client::get(const std::string & url,
-                         const std::vector<Message::Header> & headers)
+                         const std::vector<Message::Header> headers)
         {
             Message m(headers);
             return request(Http::Method::Get, url, m);

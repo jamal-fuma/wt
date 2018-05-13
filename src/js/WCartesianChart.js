@@ -515,10 +515,10 @@ WT_DECLARE_WT_MEMBER
 
    // Check if the given area is within the bounds of the chart's area + some slack.
    function isWithinBounds(area) {
-     return top(area) <= top(configArea()) + BOUNDS_SLACK &&
-	    bottom(area) >= bottom(configArea()) - BOUNDS_SLACK &&
-	    left(area) <= left(configArea()) + BOUNDS_SLACK &&
-	    right(area) >= right(configArea()) - BOUNDS_SLACK;
+     return top(area) <= top(insideArea()) + BOUNDS_SLACK &&
+	    bottom(area) >= bottom(insideArea()) - BOUNDS_SLACK &&
+	    left(area) <= left(insideArea()) + BOUNDS_SLACK &&
+	    right(area) >= right(insideArea()) - BOUNDS_SLACK;
    }
 
    function enforceLimits(flags) {
@@ -633,7 +633,7 @@ WT_DECLARE_WT_MEMBER
 	    }, TOOLTIP_TIMEOUT);
 	 }
 
-	 if (showCrosshair() && paintEnabled) {
+	 if (dragPreviousXY === null && showCrosshair() && paintEnabled) {
 	    crosshair = [c.x,c.y];
 	    rqAnimFrameThrottled(repaintOverlay);
 	 }
@@ -721,10 +721,8 @@ WT_DECLARE_WT_MEMBER
 	 overlay = undefined;
       }
 
-      if (!crosshair) {
-	 crosshair = toDisplayCoord([(left(modelArea()) + right(modelArea())) / 2,
-				     (top(modelArea()) + bottom(modelArea())) / 2]);
-      }
+      crosshair = [(left(configArea()) + right(configArea())) / 2,
+                   (top(configArea()) + bottom(configArea())) / 2];
    }
 
    this.mouseWheel = function(o, event) {
@@ -865,7 +863,8 @@ WT_DECLARE_WT_MEMBER
    };
 
    function animate(ts, dt) {
-      if (!animating) return;
+      if (!animating)
+        return;
       var now = Date.now();
       if (isUndefined(dt)) {
 	 dt = now - lastDate;

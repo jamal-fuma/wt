@@ -20,7 +20,6 @@ namespace Wt
         -> std::function<void(Args...)>
         {
             observing_ptr<ClassType> p(dynamic_cast<ClassType *>(this));
-
             return [p, f](Args... a)
             {
                 if(p.get())
@@ -35,7 +34,6 @@ namespace Wt
         -> std::function<void(Args...)>
         {
             observing_ptr<const ClassType> p(dynamic_cast<const ClassType *>(this));
-
             return [p, f](Args... a)
             {
                 if(p.get())
@@ -51,7 +49,6 @@ namespace Wt
                                     std::declval<Args>()...))(FirstArg, Args...)>
         {
             observing_ptr<const observable> p(this);
-
             return [p, f](FirstArg a1, Args... a)
             {
                 if(p.get())

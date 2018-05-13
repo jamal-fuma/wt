@@ -439,7 +439,7 @@ namespace iso_week
     weekday::weekday_from_days(int z) NOEXCEPT
     {
         return to_iso_encoding(static_cast<unsigned char>(static_cast<unsigned>(
-            z >= -4 ? (z+4) % 7 : (z+5) % 7 + 6)));
+                                   z >= -4 ? (z+4) % 7 : (z+5) % 7 + 6)));
     }
 
     CONSTCD11
@@ -472,16 +472,16 @@ namespace iso_week
 
     inline weekday & weekday::operator++() NOEXCEPT {if(++wd_ == 8) wd_ = 1; return *this;}
     inline weekday weekday::operator++(int) NOEXCEPT {auto tmp(*this); ++(*this); return tmp;}
-        inline weekday & weekday::operator--() NOEXCEPT {if(wd_-- == 1) wd_ = 7; return *this;}
-        inline weekday weekday::operator--(int) NOEXCEPT {auto tmp(*this); --(*this); return tmp;}
+    inline weekday & weekday::operator--() NOEXCEPT {if(wd_-- == 1) wd_ = 7; return *this;}
+    inline weekday weekday::operator--(int) NOEXCEPT {auto tmp(*this); --(*this); return tmp;}
 
-            inline
-            weekday &
-            weekday::operator+=(const days & d) NOEXCEPT
-        {
-            *this = *this + d;
-            return *this;
-        }
+    inline
+    weekday &
+    weekday::operator+=(const days & d) NOEXCEPT
+    {
+        *this = *this + d;
+        return *this;
+    }
 
     inline
     weekday &
@@ -968,7 +968,7 @@ CONSTCD11 inline year::year(int y) NOEXCEPT :
     {
         return x.year() < y.year() ? true
         : (x.year() > y.year() ? false
-        : (x.weeknum() < y.weeknum()));
+           : (x.weeknum() < y.weeknum()));
     }
 
     CONSTCD11
@@ -1205,7 +1205,7 @@ CONSTCD11 inline year::year(int y) NOEXCEPT :
     {
         return x.weeknum() < y.weeknum() ? true
         : (x.weeknum() > y.weeknum() ? false
-        : (static_cast<unsigned>(x.weekday()) < static_cast<unsigned>(y.weekday())));
+           : (static_cast<unsigned>(x.weekday()) < static_cast<unsigned>(y.weekday())));
     }
 
     CONSTCD11
@@ -1410,7 +1410,7 @@ CONSTCD11 inline year::year(int y) NOEXCEPT :
     {
         return x.year() < y.year() ? true
         : (x.year() > y.year() ? false
-        : (static_cast<unsigned>(x.weekday()) < static_cast<unsigned>(y.weekday())));
+           : (static_cast<unsigned>(x.weekday()) < static_cast<unsigned>(y.weekday())));
     }
 
     CONSTCD11
@@ -1555,7 +1555,7 @@ CONSTCD11 inline year::year(int y) NOEXCEPT :
     bool
     year_weeknum_weekday::ok() const NOEXCEPT
     {
-        return y_.ok() && wd_.ok() && iso_week::weeknum{1u} <= wn_ && wn_ <= year_lastweek{y_} .weeknum();
+        return y_.ok() && wd_.ok() && iso_week::weeknum{1u} <= wn_ && wn_ <= year_lastweek{y_}.weeknum();
     }
 
     CONSTCD14
@@ -1565,7 +1565,7 @@ CONSTCD11 inline year::year(int y) NOEXCEPT :
     {
         const auto dp = sys_days{d};
         const auto wd = iso_week::weekday{dp};
-        auto y = date::year_month_day{dp + days{3}} .year();
+        auto y = date::year_month_day{dp + days{3}}.year();
         auto start = sys_days((y - date::years{1})/date::dec/date::thu[date::last]) + (mon-thu);
         if(dp < start)
         {
@@ -1600,9 +1600,9 @@ CONSTCD11 inline year::year(int y) NOEXCEPT :
     {
         return x.year() < y.year() ? true
         : (x.year() > y.year() ? false
-        : (x.weeknum() < y.weeknum() ? true
-        : (x.weeknum() > y.weeknum() ? false
-        : (static_cast<unsigned>(x.weekday()) < static_cast<unsigned>(y.weekday())))));
+           : (x.weeknum() < y.weeknum() ? true
+              : (x.weeknum() > y.weeknum() ? false
+                 : (static_cast<unsigned>(x.weekday()) < static_cast<unsigned>(y.weekday())))));
     }
 
     CONSTCD11

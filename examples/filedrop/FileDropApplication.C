@@ -27,6 +27,8 @@ FileDropApplication::FileDropApplication(const Wt::WEnvironment & env)
     useStyleSheet("style.css");
     root()->addWidget(Wt::cpp14::make_unique<Wt::WText>("<h1>Try dropping a file in the widget below</h1>"));
     drop_ = root()->addWidget(Wt::cpp14::make_unique<Wt::WFileDropWidget>());
+    drop_->setDropIndicationEnabled(true);
+    // drop_->setGlobalDropEnabled(true);
     drop_->drop().connect(this, &FileDropApplication::handleDrop);
     drop_->newUpload().connect(this,&FileDropApplication::updateProgressListener);
     drop_->uploaded().connect(this, &FileDropApplication::saveFile);

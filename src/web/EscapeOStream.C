@@ -54,15 +54,15 @@ namespace Wt
     {
         std::vector<EscapeOStream::Entry>(),
         std::vector<EscapeOStream::Entry>(htmlAttributeEntries_,
-        htmlAttributeEntries_ + 3),
+                                          htmlAttributeEntries_ + 3),
         std::vector<EscapeOStream::Entry>(jsStringLiteralSQuoteEntries_,
-        jsStringLiteralSQuoteEntries_ + 5),
+                                          jsStringLiteralSQuoteEntries_ + 5),
         std::vector<EscapeOStream::Entry>(jsStringLiteralDQuoteEntries_,
-        jsStringLiteralDQuoteEntries_ + 5),
+                                          jsStringLiteralDQuoteEntries_ + 5),
         std::vector<EscapeOStream::Entry>(plainTextEntries_,
-        plainTextEntries_ + 3),
+                                          plainTextEntries_ + 3),
         std::vector<EscapeOStream::Entry>(plainTextNewLinesEntries_,
-        plainTextNewLinesEntries_ + 4)
+                                          plainTextNewLinesEntries_ + 4)
     };
 
     const std::string EscapeOStream::standardSetsSpecial_[] =

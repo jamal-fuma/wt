@@ -1138,7 +1138,7 @@ BOOST_AUTO_TEST_CASE(dbo_test7)
         BOOST_REQUIRE(result == "dima ' ? ");
     }
 #endif // ORACLE
-#endif //FIREBIRD
+#endif //FIREBIRD 
     int aId = -1;
     {
         dbo::Transaction t(*session_);

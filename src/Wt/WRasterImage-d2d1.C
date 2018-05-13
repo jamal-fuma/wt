@@ -3,7 +3,9 @@
  *
  * See the LICENSE file for terms of use.
  */
+
 #include "Wt/WRasterImage.h"
+
 #include "Wt/FontSupport.h"
 #include "Wt/WBrush.h"
 #include "Wt/WException.h"
@@ -15,10 +17,14 @@
 #include "Wt/WString.h"
 #include "Wt/WTransform.h"
 #include "Wt/Http/Response.h"
+
 #include "UriUtils.h"
+
 #include <cmath>
+
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
+
 // Direct2D
 #include <d2d1.h>
 #include <d2d1helper.h>
@@ -26,13 +32,18 @@
 #include <wincodec.h>
 // DirectWrite
 #include <Dwrite.h>
+
 #include <Shlwapi.h> // for SHCreateMemStream
+
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
 #endif
+
 // #define DEBUG_D2D
+
 namespace
 {
+
     template <class T> void SafeRelease(T *& ppT)
     {
         if(ppT)
@@ -41,18 +52,22 @@ namespace
             ppT = NULL;
         }
     }
+
     D2D1_COLOR_F fromWColor(const Wt::WColor & color)
     {
         return D2D1::ColorF(color.red()/255.0f, color.green()/255.0f, color.blue()/255.0f, color.alpha()/255.0f);
     }
+
     D2D1_POINT_2F fromPointF(const Wt::WPointF & point)
     {
         return D2D1::Point2F(static_cast<FLOAT>(point.x()), static_cast<FLOAT>(point.y()));
     }
+
     bool fequal(double d1, double d2)
     {
         return std::fabs(d1 - d2) < 1E-5;
     }
+
     enum DrawTag1
     {
         NO_DRAW_TAG = 0,
@@ -65,6 +80,7 @@ namespace
         DRAW_BITMAP = 7,
         SET_ANTIALIAS_MODE = 8
     };
+
     enum DrawTag2
     {
         APPLY_TRANSFORM = 1,
@@ -72,9 +88,12 @@ namespace
         DRAW_PLAIN_PATH = 3
     };
 }
+
 namespace Wt
 {
+
     LOGGER("WRasterImage");
+
     class WRasterImage::Impl
     {
         public:
@@ -96,6 +115,7 @@ namespace Wt
                 clipLayerActive_(false),
                 fontSupport_(0)
             {}
+
             ~Impl()
             {
                 SafeRelease(fillBrush_);
@@ -110,9 +130,11 @@ namespace Wt
                 currentFontMatch_ = FontSupport::FontMatch();
                 delete fontSupport_;
             }
+
             unsigned w_, h_;
             int drawingCount_;
             std::string type_;
+
             ID2D1Factory * factory_;
             ID2D1RenderTarget * rt_;
             IWICImagingFactory * wicFactory_;
@@ -125,11 +147,14 @@ namespace Wt
             ID2D1PathGeometry * clipGeometry_;
             ID2D1Layer * clipLayer_;
             bool clipLayerActive_;
+
             FontSupport * fontSupport_;
             FontSupport::FontMatch currentFontMatch_;
+
             void applyTransform(const WTransform & t);
             void setTransform(const WTransform & t);
             void drawPlainPath(ID2D1PathGeometry * p, const WPainterPath & path, bool filled);
+
             void beginDraw()
             {
                 ++drawingCount_;
@@ -138,6 +163,7 @@ namespace Wt
                     rt_->BeginDraw();
                 }
             }
+
             void endDraw()
             {
                 --drawingCount_;
@@ -155,6 +181,7 @@ namespace Wt
                     }
                 }
             }
+
             void resumeDraw()
             {
                 if(drawingCount_ == 0)
@@ -167,6 +194,7 @@ namespace Wt
                     rt_->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), clipGeometry_), clipLayer_);
                 }
             }
+
             void suspendDraw()
             {
                 if(drawingCount_ == 0)
@@ -188,6 +216,7 @@ namespace Wt
 #endif
                 }
             }
+
             class DrawTagGuard
             {
                 public:
@@ -208,6 +237,7 @@ namespace Wt
                             oldTag_ = tag2;
                         }
                     }
+
                     ~DrawTagGuard()
                     {
                         D2D1_TAG tag1, tag2;
@@ -221,12 +251,14 @@ namespace Wt
                             impl_->rt_->SetTags(tag1, oldTag_);
                         }
                     }
+
                 private:
                     WRasterImage::Impl * impl_;
                     int tagId_;
                     D2D1_TAG oldTag_;
             };
     };
+
 #ifdef DEBUG_D2D
     #define GUARD_TAG(tag) Impl::DrawTagGuard _tag_guard(impl_, 1, tag)
     #define GUARD_TAG_IMPL(tag) Impl::DrawTagGuard _tag_guard_impl(this, 2, tag)
@@ -234,6 +266,7 @@ namespace Wt
     #define GUARD_TAG(...)
     #define GUARD_TAG_IMPL(...)
 #endif // DEBUG_D2D
+
     WRasterImage::WRasterImage(const std::string & type,
                                const WLength & width, const WLength & height)
         : WResource(),
@@ -321,6 +354,7 @@ namespace Wt
             throw WException(std::string("Error when initializing D2D: HRESULT ") + boost::lexical_cast<std::string>(hr));
         }
     }
+
     void WRasterImage::clear()
     {
         impl_->beginDraw();
@@ -328,21 +362,25 @@ namespace Wt
         impl_->rt_->Clear();
         impl_->endDraw();
     }
+
     WRasterImage::~WRasterImage()
     {
         beingDeleted();
         impl_.reset();
         CoUninitialize();
     }
+
     void WRasterImage::addFontCollection(const std::string & directory,
                                          bool recursive)
     {
         impl_->fontSupport_->addFontCollection(directory, recursive);
     }
+
     WFlags<WPaintDevice::FeatureFlag> WRasterImage::features() const
     {
         return FeatureFlag::FontMetrics | FeatureFlag::WordWrap;
     }
+
     void WRasterImage::init()
     {
         if(!impl_->w_ || !impl_->h_)
@@ -359,6 +397,7 @@ namespace Wt
                    PainterChangeFlag::Font |
                    PainterChangeFlag::Hints);
     }
+
     void WRasterImage::done()
     {
         if(impl_->clipLayerActive_)
@@ -367,6 +406,7 @@ namespace Wt
         }
         impl_->endDraw();
     }
+
     void WRasterImage::Impl::applyTransform(const WTransform & t)
     {
         GUARD_TAG_IMPL(APPLY_TRANSFORM);
@@ -381,6 +421,7 @@ namespace Wt
             static_cast<FLOAT>(t.dy()));
         rt_->SetTransform(currentMatrix * matrix);
     }
+
     void WRasterImage::Impl::setTransform(const WTransform & t)
     {
         GUARD_TAG_IMPL(SET_TRANSFORM);
@@ -393,6 +434,7 @@ namespace Wt
             static_cast<FLOAT>(t.dy()));
         rt_->SetTransform(matrix);
     }
+
     void WRasterImage::setChanged(WFlags<PainterChangeFlag> flags)
     {
         HRESULT hr = S_OK;
@@ -594,6 +636,7 @@ namespace Wt
             }
         }
     }
+
     void WRasterImage::drawArc(const WRectF & rect,
                                double startAngle, double spanAngle)
     {
@@ -649,6 +692,7 @@ namespace Wt
         }
         SafeRelease(path);
     }
+
     void WRasterImage::drawImage(const WRectF & rect, const std::string & imgUri,
                                  int imgWidth, int imgHeight,
                                  const WRectF & srect)
@@ -726,6 +770,7 @@ namespace Wt
         );
         SafeRelease(bitmap);
     }
+
     void WRasterImage::drawLine(double x1, double y1, double x2, double y2)
     {
         GUARD_TAG(DRAW_LINE);
@@ -735,10 +780,12 @@ namespace Wt
                                            static_cast<FLOAT>(y2)),
                              impl_->strokeBrush_, impl_->lineWidth_, impl_->stroke_);
     }
+
     void WRasterImage::drawRect(const WRectF & rect)
     {
         drawPath(rect.toPath());
     }
+
     void WRasterImage::drawPath(const WPainterPath & path)
     {
         GUARD_TAG(DRAW_PATH);
@@ -757,6 +804,7 @@ namespace Wt
             }
         }
     }
+
     void WRasterImage::setPixel(int x, int y, const WColor & c)
     {
         if(painter_)
@@ -775,6 +823,7 @@ namespace Wt
         buffer[3] = c.alpha();
         SafeRelease(lock);
     }
+
     void WRasterImage::getPixels(void * data)
     {
         impl_->suspendDraw();
@@ -785,6 +834,7 @@ namespace Wt
         }
         impl_->resumeDraw();
     }
+
     WColor WRasterImage::getPixel(int x, int y)
     {
         impl_->suspendDraw();
@@ -798,6 +848,7 @@ namespace Wt
         impl_->resumeDraw();
         return WColor(data[0], data[1], data[2], data[3]);
     }
+
     void WRasterImage::Impl::drawPlainPath(ID2D1PathGeometry * p, const WPainterPath & path, bool filled)
     {
         HRESULT hr = S_OK;
@@ -909,6 +960,7 @@ namespace Wt
         hr = sink->Close();
         SafeRelease(sink);
     }
+
     void WRasterImage::drawText(const WRectF & rect,
                                 WFlags<AlignmentFlag> flags,
                                 TextFlag textFlag,
@@ -974,15 +1026,18 @@ namespace Wt
             D2D1_DRAW_TEXT_OPTIONS_NONE);
         SafeRelease(textLayout);
     }
+
     WTextItem WRasterImage::measureText(const WString & text, double maxWidth,
                                         bool wordWrap)
     {
         return impl_->fontSupport_->measureText(painter()->font(), text, maxWidth, wordWrap);
     }
+
     WFontMetrics WRasterImage::fontMetrics()
     {
         return impl_->fontSupport_->fontMetrics(painter()->font());
     }
+
     class IStreamToOStream : public IStream
     {
         public:
@@ -991,6 +1046,7 @@ namespace Wt
                 refcount_(1)
             {
             }
+
             virtual HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void ** ppvObject)
             {
                 if(iid == __uuidof(IUnknown)
@@ -1006,10 +1062,12 @@ namespace Wt
                     return E_NOINTERFACE;
                 }
             }
+
             virtual ULONG STDMETHODCALLTYPE AddRef(void)
             {
                 return (ULONG)InterlockedIncrement(&refcount_);
             }
+
             virtual ULONG STDMETHODCALLTYPE Release(void)
             {
                 ULONG res = (ULONG)InterlockedDecrement(&refcount_);
@@ -1019,10 +1077,12 @@ namespace Wt
                 }
                 return res;
             }
+
             virtual HRESULT STDMETHODCALLTYPE Read(void * pv, ULONG cb, ULONG * pcbRead)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE Write(void const * pv, ULONG cb, ULONG * pcbWritten)
             {
                 os_.write((const char *)pv, cb);
@@ -1032,48 +1092,59 @@ namespace Wt
                 }
                 return S_OK;
             }
+
             virtual HRESULT STDMETHODCALLTYPE SetSize(ULARGE_INTEGER)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE CopyTo(IStream *, ULARGE_INTEGER, ULARGE_INTEGER *,
                     ULARGE_INTEGER *)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE Commit(DWORD)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE Revert(void)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE LockRegion(ULARGE_INTEGER, ULARGE_INTEGER, DWORD)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE UnlockRegion(ULARGE_INTEGER, ULARGE_INTEGER, DWORD)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE Clone(IStream **)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE Seek(LARGE_INTEGER liDistanceToMove, DWORD dwOrigin,
                                                    ULARGE_INTEGER * lpNewFilePointer)
             {
                 return E_NOTIMPL;
             }
+
             virtual HRESULT STDMETHODCALLTYPE Stat(STATSTG * pStatstg, DWORD grfStatFlag)
             {
                 return E_NOTIMPL;
             }
+
         private:
             std::ostream & os_;
             LONG refcount_;
     };
+
     void WRasterImage::handleRequest(const Http::Request & request,
                                      Http::Response & response)
     {
@@ -1131,4 +1202,5 @@ namespace Wt
         SafeRelease(encoder);
         SafeRelease(istream);
     }
+
 }

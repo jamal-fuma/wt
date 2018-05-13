@@ -2397,7 +2397,7 @@ SQLITE_API int sqlite3_busy_timeout(sqlite3 *, int ms);
 SQLITE_API int sqlite3_get_table(
     sqlite3 * db,         /* An open database */
     const char * zSql,    /* SQL to be evaluated */
-    char ** *pazResult,   /* Results of the query */
+    char *** pazResult,   /* Results of the query */
     int * pnRow,          /* Number of result rows written here */
     int * pnColumn,       /* Number of result columns written here */
     char ** pzErrmsg      /* Error msg written here */

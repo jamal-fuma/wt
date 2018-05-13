@@ -200,11 +200,11 @@ BOOST_AUTO_TEST_CASE(EventDecodeTest_negativeTouchId)
     BOOST_REQUIRE(jsEvent.changedTouches.size() == 1);
     BOOST_REQUIRE(jsEvent.targetTouches.size() == 1);
     for(const Wt::Touch & touch :
-{
-    jsEvent.touches[0],
-                        jsEvent.changedTouches[0],
-                        jsEvent.targetTouches[0]
-    })
+            {
+                jsEvent.touches[0],
+                jsEvent.changedTouches[0],
+                jsEvent.targetTouches[0]
+            })
     {
         BOOST_REQUIRE(Wt::WPointF(touch.window()) == Wt::WPointF(Wt::Coordinates(322,75)));
         BOOST_REQUIRE(Wt::WPointF(touch.document()) == Wt::WPointF(Wt::Coordinates(322,91)));

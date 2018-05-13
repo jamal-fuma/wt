@@ -41,7 +41,7 @@ class PostAllExample : public Wt::WApplication
 
         void updateMsg(Wt::WString msg)
         {
-            lastMsg_->setText(Wt::WString{"Last received message: {1}"} .arg(msg));
+            lastMsg_->setText(Wt::WString{"Last received message: {1}"}.arg(msg));
         }
 
     private:

@@ -243,7 +243,7 @@ enum blob_get_result {blb_got_fragment = -1, blb_got_eof = 0, blb_got_full_segme
 
 typedef struct blobcallback
 {
-    short(*blob_get_segment)
+    short (*blob_get_segment)
     (void * hnd, ISC_UCHAR * buffer, ISC_USHORT buf_size, ISC_USHORT * result_len);
     void    *   blob_handle;
     ISC_LONG    blob_number_segments;

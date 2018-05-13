@@ -1070,6 +1070,11 @@ namespace Wt
                 executeSql("SET sql_mode='ANSI_QUOTES,REAL_AS_FLOAT'");
                 executeSql("SET default_storage_engine=INNODB;");
                 executeSql("SET NAMES 'utf8mb4';");
+                const std::vector<std::string> & statefulSql = getStatefulSql();
+                for(std::size_t i = 0; i < statefulSql.size(); ++i)
+                {
+                    executeSql(statefulSql[i]);
+                }
             }
 
             void MySQL::checkConnection()

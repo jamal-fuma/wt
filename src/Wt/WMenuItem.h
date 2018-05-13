@@ -396,7 +396,7 @@ namespace Wt
 
             ContentLoading loadPolicy_;
             std::unique_ptr<WWidget> uContents_; // contents not added to the widget tree
-            observing_ptr<WWidget> oContents_;   // contents in widget tree
+            observing_ptr<WWidget> oContents_;   // always points to contents
             std::unique_ptr<WContainerWidget> uContentsContainer_;
             observing_ptr<WContainerWidget> oContentsContainer_;
 

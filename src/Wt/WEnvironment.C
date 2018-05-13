@@ -282,6 +282,7 @@ namespace Wt
                 result = ips[i];
                 boost::trim(result);
                 if(!result.empty()
+                        && !boost::starts_with(result, "127.")
                         && !boost::starts_with(result, "10.")
                         && !boost::starts_with(result, "172.16.")
                         && !boost::starts_with(result, "192.168."))

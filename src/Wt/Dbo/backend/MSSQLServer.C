@@ -83,7 +83,7 @@ namespace Wt
                 {
                     return
                         std::wstring_convert<
-                        std::codecvt_utf8_utf16<char16_t>, char16_t> {} .from_bytes(str.data());
+                        std::codecvt_utf8_utf16<char16_t>, char16_t> {}.from_bytes(str.data());
                 }
 #endif // WT_WIN32
 
