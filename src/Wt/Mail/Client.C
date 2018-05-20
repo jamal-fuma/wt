@@ -34,6 +34,9 @@ namespace Wt
 
         class Client::Impl
         {
+            private:
+                asio::io_service io_service_;
+                tcp::socket socket_;
             public:
                 enum class ReplyCode
                 {
@@ -185,10 +188,6 @@ namespace Wt
                     }
                     return -1; // Not reachable
                 }
-
-            private:
-                asio::io_service io_service_;
-                tcp::socket socket_;
         };
 
         Client::Client(const std::string & selfHost)
