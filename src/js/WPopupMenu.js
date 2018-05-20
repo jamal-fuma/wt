@@ -197,9 +197,9 @@ WT_DECLARE_WT_MEMBER
        el.style.display = '';
        el.style.left = '';
        el.style.top = '';
-       $(document).unbind('mousedown', onDocumentDown);     
+       $(document).unbind('mousedown', onDocumentDown);
        unbindDocumentClick();
-       $(document).unbind('keydown', onDocumentKeyDown);     
+       $(document).unbind('keydown', onDocumentKeyDown);
      } else {
        setTimeout(function() {
 	   $(document).bind('mousedown', onDocumentDown);

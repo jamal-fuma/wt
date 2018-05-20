@@ -95,7 +95,7 @@ function(WT, element) {
     var cachedWidth, cachedHeight; //useful to not query offsetWidth twice
 
     var onScroll = function() {
-        if ((cachedWidth = element.offsetWidth) != lastWidth || 
+        if ((cachedWidth = element.offsetWidth) != lastWidth ||
 	    (cachedHeight = element.offsetHeight) != lastHeight) {
             dirty = true;
 

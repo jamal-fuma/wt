@@ -191,7 +191,7 @@ WT_DECLARE_WT_MEMBER
       else
 	 return p.x >= left(rect) && p.x <= right(rect) && p.y > top(rect) - borderSize / 2 && p.y < top(rect) + borderSize / 2;
    }
-   
+
    function onRightBorder(p, rect, borderSize) {
       if (isHorizontal())
 	 return p.y >= top(rect) && p.y <= bottom(rect) && p.x > right(rect) - borderSize / 2 && p.x < right(rect) + borderSize / 2;

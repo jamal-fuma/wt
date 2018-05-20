@@ -21,14 +21,14 @@ WT_DECLARE_WT_MEMBER
        var flexGrowProp = WT.styleAttribute('flex-grow');
        for (var i = 0; i < children.length; ++i) {
 	 var c = children[i];
-	 if (c.style.display == 'none' || 
+	 if (c.style.display == 'none' ||
 	     $(c).hasClass('out') ||
 	     c.className == 'resize-sensor')
 	   continue;
 
 	 var flg = c.getAttribute('flg');
 	 if (flg === '0')
-	   continue; 
+	   continue;
 
 	 var flexGrow = WT.css(c, flexGrowProp);
 	 totalStretch += parseFloat(flexGrow);
@@ -36,7 +36,7 @@ WT_DECLARE_WT_MEMBER
 
        for (var i = 0; i < children.length; ++i) {
 	 var c = children[i];
-	 if (c.style.display == 'none' || 
+	 if (c.style.display == 'none' ||
 	     $(c).hasClass('out') ||
 	     c.className == 'resize-sensor')
 	   continue;

@@ -176,7 +176,7 @@ WT_DECLARE_WT_MEMBER
    /*const*/ var TRANSFORM_CHANGED_TIMEOUT = 250; // ms
    /*const*/ var TOOLTIP_TIMEOUT = 500; // ms
    /*const*/ var TOOLTIP_HIDE_DELAY = 200; // ms
-   
+
    /*const*/ var FRICTION_FACTOR = 0.003, // Determines how strongly the speed decreases, when animating
        SPRING_CONSTANT = 0.0002, // How strongly the spring pulls, relative to how extended it is
        RESISTANCE_FACTOR = 0.07, // How strongly the spring resists movement, when dragging
@@ -296,7 +296,7 @@ WT_DECLARE_WT_MEMBER
 
    var crosshair = null;
 
-   var paintEnabled = true; 
+   var paintEnabled = true;
    var dragPreviousXY = null;
    var touches = [];
    var singleTouch = false;
@@ -385,7 +385,7 @@ WT_DECLARE_WT_MEMBER
    function transformedInsideChartArea() {
       return mult(combinedTransform(), insideArea());
    }
-   
+
 
    function toModelCoord(p, noTransform) {
       if (isUndefined(noTransform)) noTransform = false;
@@ -406,7 +406,7 @@ WT_DECLARE_WT_MEMBER
       return [modelArea()[0] + u[X] * modelArea()[2],
 	      modelArea()[1] + u[Y] * modelArea()[3]];
    }
-   
+
    function toDisplayCoord(p, noTransform) {
      if (isUndefined(noTransform))
         noTransform = false;
@@ -499,7 +499,7 @@ WT_DECLARE_WT_MEMBER
       if (textY === '-0.00') textY = '0.00';
       ctx.fillText("("+textX+","+textY+")", right(configArea()) - coordinateOverlayPadding()[0],
 	    top(configArea()) + coordinateOverlayPadding()[1]);
-      
+
       if (ctx.setLineDash) {
 	 ctx.setLineDash([1,2]);
       }
@@ -582,7 +582,7 @@ WT_DECLARE_WT_MEMBER
    function loadTooltip() {
       APP.emit(target.widget, "loadTooltip", tobj.tooltipPosition[X], tobj.tooltipPosition[Y]);
    }
-   
+
    /* const */ var MouseDistance = 10;
 
    this.updateTooltip = function(contents) {
@@ -1355,7 +1355,7 @@ WT_DECLARE_WT_MEMBER
       }
       // Set X range, and adjust Y!
       var series = seriesCurve(seriesNb);
-      
+
       var res = findYRange(series, lowerBound, upperBound, isHorizontal(), configArea(), modelArea(), maxZoom());
       var xZoom = res.xZoom;
       var yZoom = res.yZoom;

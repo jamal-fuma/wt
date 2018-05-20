@@ -11,7 +11,7 @@ WT_DECLARE_WT_MEMBER
  function(edit) {
      var v;
      if (edit.options) {
-	if (edit.options.item(edit.selectedIndex) == null) 
+	if (edit.options.item(edit.selectedIndex) == null)
 	  v = "";
 	else
 	  v = edit.options.item(edit.selectedIndex).text;
@@ -46,7 +46,7 @@ WT_DECLARE_WT_MEMBER
      var error;
 
      controlGroup = $edit.closest(".control-group");
-       
+
      if (controlGroup.length > 0) { // bootstrapVersion === 2
        success = "success";
        error = "error";

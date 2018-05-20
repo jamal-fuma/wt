@@ -240,7 +240,7 @@ WT_DECLARE_WT_MEMBER
     */
    this.refilter = function(value) {
 	 if(!editId) {
-	   //If edit is null we probably have already choosen a suggestion and 
+	   //If edit is null we probably have already choosen a suggestion and
 	   //we therefore don't need to refilter!
 	   return;
 	 }

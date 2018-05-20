@@ -116,7 +116,7 @@ WT_DECLARE_WT_MEMBER
     }
 
     function setCursor(position) {
-      WT.setSelectionRange(edit, position, position+1);      
+      WT.setSelectionRange(edit, position, position+1);
     }
 
     function moveForward(position) {
@@ -141,12 +141,12 @@ WT_DECLARE_WT_MEMBER
       switch(mask.charAt(position)) {
       case 'a':
       case 'A': // alphabetical: A-Za-z
-	return code >= A_LOWER_CHAR && code <= Z_LOWER_CHAR || 
+	return code >= A_LOWER_CHAR && code <= Z_LOWER_CHAR ||
 	       code >= A_UPPER_CHAR && code <= Z_UPPER_CHAR;
       case 'n':
       case 'N': // alphanumeric: A-Za-z0-9
 	return code >= A_LOWER_CHAR && code <= Z_LOWER_CHAR ||
-               code >= A_UPPER_CHAR && code <= Z_UPPER_CHAR || 
+               code >= A_UPPER_CHAR && code <= Z_UPPER_CHAR ||
 	       code >= ZERO_CHAR && code <= NINE_CHAR;
       case 'X':
       case 'x': // Anything goes
@@ -163,7 +163,7 @@ WT_DECLARE_WT_MEMBER
       case 'h':
       case 'H': // hex
 	return code >= A_UPPER_CHAR && code <= F_UPPER_CHAR ||
-               code >= ZERO_CHAR && code <= NINE_CHAR || 
+               code >= ZERO_CHAR && code <= NINE_CHAR ||
 	       code >= A_LOWER_CHAR && code <= F_LOWER_CHAR;
       case 'b':
       case 'B': // binary

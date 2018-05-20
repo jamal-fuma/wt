@@ -80,7 +80,7 @@ WT_DECLARE_WT_MEMBER
        doc = iframe.contentDocument;
 
      $(doc.body).bind('paste', function(event) {
-       var clipboardData = 
+       var clipboardData =
 	 event.clipboardData || event.originalEvent.clipboardData,
 	 i, il;
 

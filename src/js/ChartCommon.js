@@ -8,21 +8,21 @@
 
 WT_DECLARE_WT_MEMBER
 (2, JavaScriptConstructor, "ChartCommon",
- function(APP) { 
+ function(APP) {
    var MOVE_TO = 0, LINE_TO = 1, CUBIC_C1 = 2, CUBIC_C2 = 3, CUBIC_END = 4,
        QUAD_C = 5, QUAD_END = 6, ARC_C = 7, ARC_R = 8, ARC_ANGLE_SWEEP = 9;
    var X = 0, Y = 1;
    var WT = APP.WT;
 
    var self = this;
- 
+
    var utils = WT.gfxUtils;
    var top = utils.rect_top;
    var bottom = utils.rect_bottom;
    var left = utils.rect_left;
    var right = utils.rect_right;
    var mult = utils.transform_mult;
- 
+
    // Find the anchor point (not a curve control point!)
    // with X coordinate nearest to the given x,
    // and smaller than the given x, and return
@@ -75,11 +75,11 @@ WT_DECLARE_WT_MEMBER
       }
       return ascending ? i : len - 1 - i;
    }
- 
+
    function isAscending(axis, series) {
      return series[0][axis] < series[series.length-1][axis];
    }
- 
+
    this.findClosestPoint = function(x, series, isHorizontal) {
      var axis = X;
      if (isHorizontal) {
@@ -103,7 +103,7 @@ WT_DECLARE_WT_MEMBER
        return [series[next_i][X],series[next_i][Y]];
      }
    };
- 
+
    this.minMaxY = function(series, isHorizontal) {
      var yAxis = isHorizontal ? X : Y;
      var min = series[0][yAxis];
@@ -117,7 +117,7 @@ WT_DECLARE_WT_MEMBER
      }
      return [min,max];
    };
- 
+
    // Get projection matrix to project any point
    // to a line through m at angle theta
    this.projection = function(theta, m) {
@@ -129,21 +129,21 @@ WT_DECLARE_WT_MEMBER
      var h = -m[0]*c - m[1]*s;
      return [c2, cs, cs, s2, c*h+m[0], s*h+m[1]];
    };
- 
+
    this.distanceSquared = function(p1, p2) {
       var d = [p2[X] - p1[X],
                p2[Y] - p1[Y]];
      return d[X] * d[X] + d[Y] * d[Y];
    };
- 
+
    this.distanceLessThanRadius = function(p1, p2, radius) {
      return radius * radius >= self.distanceSquared(p1, p2);
    };
- 
+
    this.toZoomLevel = function(zoomFactor) {
      return Math.floor(Math.log(zoomFactor) / Math.LN2 + 0.5) + 1;
    };
- 
+
    // Check if a point is inside of the given rect
    this.isPointInRect = function(point, rect) {
      var x,y;
@@ -157,7 +157,7 @@ WT_DECLARE_WT_MEMBER
      return x >= left(rect) && x <= right(rect) &&
             y >= top(rect) && y <= bottom(rect);
    };
-   
+
    this.toDisplayCoord = function(p, transform, isHorizontal, area, modelArea) {
       var u, res;
       if (isHorizontal) {
@@ -173,7 +173,7 @@ WT_DECLARE_WT_MEMBER
       }
       return mult(transform, res);
    };
-   
+
    this.findYRange = function(series, lowerBound, upperBound, horizontal, area, modelArea, maxZoom) {
       if (series.length === 0)
 	 return; // This would be weird?

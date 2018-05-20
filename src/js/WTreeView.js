@@ -91,7 +91,7 @@ WT_DECLARE_WT_MEMBER
 		item.nodeId + ':' + item.columnId, 'mouseup', '', '');
      }
    };
-  
+
    var touchStartTimer;
 
    function emitTouchEvent(obj, event, evtType) {
@@ -470,12 +470,12 @@ WT_DECLARE_WT_MEMBER
   var offsetRowColorImg = function() {
     if (rowHeight == 0)
       return;
-    
+
     var scrollPos = contentsContainer.scrollTop;
     var rootNode = contents.children[0].children[0];
     rootNode.style.backgroundPosition = "0px " + Math.floor(scrollPos/(2*rowHeight)) * (2*rowHeight) + "px";
   };
-  
+
   if (contentsContainer.addEventListener) {
     contentsContainer.addEventListener("scroll", offsetRowColorImg);
   } else if (contentsContainer.attachEvent) {

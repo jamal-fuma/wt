@@ -270,7 +270,7 @@ WT_DECLARE_WT_MEMBER
 	});
     }
 
-    setTimeout(function() { 
+    setTimeout(function() {
      var position = $el.css('position'),
        absolute = (position === 'absolute' || position === 'fixed');
 

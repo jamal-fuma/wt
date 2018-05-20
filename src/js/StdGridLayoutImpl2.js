@@ -141,7 +141,7 @@ WT_DECLARE_WT_MEMBER
 	    widget.parentNode.parentNode.style.visibility === 'hidden')) {
 	 l = element.style[DC.left];
 	 setCss(element, DC.left, NA_px);
-       
+
 	 scrollSize = dir ? element.scrollHeight : element.scrollWidth;
        }
      }
@@ -234,8 +234,8 @@ WT_DECLARE_WT_MEMBER
        return [scrollSize, scrollBar];
 
      if ((WT.isGecko || WT.isWebKit) &&
-	 dir == HORIZONTAL && 
-	 element.getBoundingClientRect().width != 
+	 dir == HORIZONTAL &&
+	 element.getBoundingClientRect().width !=
 	 Math.ceil(element.getBoundingClientRect().width))
        scrollSize += 1;
 
@@ -439,7 +439,7 @@ WT_DECLARE_WT_MEMBER
 
 	   if (!item.sc)
 	     item.sc = []; // scrollbar (if present needs forceful size set)
-	     
+
 	   if (!item.ms)
 	     item.ms = []; // minimum size
 
@@ -569,9 +569,9 @@ WT_DECLARE_WT_MEMBER
 		     && item.set[dir];
 
 
-		   if (sizeSet || stretching) 
+		   if (sizeSet || stretching)
 		     wPreferred = Math.max(wPreferred, item.ps[dir]);
-		   else 
+		   else
 		     wPreferred = Math.max(wPreferred, calculated);
 
 		   item.ps[dir] = wPreferred;
@@ -689,7 +689,7 @@ WT_DECLARE_WT_MEMBER
 	   }
 	 }
        }
-	
+
        handleOverspanned(function(item) { return item.ps[dir]; },
 			 preferredSize);
 
@@ -825,8 +825,8 @@ WT_DECLARE_WT_MEMBER
 	       break;
 
 	     if (dir == VERTICAL &&
-		 p == widget.parentNode && 
-		 !p.lh && 
+		 p == widget.parentNode &&
+		 !p.lh &&
 		 p.offsetHeight > totalPs)
 	       totalPs = p.offsetHeight;
 
@@ -1117,7 +1117,7 @@ WT_DECLARE_WT_MEMBER
 	   var fs = -1;
 
 	   /*
-	    * if resizable was disabled, remove fixedSize and go back to 
+	    * if resizable was disabled, remove fixedSize and go back to
 	    * using the preferred size
 	    */
 	   if (!hasResizeHandle(DC, di))
@@ -1221,11 +1221,11 @@ WT_DECLARE_WT_MEMBER
 	   var r = 0;
 	   for (di = 0; di < dirCount; ++di) {
 	     if (stretch[di] > 0) {
-	       var s = measures[PREFERRED_SIZE][di] 
+	       var s = measures[PREFERRED_SIZE][di]
 		 - measures[MINIMUM_SIZE][di];
 	       var oldr = r;
 	       r += s * factor;
-	       targetSize[di] = measures[MINIMUM_SIZE][di] 
+	       targetSize[di] = measures[MINIMUM_SIZE][di]
 		 + Math.round(r) - Math.round(oldr);
 	     }
 	   }
@@ -1271,7 +1271,7 @@ WT_DECLARE_WT_MEMBER
        console.log(" -> targetSize: " + targetSize);
 
      // (4) set widths/heights of cells
-     var left = DC.margins[MARGIN_LEFT], 
+     var left = DC.margins[MARGIN_LEFT],
        first = true, resizeHandle = false, oi, di;
 
      for (di = 0; di < dirCount; ++di) {
@@ -1349,7 +1349,7 @@ WT_DECLARE_WT_MEMBER
 	       ts += targetSize[di + si];
 	     }
 	   }
-	   
+
 	   var off;
 
 	   setCss(w, 'visibility', '');
@@ -1884,7 +1884,7 @@ WT_DECLARE_APP_MEMBER
     };
 
     var resizeDelay = null;
-    
+
     window.onresize = function() {
       clearTimeout(resizeDelay);
       resizeDelay = setTimeout(function() {

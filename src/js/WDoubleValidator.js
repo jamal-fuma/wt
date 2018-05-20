@@ -16,8 +16,8 @@ WT_DECLARE_WT_MEMBER
 	    NaNError, tooSmallError, tooLargeError) {
      this.validate = function(text) {
        text = String(text);
-	   
-	   if (ignoreTrailingSpaces) 
+
+	   if (ignoreTrailingSpaces)
 		 text = text.trim();
 
        function toRegexp(value) {

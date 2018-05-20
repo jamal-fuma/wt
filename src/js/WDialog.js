@@ -105,7 +105,7 @@ WT_DECLARE_WT_MEMBER
 
      if (pctMaxWidth !== 0) {
        var ws = WT.windowSize();
-       
+
        var layout = jQuery.data(layoutContainer.firstChild, 'layout');
        if (layout && layout.setMaxSize) {
 	 layout.setMaxSize(ws.x * pctMaxWidth / 100,

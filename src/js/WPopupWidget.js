@@ -77,7 +77,7 @@ WT_DECLARE_WT_MEMBER
        for (b = b.parentNode; b; b = b.parentNode)
 	 if (a == b)
 	   return true;
-      
+
        return false;
      }
 

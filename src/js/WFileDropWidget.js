@@ -11,7 +11,7 @@ WT_DECLARE_WT_MEMBER
  function(APP, dropwidget, maxFileSize) {
 
    jQuery.data(dropwidget, 'lobj', this);
-   
+
    var self = this, WT = APP.WT;
    var hoverClassName = 'Wt-filedropzone-hover';
 
@@ -61,7 +61,7 @@ WT_DECLARE_WT_MEMBER
    dropwidget.setBodyAware = function(enable) {
      bodyAware = enable;
    };
-   
+
    dropwidget.setDropForward = function(enable) {
      bodyDropForward = enable;
    };
@@ -83,7 +83,7 @@ WT_DECLARE_WT_MEMBER
        dragState = 1;
        return;
      }
-     
+
      if (!acceptDrops)
        return;
      self.setHoverStyle(false);
@@ -96,7 +96,7 @@ WT_DECLARE_WT_MEMBER
    bodyDragEnter = function(e) {
      if (!bodyAware || !$(dropwidget).is(":visible"))
        return;
-     
+
      dragState = 1;
      self.setHoverStyle(true);
    };
@@ -117,13 +117,13 @@ WT_DECLARE_WT_MEMBER
        dropwidget.ondrop(e);
      else
        self.setHoverStyle(false);
-   }   
+   }
 
    dropwidget.ondrop = function(e) {
      e.preventDefault();
      if (!acceptDrops)
        return;
-     
+
      self.setHoverStyle(false);
      if (window.FormData === undefined ||
 	 e.dataTransfer.files == null ||
@@ -139,18 +139,18 @@ WT_DECLARE_WT_MEMBER
        var xhr = new XMLHttpRequest();
        xhr.id = Math.floor(Math.random() * Math.pow(2, 31));
        xhr.file = filesList[i];
-       
+
        uploads.push(xhr);
-       
+
        var newUpload = {};
        newUpload['id'] = xhr.id;
        newUpload['filename'] = xhr.file.name;
        newUpload['type'] = xhr.file.type;
        newUpload['size'] = xhr.file.size;
-       
+
        newKeys.push(newUpload);
      }
-     
+
      APP.emit(dropwidget, 'dropsignal', JSON.stringify(newKeys));
    }
 
@@ -160,7 +160,7 @@ WT_DECLARE_WT_MEMBER
        hiddenInput.click();
      }
    });
-   
+
    dropwidget.markForSending = function(files) {
      for (var j=0; j < files.length; j++) {
        var id = files[j]['id'];
@@ -184,11 +184,11 @@ WT_DECLARE_WT_MEMBER
        self.uploadFinished(null);
        return;
      }
-     
+
      sending = true;
      APP.emit(dropwidget, 'requestsend', uploads[0].id);
    }
-   
+
    dropwidget.send = function(url) {
      xhr = uploads[0]
      if (xhr.file.size > maxFileSize) {
@@ -205,7 +205,7 @@ WT_DECLARE_WT_MEMBER
        self.uploadFinished(null);
        return;
      }
-       
+
      xhr = uploads[0]
      xhr.addEventListener("load", self.uploadFinished);
      xhr.addEventListener("error", self.uploadFinished);
@@ -256,8 +256,8 @@ WT_DECLARE_WT_MEMBER
 
      self.addFiles(this.files);
    };
-   
-   
+
+
    this.setHoverStyle = function(enable) {
      if (enable) {
        $(dropwidget).addClass(hoverClassName);

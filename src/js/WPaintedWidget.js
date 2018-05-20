@@ -88,7 +88,7 @@ WT_DECLARE_WT_MEMBER
 	       maxX = p[0];
 	       minY = p[1];
 	       maxY = p[1];
-	       
+
 	       for (i = 0; i < 3; ++i) {
 		  p2 = self.transform_mult(t1,
 					  i == 0 ? [self.rect_left(t2), self.rect_bottom(t2)]
@@ -394,7 +394,7 @@ WT_DECLARE_WT_MEMBER
 			 split[j], softClipping ? [x(tseg), y(tseg)] : null);
 		 }
 	       } else {
-		 var radAngle = angle * Math.PI / 180; 
+		 var radAngle = angle * Math.PI / 180;
 		 var r11 = Math.cos(-radAngle);
 		 var r12 = -Math.sin(-radAngle);
 		 var r21 = -r12;
