@@ -32,6 +32,7 @@ namespace Wt
 
         using asio::ip::tcp;
 
+        // SSL only 587
         class Client::Impl
         {
             private:
