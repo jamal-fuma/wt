@@ -101,6 +101,8 @@ namespace Wt
                         failIfReplyCodeNot(ReplyCode::Ready);
                         send("EHLO " + selfFQDN + "\r\n");
                         failIfReplyCodeNot(ReplyCode::Ok);
+                        send("STARTTLS" + "\r\n");
+                        failIfReplyCodeNot(ReplyCode::Ok);
                     }
                     catch(std::exception & e)
                     {
