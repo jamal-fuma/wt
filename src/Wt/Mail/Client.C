@@ -51,8 +51,33 @@ namespace Wt
                 };
 
                 Impl(const std::string & host, const std::string & selfFQDN, int port)
-                    : socket_(io_service_)
+                    : tls_context_(asio::ssl::context::tlsv12)
+                    , ssl_socket_(io_service_,tls_context_)
+                    , socket_(ssl_socket.lowest_layer())
                 {
+                    // Create a context that uses the default paths for finding CA certificates.
+                    tls_context_.set_options(
+                        asio::ssl::context::no_sslv2
+                        | asio::ssl::context::no_sslv3);
+                    // Self signed cert - so don't bother to verify
+                    ssl_socket_.set_verify_mode(asio::ssl::context::verify_peer);
+                    ssl_socket_.set_verify_callback(bool [this](auto preverified, auto & ctx)
+                    {
+                        // Note that the callback is called once
+                        // for each certificate in the certificate chain, starting from the root
+                        // certificate authority.
+                        char subject_name[256] = {0};
+                        // In this example we will simply print the certificate's subject name.
+                        X509 * cert = X509_STORE_CTX_get_current_cert(ctx.native_handle());
+                        X509_NAME_oneline(X509_get_subject_name(cert), subject_name, 256);
+                        LOG_INFO("Smtp::Client: Verifying '" << subject_name << "'");
+                        return preverified;
+                    });
+                    // setup SSL native stuff
+                    SSL_set_tlsext_host_name(ssl_socket_.native_handle(), host_name.cstr());
+
+                    // setup SSL high-level stuff
+                    tls_context_.set_default_verify_paths();
                     // Method::Get a list of endpoints corresponding to the server name.
                     tcp::resolver resolver(io_service_);
                     tcp::resolver::query query(host, std::to_string(port));
