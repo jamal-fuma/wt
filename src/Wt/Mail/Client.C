@@ -36,8 +36,11 @@ namespace Wt
         class Client::Impl
         {
             private:
-                asio::io_service io_service_;
-                tcp::socket socket_;
+                asio::io_service & io_service_;
+                asio::ssl::stream<tcp::socket> ssl_socket_;
+                asio::ssl::context tls_context_;
+                tcp::socket & socket_;
+
             public:
                 enum class ReplyCode
                 {
