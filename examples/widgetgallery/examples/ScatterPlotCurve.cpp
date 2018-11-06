@@ -6,7 +6,7 @@
 #include <cmath>
 
 #ifdef WT_TARGET_JAVA
-using namespace Wt;
+    using namespace Wt;
 #endif // WT_TARGET_JAVA
 
 SAMPLE_BEGIN(ScatterPlotCurve)
@@ -30,9 +30,9 @@ for(unsigned i = 0; i < 40; ++i)
 Chart::WCartesianChart * chart =
     container->addWidget(cpp14::make_unique<Chart::WCartesianChart>());
 #ifndef WT_TARGET_JAVA
-chart->setModel(model);        // Set the model.
+    chart->setModel(model);        // Set the model.
 #else // WT_TARGET_JAVA
-chart->setModel(std::shared_ptr<WAbstractItemModel>(model));
+    chart->setModel(std::shared_ptr<WAbstractItemModel>(model));
 #endif // WT_TARGET_JAVA
 chart->setXSeriesColumn(0);    // Set the column that holds the X data.
 chart->setLegendEnabled(true); // Enable the legend.

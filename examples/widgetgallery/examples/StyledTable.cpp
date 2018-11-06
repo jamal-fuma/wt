@@ -5,40 +5,45 @@
 #include <Wt/WCheckBox.h>
 
 #ifdef WT_TARGET_JAVA
-using namespace Wt;
+    using namespace Wt;
 #endif // WT_TARGET_JAVA
 
-namespace {
+namespace
+{
 #ifdef WT_EXAMPLE
-    struct Employee {
-	std::string firstName;
-	std::string lastName;
-	double pay;
+    struct Employee
+    {
+        std::string firstName;
+        std::string lastName;
+        double pay;
 
-        Employee(const std::string& aFirstName, 
-		 const std::string& aLastName,
-		 double aPay)
-	  : firstName(aFirstName),
-	    lastName(aLastName),
-	    pay(aPay) { }
+        Employee(const std::string & aFirstName,
+                 const std::string & aLastName,
+                 double aPay)
+            : firstName(aFirstName),
+              lastName(aLastName),
+              pay(aPay) { }
     };
 
-    Employee employees[] = {
-      Employee("Mark", "Otto", 100),
-      Employee("Jacob", "Thornton", 50),
-      Employee("Larry the Bird", "", 10)
+    Employee employees[] =
+    {
+        Employee("Mark", "Otto", 100),
+        Employee("Jacob", "Thornton", 50),
+        Employee("Larry the Bird", "", 10)
     };
 #endif // WT_EXAMPLE
 
-extern 
-    void addOptionToggle(WWidget *widget, const char *option,
-                         const char *styleClass, WContainerWidget *parent) {
-        WCheckBox *checkBox =
+    extern
+    void addOptionToggle(WWidget * widget, const char * option,
+                         const char * styleClass, WContainerWidget * parent)
+    {
+        WCheckBox * checkBox =
             parent->addWidget(cpp14::make_unique<WCheckBox>(option));
-	checkBox->setInline(false);
-	checkBox->changed().connect([=] {
-	      widget->toggleStyleClass(styleClass, checkBox->isChecked());
-	});
+        checkBox->setInline(false);
+        checkBox->changed().connect([=]
+        {
+            widget->toggleStyleClass(styleClass, checkBox->isChecked());
+        });
     }
 }
 
@@ -52,18 +57,18 @@ table_->elementAt(0, 1)->addWidget(cpp14::make_unique<WText>("First Name"));
 table_->elementAt(0, 2)->addWidget(cpp14::make_unique<WText>("Last Name"));
 table_->elementAt(0, 3)->addWidget(cpp14::make_unique<WText>("Pay"));
 
-for (unsigned i = 0; i < 3; ++i) {
-    Employee& employee = employees[i];
+for(unsigned i = 0; i < 3; ++i)
+{
+    Employee & employee = employees[i];
     int row = i + 1;
-
     table_->elementAt(row,0)->
-        addWidget(cpp14::make_unique<WText>(WString("{1}").arg(row)));
+    addWidget(cpp14::make_unique<WText>(WString("{1}").arg(row)));
     table_->elementAt(row,1)->
-        addWidget(cpp14::make_unique<WText>(employee.firstName));
+    addWidget(cpp14::make_unique<WText>(employee.firstName));
     table_->elementAt(row,2)->
-        addWidget(cpp14::make_unique<WText>(employee.lastName));
+    addWidget(cpp14::make_unique<WText>(employee.lastName));
     table_->elementAt(row,3)->
-        addWidget(cpp14::make_unique<WLineEdit>(WString("{1}").arg(employee.pay)));
+    addWidget(cpp14::make_unique<WLineEdit>(WString("{1}").arg(employee.pay)));
 }
 
 table_->addStyleClass("table form-inline");

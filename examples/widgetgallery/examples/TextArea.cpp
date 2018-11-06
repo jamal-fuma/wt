@@ -19,7 +19,7 @@ out->addStyleClass("help-block");
 ta->changed().connect([=]
 {
     out->setText("<p>Text area changed at " +
-    Wt::WDateTime::currentDateTime().toString() + ".</p>");
+                 Wt::WDateTime::currentDateTime().toString() + ".</p>");
 });
 
 SAMPLE_END(return std::move(container))

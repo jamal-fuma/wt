@@ -21,7 +21,7 @@ c1->selectionChanged().connect([=]
         Wt::WDate toDate(d.year() + 1, 1, 1);
         int days = d.daysTo(toDate);
         out->setText(Wt::WString("<p>That's {1} days until New Year's Day!</p>")
-        .arg(days));
+                     .arg(days));
     }
 });
 

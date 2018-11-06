@@ -4,7 +4,7 @@
 #include <Wt/WText.h>
 
 #ifdef WT_TARGET_JAVA
-using namespace Wt;
+    using namespace Wt;
 #endif // WT_TARGET_JAVA
 
 SAMPLE_BEGIN(MessageBoxSync)
@@ -21,8 +21,8 @@ button->clicked().connect([=]
 {
     Wt::StandardButton answer
     = Wt::WMessageBox::show("Launch phase",
-    "<p>Launch the rocket?</p>",
-    Wt::StandardButton::Ok | Wt::StandardButton::Cancel);
+                            "<p>Launch the rocket?</p>",
+                            Wt::StandardButton::Ok | Wt::StandardButton::Cancel);
     if(answer == Wt::StandardButton::Ok)
     {
         out->setText("The rocket is launched!");

@@ -7,7 +7,7 @@
 #include <Wt/WText.h>
 
 #ifdef WT_TARGET_JAVA
-using namespace Wt;
+    using namespace Wt;
 #endif // WT_TARGET_JAVA
 
 SAMPLE_BEGIN(Popup)
@@ -48,8 +48,8 @@ item->setCheckable(true);
 item->triggered().connect([=]
 {
     out->setText(Wt::WString("<p>{1} item is {2}.</p>")
-    .arg(item->text())
-    .arg(item->isChecked() ? "checked" : "unchecked"));
+                 .arg(item->text())
+                 .arg(item->isChecked() ? "checked" : "unchecked"));
 });
 
 popup->addSeparator();
@@ -74,7 +74,7 @@ subMenu->addItem("About")->triggered().connect([=]
     auto messageBox = subMenu->addChild(
         Wt::cpp14::make_unique<Wt::WMessageBox>
         ("About", "<p>This is a program to make connections.</p>",
-    Wt::Icon::Information, Wt::StandardButton::Ok));
+         Wt::Icon::Information, Wt::StandardButton::Ok));
     messageBox->show();
     messageBox->buttonClicked().connect([=] {
         subMenu->removeChild(messageBox);

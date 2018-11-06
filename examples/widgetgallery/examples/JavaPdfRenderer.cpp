@@ -3,19 +3,19 @@
 
 class ReportResource : public Wt::WResource
 {
-public:
-  ReportResource();
+    public:
+        ReportResource();
 };
 
 SAMPLE_BEGIN(PdfRenderer)
 
 auto container = Wt::cpp14::make_unique<Wt::WContainerWidget>();
 
-Wt::WText *text =
+Wt::WText * text =
     container->addWidget(Wt::cpp14::make_unique<Wt::WText>(Wt::WString::tr("report.example")));
 text->setStyleClass("reset");
 
-Wt::WPushButton *button =
+Wt::WPushButton * button =
     container->addWidget(Wt::cpp14::make_unique<Wt::WPushButton>("Create pdf"));
 
 auto pdf = std::make_shared<ReportResource>();

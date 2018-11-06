@@ -19,9 +19,9 @@ button->clicked().connect([=]
 
     auto messageBox = c->addChild(
         Wt::cpp14::make_unique<Wt::WMessageBox>("Status",
-    "<p>Ready to launch the rocket...</p>"
-    "<p>Launch the rocket immediately?</p>",
-    Wt::Icon::Information, Wt::StandardButton::Yes | Wt::StandardButton::No));
+                "<p>Ready to launch the rocket...</p>"
+                "<p>Launch the rocket immediately?</p>",
+                Wt::Icon::Information, Wt::StandardButton::Yes | Wt::StandardButton::No));
 
     messageBox->setModal(false);
 

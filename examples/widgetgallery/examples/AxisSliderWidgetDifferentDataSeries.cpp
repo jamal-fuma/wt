@@ -10,49 +10,59 @@
 #include <cmath>
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846
+    #define M_PI 3.14159265358979323846
 #endif
 
 #ifdef WT_TARGET_JAVA
-using namespace Wt;
+    using namespace Wt;
 #endif // WT_TARGET_JAVA
 
-class SinModel : public Chart::WAbstractChartModel {
-public:
-  SinModel(double minimum, double maximum, int rows)
-    : Chart::WAbstractChartModel(),
-      minimum_(minimum),
-      maximum_(maximum),
-      rows_(rows)
-  { }
+class SinModel : public Chart::WAbstractChartModel
+{
+    public:
+        SinModel(double minimum, double maximum, int rows)
+            : Chart::WAbstractChartModel(),
+              minimum_(minimum),
+              maximum_(maximum),
+              rows_(rows)
+        { }
 
-  virtual double data(int row, int column) const
-  {
-    double x = minimum_ + row * (maximum_ - minimum_) / (rowCount() - 1);
-    if (column == 0) {
-      return x;
-    } else {
-      return std::sin(x) + std::sin(x * 100.0) / 40.0;
-    }
-  }
+        virtual double data(int row, int column) const
+        {
+            double x = minimum_ + row * (maximum_ - minimum_) / (rowCount() - 1);
+            if(column == 0)
+            {
+                return x;
+            }
+            else
+            {
+                return std::sin(x) + std::sin(x * 100.0) / 40.0;
+            }
+        }
 
-  virtual int columnCount() const
-  {
-    return 2;
-  }
+        virtual int columnCount() const
+        {
+            return 2;
+        }
 
-  virtual int rowCount() const
-  {
-    return rows_;
-  }
+        virtual int rowCount() const
+        {
+            return rows_;
+        }
 
-  double minimum() const { return minimum_; }
-  double maximum() const { return maximum_; }
+        double minimum() const
+        {
+            return minimum_;
+        }
+        double maximum() const
+        {
+            return maximum_;
+        }
 
-private:
-  double minimum_;
-  double maximum_;
-  int rows_;
+    private:
+        double minimum_;
+        double maximum_;
+        int rows_;
 };
 
 SAMPLE_BEGIN(AxisSliderWidgetDifferentDataSeries)

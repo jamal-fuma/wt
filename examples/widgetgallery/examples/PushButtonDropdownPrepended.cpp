@@ -5,7 +5,7 @@
 #include <Wt/WTemplate.h>
 
 #ifdef WT_TARGET_JAVA
-using namespace Wt;
+    using namespace Wt;
 #endif // WT_TARGET_JAVA
 
 SAMPLE_BEGIN(PushButtonDropdownPrepended)

@@ -17,7 +17,7 @@ auto out = result->bindWidget("out", Wt::cpp14::make_unique<Wt::WText>());
 button->clicked().connect([=]
 {
     out->setText("Hello, " + name->text() + "! I just want to help you... You"
-    + " could complete this simple form by adding validation.");
+                 + " could complete this simple form by adding validation.");
 });
 
 SAMPLE_END(return std::move(result))

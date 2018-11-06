@@ -32,7 +32,7 @@ sb2->activated().connect([=]
 
     std::set<int> selection = sb2->selectedIndexes();
     for(std::set<int>::iterator it = selection.begin();
-    it != selection.end(); ++it)
+            it != selection.end(); ++it)
     {
         if(!selected.empty())
         {
