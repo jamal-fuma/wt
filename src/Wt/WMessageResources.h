@@ -16,63 +16,71 @@
 #include <Wt/WDllDefs.h>
 
 #ifdef WT_THREADED
-#include <mutex>
+    #include <mutex>
 #endif
 
-namespace Wt {
-
-class WString;
-
-class WT_API WMessageResources
+namespace Wt
 {
-public:
-  WMessageResources(const std::string& path, bool loadInMemory = true);
-  WMessageResources(const char *builtin);
 
-  void hibernate();
+    class WString;
 
-  bool isBuiltin(const char *data) const { return builtin_ == data; }
-  const std::string& path() const { return path_; }
+    class WT_API WMessageResources
+    {
+        public:
+            WMessageResources(const std::string & path, bool loadInMemory = true);
+            WMessageResources(const char * builtin);
 
-  LocalizedString resolveKey(const WLocale& locale, const std::string& key) const;
-  LocalizedString resolvePluralKey(const WLocale& locale,
-			const std::string& key, 
-			::uint64_t amount) const;
+            void hibernate();
 
-  static int evalPluralCase(const std::string &expression, ::uint64_t n);
+            bool isBuiltin(const char * data) const
+            {
+                return builtin_ == data;
+            }
+            const std::string & path() const
+            {
+                return path_;
+            }
 
-  std::set<std::string> keys(const WLocale& locale) const;
+            LocalizedString resolveKey(const WLocale & locale, const std::string & key) const;
+            LocalizedString resolvePluralKey(const WLocale & locale,
+                                             const std::string & key,
+                                             ::uint64_t amount) const;
 
-private:
-  typedef std::map<std::string, std::vector<std::string> > KeyValuesMap;
+            static int evalPluralCase(const std::string & expression, ::uint64_t n);
 
-  struct Resource {
-    KeyValuesMap map_;
-    std::string pluralExpression_;
-    unsigned pluralCount_;
-  };
+            std::set<std::string> keys(const WLocale & locale) const;
 
-  typedef std::map<std::string, Resource> ResourceMap;
+        private:
+            typedef std::map<std::string, std::vector<std::string> > KeyValuesMap;
 
-  bool loadInMemory_;
-  std::string path_;
-  const char *builtin_;
+            struct Resource
+            {
+                KeyValuesMap map_;
+                std::string pluralExpression_;
+                unsigned pluralCount_;
+            };
+
+            typedef std::map<std::string, Resource> ResourceMap;
+
+            bool loadInMemory_;
+            std::string path_;
+            const char * builtin_;
 #ifdef WT_THREADED
-  std::mutex resourceMutex_;
+            std::mutex resourceMutex_;
 #endif
-  mutable ResourceMap resources_;
+            mutable ResourceMap resources_;
 
-  void load(const WLocale& locale) const;
-  LocalizedString resolve(const std::string& locale, const std::string& key) const;
-  LocalizedString resolvePlural(const std::string& locale, const std::string& key, ::uint64_t amount) const;
-  bool readResourceFile(const std::string& locale, Resource& resource) const;
-  bool readResourceStream(std::istream &s, Resource& resource,
-                          const std::string &fileName) const;
+            void load(const WLocale & locale) const;
+            LocalizedString resolve(const std::string & locale, const std::string & key) const;
+            LocalizedString resolvePlural(const std::string & locale, const std::string & key, ::uint64_t amount) const;
+            bool readResourceFile(const std::string & locale, Resource & resource) const;
+            bool readResourceStream(std::istream & s, Resource & resource,
+                                    const std::string & fileName) const;
 
-  std::string findCase(const std::vector<std::string> &cases,
-		       std::string pluralExpression,
-		       ::uint64_t amount) const;
-};
+            std::string findCase(const std::vector<std::string> & cases,
+                                 std::string pluralExpression,
+                                 ::uint64_t amount) const;
+    };
 
 }
 

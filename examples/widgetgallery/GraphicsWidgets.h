@@ -12,25 +12,25 @@
 
 class GraphicsWidgets : public TopicWidget
 {
-public:
-  GraphicsWidgets();
+    public:
+        GraphicsWidgets();
 
-  virtual void populateSubMenu(Wt::WMenu *menu);
+        virtual void populateSubMenu(Wt::WMenu * menu);
 
-private:
-  std::unique_ptr<Wt::WWidget> painting2d();
-  std::unique_ptr<Wt::WWidget> paintbrush();
-  std::unique_ptr<Wt::WWidget> categoryChart();
-  std::unique_ptr<Wt::WWidget> scatterPlot();
-  std::unique_ptr<Wt::WWidget> axisSliderWidget();
-  std::unique_ptr<Wt::WWidget> pieChart();
-  std::unique_ptr<Wt::WWidget> googleMap();
-  std::unique_ptr<Wt::WWidget> painting3d();
-  std::unique_ptr<Wt::WWidget> numCharts3d();
-  std::unique_ptr<Wt::WWidget> catCharts3d();
+    private:
+        std::unique_ptr<Wt::WWidget> painting2d();
+        std::unique_ptr<Wt::WWidget> paintbrush();
+        std::unique_ptr<Wt::WWidget> categoryChart();
+        std::unique_ptr<Wt::WWidget> scatterPlot();
+        std::unique_ptr<Wt::WWidget> axisSliderWidget();
+        std::unique_ptr<Wt::WWidget> pieChart();
+        std::unique_ptr<Wt::WWidget> googleMap();
+        std::unique_ptr<Wt::WWidget> painting3d();
+        std::unique_ptr<Wt::WWidget> numCharts3d();
+        std::unique_ptr<Wt::WWidget> catCharts3d();
 
-  Wt::WAbstractItemModel *readCsvFile(const std::string &fname,
-		  WContainerWidget *parent);
+        Wt::WAbstractItemModel * readCsvFile(const std::string & fname,
+                                             WContainerWidget * parent);
 };
 
 #endif // GRAPHICS_WIDGETS_H_

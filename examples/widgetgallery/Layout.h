@@ -12,23 +12,23 @@
 
 class Layout : public TopicWidget
 {
-public:
-  Layout();
+    public:
+        Layout();
 
-  void populateSubMenu(Wt::WMenu *menu);
+        void populateSubMenu(Wt::WMenu * menu);
 
-private:
-  std::unique_ptr<Wt::WWidget> containers();
-  std::unique_ptr<Wt::WWidget> templates();
-  std::unique_ptr<Wt::WWidget> text();
-  std::unique_ptr<Wt::WWidget> grouping();
-  std::unique_ptr<Wt::WWidget> layoutManagers();
-  std::unique_ptr<Wt::WWidget> dialogs();
-  std::unique_ptr<Wt::WWidget> images();
-  std::unique_ptr<Wt::WWidget> css();
-  std::unique_ptr<Wt::WWidget> themes();
-  Wt::WWidget *loadingIndicator();
-  void loadingIndicatorSelected(Wt::WString indicator);
+    private:
+        std::unique_ptr<Wt::WWidget> containers();
+        std::unique_ptr<Wt::WWidget> templates();
+        std::unique_ptr<Wt::WWidget> text();
+        std::unique_ptr<Wt::WWidget> grouping();
+        std::unique_ptr<Wt::WWidget> layoutManagers();
+        std::unique_ptr<Wt::WWidget> dialogs();
+        std::unique_ptr<Wt::WWidget> images();
+        std::unique_ptr<Wt::WWidget> css();
+        std::unique_ptr<Wt::WWidget> themes();
+        Wt::WWidget * loadingIndicator();
+        void loadingIndicatorSelected(Wt::WString indicator);
 };
 
 #endif // LAYOUT_H_

@@ -16,32 +16,34 @@
 template <typename Function>
 class DeferredWidget : public Wt::WContainerWidget
 {
-public:
-  DeferredWidget(Function f)
-    : f_(f) { }
+    public:
+        DeferredWidget(Function f)
+            : f_(f) { }
 
-private:
-  void load() {
-    addWidget(f_());
-    Wt::WContainerWidget::load();
-  }
+    private:
+        void load()
+        {
+            addWidget(f_());
+            Wt::WContainerWidget::load();
+        }
 
-  Function f_;
+        Function f_;
 };
 
 template <typename Function>
 std::unique_ptr<DeferredWidget<Function>> deferCreate(Function f)
 {
-  return Wt::cpp14::make_unique<DeferredWidget<Function>>(f);
+    return Wt::cpp14::make_unique<DeferredWidget<Function>>(f);
 }
 #else
-class DeferredWidget : public Wt::WContainerWidget {
-public:
-  DeferredWidget(std::bound f) {}
+class DeferredWidget : public Wt::WContainerWidget
+{
+    public:
+        DeferredWidget(std::bound f) {}
 };
 std::unique_ptr<DeferredWidget> deferCreate(std::bound b)
 {
-  return Wt::cpp14::make_unique<DeferredWidget>(b);
+    return Wt::cpp14::make_unique<DeferredWidget>(b);
 }
 
 #endif

@@ -9,30 +9,31 @@
 
 #include <Wt/WDllDefs.h>
 
-namespace Wt {
-
-class WebRequest;
-class WSocketNotifier;
-
-/*
- * Class that implements a stream of (http)-requests.
- *
- * An instance may be passed to the WebController, which will call the
- * method getNextRequest() to get the next request.
- */
-class WT_API WebStream
+namespace Wt
 {
-public:
-  WebStream();
 
-  virtual ~WebStream();
+    class WebRequest;
+    class WSocketNotifier;
 
-  /*
-   * Get the next request, return 0 when a timeout occurs.
-   * Otherwise throws an exception.
-   */
-  virtual WebRequest *getNextRequest(int timeoutsec) = 0;
-};
+    /*
+     * Class that implements a stream of (http)-requests.
+     *
+     * An instance may be passed to the WebController, which will call the
+     * method getNextRequest() to get the next request.
+     */
+    class WT_API WebStream
+    {
+        public:
+            WebStream();
+
+            virtual ~WebStream();
+
+            /*
+             * Get the next request, return 0 when a timeout occurs.
+             * Otherwise throws an exception.
+             */
+            virtual WebRequest * getNextRequest(int timeoutsec) = 0;
+    };
 
 }
 

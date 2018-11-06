@@ -12,67 +12,68 @@
 
 #include <functional>
 
-namespace Wt {
-
-  class WLayout;
-  class WWidget;
-  class WWidgetItem;
-  class WLayoutItemImpl;
-
-/*! \class WLayoutItem Wt/WLayoutItem.h Wt/WLayoutItem.h
- *  \brief An abstract base class for items that can participate in a layout.
- *
- * \sa WLayout
- */
-class WT_API WLayoutItem
+namespace Wt
 {
-public:
-  /*! \brief Destructor.
-   */
-  virtual ~WLayoutItem();
 
-  /*! \brief Finds the widget item corresponding to the given <i>widget</i>
-   *
-   * The widget is searched for recursively inside nested layouts.
-   */
-  virtual WWidgetItem *findWidgetItem(WWidget *widget) = 0;
+    class WLayout;
+    class WWidget;
+    class WWidgetItem;
+    class WLayoutItemImpl;
 
-  /*! \brief Returns the layout that implements this WLayoutItem.
-   *
-   * This implements a type-safe upcasting mechanism to a WLayout.
-   */
-  virtual WLayout *layout() = 0;
+    /*! \class WLayoutItem Wt/WLayoutItem.h Wt/WLayoutItem.h
+     *  \brief An abstract base class for items that can participate in a layout.
+     *
+     * \sa WLayout
+     */
+    class WT_API WLayoutItem
+    {
+        public:
+            /*! \brief Destructor.
+             */
+            virtual ~WLayoutItem();
 
-  /*! \brief Returns the widget that is held by this WLayoutItem.
-   *
-   * This implements a type-safe upcasting mechanism to a WWidgetItem.
-   */
-  virtual WWidget *widget() = 0;
+            /*! \brief Finds the widget item corresponding to the given <i>widget</i>
+             *
+             * The widget is searched for recursively inside nested layouts.
+             */
+            virtual WWidgetItem * findWidgetItem(WWidget * widget) = 0;
 
-  /*! \brief Returns the layout in which this item is contained.
-   */
-  virtual WLayout *parentLayout() const = 0;
+            /*! \brief Returns the layout that implements this WLayoutItem.
+             *
+             * This implements a type-safe upcasting mechanism to a WLayout.
+             */
+            virtual WLayout * layout() = 0;
 
-  virtual WWidget *parentWidget() const = 0;
+            /*! \brief Returns the widget that is held by this WLayoutItem.
+             *
+             * This implements a type-safe upcasting mechanism to a WWidgetItem.
+             */
+            virtual WWidget * widget() = 0;
 
-  virtual WLayoutItemImpl *impl() const = 0;
+            /*! \brief Returns the layout in which this item is contained.
+             */
+            virtual WLayout * parentLayout() const = 0;
+
+            virtual WWidget * parentWidget() const = 0;
+
+            virtual WLayoutItemImpl * impl() const = 0;
 
 #ifndef WT_TARGET_JAVA
-  typedef std::function<void (WWidget *)> HandleWidgetMethod;
+            typedef std::function<void (WWidget *)> HandleWidgetMethod;
 #endif
-  virtual void iterateWidgets(const HandleWidgetMethod& method) const = 0;
+            virtual void iterateWidgets(const HandleWidgetMethod & method) const = 0;
 
-private:
-  /*! \brief Internal method.
-   */
-  virtual void setParentWidget(WWidget *parent) = 0;
-  
-  /*! \brief Internal method.
-   */
-  virtual void setParentLayout(WLayout *parentLayout) = 0;
+        private:
+            /*! \brief Internal method.
+             */
+            virtual void setParentWidget(WWidget * parent) = 0;
 
-  friend class WLayout;
-};
+            /*! \brief Internal method.
+             */
+            virtual void setParentLayout(WLayout * parentLayout) = 0;
+
+            friend class WLayout;
+    };
 
 }
 
