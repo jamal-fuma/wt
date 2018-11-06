@@ -30,6 +30,7 @@ IF(ENABLE_LIBWTTEST)
     utf8/XmlTest.C
     utils/Base64Test.C
     utils/EraseWord.C
+    utils/ParseNumber.C
     widgets/WSpinBoxTest.C
     length/WLengthTest.C
     color/WColorTest.C
@@ -56,7 +57,7 @@ IF(ENABLE_LIBWTTEST)
 	SET_TARGET_PROPERTIES(test.wt PROPERTIES FOLDER "test")
   ENDIF(MSVC)
 
-  TARGET_LINK_LIBRARIES(test.wt wt wttest ${BOOST_FS_LIB} ${CMAKE_THREAD_LIBS_INIT})
+  TARGET_LINK_LIBRARIES(test.wt wt wttest ${BOOST_FS_LIB} ${WT_THREAD_LIB})
 
   IF(ENABLE_LIBWTDBO)
     # Test all dbo backends
@@ -150,7 +151,7 @@ IF(ENABLE_LIBWTTEST)
     )
 
     ADD_EXECUTABLE(test.http ${HTTP_TEST_SOURCES})
-    TARGET_LINK_LIBRARIES(test.http wt wthttp ${CMAKE_THREAD_LIBS_INIT})
+    TARGET_LINK_LIBRARIES(test.http wt wthttp ${WT_THREAD_LIB})
 	IF(MSVC)
 	  SET_TARGET_PROPERTIES(test.http PROPERTIES FOLDER "test")
     ENDIF(MSVC)  

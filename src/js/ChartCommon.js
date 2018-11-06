@@ -8,21 +8,21 @@
 
 WT_DECLARE_WT_MEMBER
 (2, JavaScriptConstructor, "ChartCommon",
- function(APP) {
+ function(APP) { 
    var MOVE_TO = 0, LINE_TO = 1, CUBIC_C1 = 2, CUBIC_C2 = 3, CUBIC_END = 4,
        QUAD_C = 5, QUAD_END = 6, ARC_C = 7, ARC_R = 8, ARC_ANGLE_SWEEP = 9;
    var X = 0, Y = 1;
    var WT = APP.WT;
 
    var self = this;
-
+ 
    var utils = WT.gfxUtils;
    var top = utils.rect_top;
    var bottom = utils.rect_bottom;
    var left = utils.rect_left;
    var right = utils.rect_right;
    var mult = utils.transform_mult;
-
+ 
    // Find the anchor point (not a curve control point!)
    // with X coordinate nearest to the given x,
    // and smaller than the given x, and return
@@ -75,11 +75,11 @@ WT_DECLARE_WT_MEMBER
       }
       return ascending ? i : len - 1 - i;
    }
-
+ 
    function isAscending(axis, series) {
      return series[0][axis] < series[series.length-1][axis];
    }
-
+ 
    this.findClosestPoint = function(x, series, isHorizontal) {
      var axis = X;
      if (isHorizontal) {
@@ -103,7 +103,7 @@ WT_DECLARE_WT_MEMBER
        return [series[next_i][X],series[next_i][Y]];
      }
    };
-
+ 
    this.minMaxY = function(series, isHorizontal) {
      var yAxis = isHorizontal ? X : Y;
      var min = series[0][yAxis];
@@ -117,7 +117,7 @@ WT_DECLARE_WT_MEMBER
      }
      return [min,max];
    };
-
+ 
    // Get projection matrix to project any point
    // to a line through m at angle theta
    this.projection = function(theta, m) {
@@ -129,21 +129,21 @@ WT_DECLARE_WT_MEMBER
      var h = -m[0]*c - m[1]*s;
      return [c2, cs, cs, s2, c*h+m[0], s*h+m[1]];
    };
-
+ 
    this.distanceSquared = function(p1, p2) {
       var d = [p2[X] - p1[X],
                p2[Y] - p1[Y]];
      return d[X] * d[X] + d[Y] * d[Y];
    };
-
+ 
    this.distanceLessThanRadius = function(p1, p2, radius) {
      return radius * radius >= self.distanceSquared(p1, p2);
    };
-
+ 
    this.toZoomLevel = function(zoomFactor) {
      return Math.floor(Math.log(zoomFactor) / Math.LN2 + 0.5) + 1;
    };
-
+ 
    // Check if a point is inside of the given rect
    this.isPointInRect = function(point, rect) {
      var x,y;
@@ -157,7 +157,7 @@ WT_DECLARE_WT_MEMBER
      return x >= left(rect) && x <= right(rect) &&
             y >= top(rect) && y <= bottom(rect);
    };
-
+   
    this.toDisplayCoord = function(p, transform, isHorizontal, area, modelArea) {
       var u, res;
       if (isHorizontal) {
@@ -173,8 +173,8 @@ WT_DECLARE_WT_MEMBER
       }
       return mult(transform, res);
    };
-
-   this.findYRange = function(series, lowerBound, upperBound, horizontal, area, modelArea, maxZoom) {
+   
+   this.findYRange = function(series, seriesAxis, lowerBound, upperBound, horizontal, area, modelArea, minZoom, maxZoom) {
       if (series.length === 0)
 	 return; // This would be weird?
       var p0 = self.toDisplayCoord([lowerBound, 0], [1,0,0,1,0,0], horizontal, area, modelArea);
@@ -233,8 +233,10 @@ WT_DECLARE_WT_MEMBER
 	    }
 	    u = (p1[axis] - series[i_n][axis]) / (series[after_i_n][axis] - series[i_n][axis]);
 	    y = series[i_n][otherAxis] + u * (series[after_i_n][otherAxis] - series[i_n][otherAxis]);
-	    if (y < min_y) min_y = y;
-	    if (y > max_y) max_y = y;
+	    if (y < min_y)
+              min_y = y;
+	    if (y > max_y)
+              max_y = y;
 	 }
       }
       var yZoom, yMargin;
@@ -244,7 +246,10 @@ WT_DECLARE_WT_MEMBER
 	 yZoom = area[H] / (max_y - min_y);
 	 yMargin = 10;
 	 yZoom = area[H] / (area[H] / yZoom + yMargin * 2); // Give it 10 px extra on each side
-	 if (yZoom > maxZoom[otherAxis]) yZoom = maxZoom[otherAxis];
+	 if (yZoom > maxZoom.y[seriesAxis])
+           yZoom = maxZoom.y[seriesAxis];
+         if (yZoom < minZoom.y[seriesAxis])
+           yZoom = minZoom.y[seriesAxis];
       }
       var panPoint;
       if (horizontal)
@@ -255,4 +260,82 @@ WT_DECLARE_WT_MEMBER
 	    !outsideRange ? -((min_y + max_y) / 2 + (area[3] / yZoom) / 2 - bottom(area)) : 0];
       return {xZoom: xZoom, yZoom: yZoom, panPoint: panPoint};
    };
+
+   this.matchesXAxis = function(x, y, area, xAxis, isHorizontal) {
+     if (isHorizontal) {
+       if (y < top(area) || y > bottom(area))
+         return false;
+       if ((xAxis.side === 'min' || xAxis.side === 'both') &&
+           x >= left(area) - xAxis.width &&
+           x <= left(area))
+         return true;
+       if ((xAxis.side === 'max' || xAxis.side === 'both') &&
+           x <= right(area) + xAxis.width &&
+           x >= right(area))
+         return true;
+     } else {
+       if (x < left(area) || x > right(area))
+         return false;
+       if ((xAxis.side === 'min' || xAxis.side === 'both') &&
+           y <= bottom(area) + xAxis.width &&
+           y >= bottom(area))
+         return true;
+       if ((xAxis.side === 'max' || xAxis.side === 'both') &&
+           y >= top(area) - xAxis.width &&
+           y <= top(area))
+         return true;
+     }
+     return false;
+   }
+
+   this.matchYAxis = function(x, y, area, yAxes, isHorizontal) {
+     function yAxisCount() {
+       return yAxes.length;
+     }
+     function yAxisSide(ax) {
+       return yAxes[ax].side;
+     }
+     function yAxisWidth(ax) {
+       return yAxes[ax].width;
+     }
+     function yAxisMinOffset(ax) {
+       return yAxes[ax].minOffset;
+     }
+     function yAxisMaxOffset(ax) {
+       return yAxes[ax].maxOffset;
+     }
+     // Check if the given x, y position (in pixels) matches an axis.
+     // If so, this returns the axis id, otherwise this returns -1.
+     if (isHorizontal) {
+       if (x < left(area) || x > right(area))
+         return -1;
+     } else {
+       if (y < top(area) || y > bottom(area))
+         return -1;
+     }
+     for (var yAx = 0; yAx < yAxisCount(); ++yAx) {
+       if (isHorizontal) {
+         if ((yAxisSide(yAx) === 'min' || yAxisSide(yAx) === 'both') &&
+             y >= top(area) - yAxisMinOffset(yAx) - yAxisWidth(yAx) &&
+             y <= top(area) - yAxisMinOffset(yAx)) {
+           return yAx;
+         } else if ((yAxisSide(yAx) === 'max' || yAxisSide(yAx) === 'both') &&
+             y >= bottom(area) + yAxisMaxOffset(yAx) &&
+             y <= bottom(area) + yAxisMaxOffset(yAx) + yAxisWidth(yAx)) {
+           return yAx;
+         }
+       } else {
+         if ((yAxisSide(yAx) === 'min' || yAxisSide(yAx) === 'both') &&
+             x >= left(area) - yAxisMinOffset(yAx) - yAxisWidth(yAx) &&
+             x <= left(area) - yAxisMinOffset(yAx)) {
+           return yAx;
+         } else if ((yAxisSide(yAx) === 'max' || yAxisSide(yAx) === 'both') &&
+             x >= right(area) + yAxisMaxOffset(yAx) &&
+             x <= right(area) + yAxisMaxOffset(yAx) + yAxisWidth(yAx)) {
+           return yAx;
+         }
+       }
+     }
+     return -1;
+   }
  });

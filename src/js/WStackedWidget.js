@@ -11,20 +11,35 @@ WT_DECLARE_WT_MEMBER
  function (APP, widget) {
   jQuery.data(widget, 'obj', this);
 
-  var WT = APP.WT, scrollTops = [], scrollLefts = [];
+  var WT = APP.WT, scrollTops = [], scrollLefts = [],
+    lastResizeWidth = null, lastResizeHeight = null;
 
   function isProperChild(el) {
     return el.nodeType == 1 && !$(el).hasClass("wt-reparented");
   }
 
-  this.wtResize = function(self, w, h, layout) {
-    var hdefined = h >= 0;
-    self.lh = hdefined && layout;
+  this.reApplySize = function() {
+    if (lastResizeHeight) {
+      this.wtResize(widget, lastResizeWidth, lastResizeHeight, false);
+    }
+  }
+  
+  this.wtResize = function(self, w, h, setSize) {
+    lastResizeWidth = w;
+    lastResizeHeight = h;
 
-    if (hdefined)
-      self.style.height = h + 'px';
-    else
-      self.style.height = '';
+    var hdefined = h >= 0;
+
+    if (setSize) {
+      if (hdefined) {
+        self.style.height = h + 'px';
+	self.lh = true;
+      } else {
+        self.style.height = '';
+	self.lh = false;
+      }
+    } else
+      self.lh = false;
 
     if (WT.boxSizing(self)) {
       h -= WT.px(self, 'marginTop');
@@ -76,19 +91,19 @@ WT_DECLARE_WT_MEMBER
 		  c.style.overflow = 'auto';
 	      }
 
-	      if (c.wtResize)
-		c.wtResize(c, w, ch, layout);
-	      else {
+	      if (c.wtResize) {
+		c.wtResize(c, w, ch, true);
+	      }	else {
 		var cheight = ch + 'px';
 		if (c.style.height != cheight) {
 		  c.style.height = cheight;
-		  c.lh = layout;
+		  c.lh = true;
 		}
 	      }
 	    }
 	  } else {
 	    if (c.wtResize)
-	      c.wtResize(c, w, -1, layout);
+	      c.wtResize(c, w, -1, true);
 	    else {
 	      c.style.height = '';
 	      c.lh = false;
@@ -143,7 +158,10 @@ WT_DECLARE_WT_MEMBER
 	    c.style.display = 'none';
 	  }
 	} else {
-	  c.style.display = '';
+          if (c.style.flexFlow)
+            c.style.display = 'flex';
+          else
+	    c.style.display = '';
 
 	  if (widget.lh) {
 	    widget.lh = false;
@@ -152,6 +170,8 @@ WT_DECLARE_WT_MEMBER
 	}
       }
     }
+
+    this.reApplySize();
   };
  });
 
@@ -216,23 +236,12 @@ WT_DECLARE_WT_MEMBER
        $to = $(to),
        h = stack.scrollHeight, w = stack.scrollWidth;
 
-     /* Remember original height, also used by layout managers to analyze
-      * the widget should it be a container with a layout manager */
-     to.nativeHeight = to.style.height;
-
      function restoreTo() {
        $to.removeClass(anim + ' in');
        to.style.position = '';
        to.style.left = '';
        to.style.width = '';
        to.style.top = '';
-
-       /* If fade-only animation within a layout, retain set height */
-       if (!effects
-           || typeof jQuery.data(stack.parentNode, 'layout') === 'undefined')
-         to.style.height = to.nativeHeight;
-
-       to.nativeHeight = null;
 
        if (WT.isGecko && (effects & Fade))
          to.style.opacity = '1';

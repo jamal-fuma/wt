@@ -6,25 +6,24 @@
 
 #include <Wt/WAbstractTableModel.h>
 
-namespace Wt
+namespace Wt {
+
+WAbstractTableModel::WAbstractTableModel()
+  : WAbstractItemModel()
+{ }
+
+WAbstractTableModel::~WAbstractTableModel()
+{ }
+
+WModelIndex WAbstractTableModel::parent(const WModelIndex& index) const
 {
+  return WModelIndex();
+}
 
-    WAbstractTableModel::WAbstractTableModel()
-        : WAbstractItemModel()
-    { }
-
-    WAbstractTableModel::~WAbstractTableModel()
-    { }
-
-    WModelIndex WAbstractTableModel::parent(const WModelIndex & index) const
-    {
-        return WModelIndex();
-    }
-
-    WModelIndex WAbstractTableModel::index(int row, int column,
-                                           const WModelIndex & parent) const
-    {
-        return createIndex(row, column, nullptr);
-    }
+WModelIndex WAbstractTableModel::index(int row, int column,
+				       const WModelIndex& parent) const
+{
+  return createIndex(row, column, (void*)nullptr);
+}
 
 }

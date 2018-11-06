@@ -9,280 +9,251 @@
 #include "WtReply.h"
 #include "Wt/Http/Message.h"
 
-namespace http
+namespace http {
+namespace server {
+
+const std::string HTTPRequest::empty_;
+
+HTTPRequest::HTTPRequest(WtReplyPtr reply, const Wt::EntryPoint *entryPoint)
+  : reply_(reply)
 {
-    namespace server
-    {
+  entryPoint_ = entryPoint;
+}
 
-        const std::string HTTPRequest::empty_;
+void HTTPRequest::reset(WtReplyPtr reply, const Wt::EntryPoint *entryPoint)
+{
+  WebRequest::reset();
 
-        HTTPRequest::HTTPRequest(WtReplyPtr reply, const Wt::EntryPoint * entryPoint)
-            : reply_(reply)
-        {
-            entryPoint_ = entryPoint;
-        }
+  reply_ = reply;
+  entryPoint_ = entryPoint;
+}
 
-        void HTTPRequest::reset(WtReplyPtr reply, const Wt::EntryPoint * entryPoint)
-        {
-            WebRequest::reset();
-            reply_ = reply;
-            entryPoint_ = entryPoint;
-        }
+bool HTTPRequest::done() const
+{
+  return !reply_.get();
+}
 
-        bool HTTPRequest::done() const
-        {
-            return !reply_.get();
-        }
+void HTTPRequest::flush(ResponseState state, const WriteCallback& callback)
+{
+  WtReplyPtr ptr = reply_;
+  
+  if (done()) 
+    return;
 
-        void HTTPRequest::flush(ResponseState state, const WriteCallback & callback)
-        {
-            WtReplyPtr ptr = reply_;
-            if(done())
-            {
-                return;
-            }
-            if(state == ResponseState::ResponseDone)
-            {
-                reply_.reset();
-            }
-            ptr->send(callback, state == ResponseState::ResponseDone);
-        }
+  if (state == ResponseState::ResponseDone)
+    reply_.reset();
 
-        void HTTPRequest::readWebSocketMessage(const ReadCallback & callback)
-        {
-            reply_->readWebSocketMessage(callback);
-        }
+  ptr->send(callback, state == ResponseState::ResponseDone);
+}
 
-        bool HTTPRequest::webSocketMessagePending() const
-        {
-            return reply_->readAvailable();
-        }
+void HTTPRequest::readWebSocketMessage(const ReadCallback& callback)
+{
+  reply_->readWebSocketMessage(callback);
+}
 
-        bool HTTPRequest::detectDisconnect(const DisconnectCallback & callback)
-        {
-            reply_->detectDisconnect(callback);
-            return true;
-        }
+bool HTTPRequest::webSocketMessagePending() const
+{
+  return reply_->readAvailable();
+}
 
-        void HTTPRequest::setStatus(int status)
-        {
-            reply_->setStatus((Reply::status_type) status);
-        }
+bool HTTPRequest::detectDisconnect(const DisconnectCallback& callback)
+{
+  reply_->detectDisconnect(callback);
+  return true;
+}
 
-        void HTTPRequest::setContentLength(::int64_t length)
-        {
-            reply_->setContentLength(length);
-        }
+void HTTPRequest::setStatus(int status)
+{
+  reply_->setStatus((Reply::status_type) status);
+}
 
-        void HTTPRequest::addHeader(const std::string & name, const std::string & value)
-        {
-            reply_->addHeader(name, value);
-        }
+void HTTPRequest::setContentLength(::int64_t length)
+{
+  reply_->setContentLength(length);
+}
 
-        void HTTPRequest::setContentType(const std::string & value)
-        {
-            reply_->setContentType(value);
-        }
+void HTTPRequest::addHeader(const std::string& name, const std::string& value)
+{
+  reply_->addHeader(name, value);
+}
 
-        void HTTPRequest::setRedirect(const std::string & url)
-        {
-            reply_->setLocation(url);
-        }
+void HTTPRequest::setContentType(const std::string& value)
+{
+  reply_->setContentType(value);
+}
 
-        const char * HTTPRequest::headerValue(const char * name) const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return nullptr;
-            }
-            const Request::Header * i = p->request().getHeader(name);
-            if(i)
-            {
-                return cstr(i->value);
-            }
-            else
-            {
-                return nullptr;
-            }
-        }
+void HTTPRequest::setRedirect(const std::string& url)
+{
+  reply_->setLocation(url);
+}
 
-        std::vector<Wt::Http::Message::Header> HTTPRequest::headers() const
-        {
-            std::vector<Wt::Http::Message::Header> headerVector;
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return headerVector;
-            }
-            const std::list<Request::Header> & headers = p->request().headers;
-            for(std::list<Request::Header>::const_iterator it=headers.begin(); it != headers.end(); ++it)
-            {
-                if(cstr(it->name))
-                {
-                    headerVector.push_back(Wt::Http::Message::Header(it->name.str(), it->value.str()));
-                }
-            }
-            return headerVector;
-        }
+const char *HTTPRequest::headerValue(const char *name) const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return nullptr;
 
-        const char * HTTPRequest::cstr(const buffer_string & bs) const
-        {
-            if(!bs.next)
-            {
-                return bs.data;
-            }
-            else
-            {
-                s_.push_back(bs.str());
-                return s_.back().c_str();
-            }
-        }
+  const Request::Header *i = p->request().getHeader(name);
+  if (i)
+    return cstr(i->value);
+  else
+    return nullptr;
+}
 
-        ::int64_t HTTPRequest::contentLength() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return 0;
-            }
-            return p->request().contentLength;
-        }
+std::vector<Wt::Http::Message::Header> HTTPRequest::headers() const
+{
+  std::vector<Wt::Http::Message::Header> headerVector;
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return headerVector;
 
-        const char * HTTPRequest::contentType() const
-        {
-            return headerValue("Content-Type");
-        }
+  const std::list<Request::Header> &headers = p->request().headers;
 
-        const char * HTTPRequest::envValue(const char * name) const
-        {
-            if(strcmp(name, "CONTENT_TYPE") == 0)
-            {
-                return headerValue("Content-Type");
-            }
-            else if(strcmp(name, "CONTENT_LENGTH") == 0)
-            {
-                return headerValue("Content-Length");
-            }
-            else if(strcmp(name, "SERVER_SIGNATURE") == 0)
-            {
-                return "<address>Wt httpd server</address>";
-            }
-            else if(strcmp(name, "SERVER_SOFTWARE") == 0)
-            {
-                return "Wthttpd/" WT_VERSION_STR ;
-            }
-            else if(strcmp(name, "SERVER_ADMIN") == 0)
-            {
-                return "webmaster@localhost";
-            }
-            else if(strcmp(name, "REMOTE_ADDR") == 0)
-            {
-                return remoteAddr().c_str();
-            }
-            else if(strcmp(name, "DOCUMENT_ROOT") == 0)
-            {
-                return reply_->configuration().docRoot().c_str();
-            }
-            else
-            {
-                return nullptr;
-            }
-        }
+  for (std::list<Request::Header>::const_iterator it=headers.begin(); it != headers.end(); ++it){
+    if (cstr(it->name)) {
+      headerVector.push_back(Wt::Http::Message::Header(it->name.str(), it->value.str()));
+    }
+  }
 
-        const std::string & HTTPRequest::serverName() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return empty_;
-            }
-            return p->configuration().serverName();
-        }
+  return headerVector;
+}
 
-        const std::string & HTTPRequest::serverPort() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return empty_;
-            }
-            if(serverPort_.empty())
-            {
-                serverPort_ = std::to_string(p->request().port);
-            }
-            return serverPort_;
-        }
+const char *HTTPRequest::cstr(const buffer_string& bs) const {
+  if (!bs.next)
+    return bs.data;
+  else {
+    s_.push_back(bs.str());
+    return s_.back().c_str();
+  }
+}
 
-        const std::string & HTTPRequest::scriptName() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return empty_;
-            }
-            return p->request().request_path;
-        }
+::int64_t HTTPRequest::contentLength() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return 0;
 
-        const char * HTTPRequest::requestMethod() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return nullptr;
-            }
-            return cstr(p->request().method);
-        }
+  return p->request().contentLength;
+}
 
-        const std::string & HTTPRequest::queryString() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return empty_;
-            }
-            return p->request().request_query;
-        }
+const char *HTTPRequest::contentType() const
+{
+  return headerValue("Content-Type");
+}
 
-        const std::string & HTTPRequest::pathInfo() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return empty_;
-            }
-            return p->request().request_extra_path;
-        }
+const char *HTTPRequest::envValue(const char *name) const
+{
+  if (strcmp(name, "CONTENT_TYPE") == 0) {
+    return headerValue("Content-Type");
+  } else if (strcmp(name, "CONTENT_LENGTH") == 0) {
+    return headerValue("Content-Length");
+  } else if (strcmp(name, "SERVER_SIGNATURE") == 0) {
+    return "<address>Wt httpd server</address>";
+  } else if (strcmp(name, "SERVER_SOFTWARE") == 0) {
+    return "Wthttpd/" WT_VERSION_STR ;
+  } else if (strcmp(name, "SERVER_ADMIN") == 0) {
+    return "webmaster@localhost";
+  } else if (strcmp(name, "REMOTE_ADDR") == 0) {
+    return remoteAddr().c_str();
+  } else if (strcmp(name, "DOCUMENT_ROOT") == 0) {
+    return reply_->configuration().docRoot().c_str();
+  } else
+    return nullptr;
+}
 
-        const std::string & HTTPRequest::remoteAddr() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return empty_;
-            }
-            return p->request().remoteIP;
-        }
+const std::string& HTTPRequest::serverName() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return empty_;
 
-        const char * HTTPRequest::urlScheme() const
-        {
-            WtReplyPtr p = reply_;
-            if(!p.get())
-            {
-                return "http";
-            }
-            return p->request().urlScheme;
-        }
+  return p->configuration().serverName();
+}
 
-        bool HTTPRequest::isSynchronous() const
-        {
-            return false;
-        }
+const std::string& HTTPRequest::serverPort() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return empty_;
 
-        Wt::WSslInfo * HTTPRequest::sslInfo() const
-        {
-            return reply_->request().sslInfo();
-        }
+  if (serverPort_.empty())
+    serverPort_ = std::to_string(p->request().port);
 
-    } // namespace server
+  return serverPort_;
+}
+
+const std::string& HTTPRequest::scriptName() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return empty_;
+
+  return p->request().request_path;
+}
+
+const char * HTTPRequest::requestMethod() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return nullptr;
+
+  return cstr(p->request().method);
+}
+
+const std::string& HTTPRequest::queryString() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return empty_;
+
+  return p->request().request_query;
+}
+
+const std::string& HTTPRequest::pathInfo() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return empty_;
+
+  return p->request().request_extra_path;
+}
+
+const std::string& HTTPRequest::remoteAddr() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return empty_;
+
+  return p->request().remoteIP;
+}
+
+const char *HTTPRequest::urlScheme() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return "http";
+
+  return p->request().urlScheme;
+}
+
+bool HTTPRequest::isSynchronous() const
+{
+  return false;
+}
+
+Wt::WSslInfo *HTTPRequest::sslInfo() const
+{
+  return reply_->request().sslInfo();
+}
+
+const std::vector<std::pair<std::string, std::string> > &HTTPRequest::urlParams() const
+{
+  WtReplyPtr p = reply_;
+  if (!p.get())
+    return WebRequest::urlParams();
+
+  return p->request().url_params;
+}
+
+} // namespace server
 } // namespace http

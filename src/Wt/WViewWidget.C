@@ -9,101 +9,102 @@
 #include "WebSession.h"
 #include "DomElement.h"
 
-namespace Wt
+namespace Wt {
+
+WViewWidget::WViewWidget()
+{ }
+
+WViewWidget::~WViewWidget()
 {
+  manageWidget(contents_, std::unique_ptr<WWidget>());
+}
 
-    WViewWidget::WViewWidget()
-    { }
+void WViewWidget::load()
+{
+  update();
 
-    WViewWidget::~WViewWidget()
-    {
-        manageWidget(contents_, std::unique_ptr<WWidget> {});
+  WWebWidget::load();
+}
+
+void WViewWidget::update()
+{
+  needContentsUpdate_ = true;
+  if (isRendered())
+    scheduleRender();
+}
+
+void WViewWidget::refresh()
+{
+  if (!contents_)
+    update();
+}
+
+void WViewWidget::render(WFlags<RenderFlag> flags)
+{
+  if (needContentsUpdate_ || (flags.test(RenderFlag::Full))) {
+    WApplication::instance()->setExposeSignals(false);
+    contents_ = renderView();
+    widgetAdded(contents_.get());
+    WApplication::instance()->setExposeSignals(true);
+
+    contents_->render(flags); // it may affect isInline(), e.g. WText
+    setInline(contents_->isInline());
+
+    needContentsUpdate_ = false;
+  }
+
+  WWebWidget::render(flags);
+}
+
+void WViewWidget::updateDom(DomElement& element, bool all)
+{
+  WApplication *app = WApplication::instance();
+  
+  if (!app->session()->renderer().preLearning()) {
+    if (all && !contents_) {
+      needContentsUpdate_ = true;
+      render(RenderFlag::Full);
     }
 
-    void WViewWidget::load()
-    {
-        update();
-        WWebWidget::load();
-    }
+    if (contents_) {
+      bool savedVisibleOnly = app->session()->renderer().visibleOnly();
 
-    void WViewWidget::update()
-    {
-        needContentsUpdate_ = true;
-        if(isRendered())
-        {
-            scheduleRender();
-        }
-    }
+      WApplication::instance()->session()->renderer().setVisibleOnly(false);
 
-    void WViewWidget::refresh()
-    {
-        if(!contents_)
-        {
-            update();
-        }
-    }
+      DomElement *e = contents_->createSDomElement(WApplication::instance());
 
-    void WViewWidget::render(WFlags<RenderFlag> flags)
-    {
-        if(needContentsUpdate_ || (flags.test(RenderFlag::Full)))
-        {
-            WApplication::instance()->setExposeSignals(false);
-            contents_ = renderView();
-            widgetAdded(contents_.get());
-            WApplication::instance()->setExposeSignals(true);
-            contents_->render(flags); // it may affect isInline(), e.g. WText
-            setInline(contents_->isInline());
-            needContentsUpdate_ = false;
-        }
-        WWebWidget::render(flags);
-    }
+      if (!all)
+	element.setWasEmpty(true); // removes previous content
+      element.addChild(e);
 
-    void WViewWidget::updateDom(DomElement & element, bool all)
-    {
-        WApplication * app = WApplication::instance();
-        if(!app->session()->renderer().preLearning())
-        {
-            if(all && !contents_)
-            {
-                needContentsUpdate_ = true;
-                render(RenderFlag::Full);
-            }
-            if(contents_)
-            {
-                bool savedVisibleOnly = app->session()->renderer().visibleOnly();
-                WApplication::instance()->session()->renderer().setVisibleOnly(false);
-                DomElement * e = contents_->createSDomElement(WApplication::instance());
-                if(!all)
-                {
-                    element.setWasEmpty(true);    // removes previous content
-                }
-                element.addChild(e);
-                WApplication::instance()->session()->renderer()
-                .setVisibleOnly(savedVisibleOnly);
-                needContentsUpdate_ = false;
-            }
-        }
-        WWebWidget::updateDom(element, all);
-    }
+      WApplication::instance()->session()->renderer()
+	.setVisibleOnly(savedVisibleOnly);
 
-    void WViewWidget::propagateRenderOk(bool deep)
-    {
-        needContentsUpdate_ = false;
-        WWebWidget::propagateRenderOk(deep);
+      needContentsUpdate_ = false;
     }
+  }
 
-    void WViewWidget::doneRerender()
-    {
-        if(contents_)
-        {
-            widgetRemoved(contents_.get(), false);
-            contents_.reset();
-        }
-    }
+  WWebWidget::updateDom(element, all);
+}
 
-    DomElementType WViewWidget::domElementType() const
-    {
-        return isInline() ? DomElementType::SPAN : DomElementType::DIV;
-    }
+void WViewWidget::propagateRenderOk(bool deep)
+{
+  needContentsUpdate_ = false;
+
+  WWebWidget::propagateRenderOk(deep);
+}
+
+void WViewWidget::doneRerender()
+{
+  if(contents_){
+    widgetRemoved(contents_.get(), false);
+    contents_.reset();
+  }
+}
+
+DomElementType WViewWidget::domElementType() const
+{
+  return isInline() ? DomElementType::SPAN : DomElementType::DIV;
+}
 
 }

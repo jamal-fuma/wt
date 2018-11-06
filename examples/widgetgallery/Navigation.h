@@ -12,21 +12,21 @@
 
 class Navigation : public TopicWidget
 {
-    public:
-        Navigation();
+public:
+  Navigation();
 
-        void populateSubMenu(Wt::WMenu * menu);
+  void populateSubMenu(Wt::WMenu *menu);
 
-    private:
-        std::unique_ptr<WWidget> internalPaths();
-        std::unique_ptr<WWidget> anchor();
-        std::unique_ptr<WWidget> stackedWidget();
-        std::unique_ptr<WWidget> tabWidget();
-        std::unique_ptr<WWidget> menuWidget();
-        std::unique_ptr<WWidget> navigationBar();
-        std::unique_ptr<WWidget> popupMenu();
-        std::unique_ptr<WWidget> splitButton();
-        std::unique_ptr<WWidget> toolBar();
+private:
+  std::unique_ptr<Wt::WWidget> internalPaths();
+  std::unique_ptr<Wt::WWidget> anchor();
+  std::unique_ptr<Wt::WWidget> stackedWidget();
+  std::unique_ptr<Wt::WWidget> tabWidget();
+  std::unique_ptr<Wt::WWidget> menuWidget();
+  std::unique_ptr<Wt::WWidget> navigationBar();
+  std::unique_ptr<Wt::WWidget> popupMenu();
+  std::unique_ptr<Wt::WWidget> splitButton();
+  std::unique_ptr<Wt::WWidget> toolBar();
 };
 
 #endif // NAVIGATION_H_

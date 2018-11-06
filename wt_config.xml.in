@@ -107,6 +107,21 @@
 	      -->
 	    <timeout>600</timeout>
 
+            <!-- Idle timeout (seconds).
+
+               When the user does not interact with the application for the set number of seconds,
+               WApplication::idleTimeout() is called. By default, this
+               method quits the application immediately, but it can be overridden
+               if different behaviour is desired.
+
+               This feature can be used to prevent others from taking over a session
+               when the device that the Wt application is being used from is left behind,
+               and is most effective in combination with a fairly short session timeout (<timeout>)
+
+               When omitted, or left empty, this feature is disabled.
+               -->
+            <!--<idle-timeout>900</idle-timeout>-->
+
 	    <!-- Server push timeout (seconds).
 
                When using server-initiated updates, the client uses
@@ -293,6 +308,11 @@
            fraction (e.g. less than 5%) will be plain HTML
            sessions. This ratio is only enforced when more than 20 sessions
 	   have been created.
+
+           The default is 1 (= 100%), which means that 100% of all sessions
+           may be plain HTML sessions, effectively disabling this feature. If
+           you set it to 0.5 for example, that means that 50% of all sessions
+           may be plain HTML sessions.
 	  -->
 	<plain-ajax-sessions-ratio-limit>1</plain-ajax-sessions-ratio-limit>
 
@@ -444,13 +464,20 @@
            Each <user-agent> is a regular expression.
 	  -->
 	<user-agents type="bot">
-	  <user-agent>.*Googlebot.*</user-agent>
-	  <user-agent>.*msnbot.*</user-agent>
-	  <user-agent>.*Slurp.*</user-agent>
-	  <user-agent>.*Crawler.*</user-agent>
-	  <user-agent>.*Bot.*</user-agent>
-	  <user-agent>.*ia_archiver.*</user-agent>
-	  <user-agent>.*Twiceler.*</user-agent>
+            <user-agent>.*Googlebot.*</user-agent>
+            <user-agent>.*msnbot.*</user-agent>
+            <user-agent>.*Slurp.*</user-agent>
+            <user-agent>.*Crawler.*</user-agent>
+            <user-agent>.*Bot.*</user-agent>
+            <user-agent>.*ia_archiver.*</user-agent>
+            <user-agent>.*Twiceler.*</user-agent>
+            <user-agent>.*Yandex.*</user-agent>
+            <user-agent>.*Nutch.*</user-agent>
+            <user-agent>.*MJ12bot.*</user-agent>
+            <user-agent>.*Baiduspider.*</user-agent>
+            <user-agent>.*Ezooms.*</user-agent>
+            <user-agent>.*Sogou web spider.*</user-agent>
+            <user-agent>.*AhrefsBot.*</user-agent>
 	</user-agents>
 
 	<!-- Configures different rendering engines for certain browsers.

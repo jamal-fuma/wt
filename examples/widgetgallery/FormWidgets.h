@@ -12,31 +12,33 @@
 
 #include "Wt/WStandardItemModel.h"
 
+#include <memory>
+
 class EventDisplayer;
 
 class FormWidgets : public TopicWidget
 {
-    public:
-        FormWidgets();
+public:
+  FormWidgets();
 
-        void populateSubMenu(Wt::WMenu * menu);
+  void populateSubMenu(Wt::WMenu *menu);
 
-    private:
-        std::unique_ptr<WWidget> introduction();
-        std::unique_ptr<WWidget> textEditors();
-        std::unique_ptr<WWidget> checkBox();
-        std::unique_ptr<WWidget> radioButton();
-        std::unique_ptr<WWidget> comboBox();
-        std::unique_ptr<WWidget> selectionBox();
-        std::unique_ptr<WWidget> autoComplete();
-        std::unique_ptr<WWidget> dateEntry();
-        std::unique_ptr<WWidget> inPlaceEdit();
-        std::unique_ptr<WWidget> slider();
-        std::unique_ptr<WWidget> progressBar();
-        std::unique_ptr<WWidget> fileUpload();
-        std::unique_ptr<WWidget> pushButton();
-        std::unique_ptr<WWidget> validation();
-        std::unique_ptr<WWidget> example();
+private:
+  std::unique_ptr<Wt::WWidget> introduction();
+  std::unique_ptr<Wt::WWidget> textEditors();
+  std::unique_ptr<Wt::WWidget> checkBox();
+  std::unique_ptr<Wt::WWidget> radioButton();
+  std::unique_ptr<Wt::WWidget> comboBox();
+  std::unique_ptr<Wt::WWidget> selectionBox();
+  std::unique_ptr<Wt::WWidget> autoComplete();
+  std::unique_ptr<Wt::WWidget> dateEntry();
+  std::unique_ptr<Wt::WWidget> inPlaceEdit();
+  std::unique_ptr<Wt::WWidget> slider();
+  std::unique_ptr<Wt::WWidget> progressBar();
+  std::unique_ptr<Wt::WWidget> fileUpload();
+  std::unique_ptr<Wt::WWidget> pushButton();
+  std::unique_ptr<Wt::WWidget> validation();
+  std::unique_ptr<Wt::WWidget> example();
 };
 
 #endif // FORMWIDGETS_H_

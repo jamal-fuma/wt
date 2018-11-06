@@ -12,24 +12,22 @@
 
 #include <Wt/Chart/WAbstractDataSeries3D.h>
 
-namespace Wt
+namespace Wt {
+  namespace Chart {
+   
+class WLegend3D : public WLegend 
 {
-    namespace Chart
-    {
+public:
+  void renderLegend
+    (WPainter* painter,
+     const std::vector<std::unique_ptr<WAbstractDataSeries3D> >& dataseries);
 
-        class WLegend3D : public WLegend
-        {
-            public:
-                void renderLegend
-                (WPainter * painter,
-                 const std::vector<std::unique_ptr<WAbstractDataSeries3D>> & dataseries);
-
-                int width();
-                int height
-                (const std::vector<std::unique_ptr<WAbstractDataSeries3D>> & dataseries);
-        };
-
-    }
+  int width();
+  int height
+    (const std::vector<std::unique_ptr<WAbstractDataSeries3D> >& dataseries);
+};
+ 
+  }
 }
 
 #endif

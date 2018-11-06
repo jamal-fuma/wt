@@ -7,30 +7,26 @@
 #include "Wt/Auth/OAuthService.h"
 #include "Wt/Auth/OAuthWidget.h"
 
-namespace Wt
+namespace Wt {
+  namespace Auth {
+
+OAuthWidget::OAuthWidget(const OAuthService& oAuthService)
+  : WImage("css/oauth-" + oAuthService.name() + ".png")
 {
-    namespace Auth
-    {
+  setToolTip(oAuthService.description());
+  setStyleClass("Wt-auth-icon");
+  setVerticalAlignment(AlignmentFlag::Middle);
 
-        OAuthWidget::OAuthWidget(const OAuthService & oAuthService)
-            : WImage("css/oauth-" + oAuthService.name() + ".png")
-        {
-            setToolTip(oAuthService.description());
-            setStyleClass("Wt-auth-icon");
-            setVerticalAlignment(AlignmentFlag::Middle);
-            process_ = oAuthService.createProcess(oAuthService.authenticationScope());
-#ifndef WT_TARGET_JAVA
-            clicked().connect(process_.get(), &OAuthProcess::startAuthenticate);
-#else
-            process_->connectStartAuthenticate(w->clicked());
-#endif
-            process_->authenticated().connect(this, &OAuthWidget::oAuthDone);
-        }
+  process_ = oAuthService.createProcess(oAuthService.authenticationScope());
+  clicked().connect(process_.get(), &OAuthProcess::startAuthenticate);
 
-        void OAuthWidget::oAuthDone(const Identity & identity)
-        {
-            authenticated_.emit(process_.get(), identity);
-        }
+  process_->authenticated().connect(this, &OAuthWidget::oAuthDone);
+}
 
-    }
+void OAuthWidget::oAuthDone(const Identity& identity)
+{
+  authenticated_.emit(process_.get(), identity);
+}
+
+  }
 }

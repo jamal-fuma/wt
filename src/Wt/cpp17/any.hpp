@@ -13,117 +13,108 @@
 
 #include <experimental/any>
 
-namespace Wt
-{
-    namespace cpp17
-    {
-        using any = std::experimental::any;
-        using bad_any_cast = std::experimental::bad_any_cast;
+namespace Wt {
+  namespace cpp17 {
+    using any = std::experimental::any;
+    using bad_any_cast = std::experimental::bad_any_cast;
 
-        template<class ValueType>
-        ValueType any_cast(const any & operand)
-        {
-            return std::experimental::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType any_cast(any & operand)
-        {
-            return std::experimental::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType any_cast(any && operand)
-        {
-            return std::experimental::any_cast<ValueType>(std::move(operand));
-        }
-        template<class ValueType>
-        const ValueType * any_cast(const any * operand) noexcept
-        {
-            return std::experimental::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType * any_cast(any * operand) noexcept
-        {
-            return std::experimental::any_cast<ValueType>(operand);
-        }
+    inline bool any_has_value(const any &v) {
+      return !v.empty();
     }
+
+    template<class ValueType>
+    ValueType any_cast(const any& operand) {
+      return std::experimental::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType any_cast(any& operand) {
+      return std::experimental::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType any_cast(any&& operand) {
+      return std::experimental::any_cast<ValueType>(std::move(operand));
+    }
+    template<class ValueType>
+    const ValueType* any_cast(const any* operand) noexcept {
+      return std::experimental::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType* any_cast(any* operand) noexcept {
+      return std::experimental::any_cast<ValueType>(operand);
+    }
+  }
 }
 
 #elif defined(WT_ANY_IS_STD_ANY)
 
 #include <any>
 
-namespace Wt
-{
-    namespace cpp17
-    {
-        using any = std::any;
-        using bad_any_cast = std::bad_any_cast;
+namespace Wt {
+  namespace cpp17 {
+    using any = std::any;
+    using bad_any_cast = std::bad_any_cast;
 
-        template<class ValueType>
-        ValueType any_cast(const any & operand)
-        {
-            return std::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType any_cast(any & operand)
-        {
-            return std::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType any_cast(any && operand)
-        {
-            return std::any_cast<ValueType>(std::move(operand));
-        }
-        template<class ValueType>
-        const ValueType * any_cast(const any * operand) noexcept
-        {
-            return std::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType * any_cast(any * operand) noexcept
-        {
-            return std::any_cast<ValueType>(operand);
-        }
+    inline bool any_has_value(const any &v) {
+      return v.has_value();
     }
+
+    template<class ValueType>
+    ValueType any_cast(const any& operand) {
+      return std::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType any_cast(any& operand) {
+      return std::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType any_cast(any&& operand) {
+      return std::any_cast<ValueType>(std::move(operand));
+    }
+    template<class ValueType>
+    const ValueType* any_cast(const any* operand) noexcept {
+      return std::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType* any_cast(any* operand) noexcept {
+      return std::any_cast<ValueType>(operand);
+    }
+  }
 }
 
 #else // defined(WT_ANY_IS_THELINK2012_ANY)
 
 #include "any/any.hpp"
 
-namespace Wt
-{
-    namespace cpp17
-    {
-        using any = linb::any;
-        using bad_any_cast = linb::bad_any_cast;
+namespace Wt {
+  namespace cpp17 {
+    using any = linb::any;
+    using bad_any_cast = linb::bad_any_cast;
 
-        template<class ValueType>
-        ValueType any_cast(const any & operand)
-        {
-            return linb::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType any_cast(any & operand)
-        {
-            return linb::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType any_cast(any && operand)
-        {
-            return linb::any_cast<ValueType>(std::move(operand));
-        }
-        template<class ValueType>
-        const ValueType * any_cast(const any * operand) noexcept
-        {
-            return linb::any_cast<ValueType>(operand);
-        }
-        template<class ValueType>
-        ValueType * any_cast(any * operand) noexcept
-        {
-            return linb::any_cast<ValueType>(operand);
-        }
+    inline bool any_has_value(const any &v) {
+      return !v.empty();
     }
+
+    template<class ValueType>
+    ValueType any_cast(const any& operand) {
+      return linb::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType any_cast(any& operand) {
+      return linb::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType any_cast(any&& operand) {
+      return linb::any_cast<ValueType>(std::move(operand));
+    }
+    template<class ValueType>
+    const ValueType* any_cast(const any* operand) noexcept {
+      return linb::any_cast<ValueType>(operand);
+    }
+    template<class ValueType>
+    ValueType* any_cast(any* operand) noexcept {
+      return linb::any_cast<ValueType>(operand);
+    }
+  }
 }
 
 #endif
