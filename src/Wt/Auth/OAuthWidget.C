@@ -7,26 +7,26 @@
 #include "Wt/Auth/OAuthService.h"
 #include "Wt/Auth/OAuthWidget.h"
 
-namespace Wt {
-  namespace Auth {
-
-OAuthWidget::OAuthWidget(const OAuthService& oAuthService)
-  : WImage("css/oauth-" + oAuthService.name() + ".png")
+namespace Wt
 {
-  setToolTip(oAuthService.description());
-  setStyleClass("Wt-auth-icon");
-  setVerticalAlignment(AlignmentFlag::Middle);
+    namespace Auth
+    {
 
-  process_ = oAuthService.createProcess(oAuthService.authenticationScope());
-  clicked().connect(process_.get(), &OAuthProcess::startAuthenticate);
+        OAuthWidget::OAuthWidget(const OAuthService & oAuthService)
+            : WImage("css/oauth-" + oAuthService.name() + ".png")
+        {
+            setToolTip(oAuthService.description());
+            setStyleClass("Wt-auth-icon");
+            setVerticalAlignment(AlignmentFlag::Middle);
+            process_ = oAuthService.createProcess(oAuthService.authenticationScope());
+            clicked().connect(process_.get(), &OAuthProcess::startAuthenticate);
+            process_->authenticated().connect(this, &OAuthWidget::oAuthDone);
+        }
 
-  process_->authenticated().connect(this, &OAuthWidget::oAuthDone);
-}
+        void OAuthWidget::oAuthDone(const Identity & identity)
+        {
+            authenticated_.emit(process_.get(), identity);
+        }
 
-void OAuthWidget::oAuthDone(const Identity& identity)
-{
-  authenticated_.emit(process_.get(), identity);
-}
-
-  }
+    }
 }

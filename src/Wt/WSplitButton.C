@@ -9,47 +9,46 @@
 #include "Wt/WSplitButton.h"
 #include "Wt/WToolBar.h"
 
-namespace Wt {
-
-WSplitButton::WSplitButton()
+namespace Wt
 {
-  init(WString::Empty);
-}
 
-WSplitButton::WSplitButton(const WString& label)
-{
-  init(label);
-}
+    WSplitButton::WSplitButton()
+    {
+        init(WString::Empty);
+    }
 
-void WSplitButton::init(const WString& label)
-{
-  impl_ = setImplementation(std::unique_ptr<WToolBar>(new WToolBar()));
+    WSplitButton::WSplitButton(const WString & label)
+    {
+        init(label);
+    }
 
-  impl_->setInline(true);
-  impl_->addButton(std::unique_ptr<WPushButton>(new WPushButton(label)));
-  impl_->addButton(std::unique_ptr<WPushButton>(new WPushButton()));
+    void WSplitButton::init(const WString & label)
+    {
+        impl_ = setImplementation(std::unique_ptr<WToolBar>(new WToolBar()));
+        impl_->setInline(true);
+        impl_->addButton(std::unique_ptr<WPushButton>(new WPushButton(label)));
+        impl_->addButton(std::unique_ptr<WPushButton>(new WPushButton()));
+        dropDownButton()->setStyleClass("dropdown-toggle");
+    }
 
-  dropDownButton()->setStyleClass("dropdown-toggle");
-}
+    WPushButton * WSplitButton::actionButton() const
+    {
+        return dynamic_cast<WPushButton *>(impl_->widget(0));
+    }
 
-WPushButton *WSplitButton::actionButton() const
-{
-  return dynamic_cast<WPushButton *>(impl_->widget(0));
-}
+    WPushButton * WSplitButton::dropDownButton() const
+    {
+        return dynamic_cast<WPushButton *>(impl_->widget(1));
+    }
 
-WPushButton *WSplitButton::dropDownButton() const
-{
-  return dynamic_cast<WPushButton *>(impl_->widget(1));
-}
+    void WSplitButton::setMenu(std::unique_ptr<WPopupMenu> popupMenu)
+    {
+        dropDownButton()->setMenu(std::move(popupMenu));
+    }
 
-void WSplitButton::setMenu(std::unique_ptr<WPopupMenu> popupMenu)
-{
-  dropDownButton()->setMenu(std::move(popupMenu));
-}
-
-WPopupMenu *WSplitButton::menu() const
-{
-  return dropDownButton()->menu();
-}
+    WPopupMenu * WSplitButton::menu() const
+    {
+        return dropDownButton()->menu();
+    }
 
 }

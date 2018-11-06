@@ -11,88 +11,98 @@
 
 #include "WebUtils.h"
 
-namespace Wt {
-  namespace Chart {
-
-bool ExtremesIterator::startSeries(const WDataSeries& series, double groupWidth,
-				   int numBarGroups, int currentBarGroup)
+namespace Wt
 {
-  return axis_ == Axis::X || series.yAxis() == yAxis_;
-}
+    namespace Chart
+    {
 
-void ExtremesIterator::newValue(const WDataSeries& series, double x, double y,
-				double stackY, int xRow, int xColumn,
-				int yRow, int yColumn)
-{
-  double v = axis_ == Axis::X ? x : y;
-  
-  if (!Utils::isNaN(v) && (scale_ != AxisScale::Log || v > 0.0)) {
-    maximum_ = std::max(v, maximum_);
-    minimum_ = std::min(v, minimum_);
-  }
-}
-    
-WChart2DImplementation::WChart2DImplementation(WCartesianChart *chart)
-  : chart_(chart)
-{ }
+        bool ExtremesIterator::startSeries(const WDataSeries & series, double groupWidth,
+                                           int numBarGroups, int currentBarGroup)
+        {
+            return axis_ == Axis::X || series.yAxis() == yAxis_;
+        }
 
-ChartType WChart2DImplementation::chartType() const
-{
-  return chart_->type();
-}
+        void ExtremesIterator::newValue(const WDataSeries & series, double x, double y,
+                                        double stackY, int xRow, int xColumn,
+                                        int yRow, int yColumn)
+        {
+            double v = axis_ == Axis::X ? x : y;
+            if(!Utils::isNaN(v) && (scale_ != AxisScale::Log || v > 0.0))
+            {
+                maximum_ = std::max(v, maximum_);
+                minimum_ = std::min(v, minimum_);
+            }
+        }
 
-void WChart2DImplementation::update()
-{
-  chart_->update();
-}
+        WChart2DImplementation::WChart2DImplementation(WCartesianChart * chart)
+            : chart_(chart)
+        { }
 
-int WChart2DImplementation::axisPadding() const
-{
-  return chart_->axisPadding();
-}
+        ChartType WChart2DImplementation::chartType() const
+        {
+            return chart_->type();
+        }
 
-int WChart2DImplementation::numberOfCategories(Axis axis) const
-{
-  if (chart_->model())
-    return chart_->model()->rowCount();
-  else
-    return 0;
-}
+        void WChart2DImplementation::update()
+        {
+            chart_->update();
+        }
 
-Orientation WChart2DImplementation::orientation() const
-{
-  return chart_->orientation();
-}
+        int WChart2DImplementation::axisPadding() const
+        {
+            return chart_->axisPadding();
+        }
 
-WString WChart2DImplementation::categoryLabel(int u, Axis axis) const
-{
-  if (chart_->XSeriesColumn() != -1) {
-    if (u < chart_->model()->rowCount())
-      return chart_->model()->displayData(u, chart_->XSeriesColumn());
-    else
-      return WString();
-  } else {
-    return WString();
-  }
-}
+        int WChart2DImplementation::numberOfCategories(Axis axis) const
+        {
+            if(chart_->model())
+            {
+                return chart_->model()->rowCount();
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
-WChart2DImplementation::RenderRange WChart2DImplementation::computeRenderRange(Axis axis, int yAxis, AxisScale scale) const
-{
-  ExtremesIterator iterator(axis, yAxis, scale);
-  
-  chart_->iterateSeries(&iterator, nullptr, false, axis == Axis::X);
+        Orientation WChart2DImplementation::orientation() const
+        {
+            return chart_->orientation();
+        }
 
-  RenderRange range;
-  range.minimum = iterator.minimum();
-  range.maximum = iterator.maximum();
+        WString WChart2DImplementation::categoryLabel(int u, Axis axis) const
+        {
+            if(chart_->XSeriesColumn() != -1)
+            {
+                if(u < chart_->model()->rowCount())
+                {
+                    return chart_->model()->displayData(u, chart_->XSeriesColumn());
+                }
+                else
+                {
+                    return WString();
+                }
+            }
+            else
+            {
+                return WString();
+            }
+        }
 
-  return range;
-}
+        WChart2DImplementation::RenderRange WChart2DImplementation::computeRenderRange(Axis axis, int yAxis, AxisScale scale) const
+        {
+            ExtremesIterator iterator(axis, yAxis, scale);
+            chart_->iterateSeries(&iterator, nullptr, false, axis == Axis::X);
+            RenderRange range;
+            range.minimum = iterator.minimum();
+            range.maximum = iterator.maximum();
+            return range;
+        }
 
-bool WChart2DImplementation::onDemandLoadingEnabled() const
-{
-  return chart_->onDemandLoadingEnabled();
-}
+        bool WChart2DImplementation::onDemandLoadingEnabled() const
+        {
+            return chart_->onDemandLoadingEnabled();
+        }
 
-  }
+    }
 }

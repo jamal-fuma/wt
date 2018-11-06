@@ -12,109 +12,118 @@
 #include "WebUtils.h"
 
 #ifndef WT_DEBUG_JS
-#include "js/WRegExpValidator.min.js"
+    #include "js/WRegExpValidator.min.js"
 #endif
 
-namespace Wt {
-
-WRegExpValidator::WRegExpValidator()
-  : pattern_(),
-    regex_(),
-    noMatchText_()
-{ }
-
-WRegExpValidator::WRegExpValidator(const WT_USTRING& pattern)
-  : pattern_(pattern),
-    regex_(pattern.toUTF8()),
-    noMatchText_()
-{ }
-
-WRegExpValidator::~WRegExpValidator()
-{ }
-
-void WRegExpValidator::setRegExp(const WT_USTRING& pattern)
+namespace Wt
 {
-  regex_.assign(pattern.toUTF8());
-  pattern_ = pattern;
-  repaint();
-}
 
-void WRegExpValidator::setInvalidNoMatchText(const WString& text)
-{
-  noMatchText_ = text;
-  repaint();
-}
+    WRegExpValidator::WRegExpValidator()
+        : pattern_(),
+          regex_(),
+          noMatchText_()
+    { }
 
-WString WRegExpValidator::invalidNoMatchText() const
-{
-  if (!noMatchText_.empty())
-    return noMatchText_;
-  else
-    return WString::tr("Wt.WRegExpValidator.Invalid");
-}
+    WRegExpValidator::WRegExpValidator(const WT_USTRING & pattern)
+        : pattern_(pattern),
+          regex_(pattern.toUTF8()),
+          noMatchText_()
+    { }
 
-WValidator::Result WRegExpValidator::validate(const WT_USTRING& input) const
-{
-  if (input.empty())
-    return WValidator::validate(input);
+    WRegExpValidator::~WRegExpValidator()
+    { }
 
-  if (std::regex_match(input.toUTF8(), regex_))
-    return Result(ValidationState::Valid);
-  else
-    return Result(ValidationState::Invalid, invalidNoMatchText());
-}
+    void WRegExpValidator::setRegExp(const WT_USTRING & pattern)
+    {
+        regex_.assign(pattern.toUTF8());
+        pattern_ = pattern;
+        repaint();
+    }
 
-void WRegExpValidator::loadJavaScript(WApplication *app)
-{
-  LOAD_JAVASCRIPT(app, "js/WRegExpValidator.js", "WRegExpValidator", wtjs1);
-}
+    void WRegExpValidator::setInvalidNoMatchText(const WString & text)
+    {
+        noMatchText_ = text;
+        repaint();
+    }
 
-void WRegExpValidator::setFlags(WFlags<RegExpFlag> flags)
-{
-  if (flags == this->flags())
-    return;
+    WString WRegExpValidator::invalidNoMatchText() const
+    {
+        if(!noMatchText_.empty())
+        {
+            return noMatchText_;
+        }
+        else
+        {
+            return WString::tr("Wt.WRegExpValidator.Invalid");
+        }
+    }
 
-  if (flags.test(RegExpFlag::MatchCaseInsensitive))
-    regex_.assign(pattern_.toUTF8(),
-                  std::regex::ECMAScript | std::regex::icase);
-  else
-    regex_.assign(pattern_.toUTF8(),
-                  std::regex::ECMAScript);
+    WValidator::Result WRegExpValidator::validate(const WT_USTRING & input) const
+    {
+        if(input.empty())
+        {
+            return WValidator::validate(input);
+        }
+        if(std::regex_match(input.toUTF8(), regex_))
+        {
+            return Result(ValidationState::Valid);
+        }
+        else
+        {
+            return Result(ValidationState::Invalid, invalidNoMatchText());
+        }
+    }
 
-  repaint();
-}
+    void WRegExpValidator::loadJavaScript(WApplication * app)
+    {
+        LOAD_JAVASCRIPT(app, "js/WRegExpValidator.js", "WRegExpValidator", wtjs1);
+    }
 
-WFlags<RegExpFlag> WRegExpValidator::flags() const
-{
-  if (regex_.flags() & std::regex::icase)
-    return RegExpFlag::MatchCaseInsensitive;
-  else
-    return WFlags<RegExpFlag>();
-}
+    void WRegExpValidator::setFlags(WFlags<RegExpFlag> flags)
+    {
+        if(flags == this->flags())
+        {
+            return;
+        }
+        if(flags.test(RegExpFlag::MatchCaseInsensitive))
+            regex_.assign(pattern_.toUTF8(),
+                          std::regex::ECMAScript | std::regex::icase);
+        else
+            regex_.assign(pattern_.toUTF8(),
+                          std::regex::ECMAScript);
+        repaint();
+    }
 
-std::string WRegExpValidator::javaScriptValidate() const
-{
-  loadJavaScript(WApplication::instance());
+    WFlags<RegExpFlag> WRegExpValidator::flags() const
+    {
+        if(regex_.flags() & std::regex::icase)
+        {
+            return RegExpFlag::MatchCaseInsensitive;
+        }
+        else
+        {
+            return WFlags<RegExpFlag>();
+        }
+    }
 
-  WStringStream js;
-
-  js << "new " WT_CLASS ".WRegExpValidator("
-     << isMandatory()
-     << ',';
-
-  js << WWebWidget::jsStringLiteral(pattern_)
-     << ",'";
-
-  if (regex_.flags() & std::regex::icase)
-    js << 'i';
-
-  js << '\'';
-
-  js << ',' << WWebWidget::jsStringLiteral(invalidBlankText())
-     << ',' << WWebWidget::jsStringLiteral(invalidNoMatchText())
-     << ");";
-
-  return js.str();
-}
+    std::string WRegExpValidator::javaScriptValidate() const
+    {
+        loadJavaScript(WApplication::instance());
+        WStringStream js;
+        js << "new " WT_CLASS ".WRegExpValidator("
+           << isMandatory()
+           << ',';
+        js << WWebWidget::jsStringLiteral(pattern_)
+           << ",'";
+        if(regex_.flags() & std::regex::icase)
+        {
+            js << 'i';
+        }
+        js << '\'';
+        js << ',' << WWebWidget::jsStringLiteral(invalidBlankText())
+           << ',' << WWebWidget::jsStringLiteral(invalidNoMatchText())
+           << ");";
+        return js.str();
+    }
 
 }

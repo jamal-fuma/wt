@@ -11,168 +11,175 @@
 
 #include <cstring>
 
-namespace Wt {
-
-LOGGER("WebSocketMessage");
-
-WebSocketMessage::WebSocketMessage(WebSession *session)
-  : session_(session)
-{ 
-  queryString_ = "wtd=" + session_->sessionId() + "&request=jsupdate";
-}
-
-void WebSocketMessage::flush(ResponseState state,
-			     const WriteCallback& callback)
+namespace Wt
 {
-  if (state != ResponseState::ResponseDone)
-    error("flush(" + std::to_string(static_cast<unsigned int>(state)) 
-	  + ") expected");
 
-  session_->pushUpdates();
+    LOGGER("WebSocketMessage");
 
-  delete this;
-}
+    WebSocketMessage::WebSocketMessage(WebSession * session)
+        : session_(session)
+    {
+        queryString_ = "wtd=" + session_->sessionId() + "&request=jsupdate";
+    }
 
-void WebSocketMessage::setWebSocketMessageCallback(const ReadCallback& callback)
-{
-  error("setWebSocketMessageCallback() not supported");
-}
+    void WebSocketMessage::flush(ResponseState state,
+                                 const WriteCallback & callback)
+    {
+        if(state != ResponseState::ResponseDone)
+            error("flush(" + std::to_string(static_cast<unsigned int>(state))
+                  + ") expected");
+        session_->pushUpdates();
+        delete this;
+    }
 
-bool WebSocketMessage::webSocketMessagePending() const
-{
-  error("webSocketMessagePending() not supported");
-  return false;
-}
+    void WebSocketMessage::setWebSocketMessageCallback(const ReadCallback & callback)
+    {
+        error("setWebSocketMessageCallback() not supported");
+    }
 
-std::istream& WebSocketMessage::in()
-{
-  return webSocket()->in();
-}
+    bool WebSocketMessage::webSocketMessagePending() const
+    {
+        error("webSocketMessagePending() not supported");
+        return false;
+    }
 
-std::ostream& WebSocketMessage::out()
-{
-  return webSocket()->out();
-}
+    std::istream & WebSocketMessage::in()
+    {
+        return webSocket()->in();
+    }
 
-std::ostream& WebSocketMessage::err()
-{
-  return webSocket()->err();
-}
+    std::ostream & WebSocketMessage::out()
+    {
+        return webSocket()->out();
+    }
 
-void WebSocketMessage::setRedirect(const std::string& url)
-{
-  error("setRedirect() not supported");
-}
+    std::ostream & WebSocketMessage::err()
+    {
+        return webSocket()->err();
+    }
 
-void WebSocketMessage::setStatus(int status)
-{
-  error("setStatus() not supported");
-}
+    void WebSocketMessage::setRedirect(const std::string & url)
+    {
+        error("setRedirect() not supported");
+    }
 
-void WebSocketMessage::setContentType(const std::string& value)
-{
-  if (value != "text/javascript; charset=UTF-8")
-    error("setContentType(): text/javascript expected");
-}
+    void WebSocketMessage::setStatus(int status)
+    {
+        error("setStatus() not supported");
+    }
 
-void WebSocketMessage::setContentLength(::int64_t length)
-{
-  // We have no use for it, web socket messages are framed
-}
+    void WebSocketMessage::setContentType(const std::string & value)
+    {
+        if(value != "text/javascript; charset=UTF-8")
+        {
+            error("setContentType(): text/javascript expected");
+        }
+    }
 
-void WebSocketMessage::addHeader(const std::string& name,
-				 const std::string& value)
-{
-  if (name == "Set-Cookie")
-    out() << "document.cookie=" << WWebWidget::jsStringLiteral(value) << ";";
-}
+    void WebSocketMessage::setContentLength(::int64_t length)
+    {
+        // We have no use for it, web socket messages are framed
+    }
 
-const char *WebSocketMessage::envValue(const char *name) const
-{
-  return webSocket()->envValue(name);
-}
+    void WebSocketMessage::addHeader(const std::string & name,
+                                     const std::string & value)
+    {
+        if(name == "Set-Cookie")
+        {
+            out() << "document.cookie=" << WWebWidget::jsStringLiteral(value) << ";";
+        }
+    }
 
-::int64_t WebSocketMessage::contentLength() const
-{
-  webSocket()->in().seekg(0, std::ios::end);
-  int length = webSocket()->in().tellg();
-  webSocket()->in().seekg(0, std::ios::beg);
-  return length;
-}
+    const char * WebSocketMessage::envValue(const char * name) const
+    {
+        return webSocket()->envValue(name);
+    }
 
-const char *WebSocketMessage::contentType() const
-{
-  return "application/x-www-form-urlencoded";
-}
+    ::int64_t WebSocketMessage::contentLength() const
+    {
+        webSocket()->in().seekg(0, std::ios::end);
+        int length = webSocket()->in().tellg();
+        webSocket()->in().seekg(0, std::ios::beg);
+        return length;
+    }
 
-const std::string& WebSocketMessage::serverName() const
-{
-  return webSocket()->serverName();
-}
+    const char * WebSocketMessage::contentType() const
+    {
+        return "application/x-www-form-urlencoded";
+    }
 
-const std::string& WebSocketMessage::serverPort() const
-{
-  return webSocket()->serverPort();
-}
+    const std::string & WebSocketMessage::serverName() const
+    {
+        return webSocket()->serverName();
+    }
 
-const std::string& WebSocketMessage::scriptName() const
-{
-  return webSocket()->scriptName();
-}
+    const std::string & WebSocketMessage::serverPort() const
+    {
+        return webSocket()->serverPort();
+    }
 
-const char *WebSocketMessage::requestMethod() const
-{
-  return "POST";
-}
+    const std::string & WebSocketMessage::scriptName() const
+    {
+        return webSocket()->scriptName();
+    }
 
-const std::string& WebSocketMessage::queryString() const
-{
-  return queryString_;
-}
+    const char * WebSocketMessage::requestMethod() const
+    {
+        return "POST";
+    }
 
-const std::string& WebSocketMessage::pathInfo() const
-{
-  return webSocket()->pathInfo();
-}
+    const std::string & WebSocketMessage::queryString() const
+    {
+        return queryString_;
+    }
 
-const std::string& WebSocketMessage::remoteAddr() const
-{
-  return webSocket()->remoteAddr();
-}
+    const std::string & WebSocketMessage::pathInfo() const
+    {
+        return webSocket()->pathInfo();
+    }
 
-const char *WebSocketMessage::urlScheme() const
-{
-  const char *wsScheme = webSocket()->urlScheme();
-  if (std::strcmp(wsScheme, "wss") == 0 ||
-      std::strcmp(wsScheme, "https") == 0)
-    return "https";
-  else
-    return "http";
-}
+    const std::string & WebSocketMessage::remoteAddr() const
+    {
+        return webSocket()->remoteAddr();
+    }
 
-Wt::WSslInfo *WebSocketMessage::sslInfo() const
-{
-  return webSocket()->sslInfo();
-}
+    const char * WebSocketMessage::urlScheme() const
+    {
+        const char * wsScheme = webSocket()->urlScheme();
+        if(std::strcmp(wsScheme, "wss") == 0 ||
+                std::strcmp(wsScheme, "https") == 0)
+        {
+            return "https";
+        }
+        else
+        {
+            return "http";
+        }
+    }
 
-const char *WebSocketMessage::headerValue(const char *name) const
-{
-  return webSocket()->headerValue(name);
-}
+    Wt::WSslInfo * WebSocketMessage::sslInfo() const
+    {
+        return webSocket()->sslInfo();
+    }
 
-std::vector<Wt::Http::Message::Header> WebSocketMessage::headers() const
-{
-  return webSocket()->headers();
-}
+    const char * WebSocketMessage::headerValue(const char * name) const
+    {
+        return webSocket()->headerValue(name);
+    }
 
-void WebSocketMessage::error(const std::string& msg) const
-{
-  LOG_ERROR("WebSocketMessage error: " + msg);
-}
+    std::vector<Wt::Http::Message::Header> WebSocketMessage::headers() const
+    {
+        return webSocket()->headers();
+    }
 
-WebRequest *WebSocketMessage::webSocket() const
-{
-  return session_->webSocket_;
-}
+    void WebSocketMessage::error(const std::string & msg) const
+    {
+        LOG_ERROR("WebSocketMessage error: " + msg);
+    }
+
+    WebRequest * WebSocketMessage::webSocket() const
+    {
+        return session_->webSocket_;
+    }
 
 }
